@@ -1,12 +1,9 @@
 // index.js
-const path = require('path')
 const express = require('express')
-const exphbs = require('express-handlebars')
 const app = express()
 
 
 app.engine('html', require('ejs').renderFile);
-app.set('views', __dirname + '/../public')
 app.set('view engine', 'html')
 
 app.use(express.static('./static'))
@@ -16,11 +13,11 @@ app.get('/menu', (request, response) => {
 })
 
 app.get('/sign_in', (request, response) => {
-    response.render('html/sign_in.html')
+    response.render('public/html/sign_in.html')
 })
 
 app.get('/sign_up', (request, response) => {
-    response.render('html/sign_up.html')
+    response.render('public/html/sign_up.html')
 })
 
 app.get('/', (request, response) => {
