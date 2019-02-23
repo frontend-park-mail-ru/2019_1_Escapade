@@ -1,5 +1,5 @@
 {
-  "name": "Escapade",
+  "name": "escapade",
   "version": "1.0.0",
   "description": "",
   "main": "server/index.js",
@@ -15,7 +15,6 @@
   },
   "dependencies": {
     "consolidate": "^0.15.1",
-    "express": "^4.16.4",
-    "mustache": "^3.0.1"
+    "express": "^4.16.4"
   }
 }
