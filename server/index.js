@@ -66,7 +66,7 @@ const path = require('path');
 
 app.use(express.static('./public'))
 app.use(express.static('./static'))
-
+var public = path.join(__dirname, '../public');
 
 /*
 
@@ -97,7 +97,7 @@ app.get('/sign_up', (request, res) => {
 
 app.get("/test1", function(req, res) {
     console.log("catch /1")
-    res.sendFile(path.join(__dirname, '../', 'public/index.html'));
+    res.sendFile(path.join(public, 'index.html'));
  });
 
  app.get("/test2", function(req, res) {
@@ -107,7 +107,7 @@ app.get("/test1", function(req, res) {
 
 app.get("/", function(req, res) {
     console.log("catch /")
-    res.sendFile(path.join(__dirname, '../', 'index.html'));
+    res.sendFile(path.join(__dirname, '../static', 'index.html'));
  });
 
  app.get("*", function(req, res) {
@@ -118,6 +118,7 @@ app.get("/", function(req, res) {
  });
 
  
+ app.use('/', express.static(public));
 
 module.exports = app
 
