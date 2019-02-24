@@ -1,7 +1,3 @@
-a {
-  text-decoration: none;
-}
-
 @import url(http://fonts.googleapis.com/css?family=Lato:400,700italic);
 * { padding: 0; margin: 0; }
 body { 
@@ -10,17 +6,7 @@ body {
 	text-transform: uppercase; 
 	letter-spacing: 1px;
 }
-a {
-    color: #FFF0FF; /* Цвет обычной ссылки */ 
-    text-decoration: none; /* Убираем подчеркивание у ссылок */
-   }
-   a:visited {
-    color: #FFF0FF; /* Цвет посещённой ссылки */
-   } 
-   a:hover {
-    color: #FFF0FF; /* Цвет ссылки при наведении на нее курсора мыши */  
-    text-decoration: underline; /* Добавляем подчеркивание */
-   }
+
 header {
     text-align: justify;
     height: 3em;
@@ -90,12 +76,11 @@ header nav a:last-child {
   left: 50%;
   transform: translate(-50%, -50%);
   text-align: center;
-  color: black;
+  color: rgb(167, 69, 69);
 }
 
 .menu__link {
   display: inline-block;
-  color: #2d6c90;
   text-decoration: none;
   position: relative;
   padding: 14px 0;
@@ -108,7 +93,7 @@ header nav a:last-child {
 
 .menu__link svg {
   fill: none;
-  stroke: #70aec9;
+  stroke: #a3b6be;
   stroke-width: 2;
   stroke-miterlimit: 10;
   stroke-dasharray: 338;
@@ -134,3 +119,17 @@ header nav a:last-child {
   opacity: 1;
   transition: opacity 0s, stroke-dashoffset 0.3s cubic-bezier(0.645, 0.045, 0.355, 1);
 }
+
+a {
+    text-decoration: none;
+    display: block;
+    color: #FFF0FF; /* Цвет обычной ссылки */ 
+    text-decoration: none; /* Убираем подчеркивание у ссылок */
+   }
+   a:visited {
+    color: #FFF0FF; /* Цвет посещённой ссылки */
+   } 
+   a:hover {
+    color: #FFF0FF; /* Цвет ссылки при наведении на нее курсора мыши */  
+    text-decoration: underline; /* Добавляем подчеркивание */
+   }
