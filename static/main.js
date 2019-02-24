@@ -2,7 +2,7 @@
 
 const application = document.getElementById('application');
 
-function createMenuLink () {
+function createMenuLink() {
 	const menuLink = document.createElement('a');
 	menuLink.href = menuLink.dataset.href = 'menu';
 
@@ -11,49 +11,25 @@ function createMenuLink () {
 	return menuLink;
 }
 
-
-function createHead(styles){
-	document.getElementsByTagName("head")[0].innerHTML = "";
-	var meta = document.createElement('meta');
-	meta['httpEquiv'] = 'Content-Type';
-	meta['content'] = 'text/html; charset=utf-8';
-	document.getElementsByTagName('head')[0].appendChild(meta);
-
-	styles.forEach( (style) => {
-		const link = document.createElement('link');
-		link.id = 'styleLinkMenu';
-		link.rel = 'stylesheet';
-		link.href = style;
-		document.head.appendChild(link);
-	});
-	
-
-}
-
-function createMenu () {
-	
-	let styles = ["css/menu_style.css"];
-	createHead(styles);
-
-
+function createMenu() {
 	const menuSection = document.createElement('section');
 	menuSection.dataset.sectionName = 'menu';
 
 	const header = document.createElement('header');
-    header.id = 'header';
+	header.id = 'header';
 	const textHeader = document.createElement('h1');
-    textHeader.textContent = 'Logic game';
-    const navHeader = document.createElement('nav');
+	textHeader.textContent = 'Logic game';
+	const navHeader = document.createElement('nav');
 
-    const titlesHeader = {
-		sign_in: 'Войти',
-		sign_up: 'Зарегистрироваться',
+	const titlesHeader = {
+		sign_in: 'Sign In',
+		sign_up: 'Sign Up',
 	};
 
 
-	Object.entries(titlesHeader).forEach( (entry) => {
-		const href = entry[ 0 ];
-		const title = entry[ 1 ];
+	Object.entries(titlesHeader).forEach((entry) => {
+		const href = entry[0];
+		const title = entry[1];
 
 		const a = document.createElement('a');
 		a.href = href;
@@ -64,61 +40,43 @@ function createMenu () {
 		navHeader.appendChild(a);
 	});
 
-    header.appendChild(textHeader);
-    header.appendChild(navHeader);
+	header.appendChild(textHeader);
+	header.appendChild(navHeader);
 
 
-    const main = document.createElement('div');
-    main.id = 'main';
-    main.classList.add('wrapper');
+	const main = document.createElement('div');
+	main.id = 'main';
+	main.classList.add('menu-wrapper');
 
-    const mainForm = document.createElement('form');
-    mainForm.id = 'mainForm';
-    mainForm.classList.add('form-signin');
+	const menu = document.createElement('div');
+	menu.id = 'menu';
+	menu.classList.add('menu-wrapper__menu');
 
-    const mainFormMenu = document.createElement('div');
-    mainFormMenu.id = 'mainFormMenu';
-    mainFormMenu.classList.add('menu');
 
-    main.appendChild(mainForm);
-	mainForm.appendChild(mainFormMenu);
+	main.appendChild(menu);
 
 	const titles = {
 		sign_in: 'Играть вдвоем',
 		sign_up: 'Играть одному',
-        leaders: 'Таблица лидеров',
-        about: 'О нас'
+		leaders: 'Таблица лидеров',
+		about: 'О нас'
 	};
 
 
-	Object.entries(titles).forEach( (entry) => {
-		const href = entry[ 0 ];
-		const title = entry[ 1 ];
+	Object.entries(titles).forEach((entry) => {
+		const href = entry[0];
+		const title = entry[1];
 
 		const a = document.createElement('a');
 		a.href = href;
 		a.dataset.href = href;
-		a.textContent = title;
-		a.classList.add('menu-button');
-        a.classList.add('menu__link');
-        
-        
-  
+		a.textContent = title
+		a.classList.add('menu__link');
 
-        const br = document.createElement('br');    
+		const br = document.createElement('br');
 
-
-        const svg = document.createElement('svg'); //Get svg element
-        const newElement = document.createElement('path'); //Create a path in SVG namespace
-        svg.setAttribute("viewBox", "0 0 152.9 43.4"); 
-        newElement.setAttribute("d","M151.9,13.6c0,0,3.3-9.5-85-8.3c-97,1.3-58.3,29-58.3,29s9.7,8.1,69.7,8.1c68.3,0,69.3-23.1,69.3-23.1 s1.7-10.5-14.7-18.4"); //Set path data
-        
-
-        svg.appendChild(newElement);
-		a.appendChild(svg);
-		
-        mainFormMenu.appendChild(a);
-        mainFormMenu.appendChild(br);
+		menu.appendChild(a);
+		menu.appendChild(br);
 	});
 
 
@@ -129,76 +87,46 @@ function createMenu () {
 
 }
 
-function createSignIn () {
-	let styles = ["https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css", "css/sign_in.css"];
-	createHead(styles);
-
-
+function createSignIn() {
 	const signInSection = document.createElement('section');
 	signInSection.dataset.sectionName = 'sign_in';
 
+	const header = document.createElement('h1');
+	header.textContent = 'Вход';
 
-	const wrapper = document.createElement("div");
-	wrapper.classList.add('wrapper');
 
 	const form = document.createElement('form');
-	form.classList.add('form-signin');
 
-	const formHeading = document.createElement('h2');
-	formHeading.classList.add('form-signin-heading');
-	formHeading.textContent = "Вход";
+	const inputs = [{
+			name: 'email',
+			type: 'email',
+			placeholder: 'Email'
+		},
+		{
+			name: 'password',
+			type: 'password',
+			placeholder: 'Password'
+		},
+		{
+			name: 'submit',
+			type: 'submit'
+		}
+	];
 
-	// email input
-	const inputEmail = document.createElement('input');
-	inputEmail.name = 'email';
-	inputEmail.type = 'email';
-	inputEmail.placeholder = 'email';
-	inputEmail.classList.add('form-control');
-	
+	inputs.forEach(function (item) {
+		const input = document.createElement('input');
 
+		input.name = item.name;
+		input.type = item.type;
 
-	// password input
-	const divPass = document.createElement('div');
-	divPass.classList.add('form-group');
-	divPass.classList.add('has-feedback');
+		input.placeholder = item.placeholder;
 
-	const inputPass = document.createElement('input');
-	inputPass.name = 'password';
-	inputPass.type = 'password';
-	inputPass.placeholder = 'Password';
-	inputPass.classList.add('form-control');
+		form.appendChild(input);
+		form.appendChild(document.createElement('br'));
+	});
 
-	const eyePass = document.createElement('i');
-	eyePass.classList.add('glyphicon');
-	eyePass.classList.add('glyphicon-eye-open');
-	eyePass.classList.add('form-control-feedback');
-
-	const divHint = document.createElement('div');
-	divHint.textContent = "Введите пароль"
-	divHint.classList.add('hint');
-
-	const submit = document.createElement('input');
-	submit.name = 'submit';
-	submit.type = 'submit';
-	submit.textContent = 'Войти';
-	submit.classList.add('btn');
-	submit.classList.add('btn-lg');
-	submit.classList.add('btn-primary');
-	submit.classList.add('btn-block');
-	submit.classList.add('btn_enter');
-
-	divPass.appendChild(inputPass);
-	divPass.appendChild(eyePass);
-	divPass.appendChild(divHint);
-
-	form.appendChild(formHeading);
-	form.appendChild(inputEmail);
-	form.appendChild(divPass);
-	form.appendChild(submit);
-	form.appendChild(createMenuLink());
-
-	wrapper.appendChild(form);
-	signInSection.appendChild(wrapper);
+	signInSection.appendChild(header);
+	signInSection.appendChild(form);
 	signInSection.appendChild(createMenuLink());
 
 	/*form.addEventListener('submit', function (event) {
@@ -207,107 +135,76 @@ function createSignIn () {
 		const email = form.elements[ 'email' ].value;
 		const password = form.elements[ 'password' ].value;
 	});*/
-	
+
 	application.appendChild(signInSection);
 }
 
-function createSignUp () {
-	let styles = ["https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css", "css/sign_up.css"];
-	createHead(styles);
+function createSignUp() {
+	const signUpSection = document.createElement('section');
+	signUpSection.dataset.sectionName = 'sign_in';
 
+	const header = document.createElement('h1');
+	header.textContent = 'Регистрация';
 
-	const signInSection = document.createElement('section');
-	signInSection.dataset.sectionName = 'sign_up';
-
-
-	const wrapper = document.createElement("div");
-	wrapper.classList.add('wrapper');
 
 	const form = document.createElement('form');
-	form.classList.add('form-signin');
 
-	const formHeading = document.createElement('h2');
-	formHeading.classList.add('form-signin-heading');
-	formHeading.textContent = "Регистрация";
-
-	// email input
-	const inputEmail = document.createElement('input');
-	inputEmail.name = 'email';
-	inputEmail.type = 'email';
-	inputEmail.placeholder = 'email';
-	inputEmail.classList.add('form-control');
-	
-
-	form.appendChild(formHeading);
-	form.appendChild(inputEmail);
-
-	const inputs = [
+	const inputs = [{
+			name: 'email',
+			type: 'email',
+			placeholder: 'Email'
+		},
 		{
 			name: 'password',
 			type: 'password',
-			placeholder: 'Пароль'
+			placeholder: 'Password'
 		},
 		{
 			name: 'password_repeat',
 			type: 'password',
-			placeholder: 'Повторите пароль'
+			placeholder: 'Repeat Password'
+		},
+		{
+			name: 'submit',
+			type: 'submit'
 		}
 	];
 
-	inputs.forEach( (item) => {
-		const divPass = document.createElement('div');
-		divPass.classList.add('form-group');
-		divPass.classList.add('has-feedback');
+	inputs.forEach(function (item) {
+		const input = document.createElement('input');
 
-		const inputPass = document.createElement('input');
-		inputPass.name =  item.name;
-		inputPass.type = item.type;
-		inputPass.placeholder = item.placeholder;
-		inputPass.classList.add('form-control');
+		input.name = item.name;
+		input.type = item.type;
 
-		const eyePass = document.createElement('i');
-		eyePass.classList.add('glyphicon');
-		eyePass.classList.add('glyphicon-eye-open');
-		eyePass.classList.add('form-control-feedback');
+		input.placeholder = item.placeholder;
 
-		const divHint = document.createElement('div');
-		divHint.textContent = "Введите пароль"
-		divHint.classList.add('hint');
-
-		divPass.appendChild(inputPass);
-		divPass.appendChild(eyePass);
-		divPass.appendChild(divHint);
-		form.appendChild(divPass);
+		form.appendChild(input);
+		form.appendChild(document.createElement('br'));
 	});
 
-
-	const submit = document.createElement('input');
-	submit.name = 'submit';
-	submit.type = 'submit';
-	submit.textContent = 'Войти';
-	submit.classList.add('btn');
-	submit.classList.add('btn-lg');
-	submit.classList.add('btn-primary');
-	submit.classList.add('btn-block');
-	submit.classList.add('btn_enter');
-	form.appendChild(submit);
-	form.appendChild(createMenuLink());
-
-	wrapper.appendChild(form);
-	signInSection.appendChild(wrapper);
-	signInSection.appendChild(createMenuLink());
+	signUpSection.appendChild(header);
+	signUpSection.appendChild(form);
+	signUpSection.appendChild(createMenuLink());
 
 	/*form.addEventListener('submit', function (event) {
 		event.preventDefault();
 
 		const email = form.elements[ 'email' ].value;
 		const password = form.elements[ 'password' ].value;
+		const password_repeat = form.elements[ 'password_repeat' ].value;
+
+		if (password !== password_repeat) {
+			alert('Passwords is not equals');
+
+			return;
+		}
+
 	});*/
 
-	application.appendChild(signInSection);
+	application.appendChild(signUpSection);
 }
 
-function createLeaderboard () {
+function createLeaderboard() {
 	const leaderboardSection = document.createElement('section');
 	leaderboardSection.dataset.sectionName = 'leaderboard';
 
@@ -316,8 +213,7 @@ function createLeaderboard () {
 
 	leaderboardSection.appendChild(header);
 	leaderboardSection.appendChild(document.createElement('br'));
-    const users = [
-		{
+	const users = [{
 			email: 'ivan@mail.ru',
 			score: '120000'
 		},
@@ -369,12 +265,12 @@ function createLeaderboard () {
 
 			leaderboardSection.appendChild(table);
 		});
-	} 
-    leaderboardSection.appendChild(createMenuLink());
+	}
+	leaderboardSection.appendChild(createMenuLink());
 	application.appendChild(leaderboardSection);
 }
 
-function createAuthors () {
+function createAuthors() {
 	const signInSection = document.createElement('section');
 	signInSection.dataset.sectionName = 'about';
 
@@ -389,9 +285,9 @@ function createAuthors () {
 
 	signInSection.appendChild(header);
 
-	Object.entries(authors).forEach( (entry) => {
-		const href = entry[ 0 ];
-		const title = entry[ 1 ];
+	Object.entries(authors).forEach((entry) => {
+		const href = entry[0];
+		const title = entry[1];
 
 		const a = document.createElement('a');
 		a.href = href;
@@ -402,7 +298,7 @@ function createAuthors () {
 		signInSection.appendChild(a);
 	});
 
-	
+
 
 	signInSection.appendChild(createMenuLink());
 
@@ -421,10 +317,10 @@ const pages = {
 createMenu();
 
 application.addEventListener('click', function (event) {
+	console.log(event.currentTarget)
 	if (!(event.target instanceof HTMLAnchorElement)) {
 		return;
 	}
-
 	event.preventDefault();
 	const link = event.target;
 
@@ -435,5 +331,5 @@ application.addEventListener('click', function (event) {
 
 	application.innerHTML = '';
 
-	pages[ link.dataset.href ]();
+	pages[link.dataset.href]();
 });
