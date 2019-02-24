@@ -17,8 +17,6 @@ app.get("/", function(req, res) {
     res.end()
  });
 
- 
- app.use('/', express.static(public));
 
 module.exports = app
 
