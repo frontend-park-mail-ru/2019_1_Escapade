@@ -1,7 +1,5 @@
 'use strict';
 
-static
-
 const application = document.getElementById('application');
 
 function createMenuLink () {
@@ -13,7 +11,31 @@ function createMenuLink () {
 	return menuLink;
 }
 
+
+function createHead(styles){
+	document.getElementsByTagName("head")[0].innerHTML = "";
+	var meta = document.createElement('meta');
+	meta['httpEquiv'] = 'Content-Type';
+	meta['content'] = 'text/html; charset=utf-8';
+	document.getElementsByTagName('head')[0].appendChild(meta);
+
+	styles.forEach( (style) => {
+		const link = document.createElement('link');
+		link.id = 'styleLinkMenu';
+		link.rel = 'stylesheet';
+		link.href = style;
+		document.head.appendChild(link);
+	});
+	
+
+}
+
 function createMenu () {
+	
+	let styles = ["css/menu_style.css"];
+	createHead(styles);
+
+
 	const menuSection = document.createElement('section');
 	menuSection.dataset.sectionName = 'menu';
 
@@ -108,46 +130,171 @@ function createMenu () {
 }
 
 function createSignIn () {
+	let styles = ["https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css", "css/sign_in.css"];
+	createHead(styles);
+
+
 	const signInSection = document.createElement('section');
 	signInSection.dataset.sectionName = 'sign_in';
 
-	const header = document.createElement('h1');
-	header.textContent = 'Вход';
 
+	const wrapper = document.createElement("div");
+	wrapper.classList.add('wrapper');
 
 	const form = document.createElement('form');
+	form.classList.add('form-signin');
+
+	const formHeading = document.createElement('h2');
+	formHeading.classList.add('form-signin-heading');
+	formHeading.textContent = "Вход";
+
+	// email input
+	const inputEmail = document.createElement('input');
+	inputEmail.name = 'email';
+	inputEmail.type = 'email';
+	inputEmail.placeholder = 'email';
+	inputEmail.classList.add('form-control');
+	
+
+
+	// password input
+	const divPass = document.createElement('div');
+	divPass.classList.add('form-group');
+	divPass.classList.add('has-feedback');
+
+	const inputPass = document.createElement('input');
+	inputPass.name = 'password';
+	inputPass.type = 'password';
+	inputPass.placeholder = 'Password';
+	inputPass.classList.add('form-control');
+
+	const eyePass = document.createElement('i');
+	eyePass.classList.add('glyphicon');
+	eyePass.classList.add('glyphicon-eye-open');
+	eyePass.classList.add('form-control-feedback');
+
+	const divHint = document.createElement('div');
+	divHint.textContent = "Введите пароль"
+	divHint.classList.add('hint');
+
+	const submit = document.createElement('input');
+	submit.name = 'submit';
+	submit.type = 'submit';
+	submit.textContent = 'Войти';
+	submit.classList.add('btn');
+	submit.classList.add('btn-lg');
+	submit.classList.add('btn-primary');
+	submit.classList.add('btn-block');
+	submit.classList.add('btn_enter');
+
+	divPass.appendChild(inputPass);
+	divPass.appendChild(eyePass);
+	divPass.appendChild(divHint);
+
+	form.appendChild(formHeading);
+	form.appendChild(inputEmail);
+	form.appendChild(divPass);
+	form.appendChild(submit);
+	form.appendChild(createMenuLink());
+
+	wrapper.appendChild(form);
+	signInSection.appendChild(wrapper);
+	signInSection.appendChild(createMenuLink());
+
+	/*form.addEventListener('submit', function (event) {
+		event.preventDefault();
+
+		const email = form.elements[ 'email' ].value;
+		const password = form.elements[ 'password' ].value;
+	});*/
+	
+	application.appendChild(signInSection);
+}
+
+function createSignUp () {
+	let styles = ["https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css", "css/sign_up.css"];
+	createHead(styles);
+
+
+	const signInSection = document.createElement('section');
+	signInSection.dataset.sectionName = 'sign_up';
+
+
+	const wrapper = document.createElement("div");
+	wrapper.classList.add('wrapper');
+
+	const form = document.createElement('form');
+	form.classList.add('form-signin');
+
+	const formHeading = document.createElement('h2');
+	formHeading.classList.add('form-signin-heading');
+	formHeading.textContent = "Регистрация";
+
+	// email input
+	const inputEmail = document.createElement('input');
+	inputEmail.name = 'email';
+	inputEmail.type = 'email';
+	inputEmail.placeholder = 'email';
+	inputEmail.classList.add('form-control');
+	
+
+	form.appendChild(formHeading);
+	form.appendChild(inputEmail);
 
 	const inputs = [
 		{
-			name: 'email',
-			type: 'email',
-			placeholder: 'Email'
-		},
-		{
 			name: 'password',
 			type: 'password',
-			placeholder: 'Password'
+			placeholder: 'Пароль'
 		},
 		{
-			name: 'submit',
-			type: 'submit'
+			name: 'password_repeat',
+			type: 'password',
+			placeholder: 'Повторите пароль'
 		}
 	];
 
-	inputs.forEach(function (item) {
-		const input = document.createElement('input');
+	inputs.forEach( (item) => {
+		const divPass = document.createElement('div');
+		divPass.classList.add('form-group');
+		divPass.classList.add('has-feedback');
 
-		input.name = item.name;
-		input.type = item.type;
+		const inputPass = document.createElement('input');
+		inputPass.name =  item.name;
+		inputPass.type = item.type;
+		inputPass.placeholder = item.placeholder;
+		inputPass.classList.add('form-control');
 
-		input.placeholder = item.placeholder;
+		const eyePass = document.createElement('i');
+		eyePass.classList.add('glyphicon');
+		eyePass.classList.add('glyphicon-eye-open');
+		eyePass.classList.add('form-control-feedback');
 
-		form.appendChild(input);
-		form.appendChild(document.createElement('br'));
+		const divHint = document.createElement('div');
+		divHint.textContent = "Введите пароль"
+		divHint.classList.add('hint');
+
+		divPass.appendChild(inputPass);
+		divPass.appendChild(eyePass);
+		divPass.appendChild(divHint);
+		form.appendChild(divPass);
 	});
 
-	signInSection.appendChild(header);
-	signInSection.appendChild(form);
+
+	const submit = document.createElement('input');
+	submit.name = 'submit';
+	submit.type = 'submit';
+	submit.textContent = 'Войти';
+	submit.classList.add('btn');
+	submit.classList.add('btn-lg');
+	submit.classList.add('btn-primary');
+	submit.classList.add('btn-block');
+	submit.classList.add('btn_enter');
+	form.appendChild(submit);
+	form.appendChild(createMenuLink());
+
+	wrapper.appendChild(form);
+	signInSection.appendChild(wrapper);
 	signInSection.appendChild(createMenuLink());
 
 	/*form.addEventListener('submit', function (event) {
@@ -158,72 +305,6 @@ function createSignIn () {
 	});*/
 
 	application.appendChild(signInSection);
-}
-
-function createSignUp () {
-	const signUpSection = document.createElement('section');
-	signUpSection.dataset.sectionName = 'sign_in';
-
-	const header = document.createElement('h1');
-	header.textContent = 'Регистрация';
-
-
-	const form = document.createElement('form');
-
-	const inputs = [
-		{
-			name: 'email',
-			type: 'email',
-			placeholder: 'Email'
-		},
-		{
-			name: 'password',
-			type: 'password',
-			placeholder: 'Password'
-		},
-		{
-			name: 'password_repeat',
-			type: 'password',
-			placeholder: 'Repeat Password'
-		},
-		{
-			name: 'submit',
-			type: 'submit'
-		}
-	];
-
-	inputs.forEach(function (item) {
-		const input = document.createElement('input');
-
-		input.name = item.name;
-		input.type = item.type;
-
-		input.placeholder = item.placeholder;
-
-		form.appendChild(input);
-		form.appendChild(document.createElement('br'));
-	});
-
-	signUpSection.appendChild(header);
-	signUpSection.appendChild(form);
-	signUpSection.appendChild(createMenuLink());
-
-	/*form.addEventListener('submit', function (event) {
-		event.preventDefault();
-
-		const email = form.elements[ 'email' ].value;
-		const password = form.elements[ 'password' ].value;
-		const password_repeat = form.elements[ 'password_repeat' ].value;
-
-		if (password !== password_repeat) {
-			alert('Passwords is not equals');
-
-			return;
-		}
-
-	});*/
-
-	application.appendChild(signUpSection);
 }
 
 function createLeaderboard () {

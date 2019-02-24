@@ -23,34 +23,6 @@ h2 {
 	position: relative;
 }
 
-h6 {
-    position: relative;
-    overflow: hidden;
-    font-size: 13px;
-    color: #808080;
-    font-weight: normal;
-    text-align: center;
-    margin-top: 45px;
-    margin-bottom: 45px;
-}
-h6 > span {
-    display: inline-block;
-    margin: 0 .4em;
-}
-h6 > span:before,
-h6 > span:after {
-    content: '';
-    position: absolute;
-    width: 100%;
-    border-top: 1px solid #DCDCDC;
-    margin-top: .6em;
-}
-h6 > span:before {
-    margin-left: -102%;
-}
-h6 > span:after {
-    margin-left: 2%;
-}
 
 .hint {
 	color: red;
@@ -59,7 +31,7 @@ h6 > span:after {
 }
 
 
-.btn_submit {
+.btn_enter {
 	background-color: #2c3e50;
 	border: 0px;
 }
