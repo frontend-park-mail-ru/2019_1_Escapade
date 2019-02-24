@@ -68,57 +68,39 @@ function createMenu () {
     header.appendChild(navHeader);
 
 
-    const main = document.createElement('div');
-    main.id = 'main';
-    main.classList.add('wrapper');
+	const main = document.createElement('div');
+	main.id = 'main';
+	main.classList.add('menu-wrapper');
 
-    const mainForm = document.createElement('form');
-    mainForm.id = 'mainForm';
-    mainForm.classList.add('form-signin');
+	const menu = document.createElement('div');
+	menu.id = 'menu';
+	menu.classList.add('menu-wrapper__menu');
 
-    const mainFormMenu = document.createElement('div');
-    mainFormMenu.id = 'mainFormMenu';
-    mainFormMenu.classList.add('menu');
 
-    main.appendChild(mainForm);
-	mainForm.appendChild(mainFormMenu);
+	main.appendChild(menu);
 
 	const titles = {
 		sign_in: 'Играть вдвоем',
 		sign_up: 'Играть одному',
-        leaders: 'Таблица лидеров',
-        about: 'О нас'
+		leaders: 'Таблица лидеров',
+		about: 'О нас'
 	};
 
 
-	Object.entries(titles).forEach( (entry) => {
-		const href = entry[ 0 ];
-		const title = entry[ 1 ];
+	Object.entries(titles).forEach((entry) => {
+		const href = entry[0];
+		const title = entry[1];
 
 		const a = document.createElement('a');
 		a.href = href;
 		a.dataset.href = href;
-		a.textContent = title;
-		a.classList.add('menu-button');
-        a.classList.add('menu__link');
-        
-        
-  
+		a.textContent = title
+		a.classList.add('menu__link');
 
-        const br = document.createElement('br');    
+		const br = document.createElement('br');
 
-
-        const svg = document.createElement('svg'); //Get svg element
-        const newElement = document.createElement('path'); //Create a path in SVG namespace
-        svg.setAttribute("viewBox", "0 0 152.9 43.4"); 
-        newElement.setAttribute("d","M151.9,13.6c0,0,3.3-9.5-85-8.3c-97,1.3-58.3,29-58.3,29s9.7,8.1,69.7,8.1c68.3,0,69.3-23.1,69.3-23.1 s1.7-10.5-14.7-18.4"); //Set path data
-        
-
-        svg.appendChild(newElement);
-		a.appendChild(svg);
-		
-        mainFormMenu.appendChild(a);
-        mainFormMenu.appendChild(br);
+		menu.appendChild(a);
+		menu.appendChild(br);
 	});
 
 
