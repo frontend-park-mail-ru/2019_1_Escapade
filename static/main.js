@@ -1,7 +1,5 @@
 'use strict';
 
-static
-
 const application = document.getElementById('application');
 
 function createMenuLink () {

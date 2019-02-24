@@ -1,9 +1,32 @@
+
 const express = require('express')
 const app = express()
 
 const path = require('path');
 
+app.use(express.static('./public'))
 app.use(express.static('./static'))
+var public = path.join(__dirname, '../public');
+
+app.get('/sign_in', (request, res) => {
+    console.log("catch sign_in")
+    res.sendFile(path.join(__dirname, '../public/html', 'sign_in.html'));
+})
+
+app.get('/sign_up', (request, res) => {
+    console.log("catch sign_up")
+    res.sendFile(path.join(__dirname, '../public/html', 'sign_up.html'));
+})
+
+app.get("/test1", function(req, res) {
+    console.log("catch /1")
+    res.sendFile(path.join(public, 'index.html'));
+ });
+
+ app.get("/test2", function(req, res) {
+    console.log("catch /2")
+    res.sendFile(path.join(__dirname, '../', 'static/index.html'));
+ });
 
 app.get("/", function(req, res) {
     console.log("catch /")
@@ -17,6 +40,8 @@ app.get("/", function(req, res) {
     res.end()
  });
 
+ 
+ app.use('/', express.static(public));
 
 module.exports = app
 
