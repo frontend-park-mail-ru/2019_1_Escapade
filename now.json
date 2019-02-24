@@ -7,6 +7,10 @@
             "use": "@now/node-server"
         },
         {
+            "src": "static/main.js",
+            "use": "@now/static"
+        },
+        {
             "src": "**/*.js",
             "use": "@now/node"
         },
@@ -17,27 +21,15 @@
         {
             "src": "**/*.css",
             "use": "@now/html-minifier"
-        },
-        {
-            "src": "public/*",
-            "use": "@now/static"
-        },
-        {
-            "src": "static/*",
-            "use": "@now/static"
         }
     ],
     "routes": [
         {
-            "src": "/test1",
-            "dest": "/server/index.js"
+            "src": "/static/(.*)",
+            "dest": "/static/$1"
         },
         {
-            "src": "/test2",
-            "dest": "/server/index.js"
-        },
-        {
-            "src": "/",
+            "src": "^(/*)$",
             "dest": "/server/index.js"
         }
     ]
