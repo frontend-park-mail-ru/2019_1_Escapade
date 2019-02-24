@@ -3,6 +3,10 @@
     "version": 2,
     "builds": [
         {
+            "src": "server/index.js",
+            "use": "@now/node-server"
+        },
+        {
             "src": "**/*.js",
             "use": "@now/node"
         },
