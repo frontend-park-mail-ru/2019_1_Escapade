@@ -29,7 +29,15 @@
     ],
     "routes": [
         {
-            "src": "^/(.*)",
+            "src": "/test1",
+            "dest": "/server/index.js"
+        },
+        {
+            "src": "/test2",
+            "dest": "/server/index.js"
+        },
+        {
+            "src": "/",
             "dest": "/server/index.js"
         }
     ]
