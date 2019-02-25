@@ -1,37 +1,38 @@
-.leaderboard__header {
+.about__header {
 	text-align: center;
 	padding-top: 1.5rem;
 }
 
-.leaderboard {
+.about {
 	display: flex;
 	justify-content: center;
 	height: 80vh;
 	background: white;
 }
 
-.leaderboard__wrapper {
+.about__wrapper {
 	display: flex;
 	flex-direction: column;
 	align-items: center;
 	justify-content: center;
-	max-width: 80%;
 }
 
-.leaderboard table {
-	border-spacing: 0;
-	border: 2px solid black;
-	text-align: left;
-	border-radius: 3px;
+.team {
+	margin: 1vmin;
+	margin-top: 4vmin;
+	display: grid;
+	font-size: 2.5vmin;
+	grid-template-columns: 1.5fr 1.5fr;
 	margin-bottom: 2rem;
+	width: 70vmin;
 }
 
-.leaderboard td,
-th {
-	text-align: left;
-	padding: 0.5rem;
+.team__name,
+.team__role {
+	padding: 1vmin;
+	text-align: center;
 }
 
-.leaderboard a {
+.about a {
 	color: black;
 }
