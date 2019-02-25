@@ -21,11 +21,19 @@
     ],
     "routes": [
         {
-            "src": "/static/(.*)",
-            "dest": "/static/$1"
+            "src": "/static/main.js",
+            "dest": "/static/main.js"
         },
         {
-            "src": "^(/*)$",
+            "src": "/static/css/(.*)",
+            "dest": "/static/css/$1"
+        },
+        {
+            "src": "/connect",
+            "dest": "/server/index.js"
+        },
+        {
+            "src": "^/(.*)",
             "dest": "/server/index.js"
         }
     ]

@@ -4,18 +4,10 @@ const app = express()
 
 const path = require('path');
 
-app.use(express.static('./public'))
-app.use(express.static('./static'))
-
-app.get('/sign_in', (request, res) => {
-    console.log("catch sign_in")
-    res.sendFile(path.join(__dirname, '../public/html', 'sign_in.html'));
-})
-
-app.get('/sign_up', (request, res) => {
-    console.log("catch sign_up")
-    res.sendFile(path.join(__dirname, '../public/html', 'sign_up.html'));
-})
+app.get("/connect", function(req, res) {
+    console.log("catch /connect")
+    res.sendFile(path.join(__dirname, '../static', 'index.html'));
+ });
 
 app.get("/", function(req, res) {
     console.log("catch /")
