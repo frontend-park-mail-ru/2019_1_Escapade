@@ -1,5 +1,9 @@
 'use strict';
 
+const way = "static/"
+// Для локалхоста ""
+// Для деплоя "static/"
+
 const application = document.getElementById('application');
 
 function createMenuLink () {
@@ -32,7 +36,7 @@ function createHead(styles){
 
 function createMenu () {
 	
-	let styles = ["css/menu_style.css"];
+	let styles = [way + "css/menu_style.css"];
 	createHead(styles);
 
 
@@ -112,7 +116,8 @@ function createMenu () {
 }
 
 function createSignIn () {
-	let styles = ["https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css", "css/sign_in.css"];
+	let styles = ["https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css", 
+	way + "css/sign_in.css"];
 	createHead(styles);
 
 
@@ -194,7 +199,8 @@ function createSignIn () {
 }
 
 function createSignUp () {
-	let styles = ["https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css", "css/sign_up.css"];
+	let styles = ["https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css",
+	 way + "css/sign_up.css"];
 	createHead(styles);
 
 
@@ -290,6 +296,9 @@ function createSignUp () {
 }
 
 function createLeaderboard () {
+	let styles = ["https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css",
+	 way + "css/leaderboard.css"];
+	createHead(styles);
 	const leaderboardSection = document.createElement('section');
 	leaderboardSection.dataset.sectionName = 'leaderboard';
 
