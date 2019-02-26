@@ -12,7 +12,7 @@ body {
 	letter-spacing: 1px;
 }
 
-header {
+.menu-header {
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
@@ -22,31 +22,35 @@ header {
 	color: #fff;
 }
 
-header nav {
+.menu-header nav {
 	display: inline-flex;
 }
 
-header h1 {
+.menu-header h1 {
 	font-size: 2em;
 	font-style: italic;
 }
 
-header nav a {
+.menu-header nav a {
 	white-space: nowrap;
 	padding-right: 1em;
 }
 
 @media screen and (max-width: 720px) {
 
-	header {
+
+	.menu-header {
 		height: auto;
 	}
 
-	header nav {
-		height: auto;
-		width: auto;
-		display: block;
+	.menu-header nav {
+		display: flex;
+		flex-direction: column;
 		text-align: left;
+	}
+
+	.menu-header nav a:first-child {
+		padding-bottom: 0.7em;
 	}
 
 }
@@ -67,7 +71,6 @@ header nav a {
 
 .menu__link {
 	display: inline-block;
-	text-decoration: none;
 	position: relative;
 	padding: 14px 0;
 	font-family: 'Muli', sans-serif;
@@ -77,38 +80,9 @@ header nav a {
 	letter-spacing: 0.040em;
 }
 
-.menu__link svg {
-	fill: none;
-	stroke: #a3b6be;
-	stroke-width: 2;
-	stroke-miterlimit: 10;
-	stroke-dasharray: 338;
-	stroke-dashoffset: 338;
-	stroke-linecap: round;
-	position: absolute;
-	top: 50%;
-	left: 50%;
-	width: calc(100% + 60px);
-	opacity: 0;
-	transform: translate(-50%, -50%);
-	transition: stroke-dashoffset 0s 0.2s, opacity 0.2s;
-	z-index: -1;
-}
-
-.menu__link--active svg {
-	stroke: #ff4c4c;
-}
-
-.menu__link--active svg,
-.menu__link:hover svg {
-	stroke-dashoffset: 0;
-	opacity: 1;
-	transition: opacity 0s, stroke-dashoffset 0.3s cubic-bezier(0.645, 0.045, 0.355, 1);
-}
-
 a {
 	text-decoration: none;
-	display: block;
+
 	color: #FFF0FF;
 	/* Цвет обычной ссылки */
 	text-decoration: none;

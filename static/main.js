@@ -1,9 +1,8 @@
-/* eslint-disable no-var */
 'use strict';
 
-const way = 'static/';
-// Для локалхоста ""
-// Для деплоя "static/"
+const way = '';
+// Для локалхоста ''
+// Для деплоя 'static/'
 
 const application = document.getElementById('application');
 
@@ -26,12 +25,12 @@ function createMenuLink() {
  */
 function createHead(styles) {
   document.getElementsByTagName('head')[0].innerHTML = '';
-  var meta = document.createElement('meta');
+  let meta = document.createElement('meta');
   meta['httpEquiv'] = 'Content-Type';
   meta['content'] = 'text/html; charset=utf-8';
   document.getElementsByTagName('head')[0].appendChild(meta);
 
-  styles.forEach((style) => {
+  styles.forEach( (style) => {
     const link = document.createElement('link');
     link.id = 'styleLinkMenu';
     link.rel = 'stylesheet';
@@ -53,6 +52,7 @@ function createMenu() {
 
   const header = document.createElement('header');
   header.id = 'header';
+  header.classList.add('menu-header');
   const textHeader = document.createElement('h1');
   textHeader.textContent = 'Logic game';
   const navHeader = document.createElement('nav');
@@ -63,7 +63,7 @@ function createMenu() {
   };
 
 
-  Object.entries(titlesHeader).forEach((entry) => {
+  Object.entries(titlesHeader).forEach( (entry) => {
     const href = entry[0];
     const title = entry[1];
 
@@ -152,7 +152,6 @@ function createSignIn() {
   inputEmail.placeholder = 'email';
   inputEmail.classList.add('form-control');
 
-
   // password input
   const divPass = document.createElement('div');
   divPass.classList.add('form-group');
@@ -199,7 +198,6 @@ function createSignIn() {
 
   /* form.addEventListener('submit', function (event) {
     event.preventDefault();
-
     const email = form.elements[ 'email' ].value;
     const password = form.elements[ 'password' ].value;
   });*/
@@ -254,7 +252,7 @@ function createSignUp() {
     },
   ];
 
-  inputs.forEach((item) => {
+  inputs.forEach( (item) => {
     const divPass = document.createElement('div');
     divPass.classList.add('form-group');
     divPass.classList.add('has-feedback');
@@ -299,7 +297,6 @@ function createSignUp() {
 
   /* form.addEventListener('submit', function (event) {
     event.preventDefault();
-
     const email = form.elements[ 'email' ].value;
     const password = form.elements[ 'password' ].value;
   });*/
@@ -311,72 +308,85 @@ function createSignUp() {
  * Create page 'leaderboard'
  */
 function createLeaderboard() {
-  const styles = ['https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css',
+  const styles = [
     way + 'css/leaderboard.css'];
   createHead(styles);
   const leaderboardSection = document.createElement('section');
   leaderboardSection.dataset.sectionName = 'leaderboard';
 
   const header = document.createElement('h1');
+  header.classList.add('leaderboard__header');
   header.textContent = 'Таблица лидеров';
+
+  const wrapper = document.createElement('div');
+  wrapper.classList.add('leaderboard');
+  const innerWrapper = document.createElement('div');
+  innerWrapper.classList.add('leaderboard__wrapper');
 
   leaderboardSection.appendChild(header);
   leaderboardSection.appendChild(document.createElement('br'));
-  const users = [
-    {
-      email: 'ivan@mail.ru',
-      score: '120000',
-    },
-    {
-      email: 'artem@mail.ru',
-      score: '545454',
-    },
-    {
-      email: 'sanya@mail.ru',
-      score: '323232',
-    },
-    {
-      email: 'vasya@mail.ru',
-      score: '5454',
-    },
+  leaderboardSection.appendChild(wrapper);
+  wrapper.appendChild(innerWrapper);
+  const users = [new Map([
+    ['num', '1'],
+    ['name', 'ser'],
+    ['score', '120000'],
+    ['games', '99'],
+  ]),
+  new Map([
+    ['num', '2'],
+    ['name', 'Dog'],
+    ['score', '545454'],
+    ['games', '3'],
+  ]),
+  new Map([
+    ['num', '3'],
+    ['name', 'Dog'],
+    ['score', '545454'],
+    ['games', '3'],
+  ]),
+  new Map([
+    ['num', '4'],
+    ['name', 'Dog'],
+    ['score', '545454'],
+    ['games', '3'],
+  ]),
+  new Map([
+    ['num', '5'],
+    ['name', 'Dog'],
+    ['score', '545454'],
+    ['games', '3'],
+  ]),
   ];
 
-  if (users) {
-    const table = document.createElement('table');
-    const thead = document.createElement('thead');
-    thead.innerHTML = `
-		<tr>
-			<th>Email</th>
-			<th>Score</th>
-		</th>
-		`;
-    const tbody = document.createElement('tbody');
+  const table = document.createElement('table');
+  innerWrapper.appendChild(table);
+  const thead = document.createElement('thead');
+  thead.innerHTML = `
+    <tr>
+      <th></th>
+      <th>User</th>
+      <th>Score</th>
+      <th>Games played</th>
+    </tr>
+    `;
+  const tbody = document.createElement('tbody');
 
-    table.appendChild(thead);
-    table.appendChild(tbody);
-    table.border = 1;
-    table.cellSpacing = table.cellPadding = 0;
+  table.appendChild(thead);
+  table.appendChild(tbody);
 
-    users.forEach(function (user) {
-      const email = user.email;
-      const score = user.score;
-
-      const tr = document.createElement('tr');
-      const tdEmail = document.createElement('td');
-      const tdScore = document.createElement('td');
-
-      tdEmail.textContent = email;
-      tdScore.textContent = score;
-
-      tr.appendChild(tdEmail);
-      tr.appendChild(tdScore);
-
-      tbody.appendChild(tr);
-
-      leaderboardSection.appendChild(table);
+  users.forEach(function(user, i) {
+    const tr = document.createElement('tr');
+    user.forEach(function(val) {
+      const td = document.createElement('td');
+      td.textContent = val;
+      tr.appendChild(td);
     });
-  }
-  leaderboardSection.appendChild(createMenuLink());
+    const background = i % 2 ? 'white' : '#f2f2f2';
+    tr.style.background = background;
+    tbody.appendChild(tr);
+  });
+  innerWrapper.appendChild(createMenuLink());
   application.appendChild(leaderboardSection);
 }
 
@@ -384,38 +394,78 @@ function createLeaderboard() {
  * Create page 'authors'
  */
 function createAuthors() {
-  const signInSection = document.createElement('section');
-  signInSection.dataset.sectionName = 'about';
+  const styles = [
+    way + 'css/about.css'];
+  createHead(styles);
+  const aboutSection = document.createElement('section');
+  aboutSection.dataset.sectionName = 'about';
 
   const header = document.createElement('h1');
+  header.classList.add('about__header');
   header.textContent = 'О нас';
 
-  const authors = {
-    author1: 'Иван',
-    author2: 'Артем',
-    author3: 'Сергей',
-  };
+  const wrapper = document.createElement('div');
+  wrapper.classList.add('about');
+  const innerWrapper = document.createElement('div');
+  innerWrapper.classList.add('about__wrapper');
 
-  signInSection.appendChild(header);
+  wrapper.appendChild(innerWrapper);
+  aboutSection.appendChild(header);
+  aboutSection.appendChild(document.createElement('br'));
+  aboutSection.appendChild(wrapper);
 
-  Object.entries(authors).forEach((entry) => {
-    const href = entry[0];
-    const title = entry[1];
+  const team = document.createElement('div');
+  team.classList.add('team');
+  innerWrapper.appendChild(team);
+
+  const members = [{
+    name: 'Дмитрий Липко',
+    role: 'Лучший ментор',
+    github: 'https://github.com/dlipko',
+  },
+  {
+    name: 'Артём Доктор',
+    role: 'Fullstack',
+    github: 'https://github.com/SmartPhoneJava',
+  },
+  {
+    name: 'Иван Спасенов',
+    role: 'Fullstack',
+    github: 'https://github.com/slevinsps',
+  },
+  {
+    name: 'Сергей Апарин',
+    role: 'Fullstack',
+    github: 'https://github.com/Bigyin1',
+  },
+  ];
+
+  members.forEach((member) => {
+    const {
+      name,
+      role,
+      github,
+    } = member;
+
+    const n = document.createElement('div');
+    n.classList.add('team__name');
+    team.appendChild(n);
 
     const a = document.createElement('a');
-    a.href = href;
-    a.dataset.href = href;
-    a.textContent = title;
-    a.classList.add('menu-button');
+    a.classList.add('team__a');
+    a.textContent = name;
+    a.href = github;
+    n.appendChild(a);
 
-    signInSection.appendChild(a);
+    const r = document.createElement('div');
+    r.classList.add('team__role');
+    r.textContent = role;
+    team.appendChild(r);
   });
 
 
-  signInSection.appendChild(createMenuLink());
-
-
-  application.appendChild(signInSection);
+  innerWrapper.appendChild(createMenuLink());
+  application.appendChild(aboutSection);
 }
 
 const pages = {
