@@ -1,6 +1,6 @@
 'use strict';
 
-const way = '';
+const way = 'static/';
 // Для локалхоста ''
 // Для деплоя 'static/'
 
