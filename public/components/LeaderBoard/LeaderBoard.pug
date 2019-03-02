@@ -1,0 +1,21 @@
+section(data-section-name='leaderboard')
+  h1.leaderboard__header Таблица лидеров
+  br
+  .leaderboard
+    .leaderboard__wrapper
+      table
+        thead
+          tr
+            th
+            th User
+            th Score
+            th Games played
+        tbody
+        - for(var i = 0; i < data.length;i++){
+          tr
+            td #{data[i].num}
+            td #{data[i].name}
+            td #{data[i].score}
+            td #{data[i].games}
+        - }
+      a(data-href='menu', href='menu') Назад в меню

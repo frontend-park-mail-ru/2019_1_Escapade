@@ -1,27 +1,18 @@
-const express = require('express')
-const app = express()
+'use strict';
 
+const express = require('express');
+const body = require('body-parser');
+const morgan = require('morgan');
 const path = require('path');
-
-app.use(express.static('./static'))
-
-app.get("/", function(req, res) {
-    console.log("catch /")
-    res.sendFile(path.join(__dirname, '../static', 'index.html'));
- });
-
- app.get("*", function(req, res) {
-    console.log("catch *")
-    res.write('<h1><marquee direction=left>Error 404!</marquee></h1>')
-    res.write('<h2>Go to <a href="/">/</a></h2>')
-    res.end()
- });
+const app = express();
 
 
-module.exports = app
+app.use(morgan('dev'));
+app.use(express.static(path.resolve(__dirname, '..', 'public')));
+app.use(body.json());
 
-const port = process.env.PORT || 3001;
 
-app.listen(port, () => {
-  console.log(`We take that port: ${port}`);
+const port = process.env.PORT || 3000;
+app.listen(port, function() {
+  console.log(`Server listening port ${port}`);
 });
