@@ -1,6 +1,6 @@
 'use strict';
-
-const way = 'static/';
+const {AjaxModule} = window;
+const way = '';
 // Для локалхоста ''
 // Для деплоя 'static/'
 
@@ -18,6 +18,7 @@ function createMenuLink() {
 
   return menuLink;
 }
+
 
 /**
  * create header in html
@@ -43,6 +44,7 @@ function createHead(styles) {
  * create menu in html
  */
 function createMenu() {
+  application.innerHTML = '';
   const styles = [way + 'css/menu_style.css'];
   createHead(styles);
 
@@ -57,13 +59,32 @@ function createMenu() {
   textHeader.textContent = 'Logic game';
   const navHeader = document.createElement('nav');
 
-  const titlesHeader = {
+
+  var titlesHeaderObj = {titlesHeader: {
     sign_in: 'Войти',
     sign_up: 'Зарегистрироваться',
-  };
+  }};
+
+  /* // Вход выход динамически менять хотел - не вышло
+  ajax(function (xhr) {
+    if (!xhr.responseText) {
+      console.log("out");
+      titlesHeaderObj.titlesHeader = {
+        sign_in: 'Войти',
+        sign_up: 'Зарегистрироваться',
+      };
+      console.log(titlesHeader);
+      return;
+    }
+    titlesHeaderObj.titlesHeader = {
+      sign_out: 'Выйти',
+    };
+    console.log(titlesHeader);
+    console.log("in");
+  }, 'GET', '/me');*/
 
 
-  Object.entries(titlesHeader).forEach( (entry) => {
+  Object.entries(titlesHeaderObj.titlesHeader).forEach( (entry) => {
     const href = entry[0];
     const title = entry[1];
 
@@ -94,6 +115,7 @@ function createMenu() {
   const titles = {
     sign_in: 'Играть вдвоем',
     sign_up: 'Играть одному',
+    me: 'Профиль',
     leaders: 'Таблица лидеров',
     about: 'О нас',
   };
@@ -126,6 +148,7 @@ function createMenu() {
  * Create page 'sign in'
  */
 function createSignIn() {
+  application.innerHTML = '';
   const styles = ['https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css',
     way + 'css/sign_in.css'];
   createHead(styles);
@@ -196,11 +219,23 @@ function createSignIn() {
   signInSection.appendChild(wrapper);
   signInSection.appendChild(createMenuLink());
 
-  /* form.addEventListener('submit', function (event) {
-    event.preventDefault();
-    const email = form.elements[ 'email' ].value;
-    const password = form.elements[ 'password' ].value;
-  });*/
+  form.addEventListener('submit', function (event) {
+		event.preventDefault();
+
+		const email = form.elements[ 'email' ].value.trim();
+		const password = form.elements[ 'password' ].value.trim();
+
+    AjaxModule.doPost({
+			callback() {
+				createProfile();
+			},
+			path: '/login',
+			body: {
+				email: email,
+				password: password,
+			},
+		});
+	});
 
   application.appendChild(signInSection);
 }
@@ -209,6 +244,7 @@ function createSignIn() {
  * Create page 'sign up'
  */
 function createSignUp() {
+  application.innerHTML = '';
   const styles = ['https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css',
     way + 'css/sign_up.css'];
   createHead(styles);
@@ -295,11 +331,29 @@ function createSignUp() {
   signInSection.appendChild(wrapper);
   signInSection.appendChild(createMenuLink());
 
-  /* form.addEventListener('submit', function (event) {
-    event.preventDefault();
-    const email = form.elements[ 'email' ].value;
-    const password = form.elements[ 'password' ].value;
-  });*/
+  form.addEventListener('submit', function (event) {
+		event.preventDefault();
+
+		const email = form.elements[ 'email' ].value;
+		const password = form.elements[ 'password' ].value;
+		const password_repeat = form.elements[ 'password_repeat' ].value;
+
+		if (password !== password_repeat) {
+			alert('Passwords is not equals');
+			return;
+		}
+
+    AjaxModule.doPost({
+			callback() {
+				createProfile();
+			},
+			path: '/signup',
+			body: {
+				email: email,
+				password: password,
+			},
+		});
+	});
 
   application.appendChild(signInSection);
 }
@@ -307,7 +361,8 @@ function createSignUp() {
 /**
  * Create page 'leaderboard'
  */
-function createLeaderboard() {
+function createLeaderboard(users) {
+  application.innerHTML = '';
   const styles = [
     way + 'css/leaderboard.css'];
   createHead(styles);
@@ -323,71 +378,117 @@ function createLeaderboard() {
   const innerWrapper = document.createElement('div');
   innerWrapper.classList.add('leaderboard__wrapper');
 
-  leaderboardSection.appendChild(header);
-  leaderboardSection.appendChild(document.createElement('br'));
-  leaderboardSection.appendChild(wrapper);
-  wrapper.appendChild(innerWrapper);
-  const users = [new Map([
-    ['num', '1'],
-    ['name', 'ser'],
-    ['score', '120000'],
-    ['games', '99'],
-  ]),
-  new Map([
-    ['num', '2'],
-    ['name', 'Dog'],
-    ['score', '545454'],
-    ['games', '3'],
-  ]),
-  new Map([
-    ['num', '3'],
-    ['name', 'Dog'],
-    ['score', '545454'],
-    ['games', '3'],
-  ]),
-  new Map([
-    ['num', '4'],
-    ['name', 'Dog'],
-    ['score', '545454'],
-    ['games', '3'],
-  ]),
-  new Map([
-    ['num', '5'],
-    ['name', 'Dog'],
-    ['score', '545454'],
-    ['games', '3'],
-  ]),
-  ];
+  
+  
 
-  const table = document.createElement('table');
-  innerWrapper.appendChild(table);
-  const thead = document.createElement('thead');
-  thead.innerHTML = `
-    <tr>
-      <th></th>
-      <th>User</th>
-      <th>Score</th>
-      <th>Games played</th>
-    </tr>
-    `;
-  const tbody = document.createElement('tbody');
+  if (users) {
+    const table = document.createElement('table');
+    innerWrapper.appendChild(table);
+    const thead = document.createElement('thead');
+    thead.innerHTML = `
+      <tr>
+        <th>User</th>
+        <th>Score</th>
+      </tr>
+      `;
+    const tbody = document.createElement('tbody');
 
-  table.appendChild(thead);
-  table.appendChild(tbody);
+    table.appendChild(thead);
+    table.appendChild(tbody);
 
-  users.forEach(function(user, i) {
-    const tr = document.createElement('tr');
-    user.forEach(function(val) {
-      const td = document.createElement('td');
-      td.textContent = val;
-      tr.appendChild(td);
+    users.forEach(function(user, i) {
+      const email = user.email;
+      const score = user.score;
+      
+      const tr = document.createElement('tr');
+      const tdEmail = document.createElement('td');
+      const tdScore = document.createElement('td');
+      
+      const background = i % 2 ? 'white' : '#f2f2f2';
+      tr.style.background = background;
+      tdEmail.textContent = email;
+			tdScore.textContent = score;
+
+			tr.appendChild(tdEmail);
+			tr.appendChild(tdScore);
+
+			tbody.appendChild(tr);
     });
-    const background = i % 2 ? 'white' : '#f2f2f2';
-    tr.style.background = background;
-    tbody.appendChild(tr);
-  });
-  innerWrapper.appendChild(createMenuLink());
+    innerWrapper.appendChild(createMenuLink());
+    wrapper.appendChild(innerWrapper);
+    leaderboardSection.appendChild(header);
+    leaderboardSection.appendChild(document.createElement('br'));
+    leaderboardSection.appendChild(wrapper);
+  } else {
+    const em = document.createElement('em');
+		em.textContent = 'Loading';
+		leaderboardSection.appendChild(em);
+
+    AjaxModule.doGet({
+			callback(xhr) {
+				const users = JSON.parse(xhr.responseText);
+				application.innerHTML = '';
+				createLeaderboard(users);
+			},
+			path: '/users',
+		});
+    
+    xhr
+  }
   application.appendChild(leaderboardSection);
+}
+
+/**
+ * Create page 'profile'
+ */
+function createProfile (me) {
+  application.innerHTML = '';
+
+  const styles = [way + 'css/menu_style.css'];
+  createHead(styles);
+	const profileSection = document.createElement('section');
+	profileSection.dataset.sectionName = 'profile';
+
+	const header = document.createElement('h1');
+	header.textContent = "Профиль";
+
+	profileSection.appendChild(header);
+	profileSection.appendChild(createMenuLink());
+
+	if (me) {
+		const p = document.createElement('p');
+
+		const div1 = document.createElement('div');
+		div1.textContent = `Email ${me.email}`;
+		const div2 = document.createElement('div');
+		div2.textContent = `Age ${me.age}`;
+		const div3 = document.createElement('div');
+		div3.textContent = `Score ${me.score}`;
+
+		p.appendChild(div1);
+		p.appendChild(div3);
+		p.appendChild(div3);
+
+		profileSection.appendChild(p);
+	} else {
+    AjaxModule.doGet({
+			callback(xhr) {
+				if (!xhr.responseText) {
+					//alert('Вы не авторизированы');
+					application.innerHTML = '';
+					createMenu();
+					return;
+				}
+
+				const user = JSON.parse(xhr.responseText);
+				application.innerHTML = '';
+				createProfile(user);
+			},
+			path: '/me',
+		});
+	}
+
+	application.appendChild(profileSection);
 }
 
 /**
@@ -472,6 +573,7 @@ const pages = {
   menu: createMenu,
   sign_in: createSignIn,
   sign_up: createSignUp,
+  me: createProfile,
   leaders: createLeaderboard,
   about: createAuthors,
 };
