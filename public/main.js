@@ -4,6 +4,7 @@ import {LeaderBoardComponent} from './components/LeaderBoard/LeaderBoard.js';
 import {MainMenuComponent} from './components/MainMenu/MainMenu.js';
 import {AuthorsComponent} from './components/Authors/Authors.js';
 import {SignUpComponent} from './components/SignUp/SignUp.js';
+import {SignInComponent} from './components/SignIn/SignIn.js';
 
 const application = document.getElementById('application');
 /**
@@ -30,48 +31,10 @@ function createMenu() {
  *
  */
 function createSignIn() {
-  const signInSection = document.createElement('section');
-  signInSection.dataset.sectionName = 'sign_in';
-
-  const header = document.createElement('h1');
-  header.textContent = 'Вход';
-
-
-  const form = document.createElement('form');
-
-  const inputs = [{
-    name: 'email',
-    type: 'email',
-    placeholder: 'Email',
-  },
-  {
-    name: 'password',
-    type: 'password',
-    placeholder: 'Password',
-  },
-  {
-    name: 'submit',
-    type: 'submit',
-  },
-  ];
-
-  inputs.forEach(function(item) {
-    const input = document.createElement('input');
-
-    input.name = item.name;
-    input.type = item.type;
-
-    input.placeholder = item.placeholder;
-
-    form.appendChild(input);
-    form.appendChild(document.createElement('br'));
+  const signin = new SignInComponent({
+    el: application,
   });
-
-  signInSection.appendChild(header);
-  signInSection.appendChild(form);
-  signInSection.appendChild(createMenuLink());
-
-  application.appendChild(signInSection);
+  signin.render();
 }
 
 /**

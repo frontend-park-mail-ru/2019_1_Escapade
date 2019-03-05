@@ -47,10 +47,30 @@
   color: #6e4c1a;
 }
 
+.signup__footer{
+  font-size: calc(1vw + .2rem);
+}
+
 .signup__footer .button{
   color: black
 }
 
 .signup__footer .button:hover{
   text-decoration: underline
+}
+
+.signup__warning{
+  width: 80%;
+  align-self: center;
+  margin-top: -5px;
+  margin-bottom: 5px;
+}
+
+.warning{
+  font-size: 13px;
+  color: red;
+}
+
+.hidden{
+  display: none !important
 }
