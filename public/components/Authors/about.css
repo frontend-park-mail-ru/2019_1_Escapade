@@ -23,7 +23,6 @@
 	display: grid;
 	font-size: 2.5vmin;
 	grid-template-columns: 1.5fr 1.5fr;
-	margin-bottom: 2rem;
 	width: 70vmin;
 }
 

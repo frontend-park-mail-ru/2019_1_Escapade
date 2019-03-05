@@ -5,19 +5,9 @@ import {MainMenuComponent} from './components/MainMenu/MainMenu.js';
 import {AuthorsComponent} from './components/Authors/Authors.js';
 import {SignUpComponent} from './components/SignUp/SignUp.js';
 import {SignInComponent} from './components/SignIn/SignIn.js';
+import {ProfileComponent} from './components/Profile/Profile.js';
 
 const application = document.getElementById('application');
-/**
- * @return {menu}
- */
-function createMenuLink() {
-  const menuLink = document.createElement('a');
-  menuLink.href = menuLink.dataset.href = 'menu';
-
-  menuLink.textContent = 'Назад в меню';
-
-  return menuLink;
-}
 
 /** */
 function createMenu() {
@@ -102,82 +92,10 @@ function createAuthors() {
 
 /** */
 function createProfile() { // TODO
-  const profileSection = document.createElement('section');
-  profileSection.dataset.sectionName = 'profile';
-
-  const header = document.createElement('h1');
-  header.classList.add('profile__header');
-  header.textContent = 'Ваш профиль';
-
-  const wrapper = document.createElement('div');
-  wrapper.classList.add('profile');
-
-  const innerWrapper = document.createElement('div');
-  innerWrapper.classList.add('profile__wrapper');
-
-  const profile = document.createElement('div');
-  profile.classList.add('profile__main');
-
-  const avatarWrapper = document.createElement('div');
-  avatarWrapper.classList.add('profile__avatar');
-
-  const avatar = document.createElement('img');
-  avatar.classList.add('profile__avatar__img');
-  avatar.src = './img/qrosh.png';
-
-  const info = document.createElement('div');
-  info.classList.add('profile__info');
-
-  const infoList = [{
-    header: 'Name',
-    value: 'Cat',
-  },
-  {
-    header: 'Email',
-    value: 'cat@js.ru',
-  },
-  {
-    header: 'Password',
-    value: '******',
-  },
-  {
-    header: 'Games Played',
-    value: 128,
-  },
-  ];
-
-  infoList.forEach((ent) => {
-    const row = document.createElement('div');
-    row.classList.add('profile__row');
-
-    const head = document.createElement('div');
-    head.classList.add('profile__name');
-    head.textContent = ent.header;
-
-    const value = document.createElement('div');
-    value.classList.add('profile__value');
-    value.textContent = ent.value;
-
-    row.appendChild(head);
-    row.appendChild(value);
-    info.appendChild(row);
+  const profile = new ProfileComponent({
+    el: application,
   });
-
-  avatarWrapper.appendChild(avatar);
-
-  profile.appendChild(avatarWrapper);
-  profile.appendChild(info);
-
-
-  innerWrapper.appendChild(profile, createMenuLink());
-  innerWrapper.appendChild(createMenuLink());
-
-  wrapper.appendChild(innerWrapper);
-  profileSection.appendChild(header);
-  profileSection.appendChild(document.createElement('br'));
-  profileSection.appendChild(wrapper);
-
-  application.appendChild(profileSection);
+  profile.render();
 }
 
 const pages = {

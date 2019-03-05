@@ -23,15 +23,10 @@
 	border: 2px solid black;
 	text-align: left;
 	border-radius: 3px;
-	margin-bottom: 2rem;
 }
 
 .leaderboard td,
 th {
 	text-align: left;
 	padding: 0.5rem;
-}
-
-.leaderboard a {
-	color: black;
 }

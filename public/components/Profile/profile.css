@@ -28,3 +28,33 @@
 	width: 220px;
 	height: 160px;
 }
+
+.profile__info{
+  display: flex;
+  flex-direction: column;
+  min-width: 25vh;
+}
+
+.profile__name{
+  text-align: left;
+  color: #5f3901;
+  margin-bottom: 2px;
+  font-size: 1.8vh;
+}
+
+.profile__value{
+  padding: 5px 20px;
+  text-align: center;
+  background: rgba(230,222,193,.8);
+  /* border: 1px solid black; */
+}
+
+.back{
+  margin-top: 15px;
+  color: black;
+  text-decoration: none;
+}
+
+.back:hover{
+  text-decoration: underline;
+}
