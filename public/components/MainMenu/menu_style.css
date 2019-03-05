@@ -38,7 +38,6 @@ body {
 
 @media screen and (max-width: 720px) {
 
-
 	.menu-header {
 		height: auto;
 	}
@@ -80,7 +79,8 @@ body {
 	letter-spacing: 0.040em;
 }
 
-a {
+.menu__link,
+.menu-button {
 	text-decoration: none;
 
 	color: #FFF0FF;
@@ -89,13 +89,8 @@ a {
 	/* Убираем подчеркивание у ссылок */
 }
 
-a:visited {
-	color: #FFF0FF;
-	/* Цвет посещённой ссылки */
-}
-
-a:hover {
-	color: #FFF0FF;
+.menu__link:hover,
+.menu-button:hover{
 	/* Цвет ссылки при наведении на нее курсора мыши */
 	text-decoration: underline;
 	/* Добавляем подчеркивание */

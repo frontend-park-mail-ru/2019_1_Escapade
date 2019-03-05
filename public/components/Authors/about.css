@@ -33,6 +33,11 @@
 	text-align: center;
 }
 
-.about a {
-	color: black;
+.team__a {
+  color: black;
+  text-decoration: none
+}
+
+.team__a:hover{
+  text-decoration: underline
 }
