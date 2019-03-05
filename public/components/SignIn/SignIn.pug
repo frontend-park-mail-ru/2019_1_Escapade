@@ -1,0 +1,16 @@
+header#header.menu-header
+    h1 Logic game
+    nav
+      a.menu-button(href='sign_in', data-href='sign_in') Sign In
+      a.menu-button(href='sign_up', data-href='sign_up') Sign Up
+section.signup
+  form.signup__form(novalidate='novalidate')
+    input.input.signup__input.text-h2#login(type='login', name='login', autofocus='true', placeholder='Login')
+    .warning.signup__warning.hidden.js-warning-login
+    input.input.signup__input.text-h2#password(type='password', name='password', autocomplete='autocomplete', placeholder='Password')
+    .warning.signup__warning.hidden.js-warning-password
+    input.button.signup__submit.text-h2(type='submit', name='submit', value='Sign in')
+    .signup__footer
+      a.button.header-bar__button.text-base(data-href='menu', href='menu') Back to Menu
+      .text-base or
+      a.button.header-bar__button.text-base(data-href='sign_up', href='sign_up') Sign Up
