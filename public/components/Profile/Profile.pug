@@ -1,22 +1,23 @@
-section(data-section-name='profile')
-  h1.profile__header Ваш профиль
-  br
-  .profile
-    .profile__wrapper
-      .profile__main
-        .profile__avatar
-          img.profile__avatar__img(src='./img/qrosh.png')
-        .profile__info
-          .profile__row
-            .profile__name Name
-            .profile__value Cat
-          .profile__row
-            .profile__name Email
-            .profile__value cat@js.ru
-          .profile__row
-            .profile__name Password
-            .profile__value ******
-          .profile__row
-            .profile__name Games Played
-            .profile__value 128
-      a.back(data-href='menu', href='menu') Назад в меню
+extends ../Header.pug
+
+block content
+  section(data-section-name='profile')
+    .profile
+      .profile__wrapper
+        .profile__main
+          .profile__avatar
+            img.profile__avatar__img(src='./img/qrosh.png')
+          .profile__info
+            .profile__row
+              .profile__name Name
+              .profile__value Cat
+            .profile__row
+              .profile__name Email
+              .profile__value cat@js.ru
+            .profile__row
+              .profile__name Password
+              .profile__value ******
+            .profile__row
+              .profile__name Games Played
+              .profile__value 128
+        a.back(data-href='menu', href='menu') Назад в меню
