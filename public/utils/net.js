@@ -1,4 +1,4 @@
-
+const backHost = '';
 
 /** */
 export class Net {
@@ -8,10 +8,11 @@ export class Net {
    * @param {object} body
    * @return {Promise<Response>}
    */
-  static post({url = '/', body = {}} = {}) {
-    return fetch(url, {
+  static post({host = backHost, url = '/', body = {}} = {}) {
+    return fetch(host + url, {
       method: 'POST',
       body: JSON.stringify(body),
+      mode: 'cors',
       credentials: 'include',
     });
   }
@@ -21,9 +22,10 @@ export class Net {
    * @param {string} url
    * @return {Promise<Response>}
    */
-  static get({url = '/'} = {}) {
-    return fetch(url, {
+  static get({host = backHost, url = '/'} = {}) {
+    return fetch(host + url, {
       method: 'GET',
+      mode: 'cors',
       credentials: 'include',
     });
   }

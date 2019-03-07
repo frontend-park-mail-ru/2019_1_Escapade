@@ -134,7 +134,7 @@ export class SignUpComponent {
             resp
                 .json()
                 .then((json) => {
-                  User.setUser({...data, guid: json.id});
+                  User.setUser({...data});
                   createProfile();
                   console.log(User);
                 });

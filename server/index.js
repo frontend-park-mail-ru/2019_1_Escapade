@@ -71,9 +71,9 @@ app.post('/login', function(req, res) {
 
   const id = uuid();
   ids[id] = email;
-
+  console.log(users.email);
   res.cookie('sessionid', id, {expires: new Date(Date.now() + 1000 * 60 * 10)});
-  res.status(200).json({id});
+  res.status(200).json(users[email]);
 });
 
 app.get('/me', function(req, res) {

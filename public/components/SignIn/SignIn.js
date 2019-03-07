@@ -111,7 +111,8 @@ export class SignInComponent {
             resp
                 .json()
                 .then((json) => {
-                  User.setUser({...data});
+                  console.log(json);
+                  User.setUser({...json});
                   createProfile();
                   console.log(User);
                 });
