@@ -6,18 +6,19 @@ block content
       .profile__wrapper
         .profile__main
           .profile__avatar
-            img.profile__avatar__img(src='./img/qrosh.png')
+            - var url = data.avatar
+            img.profile__avatar__img(src=url)
           .profile__info
             .profile__row
-              .profile__name Name
-              .profile__value Cat
+              .profile__name Login
+              .profile__value #{data.login}
             .profile__row
               .profile__name Email
-              .profile__value cat@js.ru
+              .profile__value #{data.email}
             .profile__row
               .profile__name Password
               .profile__value ******
             .profile__row
               .profile__name Games Played
-              .profile__value 128
+              .profile__value #{data.played}
         a.back(data-href='menu', href='menu') Назад в меню

@@ -1,5 +1,9 @@
 import signInTemplate from './SignIn.pug';
-import {validatePass} from '../../utils/validation.js';
+import {validatePass, validateEmail} from '../../utils/validation.js';
+import {User} from '../../utils/user.js';
+import {Net} from '../../utils/net.js';
+import {createProfile} from '../../main.js';
+
 
 /** */
 export class SignInComponent {
@@ -25,7 +29,7 @@ export class SignInComponent {
   render() {
     this._el.innerHTML = this.template({data: this._data});
     this._warnings = {};
-    this._warnings.login = this._el.querySelector('.js-warning-login');
+    this._warnings.email = this._el.querySelector('.js-warning-email');
     this._warnings.pass = this._el.querySelector('.js-warning-password');
     this._form = this._el.querySelector('.signup__form');
 
@@ -41,9 +45,11 @@ export class SignInComponent {
   _onSubmit(event) {
     event.preventDefault();
     const data = {};
-    data.login = this._form.elements['login'].value;
+    data.email = this._form.elements['email'].value;
     data.pass = this._form.elements['password'].value;
-    this._validateInput(data);
+    if (this._validateInput(data)) {
+      this._login(data);
+    }
   }
   /**
    *
@@ -53,13 +59,13 @@ export class SignInComponent {
   _validateInput({email, login, pass, repass}) {
     let isValid = true;
 
-    this._hideWarning(this._warnings.login);
-    if (validatePass(login) !== true) {
-      let message = 'Invalid login format';
-      if (login.length === 0) {
-        message = 'Fill login field please';
+    this._hideWarning(this._warnings.email);
+    if (validateEmail(email) !== true) {
+      let message = 'Invalid email format';
+      if (email.length === 0) {
+        message = 'Fill email field please';
       }
-      this._showWarning(this._warnings.login, message);
+      this._showWarning(this._warnings.email, message);
       isValid = false;
     }
 
@@ -92,5 +98,30 @@ export class SignInComponent {
   _hideWarning(warning) {
     warning.classList.add('hidden');
     warning.innerHTML = '';
+  }
+
+  /**
+   *
+   * @param {object} data
+   */
+  _login(data) {
+    Net.post({url: '/login', body: data})
+        .then((resp) => {
+          if (resp.status === 200) {
+            resp
+                .json()
+                .then((json) => {
+                  User.setUser({...data});
+                  createProfile();
+                  console.log(User);
+                });
+          } else {
+            resp
+                .json()
+                .then((error) => {
+                  this._showWarning(this._warnings.email, error.error);
+                });
+          }
+        });
   }
 }

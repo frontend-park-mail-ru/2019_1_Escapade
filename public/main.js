@@ -6,6 +6,7 @@ import {AuthorsComponent} from './components/Authors/Authors.js';
 import {SignUpComponent} from './components/SignUp/SignUp.js';
 import {SignInComponent} from './components/SignIn/SignIn.js';
 import {ProfileComponent} from './components/Profile/Profile.js';
+import {User} from './utils/user.js';
 
 const application = document.getElementById('application');
 
@@ -14,6 +15,7 @@ function createMenu() {
   const menu = new MainMenuComponent({
     el: application,
   });
+  menu.data = User;
   menu.render();
 }
 
@@ -24,6 +26,7 @@ function createSignIn() {
   const signin = new SignInComponent({
     el: application,
   });
+  signin.data = User;
   signin.render();
 }
 
@@ -34,6 +37,7 @@ function createSignUp() {
   const signup = new SignUpComponent({
     el: application,
   });
+  signup.data = User;
   signup.render();
 }
 
@@ -87,14 +91,16 @@ function createAuthors() {
   const authors = new AuthorsComponent({
     el: application,
   });
+  authors.data = User;
   authors.render();
 }
 
 /** */
-function createProfile() { // TODO
+export function createProfile() { // TODO
   const profile = new ProfileComponent({
     el: application,
   });
+  profile.data = User;
   profile.render();
 }
 

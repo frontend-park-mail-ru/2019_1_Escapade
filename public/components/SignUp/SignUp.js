@@ -1,5 +1,8 @@
 import signUpTemplate from './SignUp.pug';
 import {validateEmail, validatePass} from '../../utils/validation.js';
+import {User} from '../../utils/user.js';
+import {Net} from '../../utils/net.js';
+import {createProfile} from '../../main.js';
 /** */
 export class SignUpComponent {
   /**
@@ -48,7 +51,9 @@ export class SignUpComponent {
     data.login = this._form.elements['login'].value;
     data.pass = this._form.elements['password'].value;
     data.repass = this._form.elements['password-repeat'].value;
-    this._validateInput(data);
+    if (this._validateInput(data)) {
+      this._auth(data);
+    }
   }
   /**
    *
@@ -115,5 +120,29 @@ export class SignUpComponent {
   _hideWarning(warning) {
     warning.classList.add('hidden');
     warning.innerHTML = '';
+  }
+
+
+  /**
+   *
+   * @param {object} data
+   */
+  _auth(data) {
+    Net.post({url: '/signup', body: data})
+        .then((resp) => {
+          if (resp.status === 201) {
+            resp
+                .json()
+                .then((json) => {
+                  User.setUser({...data, guid: json.id});
+                  createProfile();
+                  console.log(User);
+                });
+          } else {
+            resp
+                .json()
+                .then((error) => console.log('error: ', error));
+          }
+        });
   }
 }

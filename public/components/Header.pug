@@ -1,7 +1,10 @@
 header#header.menu-header
   h1 Logic game
   nav
-    a.menu-button(href='sign_in', data-href='sign_in') Sign In
-    a.menu-button(href='sign_up', data-href='sign_up') Sign Up
-    a.menu-button(href='profile', data-href='profile') Profile
+    - if (data.login === null){
+        a.menu-button(href='sign_in', data-href='sign_in') Sign In
+        a.menu-button(href='sign_up', data-href='sign_up') Sign Up
+    - } else {
+        a.menu-button(href='profile', data-href='profile') Profile
+    - }
 block content
