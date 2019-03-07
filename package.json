@@ -7,8 +7,7 @@
     "build": "webpack -p",
     "watch": "webpack --watch",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node server",
-    "now-start": "node server"
+    "start": "node ."
   },
   "author": "",
   "license": "ISC",
