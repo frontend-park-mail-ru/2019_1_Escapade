@@ -16,3 +16,6 @@ npm i pug-loader -D
 npm run build
 
 node index.js
+
+
+Деплой: https://escapade-frontend.herokuapp.com/
