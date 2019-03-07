@@ -6,17 +6,20 @@ import {AuthorsComponent} from './components/Authors/Authors.js';
 import {SignUpComponent} from './components/SignUp/SignUp.js';
 import {SignInComponent} from './components/SignIn/SignIn.js';
 import {ProfileComponent} from './components/Profile/Profile.js';
-import {User} from './utils/user.js';
+import {User, checkAuth} from './utils/user.js';
 
 const application = document.getElementById('application');
 
 /** */
 function createMenu() {
-  const menu = new MainMenuComponent({
-    el: application,
-  });
-  menu.data = User;
-  menu.render();
+  checkAuth(
+      () => {
+        const menu = new MainMenuComponent({
+          el: application,
+        });
+        menu.data = User;
+        menu.render();
+      });
 }
 
 /**

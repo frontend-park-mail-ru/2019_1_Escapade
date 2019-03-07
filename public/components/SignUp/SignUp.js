@@ -141,7 +141,9 @@ export class SignUpComponent {
           } else {
             resp
                 .json()
-                .then((error) => console.log('error: ', error));
+                .then((error) => {
+                  this._showWarning(this._warnings.email, error.error);
+                });
           }
         });
   }

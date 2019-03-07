@@ -43,12 +43,13 @@ app.post('/signup', function(req, res) {
   req.body = JSON.parse(req.body);
   const password = req.body.pass;
   const email = req.body.email;
+  const login = req.body.login;
   if (users[email]) {
     return res.status(400).json({error: 'Пользователь уже существует'});
   }
 
   const id = uuid();
-  const user = {password, email, score: 0};
+  const user = {login, password, email, played: 0};
   ids[id] = email;
   users[email] = user;
 
@@ -82,9 +83,8 @@ app.get('/me', function(req, res) {
     return res.status(401).end();
   }
 
-  users[email].score += 1;
-
-  res.json(users[email]);
+  console.log(users[email]);
+  res.status(200).json(users[email]);
 });
 
 app.get('/users', function(req, res) {
