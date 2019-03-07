@@ -101,7 +101,7 @@ app.get('/users', function(req, res) {
   res.json(scorelist);
 });
 
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 8080;
 
 // app.listen();
 app.listen(port, function() {

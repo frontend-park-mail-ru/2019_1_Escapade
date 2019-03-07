@@ -2,7 +2,7 @@
   "name": "escapade",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "server/index.js",
   "scripts": {
     "build": "webpack -p",
     "watch": "webpack --watch",
