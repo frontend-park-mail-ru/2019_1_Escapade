@@ -49,6 +49,20 @@
   /* border: 1px solid black; */
 }
 
+.profile__avatar{
+  display: flex;
+  flex-direction: column;
+  justify-content:space-between ;
+  align-items: center;
+  
+
+}
+
+.avatar__button{
+  width: 50%;
+  margin-top: 1.2rem;
+}
+
 .back{
   margin-top: 15px;
   color: black;

@@ -4,15 +4,11 @@
   "builds": [
     {
       "src": "server/index.js",
-      "use": "@now/node-server"
+      "use": "@now/node"
     },
     {
       "src": "public/dist/bundle.js",
       "use": "@now/static"
-    },
-    {
-      "src": "**/*.js",
-      "use": "@now/node"
     },
     {
       "src": "**/*.html",
@@ -25,12 +21,8 @@
   ],
   "routes": [
     {
-      "src": "/public/(.*)",
-      "dest": "/public/$1"
-    },
-    {
-      "src": "^(/*)$",
-      "dest": "/server/index.js"
+      "src": "/(.*)",
+      "dest": "server/index.js"
     }
   ]
 }

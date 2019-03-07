@@ -8,6 +8,7 @@ block content
           .profile__avatar
             - var url = data.avatar
             img.profile__avatar__img(src=url)
+            input.button.avatar__button(type='submit', name='submit', value='Upload')
           .profile__info
             .profile__row
               .profile__name Login
