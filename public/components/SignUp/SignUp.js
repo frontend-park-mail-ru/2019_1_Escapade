@@ -128,7 +128,7 @@ export class SignUpComponent {
    * @param {object} data
    */
   _auth(data) {
-    Net.post({url: '/signup', body: data})
+    Net.post({url: '/register', body: data})
         .then((resp) => {
           if (resp.status === 201) {
             resp
