@@ -16,7 +16,7 @@ export class Net {
       mode: 'cors',
       credentials: 'include',
       headers: {
-        'Content-Type': 'application/json; charset=utf-8',
+        'Content-Type': 'multipart/form-data; charset=utf-8',
       },
     });
   }
