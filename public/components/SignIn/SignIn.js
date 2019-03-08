@@ -46,7 +46,7 @@ export class SignInComponent {
     event.preventDefault();
     const data = {};
     data.email = this._form.elements['email'].value;
-    data.pass = this._form.elements['password'].value;
+    data.password = this._form.elements['password'].value;
     if (this._validateInput(data)) {
       this._login(data);
     }
@@ -56,7 +56,7 @@ export class SignInComponent {
    * @param  {...any} data
    * @return {boolean}
    */
-  _validateInput({email, login, pass, repass}) {
+  _validateInput({email, login, password, repass}) {
     let isValid = true;
 
     this._hideWarning(this._warnings.email);
@@ -70,9 +70,9 @@ export class SignInComponent {
     }
 
     this._hideWarning(this._warnings.pass);
-    if (validatePass(pass) !== true) {
+    if (validatePass(password) !== true) {
       let message = 'Invalid password format';
-      if (pass.length === 0) {
+      if (password.length === 0) {
         message = 'Fill password field please';
       }
       this._showWarning(this._warnings.pass, message);
