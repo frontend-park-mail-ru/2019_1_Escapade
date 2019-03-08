@@ -32,4 +32,17 @@ export class Net {
       credentials: 'include',
     });
   }
+
+  /**
+   * Гет запрос, с JSON body
+   * @param {string} url
+   * @return {Promise<Response>}
+   */
+  static delete({host = backHost, url = '/'} = {}) {
+    return fetch(host + url, {
+      method: 'DELETE',
+      mode: 'cors',
+      credentials: 'include',
+    });
+  }
 }

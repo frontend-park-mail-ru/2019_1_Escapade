@@ -7,6 +7,7 @@ import {SignUpComponent} from './components/SignUp/SignUp.js';
 import {SignInComponent} from './components/SignIn/SignIn.js';
 import {ProfileComponent} from './components/Profile/Profile.js';
 import {User, checkAuth} from './utils/user.js';
+import {Net} from './utils/net.js';
 
 const application = document.getElementById('application');
 
@@ -19,6 +20,24 @@ function createMenu() {
         });
         menu.data = User;
         menu.render();
+      });
+}
+
+
+/**
+ *
+ */
+function signOut() {
+  Net.delete({url: '/logout'})
+      .then((resp) => {
+        if (resp.status === 200) {
+          User.removeUser();
+          const menu = new MainMenuComponent({
+            el: application,
+          });
+          menu.data = User;
+          menu.render();
+        }
       });
 }
 
@@ -114,6 +133,7 @@ const pages = {
   leaders: createLeaderboard,
   about: createAuthors,
   profile: createProfile,
+  sign_out: signOut,
 };
 
 
