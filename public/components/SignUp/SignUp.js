@@ -128,6 +128,7 @@ export class SignUpComponent {
    * @param {object} data
    */
   _auth(data) {
+    console.log(data);
     Net.post({url: '/register', body: data})
         .then((resp) => {
           if (resp.status === 201) {
