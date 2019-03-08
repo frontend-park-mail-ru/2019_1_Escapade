@@ -56,7 +56,7 @@ export class SignInComponent {
    * @param  {...any} data
    * @return {boolean}
    */
-  _validateInput({email, login, password, repass}) {
+  _validateInput({email, password}) {
     let isValid = true;
 
     this._hideWarning(this._warnings.email);

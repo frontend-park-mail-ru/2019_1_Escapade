@@ -41,15 +41,15 @@ const ids = {};
 
 app.post('/signup', function(req, res) {
   req.body = JSON.parse(req.body);
-  const password = req.body.pass;
+  const password = req.body.password;
   const email = req.body.email;
-  const login = req.body.login;
+  const username = req.body.username;
   if (users[email]) {
     return res.status(400).json({error: 'Пользователь уже существует'});
   }
 
   const id = uuid();
-  const user = {login, password, email, played: 0};
+  const user = {username, password, email, played: 0};
   ids[id] = email;
   users[email] = user;
 

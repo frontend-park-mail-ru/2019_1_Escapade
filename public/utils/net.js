@@ -1,4 +1,4 @@
-const backHost = '';
+const backHost = 'https://escapade-backend.herokuapp.com';
 
 /** */
 export class Net {
@@ -14,6 +14,9 @@ export class Net {
       body: JSON.stringify(body),
       mode: 'cors',
       credentials: 'include',
+      headers: {
+        'Content-Type': 'application/json; charset=utf-8',
+      },
     });
   }
 

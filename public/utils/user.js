@@ -3,7 +3,7 @@ import {Net} from './net.js';
 class UserSingleton {
   /** */
   constructor() {
-    this.login = null;
+    this.username = null;
     this.email = null;
     this.played = null;
     this.avatar = null;
@@ -14,13 +14,13 @@ class UserSingleton {
    * @param {string} email
    * @param {string} score
    * @param {string} avatar
-   * @param {string} login
+   * @param {string} username
    */
-  setUser({email, played, avatar, password, login} = {}) {
+  setUser({email, played, avatar, password, username} = {}) {
     this.email = email || null;
     this.played = played || 0;
     this.avatar = avatar || './img/qrosh.png';
-    this.login = login || null;
+    this.username = username || null;
     this.password = password || null;
   }
 
@@ -31,7 +31,7 @@ class UserSingleton {
     this.email = null;
     this.played = null;
     this.avatar = null;
-    this.login = null;
+    this.username = null;
     this.password = null;
   }
 }
