@@ -11,7 +11,8 @@ export class Net {
   static post({host = backHost, url = '/', body = {}} = {}) {
     return fetch(host + url, {
       method: 'POST',
-      body: JSON.stringify(body),
+      body: new FormData(body),
+      // JSON.stringify(body),
       mode: 'cors',
       credentials: 'include',
       headers: {
