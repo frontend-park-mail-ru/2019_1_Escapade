@@ -48,7 +48,7 @@ export class SignUpComponent {
     event.preventDefault();
     const data = {};
     data.email = this._form.elements['email'].value;
-    data.username = this._form.elements['login'].value;
+    data.name = this._form.elements['login'].value;
     data.password = this._form.elements['password'].value;
     data.repass = this._form.elements['password-repeat'].value;
     if (this._validateInput(data)) {
@@ -60,7 +60,7 @@ export class SignUpComponent {
    * @param  {...any} data
    * @return {boolean}
    */
-  _validateInput({email, username, password, repass}) {
+  _validateInput({email, name, password, repass}) {
     let isValid = true;
     this._hideWarning(this._warnings.email);
     if (validateEmail(email) !== true) {
@@ -73,9 +73,9 @@ export class SignUpComponent {
     }
 
     this._hideWarning(this._warnings.login);
-    if (validatePass(username) !== true) {
+    if (validatePass(name) !== true) {
       let message = 'Invalid login format';
-      if (username.length === 0) {
+      if (name.length === 0) {
         message = 'Fill login field please';
       }
       this._showWarning(this._warnings.login, message);
