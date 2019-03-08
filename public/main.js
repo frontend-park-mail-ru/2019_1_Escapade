@@ -11,16 +11,14 @@ import {Net} from './utils/net.js';
 
 const application = document.getElementById('application');
 
+
 /** */
 function createMenu() {
-  checkAuth(
-      () => {
-        const menu = new MainMenuComponent({
-          el: application,
-        });
-        menu.data = User;
-        menu.render();
-      });
+  const menu = new MainMenuComponent({
+    el: application,
+  });
+  menu.data = User;
+  menu.render();
 }
 
 
@@ -136,8 +134,7 @@ const pages = {
   sign_out: signOut,
 };
 
-
-createMenu();
+checkAuth(createMenu);
 
 application.addEventListener('click', function(event) {
   if (!(event.target instanceof HTMLAnchorElement) ||
