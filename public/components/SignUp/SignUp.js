@@ -52,6 +52,7 @@ export class SignUpComponent {
     data.password = this._form.elements['password'].value;
     data.repass = this._form.elements['password-repeat'].value;
     if (this._validateInput(data)) {
+      console.log(data);
       this._auth(data);
     }
   }
