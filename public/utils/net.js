@@ -1,4 +1,4 @@
-const backHost = 'http://localhost:3000';
+const backHost = 'https://escapade-backend.herokuapp.com';
 
 
 /** */
