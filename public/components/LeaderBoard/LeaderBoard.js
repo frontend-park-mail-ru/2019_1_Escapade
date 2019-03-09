@@ -37,10 +37,7 @@ export class LeaderBoardComponent {
             el:
             this.parent.querySelector('.leaderboard__wrapper'),
           });
-          Net.get({url: '/leaderboard/pages/1'})
-              .then((resp) => {
-                return resp.json();
-              })
+          this._getPage(1)
               .then((data) => {
                 this.board.data = data;
                 this.board.render();
@@ -67,6 +64,11 @@ export class LeaderBoardComponent {
     if (this._currPage === this._pagesCount) {
       return;
     }
+    this._getPage(this._currPage + 1)
+        .then((data) => {
+          this.board.data = data;
+          this.board.render();
+        });
     if (this._currPage === 1) {
       this._arrows[0].classList.remove('arrow__inactive');
     }
@@ -83,6 +85,11 @@ export class LeaderBoardComponent {
     if (this._currPage == 1) {
       return;
     }
+    this._getPage(this._currPage - 1)
+        .then((data) => {
+          this.board.data = data;
+          this.board.render();
+        });
     if (this._currPage === this._pagesCount) {
       this._arrows[1].classList.remove('arrow__inactive');
     }
@@ -90,5 +97,16 @@ export class LeaderBoardComponent {
     if (this._currPage === 1) {
       this._arrows[0].classList.add('arrow__inactive');
     }
+  }
+
+  /**
+   *@param {int} page
+   @return {Promise<any>}
+   */
+  _getPage(page) {
+    return Net.get({url: `/leaderboard/pages/${page}`})
+        .then((resp) => {
+          return resp.json();
+        });
   }
 }
