@@ -7,8 +7,11 @@ block content
         .profile__main
           .profile__avatar
             - var url = data.avatar
-            img.profile__avatar__img(src=url)
-            input.button.avatar__button(type='file', name='upload', value='Upload')
+            div(id='res')
+            span(id='output')
+            input.button.avatar__button(type='file', name='upload', id="file", value='Upload')
+            
+              
           .profile__info
             .profile__row
               .profile__name Login
