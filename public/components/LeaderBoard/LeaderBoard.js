@@ -67,6 +67,7 @@ export class LeaderBoardComponent {
     }
     this._getPage(this._currPage + 1)
         .then((data) => {
+          console.log(data);
           this.board.data = data;
           this.board.render();
         });
