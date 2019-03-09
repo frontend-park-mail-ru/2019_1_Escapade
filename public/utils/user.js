@@ -7,7 +7,6 @@ class UserSingleton {
     this.email = null;
     this.played = null;
     this.avatar = null;
-    this.password = null;
   }
 
   /**
@@ -16,12 +15,11 @@ class UserSingleton {
    * @param {string} avatar
    * @param {string} name
    */
-  setUser({email, played, avatar, password, name} = {}) {
+  setUser({email, played, avatar, name} = {}) {
     this.email = email || null;
     this.played = played || 0;
     this.avatar = avatar || './img/qrosh.png';
     this.name = name || null;
-    this.password = password || null;
   }
 
   /**
@@ -32,7 +30,6 @@ class UserSingleton {
     this.played = null;
     this.avatar = null;
     this.name = null;
-    this.password = null;
   }
 }
 

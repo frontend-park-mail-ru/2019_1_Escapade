@@ -25,7 +25,7 @@ export class LeaderBoardComponent {
 
   /** */
   render() {
-    Net.get({url: '/leaderboard/pages/count'})
+    Net.get({url: '/usersPageAmount'})
         .then((resp) => {
           return resp.json();
         })
@@ -104,7 +104,7 @@ export class LeaderBoardComponent {
    @return {Promise<any>}
    */
   _getPage(page) {
-    return Net.get({url: `/leaderboard/pages/${page}`})
+    return Net.get({url: `/users/${page}`})
         .then((resp) => {
           return resp.json();
         });
