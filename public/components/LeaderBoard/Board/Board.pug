@@ -1,15 +1,14 @@
 table
   thead
     tr
-      th
       th User
-      th Score
-      th Games played
+      th Best Score
+      th Best Time
+  hr
   tbody
   - for(var i = 0; i < data.length;i++){
     tr
-      td #{data[i].num}
       td #{data[i].name}
-      td #{data[i].score}
-      td #{data[i].games}
+      td #{data[i].bestScore}
+      td #{data[i].bestTime}
   - }
