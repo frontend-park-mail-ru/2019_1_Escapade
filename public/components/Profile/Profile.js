@@ -68,6 +68,7 @@ export class ProfileComponent {
     // Only process image files.
     if (!f.type.match('image.*')) {
       alert('Image only please....');
+      return;
     }
     this._uploadAvatar(f);
     const reader = new FileReader();
