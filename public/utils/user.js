@@ -50,9 +50,9 @@ export function checkAuth(callback) {
               .then((json) => {
                 User.setUser({...json});
                 callback();
-                console.log('check', json);
               });
         } else {
+          console.log('No Auth');
           User.removeUser();
           callback();
         }

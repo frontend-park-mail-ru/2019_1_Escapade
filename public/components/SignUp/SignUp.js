@@ -135,7 +135,6 @@ export class SignUpComponent {
           if (resp.status === 201) {
             User.setUser({...data});
             createProfile();
-            console.log(User);
           } else {
             return resp.json();
           }
