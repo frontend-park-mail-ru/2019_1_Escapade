@@ -103,7 +103,6 @@ app.get('/users', function(req, res) {
 
 const port = process.env.PORT || 8080;
 
-// app.listen();
 app.listen(port, function() {
   console.log(`Server listening port ${port}`);
 });

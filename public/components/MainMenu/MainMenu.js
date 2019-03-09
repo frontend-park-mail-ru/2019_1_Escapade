@@ -9,7 +9,7 @@ export class MainMenuComponent {
   constructor({
     el = document.body,
   } = {}) {
-    this._el = el;
+    this.parent = el;
     this.template = menuTemplate;
   }
 
@@ -22,6 +22,6 @@ export class MainMenuComponent {
 
   /** */
   render() {
-    this._el.innerHTML = this.template({data: this._data});
+    this.parent.innerHTML = this.template({data: this._data});
   }
 }

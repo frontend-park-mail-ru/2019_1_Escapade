@@ -11,7 +11,7 @@ export class ProfileComponent {
   constructor({
     el = document.body,
   } = {}) {
-    this._el = el;
+    this.parent = el;
     this.template = ProfileTemplate;
   }
 
@@ -24,6 +24,6 @@ export class ProfileComponent {
 
   /** */
   render() {
-    this._el.innerHTML = this.template({data: this._data});
+    this.parent.innerHTML = this.template({data: this._data});
   }
 }

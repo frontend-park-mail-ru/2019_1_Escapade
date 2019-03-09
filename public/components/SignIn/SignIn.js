@@ -14,7 +14,7 @@ export class SignInComponent {
   constructor({
     el = document.body,
   } = {}) {
-    this._el = el;
+    this.parent = el;
     this.template = signInTemplate;
   }
 
@@ -27,13 +27,13 @@ export class SignInComponent {
 
   /** */
   render() {
-    this._el.innerHTML = this.template({data: this._data});
+    this.parent.innerHTML = this.template({data: this._data});
     this._warnings = {};
-    this._warnings.email = this._el.querySelector('.js-warning-email');
-    this._warnings.pass = this._el.querySelector('.js-warning-password');
-    this._form = this._el.querySelector('.signup__form');
+    this._warnings.email = this.parent.querySelector('.js-warning-email');
+    this._warnings.pass = this.parent.querySelector('.js-warning-password');
+    this._form = this.parent.querySelector('.signup__form');
 
-    this._submitButton = this._el.querySelector('.signup__submit');
+    this._submitButton = this.parent.querySelector('.signup__submit');
 
     this._submitButton.addEventListener('click', this._onSubmit.bind(this));
   }
@@ -111,10 +111,8 @@ export class SignInComponent {
             resp
                 .json()
                 .then((json) => {
-                  console.log(json);
                   User.setUser({...json});
                   createProfile();
-                  console.log(User);
                 });
           } else {
             resp

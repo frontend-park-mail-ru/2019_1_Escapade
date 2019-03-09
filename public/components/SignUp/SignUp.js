@@ -12,7 +12,7 @@ export class SignUpComponent {
   constructor({
     el = document.body,
   } = {}) {
-    this._el = el;
+    this.parent = el;
     this.template = signUpTemplate;
   }
 
@@ -25,16 +25,16 @@ export class SignUpComponent {
 
   /** */
   render() {
-    this._el.innerHTML = this.template({data: this._data});
+    this.parent.innerHTML = this.template({data: this._data});
 
     this._warnings = {};
-    this._warnings.email = this._el.querySelector('.js-warning-email');
-    this._warnings.login = this._el.querySelector('.js-warning-login');
-    this._warnings.pass = this._el.querySelector('.js-warning-password');
-    this._warnings.repass = this._el.querySelector('.js-warning-repassword');
-    this._form = this._el.querySelector('.signup__form');
+    this._warnings.email = this.parent.querySelector('.js-warning-email');
+    this._warnings.login = this.parent.querySelector('.js-warning-login');
+    this._warnings.pass = this.parent.querySelector('.js-warning-password');
+    this._warnings.repass = this.parent.querySelector('.js-warning-repassword');
+    this._form = this.parent.querySelector('.signup__form');
 
-    this._submitButton = this._el.querySelector('.signup__submit');
+    this._submitButton = this.parent.querySelector('.signup__submit');
 
     this._submitButton.addEventListener('click', this._onSubmit.bind(this));
   }
@@ -133,13 +133,9 @@ export class SignUpComponent {
     Net.post({url: '/register', body: data})
         .then((resp) => {
           if (resp.status === 201) {
-            resp
-                .json()
-                .then((json) => {
-                  User.setUser({...data});
-                  createProfile();
-                  console.log(User);
-                });
+            User.setUser({...data});
+            createProfile();
+            console.log(User);
           } else {
             resp
                 .json()

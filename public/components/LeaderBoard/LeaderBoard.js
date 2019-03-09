@@ -9,7 +9,7 @@ export class LeaderBoardComponent {
   constructor({
     el = document.body,
   } = {}) {
-    this._el = el;
+    this.parent = el;
     this.template = boardTemplate;
   }
 
@@ -22,6 +22,6 @@ export class LeaderBoardComponent {
 
   /** */
   render() {
-    this._el.innerHTML = this.template({data: this._data});
+    this.parent.innerHTML = this.template({data: this._data});
   }
 }
