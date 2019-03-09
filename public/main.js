@@ -65,42 +65,9 @@ function createSignUp() {
  *
  */
 function createLeaderboard() {
-  const users = [{
-    'num': '1',
-    'name': 'ser',
-    'score': '120000',
-    'games': '99',
-  },
-  {
-    'num': '2',
-    'name': 'cat',
-    'score': '23500',
-    'games': '99',
-  },
-  {
-    'num': '3',
-    'name': 'damian',
-    'score': '1200',
-    'games': '99',
-  },
-  {
-    'num': '4',
-    'name': 'dog',
-    'score': '120000',
-    'games': '99',
-  },
-  {
-    'num': '5',
-    'name': 'pig',
-    'score': '15000',
-    'games': '99',
-  },
-  ];
-
   const board = new LeaderBoardComponent({
     el: application,
   });
-  board.data = JSON.parse(JSON.stringify(users));
   board.render();
 }
 

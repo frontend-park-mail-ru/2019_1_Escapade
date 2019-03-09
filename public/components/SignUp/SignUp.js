@@ -137,12 +137,11 @@ export class SignUpComponent {
             createProfile();
             console.log(User);
           } else {
-            resp
-                .json()
-                .then((error) => {
-                  this._showWarning(this._warnings.email, error.message);
-                });
+            return resp.json();
           }
+        })
+        .then((error) => {
+          this._showWarning(this._warnings.email, error.message);
         });
   }
 }
