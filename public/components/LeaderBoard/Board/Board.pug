@@ -9,6 +9,6 @@ table
   - for(var i = 0; i < data.length;i++){
     tr
       td #{data[i].name}
-      td #{data[i].bestScore}
-      td #{data[i].bestTime}
+      td #{data[i].bestScore.String || 0}
+      td #{data[i].bestTime.String || 0}
   - }
