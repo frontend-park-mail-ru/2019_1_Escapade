@@ -140,7 +140,7 @@ export class SignUpComponent {
             resp
                 .json()
                 .then((error) => {
-                  this._showWarning(this._warnings.email, error.error);
+                  this._showWarning(this._warnings.email, error.message);
                 });
           }
         });
