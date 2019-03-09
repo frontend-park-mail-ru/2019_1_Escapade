@@ -30,7 +30,8 @@ export class LeaderBoardComponent {
           return resp.json();
         })
         .then((count) => {
-          this._pagesCount = count.count;
+          this._pagesCount = count.amount;
+          console.log('Pages amount', count.amount);
           this.parent.innerHTML = this.template();
           this._initButtons();
           this.board = new BoardComponent({
