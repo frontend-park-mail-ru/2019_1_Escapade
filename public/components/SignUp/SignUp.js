@@ -136,7 +136,7 @@ export class SignUpComponent {
    */
   _auth(data) {
     console.log(data);
-    Net.post({url: '/register', body: data})
+    Net.post({url: '/user', body: data})
         .then((resp) => {
           if (resp.status === 201) {
             User.setUser({...data});

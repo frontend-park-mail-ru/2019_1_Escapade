@@ -110,7 +110,7 @@ export class SignInComponent {
    * @param {object} data
    */
   _login(data) {
-    Net.post({url: '/login', body: data})
+    Net.post({url: '/user/login', body: data})
         .then((resp) => {
           if (resp.status === 200) {
             resp.json()

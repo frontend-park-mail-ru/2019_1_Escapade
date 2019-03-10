@@ -12,9 +12,7 @@ import {Net} from './utils/net.js';
 const application = document.getElementById('application');
 
 
-/**
- * Создать и отрендерить главное меню
-*/
+/** */
 function createMenu() {
   const menu = new MainMenuComponent({
     el: application,
@@ -25,10 +23,10 @@ function createMenu() {
 
 
 /**
- *Выход из аккаунта с последующим редиректом на главное меню
+ *
  */
 function signOut() {
-  Net.delete({url: '/logout'})
+  Net.delete({url: '/user/logout'})
       .then((resp) => {
         if (resp.status === 200) {
           User.removeUser();
@@ -42,7 +40,7 @@ function signOut() {
 }
 
 /**
- *Создать и отрендерить страницу логина
+ *
  */
 function createSignIn() {
   const signin = new SignInComponent({
@@ -53,7 +51,7 @@ function createSignIn() {
 }
 
 /**
- *Создать и отрендерить страницу регистрации
+ *
  */
 function createSignUp() {
   const signup = new SignUpComponent({
@@ -64,7 +62,7 @@ function createSignUp() {
 }
 
 /**
- *Создать и отрендерить лидерборд
+ *
  */
 function createLeaderboard() {
   const board = new LeaderBoardComponent({
@@ -74,7 +72,7 @@ function createLeaderboard() {
 }
 
 /**
- * Создать и отрендерить страницу авторов
+ *
  */
 function createAuthors() {
   const authors = new AuthorsComponent({
@@ -84,14 +82,11 @@ function createAuthors() {
   authors.render();
 }
 
-/**
- * Создать и отрендерить профиль
-*/
+/** */
 export function createProfile() { // TODO
   const profile = new ProfileComponent({
     el: application,
   });
-  console.log("sfdsfsdfsdfds");
   profile.data = User;
   profile.render();
 }

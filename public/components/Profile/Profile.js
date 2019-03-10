@@ -146,7 +146,7 @@ export class ProfileComponent {
     const formData = new FormData();
     formData.append('file', file);
     console.log('upload photo');
-    Net.postPhoto({url: '/playerAvatar', body: formData})
+    Net.postPhoto({url: '/user/Avatar', body: formData})
         .then((resp) => {
           if (resp.status === 201) {
             resp
@@ -200,7 +200,7 @@ export class ProfileComponent {
    * @param {*} h
    */
   _getAvatar(w = 250, h = 250) {
-    Net.get({url: '/playerAvatar'})
+    Net.get({url: '/user/Avatar'})
         .then((resp) => {
           console.log(resp.status);
           if (resp.status === 200) {
@@ -233,7 +233,7 @@ export class ProfileComponent {
    */
   _changeProfile(data) {
     console.log(data);
-    Net.put({url: '/updateProfile', body: data})
+    Net.put({url: '/user', body: data})
         .then((resp) => {
           console.log(resp.status )
           if (resp.status === 200) {

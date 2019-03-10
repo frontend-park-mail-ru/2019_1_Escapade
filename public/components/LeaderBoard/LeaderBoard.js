@@ -27,7 +27,7 @@ export class LeaderBoardComponent {
    * Отрисовка лидербода и получение необходимой информации с бэкэнда
   */
   render() {
-    Net.get({url: '/usersPageAmount'})
+    Net.get({url: '/users/pages_amount'})
         .then((resp) => {
           return resp.json();
         })
@@ -110,7 +110,7 @@ export class LeaderBoardComponent {
    @return {Promise<any>}
    */
   _getPage(page) {
-    return Net.get({url: `/users/${page}`})
+    return Net.get({url: `/users/pages/${page}`})
         .then((resp) => {
           return resp.json();
         });
