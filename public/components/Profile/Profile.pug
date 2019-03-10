@@ -10,6 +10,11 @@ block content
           .profile__info
             form.signup__form(novalidate='novalidate')
               .profile__row
+                .profile__name Avatar
+                span(id='output' class="inner")
+                label(for="file" class="custom-file-upload button") Load avatar
+                input(id="file" type="file")
+              .profile__row
                 .profile__name Login
                 input.input.signup__input.text-h2#login(type='login', name='login',  value=data.name)
                 .warning.signup__warning.hidden.js-warning-login
