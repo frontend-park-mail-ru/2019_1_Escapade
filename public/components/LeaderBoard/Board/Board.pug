@@ -4,10 +4,12 @@ table
       th User
       th Best Score
       th Best Time
+    hr.leaderboard__border
   tbody
   - for(var i = 0; i < data.length;i++){
     tr
       td #{data[i].name}
       td #{data[i].bestScore.String || 0}
       td #{data[i].bestTime.String || 0}
+    hr.leaderboard__border
   - }
