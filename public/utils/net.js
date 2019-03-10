@@ -1,4 +1,4 @@
-const backHost = 'http://localhost:3000';
+const backHost = 'https://escapade-backend.herokuapp.com';
 
 
 /** */
@@ -21,12 +21,12 @@ export class Net {
     });
   }
 
- /**
-   * Put запрос, с JSON body
-   * @param {string} url
-   * @param {object} body
-   * @return {Promise<Response>}
-   */
+  /**
+    * Put запрос, с JSON body
+    * @param {string} url
+    * @param {object} body
+    * @return {Promise<Response>}
+    */
   static put({host = backHost, url = '/', body = {}} = {}) {
     return fetch(host + url, {
       method: 'PUT',
