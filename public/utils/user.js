@@ -46,8 +46,7 @@ export function checkAuth(callback) {
   Net.get({url: '/me'})
       .then((resp) => {
         if (resp.status === 200) {
-          resp
-              .json()
+          resp.json()
               .then((json) => {
                 User.setUser({...json});
                 callback();

@@ -1,19 +1,19 @@
 .profile__header {
-	text-align: center;
-	padding-top: 1.5rem;
+  text-align: center;
+  padding-top: 1.5rem;
 }
 
 .profile {
-	display: flex;
-	justify-content: center;
-	height: 80vh;
-	background: white;
+  display: flex;
+  justify-content: center;
+  height: 80vh;
+  background: white;
 }
 
 .profile__wrapper {
-	display: flex;
-	flex-direction: column;
-	align-items: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   justify-content: center;
   width: 80%;
 }
@@ -32,8 +32,8 @@
 }
 
 .profile__avatar__img {
-	width: 220px;
-	height: 160px;
+  width: 220px;
+  height: 160px;
 }
 
 .profile__info{
@@ -53,7 +53,6 @@
   padding: 5px 20px;
   text-align: center;
   background: rgba(230,222,193,.8);
-  /* border: 1px solid black; */
 }
 
 .profile__avatar{
@@ -61,8 +60,6 @@
   flex-direction: column;
   justify-content:space-between ;
   align-items: center;
-  
-
 }
 
 .avatar__button{

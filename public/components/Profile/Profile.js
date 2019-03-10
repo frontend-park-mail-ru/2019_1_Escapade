@@ -100,8 +100,7 @@ export class ProfileComponent {
             console.log('Heeeelpppp2323');
             document.getElementById('output')
                 .innerHTML = ['<img class="thumb" ', '" src="./img/qrosh.png"' + ' width="' + w + '" height="' + h + '"  />'].join('');
-            resp
-                .json()
+            resp.json()
                 .then((error) => {
                   this._showWarning(this._warnings.email, error.error);
                 });

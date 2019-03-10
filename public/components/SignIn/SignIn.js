@@ -113,15 +113,13 @@ export class SignInComponent {
     Net.post({url: '/login', body: data})
         .then((resp) => {
           if (resp.status === 200) {
-            resp
-                .json()
+            resp.json()
                 .then((json) => {
                   User.setUser({...json});
                   createProfile();
                 });
           } else {
-            resp
-                .json()
+            resp.json()
                 .then((error) => {
                   this._showWarning(this._warnings.email, error.message);
                 });
