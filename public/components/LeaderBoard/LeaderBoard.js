@@ -52,11 +52,12 @@ export class LeaderBoardComponent {
    * Установка листенеров на кнопки пагинации
    */
   _initButtons() {
-    this._arrows = this.parent.querySelectorAll('.arrow');
-    this._arrows[0].addEventListener('click', this._prevPage.bind(this));
-    this._arrows[1].addEventListener('click', this._nextPage.bind(this));
+    ([this._leftArrow, this._rightArrow] =
+      this.parent.querySelectorAll('.arrow'));
+    this._leftArrow.addEventListener('click', this._prevPage.bind(this));
+    this._rightArrow.addEventListener('click', this._nextPage.bind(this));
     if (this._pagesCount === 1) {
-      this._arrows[1].classList.add('arrow__inactive');
+      this._rightArrow.classList.add('arrow__inactive');
     }
   }
 
@@ -74,11 +75,11 @@ export class LeaderBoardComponent {
           this.board.render();
         });
     if (this._currPage === 1) {
-      this._arrows[0].classList.remove('arrow__inactive');
+      this._leftArrow.classList.remove('arrow__inactive');
     }
     this._currPage += 1;
     if (this._currPage === this._pagesCount) {
-      this._arrows[1].classList.add('arrow__inactive');
+      this._rightArrow.classList.add('arrow__inactive');
     }
   }
 
@@ -95,11 +96,11 @@ export class LeaderBoardComponent {
           this.board.render();
         });
     if (this._currPage === this._pagesCount) {
-      this._arrows[1].classList.remove('arrow__inactive');
+      this._rightArrow.classList.remove('arrow__inactive');
     }
     this._currPage -= 1;
     if (this._currPage === 1) {
-      this._arrows[0].classList.add('arrow__inactive');
+      this._leftArrow.classList.add('arrow__inactive');
     }
   }
 
