@@ -204,21 +204,17 @@ export class ProfileComponent {
         .then((resp) => {
           console.log(resp.status);
           if (resp.status === 200) {
-            console.log('_getAvatar1121212');
             const buffer = resp.blob();
             return buffer;
           } else {
-            console.log('Heeeelpppp2323');
             document.getElementById('output')
                 .innerHTML = ['<img class="thumb" ', '" src="./img/qrosh.png"'
               + ' width="' + w + '" height="' + h + '"  />'].join('');
-            resp.json()
-                .then((error) => {
-                  this._showWarning(this._warnings.email, error.error);
-                });
+            return;
           }
         })
         .then((myBlob) => {
+          console.log('in myBlob ');
           const objectURL = URL.createObjectURL(myBlob);
           console.log('_getAvatar112' + objectURL);
           document.getElementById('output')
