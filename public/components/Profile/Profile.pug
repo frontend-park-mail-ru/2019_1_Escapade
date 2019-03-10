@@ -2,27 +2,42 @@ extends ../Header.pug
 
 block content
   section(data-section-name='profile')
-    .profile
+    .profile 
       .profile__wrapper
         .profile__main
           .profile__avatar
-            - var url = data.avatar
-            div(id='res')
-            span(id='output')
-            input.button.avatar__button(type='file', name='upload', id="file", value='Upload')
-            
-              
+            - var url = data.avatar          
           .profile__info
-            .profile__row
-              .profile__name Login
-              .profile__value #{data.name}
-            .profile__row
-              .profile__name Email
-              .profile__value #{data.email}
-            .profile__row
-              .profile__name Password
-              .profile__value ******
+            form.signup__form(novalidate='novalidate')
+              .profile__row
+                .profile__name Avatar
+                span(id='output' class="inner")
+                label(for="file" class="custom-file-upload button") Load avatar
+                input(id="file" type="file")
+              .profile__row
+                .profile__name Login
+                input.input.signup__input.text-h2#login(type='login', name='login',  value=data.name)
+                .warning.signup__warning.hidden.js-warning-login
+              .profile__row
+                .profile__name Email
+                input.input.signup__input.text-h2#email(type='email', name='email',  value=data.email)
+                .warning.signup__warning.hidden.js-warning-email
+              .profile__row
+                .profile__name Password
+                input.input.signup__input.text-h2#password(type='password', name='password', placeholder='******', autocomplete="new-password")
+                .warning.signup__warning.hidden.js-warning-password
+              .profile__row
+                .profile__name Repeat password
+                input.input.signup__input.text-h2#password-repeat(type='password', name='password-repeat',  placeholder='******', autocomplete="new-password")
+                .warning.signup__warning.hidden.js-warning-repassword
+              .profile__row
+                input.change__submit.button(id="submit_changes", type='submit', name='submit', value='Изменить данные')
+            br
+            hr
+            br
             .profile__row
               .profile__name Games Played
               .profile__value #{data.played}
-        a.back(data-href='menu', href='menu') Назад в меню
+            .profile__row
+              .hrefBackToMenu 
+                a.back(data-href='menu', href='menu' ) Назад в меню

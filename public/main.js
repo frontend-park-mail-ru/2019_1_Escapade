@@ -87,6 +87,7 @@ export function createProfile() { // TODO
   const profile = new ProfileComponent({
     el: application,
   });
+  console.log("sfdsfsdfsdfds");
   profile.data = User;
   profile.render();
 }

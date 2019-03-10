@@ -11,11 +11,19 @@
 }
 
 .profile__wrapper {
-	display: flex;
 	flex-direction: column;
 	align-items: center;
   justify-content: center;
   width: 80%;
+  scroll-behavior: auto;
+
+  overflow: auto;
+  width: 500px;
+  max-height: 100%;
+  margin: 30px auto;
+  background-repeat: no-repeat;
+  background-size: 100% 40px, 100% 40px, 100% 14px, 100% 14px;
+  background-attachment: local, local, scroll, scroll;
 }
 
 .profile__main{
@@ -67,6 +75,7 @@
   margin-top: 15px;
   color: black;
   text-decoration: none;
+  text-align: center;
 }
 
 .back:hover{
@@ -75,12 +84,26 @@
 
 img {
   display: block;
-  max-width:250px;
-  max-height:250px;
+  max-width:200px;
+  max-height:200px;
   width: auto;
   height: auto;
+  padding: 5px 10px;
+  text-align: center;
+  vertical-align: middle;
+  margin-left: auto;
+  margin-right: auto;
 }
 
-input[type='file'] {
-  color: transparent;
+input[type="file"] {
+  display: none;
+}
+.custom-file-upload {
+  border: 1px solid #ccc;
+  display: inline-block;
+  padding: 6px 12px;
+  cursor: pointer;
+}
+.hrefBackToMenu {
+  text-align: center;
 }

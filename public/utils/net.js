@@ -21,6 +21,24 @@ export class Net {
     });
   }
 
+ /**
+   * Put запрос, с JSON body
+   * @param {string} url
+   * @param {object} body
+   * @return {Promise<Response>}
+   */
+  static put({host = backHost, url = '/', body = {}} = {}) {
+    return fetch(host + url, {
+      method: 'PUT',
+      body: JSON.stringify(body),
+      mode: 'cors',
+      credentials: 'include',
+      headers: {
+        'Content-Type': 'application/json; charset=utf-8',
+      },
+    });
+  }
+
   /**
    * Пост запрос, с JSON body
    * @param {string} url
