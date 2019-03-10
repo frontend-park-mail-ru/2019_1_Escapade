@@ -244,7 +244,7 @@ export class ProfileComponent {
             return resp.json();
           }
         })
-        .then((error) => {
+        .catch((error) => {
           this._showWarning(this._warnings.email, error.message);
         });
   }
