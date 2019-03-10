@@ -21,10 +21,7 @@
 }
 
 .leaderboard table {
-	border-spacing: 0;
-	border: 2px solid black;
 	text-align: left;
-	border-radius: 3px;
 }
 
 .leaderboard__controls{
@@ -40,8 +37,17 @@
   opacity: 0.2;
 }
 
+.leaderboard th{
+  font-weight: bold
+}
+
 .leaderboard td,
 th {
+  font-size: calc(1.9vh + .72rem);
 	text-align: center;
 	padding: 0.5rem;
+}
+
+.leaderboard tr{
+  border-bottom: 2px solid gray ;
 }
