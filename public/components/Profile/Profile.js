@@ -214,7 +214,10 @@ export class ProfileComponent {
           }
         })
         .then((myBlob) => {
-          console.log('in myBlob ');
+          console.log(myBlob);
+          if (myBlob === undefined) {
+            return;
+          }
           const objectURL = URL.createObjectURL(myBlob);
           console.log('_getAvatar112' + objectURL);
           document.getElementById('output')
@@ -231,12 +234,12 @@ export class ProfileComponent {
     console.log(data);
     Net.put({url: '/user', body: data})
         .then((resp) => {
-          console.log(resp.status )
+          console.log(resp.status);
           if (resp.status === 200) {
             data.password = '';
             data.repassword = '';
             User.setUser({...data});
-            createProfile(); 
+            createProfile();
           } else {
             return resp.json();
           }
