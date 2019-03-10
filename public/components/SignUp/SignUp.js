@@ -34,7 +34,7 @@ export class SignUpComponent {
     this._warnings.login = this.parent.querySelector('.js-warning-login');
     this._warnings.pass = this.parent.querySelector('.js-warning-password');
     this._warnings.repass = this.parent.querySelector('.js-warning-repassword');
-    this._form = this.parent.querySelector('.profile__form');
+    this._form = this.parent.querySelector('.signup__form');
 
     this._submitButton = this.parent.querySelector('.signup__submit');
 
