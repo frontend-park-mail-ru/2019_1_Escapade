@@ -141,6 +141,9 @@ export class SignUpComponent {
         })
         .then((error) => {
           this._showWarning(this._warnings.email, error.message);
+        })
+        .catch((error) => {
+          console.log('SignUp failed', error);
         });
   }
 }

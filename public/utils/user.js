@@ -1,4 +1,5 @@
 import {Net} from './net.js';
+
 /** */
 class UserSingleton {
   /** */
@@ -53,5 +54,8 @@ export function checkAuth(callback) {
           User.removeUser();
           callback();
         }
+      })
+      .catch((error) => {
+        console.log(error);
       });
 }

@@ -81,9 +81,7 @@ export class ProfileComponent {
     })(f);
     // Read in the image file as a data URL.
     reader.readAsDataURL(f);
-
   }
-
 
   /**
    *
@@ -113,8 +111,7 @@ export class ProfileComponent {
           const objectURL = URL.createObjectURL(myBlob);
           console.log('_getAvatar112' + objectURL);
           document.getElementById('output')
-              .innerHTML = ['<img class="thumb" ', '" src="', objectURL +'"  />'].join('');
+              .innerHTML = ['<img class="thumb" ', '" src="', objectURL + '"  />'].join('');
         });
   }
-
 }

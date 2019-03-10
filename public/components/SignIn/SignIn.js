@@ -121,6 +121,9 @@ export class SignInComponent {
                   this._showWarning(this._warnings.email, error.message);
                 });
           }
+        })
+        .catch((error) => {
+          console.log('SignIn failed', error);
         });
   }
 }
