@@ -43,7 +43,7 @@ export const User = new UserSingleton();
  * @param {function} callback
  */
 export function checkAuth(callback) {
-  Net.get({url: '/me'})
+  Net.get({url: '/user'})
       .then((resp) => {
         if (resp.status === 200) {
           resp.json()
