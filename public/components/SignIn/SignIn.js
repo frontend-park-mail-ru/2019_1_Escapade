@@ -25,7 +25,9 @@ export class SignInComponent {
     this._data = d;
   }
 
-  /** */
+  /**
+   * Отрисовка формы логина и добавление лисенеров
+  */
   render() {
     this.parent.innerHTML = this.template({data: this._data});
     this._warnings = {};
@@ -39,8 +41,8 @@ export class SignInComponent {
   }
 
   /**
-   *
-   * @param {*} event
+   * Действие при сабмите формы регистрации
+   * @param {Event} event
    */
   _onSubmit(event) {
     event.preventDefault();
@@ -51,8 +53,9 @@ export class SignInComponent {
       this._login(data);
     }
   }
+
   /**
-   *
+   * Валидация формы логина
    * @param  {...any} data
    * @return {boolean}
    */
@@ -81,8 +84,9 @@ export class SignInComponent {
 
     return isValid;
   }
+
   /**
-   *
+   * Показать предупреждение валидации
    * @param {*} warning
    * @param {*} message
    */
@@ -91,8 +95,9 @@ export class SignInComponent {
     warning.innerHTML = '';
     warning.innerHTML += message;
   }
+
   /**
-   *
+   * Скрыть предупреждение валидации
    * @param {*} warning
    */
   _hideWarning(warning) {
@@ -101,7 +106,7 @@ export class SignInComponent {
   }
 
   /**
-   *
+   * Отправка запроса логина и заполнение объекта User
    * @param {object} data
    */
   _login(data) {

@@ -23,7 +23,9 @@ export class LeaderBoardComponent {
     this._data = d;
   }
 
-  /** */
+  /**
+   * Отрисовка лидербода и получение необходимой информации с бэкэнда
+  */
   render() {
     Net.get({url: '/usersPageAmount'})
         .then((resp) => {
@@ -47,7 +49,7 @@ export class LeaderBoardComponent {
   }
 
   /**
-   *
+   * Установка листенеров на кнопки пагинации
    */
   _initButtons() {
     this._arrows = this.parent.querySelectorAll('.arrow');
@@ -59,7 +61,7 @@ export class LeaderBoardComponent {
   }
 
   /**
-   *
+   * Переключение на сл.страницу
    */
   _nextPage() {
     if (this._currPage === this._pagesCount) {
@@ -81,7 +83,7 @@ export class LeaderBoardComponent {
   }
 
   /**
-   *
+   * Переключение на пред.страницу
    */
   _prevPage() {
     if (this._currPage == 1) {
@@ -102,6 +104,7 @@ export class LeaderBoardComponent {
   }
 
   /**
+   * Получение списка юзеров для страницы с бэкэнда
    *@param {int} page
    @return {Promise<any>}
    */

@@ -11,6 +11,7 @@ class UserSingleton {
   }
 
   /**
+   * Заполнить информацию о юзере при логине
    * @param {string} email
    * @param {string} score
    * @param {string} avatar
@@ -24,8 +25,8 @@ class UserSingleton {
   }
 
   /**
-     *
-     */
+    * Удалить инфоривацию о юзере при логауте
+    */
   removeUser() {
     this.email = null;
     this.played = null;
@@ -37,6 +38,8 @@ class UserSingleton {
 export const User = new UserSingleton();
 
 /**
+ *
+ * Проверка авторизации пользователя при вхлоде на сайт
  * @param {function} callback
  */
 export function checkAuth(callback) {
