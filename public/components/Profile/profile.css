@@ -24,6 +24,13 @@
   align-items: center;
 }
 
+@media screen and (max-width: 720px) {
+
+  .profile__main{
+    flex-direction: column;
+  }
+}
+
 .profile__avatar__img {
 	width: 220px;
 	height: 160px;
