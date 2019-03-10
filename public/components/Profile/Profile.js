@@ -36,7 +36,8 @@ export class ProfileComponent {
     this._warnings.pass = this._el.querySelector('.js-warning-password');
     this._warnings.repass = this._el.querySelector('.js-warning-repassword');
     this._changeButton = this._el.querySelector('.change__submit');
-    this._changeButton.addEventListener('click', this._onSubmitDataProfile.bind(this));
+    this._changeButton
+        .addEventListener('click', this._onSubmitDataProfile.bind(this));
 
     document.getElementById('file')
         .addEventListener('change', this._handleFileSelect.bind(this), false);
@@ -57,7 +58,8 @@ export class ProfileComponent {
     data.repass = this._form.elements['password-repeat'].value;
     console.log(this._data);
     if (this._validateInput(data)) {
-      console.log(' hello56 ' + data.email, ' ', data.name, ' ', data.password, ' ', data.repass);
+      console.log(' hello56 ' + data.email, ' ',
+          data.name, ' ', data.password, ' ', data.repass);
       this._changeProfile(data);
     }
   }

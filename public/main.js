@@ -1,13 +1,13 @@
 'use strict';
 
-import {LeaderBoardComponent} from './components/LeaderBoard/LeaderBoard.js';
-import {MainMenuComponent} from './components/MainMenu/MainMenu.js';
-import {AuthorsComponent} from './components/Authors/Authors.js';
-import {SignUpComponent} from './components/SignUp/SignUp.js';
-import {SignInComponent} from './components/SignIn/SignIn.js';
-import {ProfileComponent} from './components/Profile/Profile.js';
-import {User, checkAuth} from './utils/user.js';
-import {Net} from './utils/net.js';
+import { LeaderBoardComponent } from './components/LeaderBoard/LeaderBoard.js';
+import { MainMenuComponent } from './components/MainMenu/MainMenu.js';
+import { AuthorsComponent } from './components/Authors/Authors.js';
+import { SignUpComponent } from './components/SignUp/SignUp.js';
+import { SignInComponent } from './components/SignIn/SignIn.js';
+import { ProfileComponent } from './components/Profile/Profile.js';
+import { User, checkAuth } from './utils/user.js';
+import { Net } from './utils/net.js';
 
 const application = document.getElementById('application');
 
@@ -26,17 +26,17 @@ function createMenu() {
  *
  */
 function signOut() {
-  Net.delete({url: '/user/logout'})
-      .then((resp) => {
-        if (resp.status === 200) {
-          User.removeUser();
-          const menu = new MainMenuComponent({
-            el: application,
-          });
-          menu.data = User;
-          menu.render();
-        }
-      });
+  Net.delete({ url: '/user/logout' })
+    .then((resp) => {
+      if (resp.status === 200) {
+        User.removeUser();
+        const menu = new MainMenuComponent({
+          el: application,
+        });
+        menu.data = User;
+        menu.render();
+      }
+    });
 }
 
 /**
@@ -103,7 +103,7 @@ const pages = {
 
 checkAuth(createMenu);
 
-application.addEventListener('click', function(event) {
+application.addEventListener('click', function (event) {
   if (!(event.target instanceof HTMLAnchorElement) ||
     event.target.classList.contains('team__a')) {
     return;
