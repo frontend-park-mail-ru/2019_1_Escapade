@@ -76,7 +76,10 @@ export class ProfileComponent {
     reader.onload = ((theFile) => {
       return function(e) {
         // Render thumbnail.
-        document.getElementById('output').innerHTML = ['<img class="thumb" title="', escape(theFile.name), '" src="', e.target.result, '" width="' + w + '" height="' + h + '"  />'].join('');
+        document.getElementById('output').innerHTML =
+          ['<img class="thumb" title="', escape(theFile.name),
+            '" src="', e.target.result, '" width="' + w +
+            '" height="' + h + '"  />'].join('');
       };
     })(f);
     // Read in the image file as a data URL.
@@ -99,7 +102,8 @@ export class ProfileComponent {
           } else {
             console.log('Heeeelpppp2323');
             document.getElementById('output')
-                .innerHTML = ['<img class="thumb" ', '" src="./img/qrosh.png"' + ' width="' + w + '" height="' + h + '"  />'].join('');
+                .innerHTML = ['<img class="thumb" ', '" src="./img/qrosh.png"'
+              + ' width="' + w + '" height="' + h + '"  />'].join('');
             resp.json()
                 .then((error) => {
                   this._showWarning(this._warnings.email, error.error);
@@ -110,7 +114,8 @@ export class ProfileComponent {
           const objectURL = URL.createObjectURL(myBlob);
           console.log('_getAvatar112' + objectURL);
           document.getElementById('output')
-              .innerHTML = ['<img class="thumb" ', '" src="', objectURL + '"  />'].join('');
+              .innerHTML = ['<img class="thumb" ',
+                '" src="', objectURL + '"  />'].join('');
         });
   }
 }

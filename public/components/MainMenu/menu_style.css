@@ -63,7 +63,9 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
+  justify-content: space-evenly;
+  height: 40vh;
+  margin-top: 20vh;
 }
 
 
