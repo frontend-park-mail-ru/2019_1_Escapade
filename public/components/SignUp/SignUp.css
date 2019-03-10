@@ -1,9 +1,9 @@
 .signup{
   height: 80vh;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
 
 .signup__form {
@@ -23,7 +23,7 @@
 }
 
 @media screen and (min-width: 720px) {
-	.signup__form{
+  .signup__form{
     min-width: 35vh;
   }
 

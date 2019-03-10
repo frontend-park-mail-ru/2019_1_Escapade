@@ -1,5 +1,5 @@
 /**
-   *
+   * Валидация email
    * @param {*} email
    * @return {boolean}
    */
@@ -9,7 +9,7 @@ export function validateEmail(email) {
 };
 
 /**
- *
+ * Валидация пароля
  * @param {*} pass
  * @return {boolean}
  */

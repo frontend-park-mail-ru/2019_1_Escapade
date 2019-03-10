@@ -7,7 +7,7 @@ import {createProfile} from '../../main.js';
 export class SignUpComponent {
   /**
    *
-   * @param {*} param0
+   * @param {HTMLElement} parent
    */
   constructor({
     el = document.body,
@@ -17,13 +17,15 @@ export class SignUpComponent {
   }
 
   /**
-   * @param {*} d
+   * @param {Object} data
   */
-  set data(d = []) {
-    this._data = d;
+  set data(data = []) {
+    this._data = data;
   }
 
-  /** */
+  /**
+   * Отрисовка формы регистрации и добавление лисенеров
+  */
   render() {
     this.parent.innerHTML = this.template({data: this._data});
 
@@ -40,8 +42,8 @@ export class SignUpComponent {
   }
 
   /**
-   *
-   * @param {*} event
+   * Действие при сабмите формы логина
+   * @param {Event} event
    */
   _onSubmit(event) {
     console.log('event');
@@ -56,8 +58,9 @@ export class SignUpComponent {
       this._auth(data);
     }
   }
+
   /**
-   *
+   * Валидация формы авторизации
    * @param  {...any} data
    * @return {boolean}
    */
@@ -75,7 +78,7 @@ export class SignUpComponent {
 
     this._hideWarning(this._warnings.login);
     if (validatePass(name) !== true) {
-      let message = 'Invalid login format';
+      let message = 'Invalid login format. Login must be at least 3 letters';
       if (name.length === 0) {
         message = 'Fill login field please';
       }
@@ -85,7 +88,8 @@ export class SignUpComponent {
 
     this._hideWarning(this._warnings.pass);
     if (validatePass(password) !== true) {
-      let message = 'Invalid password format';
+      let message = `Invalid password format.
+       Password must be at least 3 letters`;
       if (password.length === 0) {
         message = 'Fill password field please';
       }
@@ -104,18 +108,20 @@ export class SignUpComponent {
     }
     return isValid;
   }
+
   /**
-   *
-   * @param {*} warning
-   * @param {*} message
+   * Показать предупреждение валидации
+   * @param {HTMLElement} warning
+   * @param {String} message
    */
   _showWarning(warning, message) {
     warning.classList.remove('hidden');
     warning.innerHTML = '';
     warning.innerHTML += message;
   }
+
   /**
-   *
+   * Скрыть предупреждение валидации
    * @param {*} warning
    */
   _hideWarning(warning) {
@@ -125,7 +131,7 @@ export class SignUpComponent {
 
 
   /**
-   *
+   * Отправка запроса авторизации и заполнение объекта User
    * @param {object} data
    */
   _auth(data) {
@@ -135,13 +141,15 @@ export class SignUpComponent {
           if (resp.status === 201) {
             User.setUser({...data});
             createProfile();
-            console.log(User);
           } else {
             return resp.json();
           }
         })
         .then((error) => {
           this._showWarning(this._warnings.email, error.message);
+        })
+        .catch((error) => {
+          console.log('SignUp failed', error);
         });
   }
 }

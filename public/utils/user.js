@@ -1,4 +1,5 @@
 import {Net} from './net.js';
+
 /** */
 class UserSingleton {
   /** */
@@ -7,54 +8,56 @@ class UserSingleton {
     this.email = null;
     this.played = null;
     this.avatar = null;
-    this.password = null;
   }
 
   /**
+   * Заполнить информацию о юзере при логине
    * @param {string} email
    * @param {string} score
    * @param {string} avatar
    * @param {string} name
    */
-  setUser({email, played, avatar, password, name} = {}) {
+  setUser({email, played, avatar, name} = {}) {
     this.email = email || null;
     this.played = played || 0;
     this.avatar = avatar || './img/qrosh.png';
     this.name = name || null;
-    this.password = password || null;
   }
 
   /**
-     *
-     */
+    * Удалить инфоривацию о юзере при логауте
+    */
   removeUser() {
     this.email = null;
     this.played = null;
     this.avatar = null;
     this.name = null;
-    this.password = null;
   }
 }
 
 export const User = new UserSingleton();
 
 /**
+ *
+ * Проверка авторизации пользователя при вхлоде на сайт
  * @param {function} callback
  */
 export function checkAuth(callback) {
   Net.get({url: '/me'})
       .then((resp) => {
         if (resp.status === 200) {
-          resp
-              .json()
+          resp.json()
               .then((json) => {
                 User.setUser({...json});
                 callback();
-                console.log('check', json);
               });
         } else {
+          console.log('No Auth');
           User.removeUser();
           callback();
         }
+      })
+      .catch((error) => {
+        console.log(error);
       });
 }

@@ -20,7 +20,9 @@ export class MainMenuComponent {
     this._data = d;
   }
 
-  /** */
+  /**
+   * Отрисовка главного меню
+  */
   render() {
     this.parent.innerHTML = this.template({data: this._data});
   }

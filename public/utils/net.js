@@ -1,4 +1,4 @@
-const backHost = 'http://localhost:3000';
+const backHost = 'https://escapade-backend.herokuapp.com';
 
 
 /** */
@@ -40,7 +40,7 @@ export class Net {
   }
 
   /**
-   * Пост запрос, с JSON body
+   * Отправка аватара
    * @param {string} url
    * @param {object} body
    * @return {Promise<Response>}
@@ -55,7 +55,7 @@ export class Net {
   }
 
   /**
-   * Гет запрос, с JSON body
+   * Гет запрос
    * @param {string} url
    * @return {Promise<Response>}
    */
@@ -68,7 +68,7 @@ export class Net {
   }
 
   /**
-   * Гет запрос, с JSON body
+   * DELETE запрос
    * @param {string} url
    * @return {Promise<Response>}
    */
