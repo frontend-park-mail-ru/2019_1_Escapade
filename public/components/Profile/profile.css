@@ -14,11 +14,8 @@
 	flex-direction: column;
 	align-items: center;
   justify-content: center;
-  width: 80%;
-  scroll-behavior: auto;
-  overflow: auto;
   max-height: 100%;
-  margin: 30px auto;
+  margin-top: 218vh;
 }
 
 .profile__main{
@@ -73,13 +70,10 @@
 }
 
 .profile__form{
-grid-template-areas:  ".   form"
+grid-template-areas:  
                       "ava form"
-                      "ava from"
-                      "ava from"
-                      ".   from"
-
-
+                      "ava from";
+grid-template-columns: 1fr 1fr;
 }
 
 .avatar__button{
