@@ -29,7 +29,7 @@ export class ProfileComponent {
   render() {
     this._el.innerHTML = this.template({data: this._data});
     this._getAvatar();
-    this._form = this._el.querySelector('.signup__form');
+    this._form = this._el.querySelector('.profile__form');
     this._warnings = {};
     this._warnings.email = this._el.querySelector('.js-warning-email');
     this._warnings.login = this._el.querySelector('.js-warning-login');
