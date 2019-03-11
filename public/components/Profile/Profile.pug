@@ -8,8 +8,8 @@ block content
           .profile__avatar
             - var url = data.avatar          
           .profile__info
-            form.signup__form(novalidate='novalidate')
-              .profile__row
+            form.profile__form(novalidate='novalidate')
+              .profile__avatar
                 .profile__name Avatar
                 span(id='output' class="inner")
                 label(for="file" class="custom-file-upload button") Load avatar
@@ -35,9 +35,6 @@ block content
             br
             hr
             br
-            .profile__row
-              .profile__name Games Played
-              .profile__value #{data.played}
             .profile__row
               .hrefBackToMenu 
                 a.back(data-href='menu', href='menu' ) Назад в меню

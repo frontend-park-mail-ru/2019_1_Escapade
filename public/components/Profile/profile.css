@@ -16,14 +16,9 @@
   justify-content: center;
   width: 80%;
   scroll-behavior: auto;
-
   overflow: auto;
-  width: 500px;
   max-height: 100%;
   margin: 30px auto;
-  background-repeat: no-repeat;
-  background-size: 100% 40px, 100% 40px, 100% 14px, 100% 14px;
-  background-attachment: local, local, scroll, scroll;
 }
 
 .profile__main{
@@ -37,11 +32,6 @@
   .profile__main{
     flex-direction: column;
   }
-}
-
-.profile__avatar__img {
-  width: 220px;
-  height: 160px;
 }
 
 .profile__info{
@@ -68,6 +58,25 @@
   flex-direction: column;
   justify-content:space-between ;
   align-items: center;
+  grid-area: ava;
+}
+
+.profile__row{
+  grid-area: row;
+}
+
+.profile__form{
+  display: grid;
+  text-align: center;
+
+  grid-template-areas:  ".   row ."
+                        "ava row ."
+                        "ava row ."
+                        "ava row ."
+                        ".   row ."
+                        ". row ."
+
+
 }
 
 .avatar__button{
