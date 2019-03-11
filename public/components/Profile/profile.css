@@ -61,20 +61,23 @@
   grid-area: ava;
 }
 
-.profile__row{
-  grid-area: row;
-}
-
 .profile__form{
   display: grid;
   text-align: center;
+}
 
-  grid-template-areas:  ".   row ."
-                        "ava row ."
-                        "ava row ."
-                        "ava row ."
-                        ".   row ."
-                        ". row ."
+.profile__data{
+  display: flex;
+  flex-direction: column;
+  grid-area: form;
+}
+
+.profile__form{
+grid-template-areas:  ".   form"
+                      "ava form"
+                      "ava from"
+                      "ava from"
+                      ".   from"
 
 
 }

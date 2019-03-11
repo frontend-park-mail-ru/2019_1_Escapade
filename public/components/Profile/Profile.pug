@@ -14,27 +14,29 @@ block content
                 span(id='output' class="inner")
                 label(for="file" class="custom-file-upload button") Load avatar
                 input(id="file" type="file")
+              .profile__data
+                .profile__row
+                  .profile__name Login
+                  input.input.signup__input.text-h2#login(type='login', name='login',  value=data.name)
+                  .warning.signup__warning.hidden.js-warning-login
+                .profile__row
+                  .profile__name Email
+                  input.input.signup__input.text-h2#email(type='email', name='email',  value=data.email)
+                  .warning.signup__warning.hidden.js-warning-email
+                .profile__row
+                  .profile__name Password
+                  input.input.signup__input.text-h2#password(type='password', name='password', placeholder='******', autocomplete="new-password")
+                  .warning.signup__warning.hidden.js-warning-password
+                .profile__row
+                  .profile__name Repeat password
+                  input.input.signup__input.text-h2#password-repeat(type='password', name='password-repeat',  placeholder='******', autocomplete="new-password")
+                  .warning.signup__warning.hidden.js-warning-repassword
+                .profile__row
+                  input.change__submit.button(id="submit_changes", type='submit', name='submit', value='Изменить данные')
+            .profile__footer
+              br
+              hr
+              br
               .profile__row
-                .profile__name Login
-                input.input.signup__input.text-h2#login(type='login', name='login',  value=data.name)
-                .warning.signup__warning.hidden.js-warning-login
-              .profile__row
-                .profile__name Email
-                input.input.signup__input.text-h2#email(type='email', name='email',  value=data.email)
-                .warning.signup__warning.hidden.js-warning-email
-              .profile__row
-                .profile__name Password
-                input.input.signup__input.text-h2#password(type='password', name='password', placeholder='******', autocomplete="new-password")
-                .warning.signup__warning.hidden.js-warning-password
-              .profile__row
-                .profile__name Repeat password
-                input.input.signup__input.text-h2#password-repeat(type='password', name='password-repeat',  placeholder='******', autocomplete="new-password")
-                .warning.signup__warning.hidden.js-warning-repassword
-              .profile__row
-                input.change__submit.button(id="submit_changes", type='submit', name='submit', value='Изменить данные')
-            br
-            hr
-            br
-            .profile__row
-              .hrefBackToMenu 
-                a.back(data-href='menu', href='menu' ) Назад в меню
+                .hrefBackToMenu 
+                  a.back(data-href='menu', href='menu' ) Назад в меню
