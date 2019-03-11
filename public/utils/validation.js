@@ -18,11 +18,32 @@ export function validateEmail(email) {
 
 /**
  * Валидация пароля
- * @param {*} pass
+ * @param {*} password
  * @return {boolean}
  */
-export function validatePass(pass) {
-  return R_PASSWORD.test(pass);
+export function validatePass(password) {
+  let message = '';
+  if (R_PASSWORD.test(password) !== true) {
+    message = `Password must be at least 3 letters`;
+    if (password.length === 0) {
+      message = 'Fill password field please';
+    }
+  }
+  return message;
+}
+
+
+/**
+ * Валидация логина
+ * @param {*} login
+ * @return {boolean}
+ */
+export function validateLogin(login) {
+  let message = '';
+  if (login.length < 3) {
+    message = 'Login must be at least 3 letters';
+  }
+  return message;
 }
 
 /**

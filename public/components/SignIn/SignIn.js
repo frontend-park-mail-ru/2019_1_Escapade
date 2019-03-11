@@ -61,8 +61,10 @@ export class SignInComponent {
    */
   _validateInput({email, password}) {
     let isValid = true;
+    let message = '';
 
     this._hideWarning(this._warnings.email);
+    email = makeSafe(email);
     message = validateEmail(email);
     if (message.length !== 0 ) {
       this._showWarning(this._warnings.email, message);
@@ -70,11 +72,9 @@ export class SignInComponent {
     }
 
     this._hideWarning(this._warnings.pass);
-    if (validatePass(password) !== true) {
-      let message = 'Invalid password format';
-      if (password.length === 0) {
-        message = 'Fill password field please';
-      }
+    password = makeSafe(password);
+    password = validatePass(password);
+    if (message.length !== 0 ) {
       this._showWarning(this._warnings.pass, message);
       isValid = false;
     }

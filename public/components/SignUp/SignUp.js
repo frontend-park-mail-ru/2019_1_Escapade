@@ -1,5 +1,5 @@
 import signUpTemplate from './SignUp.pug';
-import {validateEmail, validatePass} from '../../utils/validation.js';
+import {validateEmail, validatePass, validateLogin, makeSafe} from '../../utils/validation.js';
 import {User} from '../../utils/user.js';
 import {Net} from '../../utils/net.js';
 import {createProfile} from '../../main.js';
@@ -67,41 +67,33 @@ export class SignUpComponent {
   _validateInput({email, name, password, repass}) {
     let isValid = true;
     let message = '';
+
     this._hideWarning(this._warnings.email);
+    email = makeSafe(email);
     message = validateEmail(email);
     if (message.length !== 0 ) {
       this._showWarning(this._warnings.email, message);
       isValid = false;
     }
 
-
     this._hideWarning(this._warnings.login);
-    if (validatePass(name) !== true) {
-      let message = 'Invalid login format. Login must be at least 3 letters';
-      if (name.length === 0) {
-        message = 'Fill login field please';
-      }
+    name = makeSafe(name);
+    message = validateLogin(name);
+    if (message.length !== 0 ) {
       this._showWarning(this._warnings.login, message);
       isValid = false;
     }
 
-    this._hideWarning(this._warnings.pass);
-    if (validatePass(password) !== true) {
-      let message = `Invalid password format.
-       Password must be at least 3 letters`;
-      if (password.length === 0) {
-        message = 'Fill password field please';
-      }
+    password = makeSafe(password);
+    password = validatePass(password);
+    if (message.length !== 0 ) {
       this._showWarning(this._warnings.pass, message);
       isValid = false;
     }
 
     this._hideWarning(this._warnings.repass);
     if (repass !== password) {
-      let message = 'Passwords dont match';
-      if (repass.length === 0) {
-        message = 'Repeat password please';
-      }
+      message = 'Passwords dont match';
       this._showWarning(this._warnings.repass, message);
       isValid = false;
     }
