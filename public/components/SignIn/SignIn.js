@@ -63,14 +63,10 @@ export class SignInComponent {
     let isValid = true;
 
     this._hideWarning(this._warnings.email);
-    if (validateEmail(email) !== true) {
-      let message = 'Invalid email format';
-      if (email.length === 0) {
-        message = 'Fill email field please';
-      }
+    validateEmail(email).then( (message) => {
       this._showWarning(this._warnings.email, message);
       isValid = false;
-    }
+    });
 
     this._hideWarning(this._warnings.pass);
     if (validatePass(password) !== true) {
