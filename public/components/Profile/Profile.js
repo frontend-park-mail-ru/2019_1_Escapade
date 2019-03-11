@@ -1,6 +1,6 @@
 import ProfileTemplate from './Profile.pug';
 import {Net} from '../../utils/net.js';
-import {validateEmail, validatePass} from '../../utils/validation.js';
+import {validateEmail, validatePass, validateLogin, makeSafe} from '../../utils/validation.js';
 import {User} from '../../utils/user.js';
 import {createProfile} from '../../main.js';
 /**
@@ -70,51 +70,40 @@ export class ProfileComponent {
    * @return {boolean}
    */
   _validateInput(data) {
+    let message = '';
     let isValid = true;
     this._hideWarning(this._warnings.email);
     this._hideWarning(this._warnings.login);
     this._hideWarning(this._warnings.pass);
     this._hideWarning(this._warnings.repass);
+    data.email = makeSafe(data.email);
     if (data.email != this._data.email) {
-      if (validateEmail(data.email) !== true) {
-        let message = 'Invalid email format';
-        if (data.email.length === 0) {
-          message = 'Fill email field please';
-        }
+      message = validateEmail(data.email);
+      if (message.length !== 0 ) {
         this._showWarning(this._warnings.email, message);
         isValid = false;
       }
     }
 
+    data.name = makeSafe(data.name);
     if (data.name != this._data.name) {
-      this._hideWarning(this._warnings.login);
-      if (validatePass(data.name) !== true) {
-        let message = 'Invalid login format';
-        if (data.name.length === 0) {
-          message = 'Fill login field please';
-        }
+      message = validateLogin(data.name);
+      if (message.length !== 0 ) {
         this._showWarning(this._warnings.login, message);
         isValid = false;
       }
     }
 
+    data.password = makeSafe(data.password);
+    data.repass = makeSafe(data.repass);
     if (data.password != '') {
-      this._hideWarning(this._warnings.pass);
-      if (validatePass(data.password) !== true) {
-        let message = 'Invalid password format';
-        if (data.password.length === 0) {
-          message = 'Fill password field please';
-        }
+      message = validatePass(data.password);
+      if (message.length !== 0 ) {
         this._showWarning(this._warnings.pass, message);
         isValid = false;
       }
-
-      this._hideWarning(this._warnings.repass);
       if (data.repass !== data.password) {
-        let message = 'Passwords dont match';
-        if (data.repass.length === 0) {
-          message = 'Repeat password please';
-        }
+        message = 'Passwords dont match';
         this._showWarning(this._warnings.repass, message);
         isValid = false;
       }

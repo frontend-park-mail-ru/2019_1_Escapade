@@ -91,6 +91,7 @@ export class SignUpComponent {
       isValid = false;
     }
 
+    repass = makeSafe(repass);
     this._hideWarning(this._warnings.repass);
     if (repass !== password) {
       message = 'Passwords dont match';
