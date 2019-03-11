@@ -85,7 +85,7 @@ export class SignUpComponent {
     }
 
     password = makeSafe(password);
-    password = validatePass(password);
+    message = validatePass(password);
     if (message.length !== 0 ) {
       this._showWarning(this._warnings.pass, message);
       isValid = false;

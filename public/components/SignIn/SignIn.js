@@ -1,5 +1,5 @@
 import signInTemplate from './SignIn.pug';
-import {validatePass, validateEmail} from '../../utils/validation.js';
+import {validateEmail, validatePass, makeSafe} from '../../utils/validation.js';
 import {User} from '../../utils/user.js';
 import {Net} from '../../utils/net.js';
 import {createProfile} from '../../main.js';
@@ -73,7 +73,7 @@ export class SignInComponent {
 
     this._hideWarning(this._warnings.pass);
     password = makeSafe(password);
-    password = validatePass(password);
+    message = validatePass(password);
     if (message.length !== 0 ) {
       this._showWarning(this._warnings.pass, message);
       isValid = false;
