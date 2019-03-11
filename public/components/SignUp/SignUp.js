@@ -66,11 +66,13 @@ export class SignUpComponent {
    */
   _validateInput({email, name, password, repass}) {
     let isValid = true;
+    let message = '';
     this._hideWarning(this._warnings.email);
-    validateEmail(email).then( (message) => {
+    message = validateEmail(email);
+    if (message.length !== 0 ) {
       this._showWarning(this._warnings.email, message);
       isValid = false;
-    });
+    }
 
 
     this._hideWarning(this._warnings.login);
