@@ -1,6 +1,6 @@
 import {Net} from '../../utils/net.js';
 import {User} from '../../utils/user.js';
-import {MainMenuComponent} from '../MainMenu/MainMenu.js';
+import {MainMenuComponent} from '../MainMenuView/MainMenu.js';
 /** */
 export class SignOutComponent {
   /**
