@@ -226,6 +226,7 @@ export class ProfileView extends BaseView {
             data.password = '';
             data.repassword = '';
             User.setUser({...data});
+            Bus.emit('userUpdate', null);
             router.open('/profile');
           } else {
             return resp.json();

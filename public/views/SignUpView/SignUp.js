@@ -126,6 +126,7 @@ export class SignUpView extends BaseView {
         .then((resp) => {
           if (resp.status === 201) {
             User.setUser({...data});
+            Bus.emit('userUpdate', null);
             router.open('/profile');
           } else {
             return resp.json();

@@ -107,6 +107,7 @@ export class SignInView extends BaseView {
             resp.json()
                 .then((json) => {
                   User.setUser({...json});
+                  Bus.emit('userUpdate', null);
                   router.open('/profile');
                 });
           } else {
