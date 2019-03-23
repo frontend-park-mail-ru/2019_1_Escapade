@@ -52,6 +52,7 @@ export default class BaseView {
    *
    */
   render() {
+    this.parent.innerHTML = '';
     this.parent.innerHTML = this.template({data: this._data});
   }
 }
