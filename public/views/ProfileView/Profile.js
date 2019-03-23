@@ -3,8 +3,8 @@ import {Net} from '../../utils/net.js';
 import {validateEmail, validatePass, validateLogin, makeSafe}
   from '../../utils/validation.js';
 import {User} from '../../utils/user.js';
-import {createProfile} from '../../main.js';
 import BaseView from '../BaseView';
+import router from '../../main';
 /**
  *
  */
@@ -224,7 +224,7 @@ export class ProfileView extends BaseView {
             data.password = '';
             data.repassword = '';
             User.setUser({...data});
-            createProfile();
+            router.open('/profile');
           } else {
             return resp.json();
           }

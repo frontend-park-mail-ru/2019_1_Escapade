@@ -1,6 +1,6 @@
 import {Net} from '../../utils/net.js';
 import {User} from '../../utils/user.js';
-import {MainMenuView} from '../MainMenuView/MainMenu.js';
+import router from '../../main';
 /** */
 export class SignOut {
   /**
@@ -12,11 +12,7 @@ export class SignOut {
         .then((resp) => {
           if (resp.status === 200) {
             User.removeUser();
-            const menu = new MainMenuView({
-              el: application,
-            });
-            menu.data = User;
-            menu.render();
+            router.open('/');
           }
         });
   }

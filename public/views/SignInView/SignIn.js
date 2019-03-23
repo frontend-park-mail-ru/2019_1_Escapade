@@ -2,8 +2,8 @@ import signInTemplate from './SignIn.pug';
 import {validateEmail, validatePass, makeSafe} from '../../utils/validation.js';
 import {User} from '../../utils/user.js';
 import {Net} from '../../utils/net.js';
-import {createProfile} from '../../main.js';
 import BaseView from '../BaseView';
+import router from '../../main';
 
 
 /** */
@@ -105,7 +105,7 @@ export class SignInView extends BaseView {
             resp.json()
                 .then((json) => {
                   User.setUser({...json});
-                  createProfile();
+                  router.open('/profile');
                 });
           } else {
             resp.json()

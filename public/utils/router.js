@@ -74,7 +74,8 @@ export default class Router {
    */
   start() {
     this.root.addEventListener('click', function(event) {
-      if (!(event.target instanceof HTMLAnchorElement)) {
+      if (!(event.target instanceof HTMLAnchorElement) ||
+        event.target.classList.contains('team__a')) {
         return;
       }
 

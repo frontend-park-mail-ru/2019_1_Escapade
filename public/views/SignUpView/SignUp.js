@@ -3,8 +3,8 @@ import {validateEmail, validatePass, validateLogin, makeSafe}
   from '../../utils/validation.js';
 import {User} from '../../utils/user.js';
 import {Net} from '../../utils/net.js';
-import {createProfile} from '../../main.js';
 import BaseView from '../BaseView';
+import router from '../../main';
 /** */
 export class SignUpView extends BaseView {
   /**
@@ -124,7 +124,7 @@ export class SignUpView extends BaseView {
         .then((resp) => {
           if (resp.status === 201) {
             User.setUser({...data});
-            createProfile();
+            router.open('/profile');
           } else {
             return resp.json();
           }
