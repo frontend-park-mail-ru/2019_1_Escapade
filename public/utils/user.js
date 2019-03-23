@@ -1,5 +1,5 @@
 import {Net} from './net.js';
-
+import Bus from './bus';
 /** */
 class UserSingleton {
   /** */
@@ -22,6 +22,7 @@ class UserSingleton {
     this.played = played || 0;
     this.avatar = avatar || './img/qrosh.png';
     this.name = name || null;
+    Bus.emit('userUpdate', null);
   }
 
   /**
@@ -32,6 +33,7 @@ class UserSingleton {
     this.played = null;
     this.avatar = null;
     this.name = null;
+    Bus.emit('userUpdate', null);
   }
 }
 

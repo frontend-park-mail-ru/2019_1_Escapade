@@ -5,6 +5,7 @@ import {validateEmail, validatePass, validateLogin, makeSafe}
 import {User} from '../../utils/user.js';
 import BaseView from '../BaseView';
 import router from '../../main';
+import Bus from '../../utils/bus';
 /**
  *
  */
@@ -15,6 +16,7 @@ export class ProfileView extends BaseView {
    */
   constructor(parent) {
     super(parent, ProfileTemplate);
+    Bus.on('userUpdate', this.render.bind(this));
   }
 
   /** */

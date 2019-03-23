@@ -2,6 +2,7 @@ import signUpTemplate from './SignUp.pug';
 import {validateEmail, validatePass, validateLogin, makeSafe}
   from '../../utils/validation.js';
 import {User} from '../../utils/user.js';
+import Bus from '../../utils/bus';
 import {Net} from '../../utils/net.js';
 import BaseView from '../BaseView';
 import router from '../../main';
@@ -13,6 +14,7 @@ export class SignUpView extends BaseView {
    */
   constructor(parent) {
     super(parent, signUpTemplate);
+    Bus.on('userUpdate', this.render.bind(this));
   }
 
   /**

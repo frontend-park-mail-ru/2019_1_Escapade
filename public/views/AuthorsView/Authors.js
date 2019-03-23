@@ -1,6 +1,7 @@
 import authorsTemplate from './Authors.pug';
 import BaseView from '../BaseView';
 import {User} from '../../utils/user.js';
+import Bus from '../../utils/bus';
 
 /** */
 export class AuthorsView extends BaseView {
@@ -10,6 +11,7 @@ export class AuthorsView extends BaseView {
    */
   constructor(parent) {
     super(parent, authorsTemplate);
+    Bus.on('userUpdate', this.render.bind(this));
   }
 
   /** */

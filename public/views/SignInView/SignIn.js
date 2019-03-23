@@ -4,6 +4,7 @@ import {User} from '../../utils/user.js';
 import {Net} from '../../utils/net.js';
 import BaseView from '../BaseView';
 import router from '../../main';
+import Bus from '../../utils/bus';
 
 
 /** */
@@ -14,6 +15,7 @@ export class SignInView extends BaseView {
    */
   constructor(parent) {
     super(parent, signInTemplate);
+    Bus.on('userUpdate', this.render.bind(this));
   }
 
   /**
