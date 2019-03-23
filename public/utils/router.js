@@ -1,4 +1,4 @@
-import {signOut} from '../views/SignOut/SignOut';
+import bus from './bus';
 
 /**
  *
@@ -88,7 +88,7 @@ export default class Router {
         pathname: link.pathname,
       });
       if (link.pathname === '/sign_out') {
-        signOut.signOut();
+        bus.emit('logout', null);
         return;
       }
       this.open(link.pathname);

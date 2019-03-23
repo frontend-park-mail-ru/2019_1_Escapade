@@ -5,6 +5,12 @@ import Bus from '../../utils/bus';
 /** */
 class SignOut {
   /**
+   *
+   */
+  constructor() {
+    Bus.on('logout', this.signOut.bind(this));
+  }
+  /**
    * Выход и возвращение в главное меню
    * @param {User} User
   */
