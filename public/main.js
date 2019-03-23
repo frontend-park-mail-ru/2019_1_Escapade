@@ -15,6 +15,7 @@ const application = document.getElementById('application');
 /** */
 function createMenu() {
   const menu = new MainMenuView(application);
+  menu.render();
   menu.show();
 }
 
@@ -32,6 +33,7 @@ function signOut() {
  */
 function createSignIn() {
   const signin = new SignInView(application);
+  signin.render();
   signin.show();
 }
 
@@ -40,6 +42,7 @@ function createSignIn() {
  */
 function createSignUp() {
   const signup = new SignUpView(application);
+  signup.render();
   signup.show();
 }
 
@@ -48,6 +51,7 @@ function createSignUp() {
  */
 function createLeaderboard() {
   const board = new LeaderBoardView(application);
+  board.render();
   board.show();
 }
 
@@ -56,12 +60,14 @@ function createLeaderboard() {
  */
 function createAuthors() {
   const authors = new AuthorsView(application);
+  authors.render();
   authors.show();
 }
 
 /** */
 export function createProfile() { // TODO
   const profile = new ProfileView(application);
+  profile.render();
   profile.show();
 }
 
