@@ -1,34 +1,25 @@
 import signUpTemplate from './SignUp.pug';
-import {validateEmail, validatePass, validateLogin, makeSafe} from '../../utils/validation.js';
+import {validateEmail, validatePass, validateLogin, makeSafe}
+  from '../../utils/validation.js';
 import {User} from '../../utils/user.js';
 import {Net} from '../../utils/net.js';
 import {createProfile} from '../../main.js';
+import BaseView from '../BaseView';
 /** */
-export class SignUpComponent {
+export class SignUpView extends BaseView {
   /**
    *
    * @param {HTMLElement} parent
    */
-  constructor({
-    el = document.body,
-  } = {}) {
-    this.parent = el;
-    this.template = signUpTemplate;
-  }
-
-  /**
-   * @param {Object} data
-  */
-  set data(data = []) {
-    this._data = data;
+  constructor(parent) {
+    super(parent, signUpTemplate);
   }
 
   /**
    * Отрисовка формы регистрации и добавление лисенеров
   */
   render() {
-    this.parent.innerHTML = this.template({data: this._data});
-
+    super.render();
     this._warnings = {};
     this._warnings.email = this.parent.querySelector('.js-warning-email');
     this._warnings.login = this.parent.querySelector('.js-warning-login');
@@ -71,7 +62,7 @@ export class SignUpComponent {
     this._hideWarning(this._warnings.email);
     email = makeSafe(email);
     message = validateEmail(email);
-    if (message.length !== 0 ) {
+    if (message.length !== 0) {
       this._showWarning(this._warnings.email, message);
       isValid = false;
     }
@@ -79,14 +70,14 @@ export class SignUpComponent {
     this._hideWarning(this._warnings.login);
     name = makeSafe(name);
     message = validateLogin(name);
-    if (message.length !== 0 ) {
+    if (message.length !== 0) {
       this._showWarning(this._warnings.login, message);
       isValid = false;
     }
 
     password = makeSafe(password);
     message = validatePass(password);
-    if (message.length !== 0 ) {
+    if (message.length !== 0) {
       this._showWarning(this._warnings.pass, message);
       isValid = false;
     }

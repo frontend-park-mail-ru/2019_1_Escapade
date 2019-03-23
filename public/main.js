@@ -1,12 +1,12 @@
 'use strict';
 
-import {LeaderBoardComponent} from './views/LeaderBoardView/LeaderBoard.js';
-import {SignOutComponent} from './views/SignOut/SignOut.js';
-import {MainMenuComponent} from './views/MainMenuView/MainMenu.js';
-import {AuthorsComponent} from './views/AuthorsView/Authors.js';
-import {SignUpComponent} from './views/SignUpView/SignUp.js';
-import {SignInComponent} from './views/SignInView/SignIn.js';
-import {ProfileComponent} from './views/ProfileView/Profile.js';
+import {LeaderBoardView} from './views/LeaderBoardView/LeaderBoard.js';
+import {SignOut} from './views/SignOut/SignOut.js';
+import {MainMenuView} from './views/MainMenuView/MainMenu.js';
+import {AuthorsView} from './views/AuthorsView/Authors.js';
+import {SignUpView} from './views/SignUpView/SignUp.js';
+import {SignInView} from './views/SignInView/SignIn.js';
+import {ProfileView} from './views/ProfileView/Profile.js';
 import {User, checkAuth} from './utils/user.js';
 
 const application = document.getElementById('application');
@@ -14,7 +14,7 @@ const application = document.getElementById('application');
 
 /** */
 function createMenu() {
-  const menu = new MainMenuComponent({
+  const menu = new MainMenuView({
     el: application,
   });
   menu.data = User;
@@ -26,7 +26,7 @@ function createMenu() {
  *
  */
 function signOut() {
-  const signout = new SignOutComponent();
+  const signout = new SignOut();
   signout.signOut(User);
 }
 
@@ -34,7 +34,7 @@ function signOut() {
  *
  */
 function createSignIn() {
-  const signin = new SignInComponent({
+  const signin = new SignInView({
     el: application,
   });
   signin.data = User;
@@ -45,18 +45,16 @@ function createSignIn() {
  *
  */
 function createSignUp() {
-  const signup = new SignUpComponent({
-    el: application,
-  });
+  const signup = new SignUpView(application);
   signup.data = User;
-  signup.render();
+  signup.show();
 }
 
 /**
  *
  */
 function createLeaderboard() {
-  const board = new LeaderBoardComponent({
+  const board = new LeaderBoardView({
     el: application,
   });
   board.render();
@@ -66,7 +64,7 @@ function createLeaderboard() {
  *
  */
 function createAuthors() {
-  const authors = new AuthorsComponent({
+  const authors = new AuthorsView({
     el: application,
   });
   authors.data = User;
@@ -75,7 +73,7 @@ function createAuthors() {
 
 /** */
 export function createProfile() { // TODO
-  const profile = new ProfileComponent({
+  const profile = new ProfileView({
     el: application,
   });
   profile.data = User;

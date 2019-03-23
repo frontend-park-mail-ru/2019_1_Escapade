@@ -3,7 +3,7 @@ import {BoardComponent} from './Board/Board.js';
 import {Net} from '../../utils/net.js';
 
 /** */
-export class LeaderBoardComponent {
+export class LeaderBoardView {
   /**
    *
    * @param {*} param0

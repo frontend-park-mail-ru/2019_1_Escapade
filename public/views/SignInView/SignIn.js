@@ -6,7 +6,7 @@ import {createProfile} from '../../main.js';
 
 
 /** */
-export class SignInComponent {
+export class SignInView {
   /**
    *
    * @param {*} param0
@@ -66,7 +66,7 @@ export class SignInComponent {
     this._hideWarning(this._warnings.email);
     email = makeSafe(email);
     message = validateEmail(email);
-    if (message.length !== 0 ) {
+    if (message.length !== 0) {
       this._showWarning(this._warnings.email, message);
       isValid = false;
     }
@@ -74,7 +74,7 @@ export class SignInComponent {
     this._hideWarning(this._warnings.pass);
     password = makeSafe(password);
     message = validatePass(password);
-    if (message.length !== 0 ) {
+    if (message.length !== 0) {
       this._showWarning(this._warnings.pass, message);
       isValid = false;
     }

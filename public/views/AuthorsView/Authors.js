@@ -1,7 +1,7 @@
 import authorsTemplate from './Authors.pug';
 
 /** */
-export class AuthorsComponent {
+export class AuthorsView {
   /**
    *
    * @param {*} param0

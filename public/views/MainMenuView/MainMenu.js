@@ -1,7 +1,7 @@
 import menuTemplate from './MainMenu.pug';
 
 /** */
-export class MainMenuComponent {
+export class MainMenuView {
   /**
    *
    * @param {*} param0

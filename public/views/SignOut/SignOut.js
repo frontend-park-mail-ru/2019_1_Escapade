@@ -1,8 +1,8 @@
 import {Net} from '../../utils/net.js';
 import {User} from '../../utils/user.js';
-import {MainMenuComponent} from '../MainMenuView/MainMenu.js';
+import {MainMenuView} from '../MainMenuView/MainMenu.js';
 /** */
-export class SignOutComponent {
+export class SignOut {
   /**
    * Отрисовка главного меню
    * @param {User} User
@@ -12,7 +12,7 @@ export class SignOutComponent {
         .then((resp) => {
           if (resp.status === 200) {
             User.removeUser();
-            const menu = new MainMenuComponent({
+            const menu = new MainMenuView({
               el: application,
             });
             menu.data = User;

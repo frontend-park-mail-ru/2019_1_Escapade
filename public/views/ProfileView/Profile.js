@@ -6,7 +6,7 @@ import {createProfile} from '../../main.js';
 /**
  *
  */
-export class ProfileComponent {
+export class ProfileView {
   /**
    *
    * @param {*} param0
@@ -79,7 +79,7 @@ export class ProfileComponent {
     data.email = makeSafe(data.email);
     if (data.email != this._data.email) {
       message = validateEmail(data.email);
-      if (message.length !== 0 ) {
+      if (message.length !== 0) {
         this._showWarning(this._warnings.email, message);
         isValid = false;
       }
@@ -88,7 +88,7 @@ export class ProfileComponent {
     data.name = makeSafe(data.name);
     if (data.name != this._data.name) {
       message = validateLogin(data.name);
-      if (message.length !== 0 ) {
+      if (message.length !== 0) {
         this._showWarning(this._warnings.login, message);
         isValid = false;
       }
@@ -98,7 +98,7 @@ export class ProfileComponent {
     data.repass = makeSafe(data.repass);
     if (data.password != '') {
       message = validatePass(data.password);
-      if (message.length !== 0 ) {
+      if (message.length !== 0) {
         this._showWarning(this._warnings.pass, message);
         isValid = false;
       }
