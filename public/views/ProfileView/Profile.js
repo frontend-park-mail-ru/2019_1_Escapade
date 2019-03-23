@@ -137,7 +137,7 @@ export class ProfileView extends BaseView {
     const formData = new FormData();
     formData.append('file', file);
     console.log('upload photo');
-    Net.postPhoto({url: '/user/Avatar', body: formData})
+    Net.postPhoto({url: '/avatar', body: formData})
         .then((resp) => {
           if (resp.status === 201) {
             resp
@@ -191,7 +191,7 @@ export class ProfileView extends BaseView {
    * @param {*} h
    */
   _getAvatar(w = 250, h = 250) {
-    Net.get({url: '/user/Avatar'})
+    Net.get({url: '/avatar'})
         .then((resp) => {
           console.log(resp.status);
           if (resp.status === 200) {

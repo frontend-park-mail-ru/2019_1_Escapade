@@ -98,7 +98,7 @@ export class SignInView extends BaseView {
    * @param {object} data
    */
   _login(data) {
-    Net.post({url: '/user/login', body: data})
+    Net.post({url: '/session', body: data})
         .then((resp) => {
           if (resp.status === 200) {
             resp.json()

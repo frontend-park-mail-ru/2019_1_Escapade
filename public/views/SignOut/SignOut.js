@@ -8,7 +8,7 @@ export class SignOut {
    * @param {User} User
   */
   signOut() {
-    Net.delete({url: '/user/logout'})
+    Net.delete({url: '/session'})
         .then((resp) => {
           if (resp.status === 200) {
             User.removeUser();
