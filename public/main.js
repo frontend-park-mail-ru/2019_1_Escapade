@@ -1,7 +1,6 @@
 'use strict';
 
 import {LeaderBoardView} from './views/LeaderBoardView/LeaderBoard.js';
-import {SignOut} from './views/SignOut/SignOut.js';
 import {MainMenuView} from './views/MainMenuView/MainMenu.js';
 import {AuthorsView} from './views/AuthorsView/Authors.js';
 import {SignUpView} from './views/SignUpView/SignUp.js';
@@ -21,8 +20,7 @@ router
     .register('/leaders', LeaderBoardView)
     .register('/about', AuthorsView)
     .register('/sign_in', SignInView)
-    .register('/profile', ProfileView)
-    .register('/sign_out', SignOut);
+    .register('/profile', ProfileView);
 
 checkAuth(router.start.bind(router));
 

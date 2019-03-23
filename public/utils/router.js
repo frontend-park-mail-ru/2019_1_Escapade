@@ -1,3 +1,5 @@
+import {signOut} from '../views/SignOut/SignOut';
+
 /**
  *
  */
@@ -85,7 +87,10 @@ export default class Router {
       console.log({
         pathname: link.pathname,
       });
-
+      if (link.pathname === '/sign_out') {
+        signOut.signOut();
+        return;
+      }
       this.open(link.pathname);
     }.bind(this));
 

@@ -2,9 +2,9 @@ import {Net} from '../../utils/net.js';
 import {User} from '../../utils/user.js';
 import router from '../../main';
 /** */
-export class SignOut {
+class SignOut {
   /**
-   * Отрисовка главного меню
+   * Выход и возвращение в главное меню
    * @param {User} User
   */
   signOut() {
@@ -17,3 +17,4 @@ export class SignOut {
         });
   }
 }
+export const signOut = new SignOut();
