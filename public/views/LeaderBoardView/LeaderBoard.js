@@ -1,32 +1,24 @@
 import leaderBoardTemplate from './LeaderBoard.pug';
 import {BoardComponent} from './Board/Board.js';
 import {Net} from '../../utils/net.js';
+import BaseView from '../BaseView';
 
 /** */
-export class LeaderBoardView {
+export class LeaderBoardView extends BaseView {
   /**
    *
-   * @param {*} param0
+   * @param {*} parent
    */
-  constructor({
-    el = document.body,
-  } = {}) {
-    this.parent = el;
-    this.template = leaderBoardTemplate;
+  constructor(parent) {
+    super(parent, leaderBoardTemplate);
     this._currPage = 1;
-  }
-
-  /**
-   * @param {*} d
-  */
-  set data(d = []) {
-    this._data = d;
   }
 
   /**
    * Отрисовка лидербода и получение необходимой информации с бэкэнда
   */
   render() {
+    super.render();
     Net.get({url: '/users/pages_amount'})
         .then((resp) => {
           return resp.json();
@@ -34,7 +26,6 @@ export class LeaderBoardView {
         .then((count) => {
           this._pagesCount = count.amount;
           console.log('Pages amount', count.amount);
-          this.parent.innerHTML = this.template();
           this._initButtons();
           this.board = new BoardComponent({
             el:

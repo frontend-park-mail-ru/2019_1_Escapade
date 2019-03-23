@@ -1,27 +1,18 @@
 import authorsTemplate from './Authors.pug';
+import BaseView from '../BaseView';
 
 /** */
-export class AuthorsView {
+export class AuthorsView extends BaseView {
   /**
    *
-   * @param {*} param0
+   * @param {*} parent
    */
-  constructor({
-    el = document.body,
-  } = {}) {
-    this.parent = el;
-    this.template = authorsTemplate;
-  }
-
-  /**
-   * @param {*} d
-  */
-  set data(d = []) {
-    this._data = d;
+  constructor(parent) {
+    super(parent, authorsTemplate);
   }
 
   /** */
   render() {
-    this.parent.innerHTML = this.template({data: this._data});
+    super.render();
   }
 }

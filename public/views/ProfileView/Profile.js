@@ -1,21 +1,20 @@
 import ProfileTemplate from './Profile.pug';
 import {Net} from '../../utils/net.js';
-import {validateEmail, validatePass, validateLogin, makeSafe} from '../../utils/validation.js';
+import {validateEmail, validatePass, validateLogin, makeSafe}
+  from '../../utils/validation.js';
 import {User} from '../../utils/user.js';
 import {createProfile} from '../../main.js';
+import BaseView from '../BaseView';
 /**
  *
  */
-export class ProfileView {
+export class ProfileView extends BaseView {
   /**
    *
-   * @param {*} param0
+   * @param {*} parent
    */
-  constructor({
-    el = document.body,
-  } = {}) {
-    this._el = el;
-    this.template = ProfileTemplate;
+  constructor(parent) {
+    super(parent, ProfileTemplate);
   }
 
   /**
@@ -27,7 +26,8 @@ export class ProfileView {
 
   /** */
   render() {
-    this._el.innerHTML = this.template({data: this._data});
+    super.render();
+
     this._getAvatar();
     this._form = this._el.querySelector('.profile__form');
     this._warnings = {};

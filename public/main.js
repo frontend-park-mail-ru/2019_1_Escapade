@@ -14,11 +14,9 @@ const application = document.getElementById('application');
 
 /** */
 function createMenu() {
-  const menu = new MainMenuView({
-    el: application,
-  });
+  const menu = new MainMenuView(application);
   menu.data = User;
-  menu.render();
+  menu.show();
 }
 
 
@@ -34,11 +32,9 @@ function signOut() {
  *
  */
 function createSignIn() {
-  const signin = new SignInView({
-    el: application,
-  });
+  const signin = new SignInView(application);
   signin.data = User;
-  signin.render();
+  signin.show();
 }
 
 /**
@@ -54,30 +50,24 @@ function createSignUp() {
  *
  */
 function createLeaderboard() {
-  const board = new LeaderBoardView({
-    el: application,
-  });
-  board.render();
+  const board = new LeaderBoardView(application);
+  board.show();
 }
 
 /**
  *
  */
 function createAuthors() {
-  const authors = new AuthorsView({
-    el: application,
-  });
+  const authors = new AuthorsView(application);
   authors.data = User;
-  authors.render();
+  authors.show();
 }
 
 /** */
 export function createProfile() { // TODO
-  const profile = new ProfileView({
-    el: application,
-  });
+  const profile = new ProfileView(application);
   profile.data = User;
-  profile.render();
+  profile.show();
 }
 
 const pages = {

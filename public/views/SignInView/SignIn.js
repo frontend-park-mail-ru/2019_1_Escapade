@@ -3,33 +3,24 @@ import {validateEmail, validatePass, makeSafe} from '../../utils/validation.js';
 import {User} from '../../utils/user.js';
 import {Net} from '../../utils/net.js';
 import {createProfile} from '../../main.js';
+import BaseView from '../BaseView';
 
 
 /** */
-export class SignInView {
+export class SignInView extends BaseView {
   /**
    *
-   * @param {*} param0
+   * @param {*} parent
    */
-  constructor({
-    el = document.body,
-  } = {}) {
-    this.parent = el;
-    this.template = signInTemplate;
-  }
-
-  /**
-   * @param {*} d
-  */
-  set data(d = []) {
-    this._data = d;
+  constructor(parent) {
+    super(parent, signInTemplate);
   }
 
   /**
    * Отрисовка формы логина и добавление лисенеров
   */
   render() {
-    this.parent.innerHTML = this.template({data: this._data});
+    super.render();
     this._warnings = {};
     this._warnings.email = this.parent.querySelector('.js-warning-email');
     this._warnings.pass = this.parent.querySelector('.js-warning-password');
