@@ -124,7 +124,9 @@ export class SignUpView extends BaseView {
         .then((resp) => {
           if (resp.status === 201) {
             User.setUser({...data});
+            console.log('register');
             createProfile();
+            console.log('profile');
           } else {
             return resp.json();
           }
