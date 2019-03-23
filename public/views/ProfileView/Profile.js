@@ -26,6 +26,7 @@ export class ProfileView extends BaseView {
 
   /** */
   render() {
+    this.data = User;
     super.render();
 
     this._getAvatar();

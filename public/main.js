@@ -15,7 +15,6 @@ const application = document.getElementById('application');
 /** */
 function createMenu() {
   const menu = new MainMenuView(application);
-  menu.data = User;
   menu.show();
 }
 
@@ -33,7 +32,6 @@ function signOut() {
  */
 function createSignIn() {
   const signin = new SignInView(application);
-  signin.data = User;
   signin.show();
 }
 
@@ -42,7 +40,6 @@ function createSignIn() {
  */
 function createSignUp() {
   const signup = new SignUpView(application);
-  signup.data = User;
   signup.show();
 }
 
@@ -59,14 +56,12 @@ function createLeaderboard() {
  */
 function createAuthors() {
   const authors = new AuthorsView(application);
-  authors.data = User;
   authors.show();
 }
 
 /** */
 export function createProfile() { // TODO
   const profile = new ProfileView(application);
-  profile.data = User;
   profile.show();
 }
 

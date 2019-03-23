@@ -1,5 +1,6 @@
 import authorsTemplate from './Authors.pug';
 import BaseView from '../BaseView';
+import {User} from '../../utils/user.js';
 
 /** */
 export class AuthorsView extends BaseView {
@@ -13,6 +14,7 @@ export class AuthorsView extends BaseView {
 
   /** */
   render() {
+    this.data = User;
     super.render();
   }
 }

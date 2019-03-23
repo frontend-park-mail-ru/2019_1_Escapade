@@ -1,6 +1,6 @@
 import menuTemplate from './MainMenu.pug';
 import BaseView from '../BaseView';
-
+import {User} from '../../utils/user.js';
 /** */
 export class MainMenuView extends BaseView {
   /**
@@ -15,6 +15,7 @@ export class MainMenuView extends BaseView {
    * Отрисовка главного меню
   */
   render() {
+    this.data = User;
     super.render();
   }
 }

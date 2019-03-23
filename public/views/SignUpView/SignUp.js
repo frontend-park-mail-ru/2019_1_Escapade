@@ -19,6 +19,7 @@ export class SignUpView extends BaseView {
    * Отрисовка формы регистрации и добавление лисенеров
   */
   render() {
+    this.data = User;
     super.render();
     this._warnings = {};
     this._warnings.email = this.parent.querySelector('.js-warning-email');
