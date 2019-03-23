@@ -1,5 +1,5 @@
 const backHost = 'https://escapade-backend.herokuapp.com';
-//const backHost = 'http://localhost:3000';
+// const backHost = 'http://localhost:8080';
 
 /** */
 export class Net {
