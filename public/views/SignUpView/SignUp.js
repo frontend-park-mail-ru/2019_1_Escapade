@@ -14,7 +14,6 @@ export class SignUpView extends BaseView {
    */
   constructor(parent) {
     super(parent, signUpTemplate);
-    Bus.on('userUpdate', this.render.bind(this));
   }
 
   /**

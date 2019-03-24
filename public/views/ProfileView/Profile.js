@@ -16,7 +16,6 @@ export class ProfileView extends BaseView {
    */
   constructor(parent) {
     super(parent, ProfileTemplate);
-    Bus.on('userUpdate', this.render.bind(this));
   }
 
   /** */

@@ -1,3 +1,6 @@
+import headerTmpl from '../templates/HeaderInner.pug';
+import Bus from '../utils/bus';
+
 
 /**
  * @class BaseView
@@ -12,8 +15,9 @@ export default class BaseView {
   constructor(parent, template) {
     this.parent = parent;
     this.parent.hidden = true;
-
     this.template = template;
+
+    Bus.on('userUpdate', this.onUserUpdate.bind(this));
   }
   /** */
   get active() {
@@ -54,5 +58,14 @@ export default class BaseView {
   render() {
     this.parent.innerHTML = '';
     this.parent.innerHTML = this.template({data: this._data});
+  }
+  /**
+   *
+   */
+  onUserUpdate() {
+    const header = this.parent.querySelector('.menu-header');
+    if (header) {
+      header.innerHTML = headerTmpl({data: this._data});
+    }
   }
 }
