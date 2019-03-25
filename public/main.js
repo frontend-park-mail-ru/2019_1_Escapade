@@ -1,6 +1,5 @@
 'use strict';
 
-import {LeaderBoardView} from './views/LeaderBoardView/LeaderBoard.js';
 import {MainMenuView} from './views/MainMenuView/MainMenu.js';
 import {AuthorsView} from './views/AuthorsView/Authors.js';
 import {SignUpView} from './views/SignUpView/SignUp.js';
@@ -10,6 +9,7 @@ import signOut from './views/SignOut/SignOut';
 import {checkAuth} from './utils/user.js';
 import Router from './utils/router';
 import bus from './utils/bus.js';
+import LeaderBoardMV from './ModelView/LeaderBoardMV';
 
 const root = document.getElementById('application');
 
@@ -19,7 +19,7 @@ router
     .register('/', MainMenuView)
     .register('/sign_in', SignInView)
     .register('/sign_up', SignUpView)
-    .register('/leaders', LeaderBoardView)
+    .register('/leaders', LeaderBoardMV.view)
     .register('/about', AuthorsView)
     .register('/sign_in', SignInView)
     .register('/profile', ProfileView);

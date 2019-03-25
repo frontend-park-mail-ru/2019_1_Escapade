@@ -4,12 +4,10 @@ import boardTemplate from './Board.pug';
 export class BoardComponent {
   /**
    *
-   * @param {*} param0
+   * @param {*} parent
    */
-  constructor({
-    el = document.body,
-  } = {}) {
-    this.parent = el;
+  constructor(parent) {
+    this.parent = parent;
     this.template = boardTemplate;
   }
 

@@ -1,10 +1,10 @@
 import leaderBoardTemplate from './LeaderBoard.pug';
 import {BoardComponent} from './Board/Board.js';
-import {Net} from '../../utils/net.js';
 import BaseView from '../BaseView';
+import Bus from '../../utils/bus';
 
 /** */
-export class LeaderBoardView extends BaseView {
+export default class LeaderBoardView extends BaseView {
   /**
    *
    * @param {*} parent
@@ -12,6 +12,13 @@ export class LeaderBoardView extends BaseView {
   constructor(parent) {
     super(parent, leaderBoardTemplate);
     this._currPage = 1;
+
+    Bus.on('respPagesAmount', this._initBoard.bind(this));
+    Bus.on('respPage', (users) => {
+      this.board.data = users;
+      this.board.render();
+      console.log('rerender board');
+    });
   }
 
   /**
@@ -19,24 +26,20 @@ export class LeaderBoardView extends BaseView {
   */
   render() {
     super.render();
-    Net.get({url: '/users/pages_amount'})
-        .then((resp) => {
-          return resp.json();
-        })
-        .then((count) => {
-          this._pagesCount = count.amount;
-          console.log('Pages amount', count.amount);
-          this._initButtons();
-          this.board = new BoardComponent({
-            el:
-            this.parent.querySelector('.leaderboard__wrapper'),
-          });
-          this._getPage(1)
-              .then((data) => {
-                this.board.data = data;
-                this.board.render();
-              });
-        });
+    Bus.emit('reqPagesAmount');
+    Bus.emit('reqPage', 1);
+  }
+
+  /**
+   *
+   * @param {*} amount
+   */
+  _initBoard(amount) {
+    this._pagesCount = amount;
+    this._initButtons();
+    this.board = new BoardComponent(
+        this.parent.querySelector('.leaderboard__wrapper'));
+    console.log('initBoard');
   }
 
   /**
@@ -59,12 +62,7 @@ export class LeaderBoardView extends BaseView {
     if (this._currPage === this._pagesCount) {
       return;
     }
-    this._getPage(this._currPage + 1)
-        .then((data) => {
-          console.log(data);
-          this.board.data = data;
-          this.board.render();
-        });
+    Bus.emit('reqPage', this._currPage + 1);
     if (this._currPage === 1) {
       this._leftArrow.classList.remove('arrow__inactive');
     }
@@ -81,11 +79,7 @@ export class LeaderBoardView extends BaseView {
     if (this._currPage == 1) {
       return;
     }
-    this._getPage(this._currPage - 1)
-        .then((data) => {
-          this.board.data = data;
-          this.board.render();
-        });
+    Bus.emit('reqPage', this._currPage - 1);
     if (this._currPage === this._pagesCount) {
       this._rightArrow.classList.remove('arrow__inactive');
     }
@@ -93,17 +87,5 @@ export class LeaderBoardView extends BaseView {
     if (this._currPage === 1) {
       this._leftArrow.classList.add('arrow__inactive');
     }
-  }
-
-  /**
-   * Получение списка юзеров для страницы с бэкэнда
-   *@param {int} page
-   @return {Promise<any>}
-   */
-  _getPage(page) {
-    return Net.get({url: `/users/pages/${page}`})
-        .then((resp) => {
-          return resp.json();
-        });
   }
 }
