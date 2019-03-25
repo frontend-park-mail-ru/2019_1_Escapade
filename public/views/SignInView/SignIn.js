@@ -15,8 +15,8 @@ export default class SignInView extends BaseView {
   constructor(parent) {
     super(parent, signInTemplate);
 
-    Bus.on('onSuccessLogin', (user) => {
-      User.setUser(...user);
+    Bus.on('onSuccessLogin', (usr) => {
+      User.setUser({...usr});
       Bus.emit('userUpdate');
       router.open('/profile');
     });
