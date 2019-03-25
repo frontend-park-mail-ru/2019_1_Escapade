@@ -165,8 +165,8 @@ export default class ProfileView extends BaseView {
         // Render thumbnail.
         document.getElementById('output').innerHTML =
           ['<img class="thumb" title="', escape(theFile.name),
-            '" src="', e.target.result, '" width="' + w +
-            '" height="' + h + '"  />'].join('');
+            '" src="', e.target.result, '" width="' + 250 +
+            '" height="' + 250 + '"  />'].join('');
       };
     })(img);
     // Read in the image file as a data URL.
@@ -180,7 +180,7 @@ export default class ProfileView extends BaseView {
     console.log('Failed to get avatar');
     document.getElementById('output')
         .innerHTML = ['<img class="thumb" ', '" src="./img/qrosh.png"'
-        + ' width="' + w + '" height="' + h + '"  />'].join('');
+        + ' width="' + 250 + '" height="' + 250 + '"  />'].join('');
   }
 
   /**

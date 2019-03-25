@@ -67,7 +67,7 @@ export default class ProfileModel {
    * @param {*} w
    * @param {*} h
    */
-  _getAvatar(w = 250, h = 250) {
+  _getAvatar() {
     Net.get({url: '/avatar'})
         .then((resp) => {
           console.log(resp.status);
