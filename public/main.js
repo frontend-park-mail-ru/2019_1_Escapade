@@ -9,7 +9,7 @@ import {checkAuth} from './utils/user.js';
 import Router from './utils/router';
 import bus from './utils/bus.js';
 import LeaderBoardMV from './ModelView/LeaderBoardMV';
-import SignInMV from './ModelView/SignInMV.js';
+import SignInMV from './ModelView/SignInMV';
 
 const root = document.getElementById('application');
 
@@ -21,7 +21,6 @@ router
     .register('/sign_up', SignUpView)
     .register('/leaders', LeaderBoardMV.view)
     .register('/about', AuthorsView)
-    .register('/sign_in', SignInView)
     .register('/profile', ProfileView);
 
 bus.on('logout', signOut);
