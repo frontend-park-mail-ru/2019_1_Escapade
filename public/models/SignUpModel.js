@@ -22,11 +22,11 @@ export default class SignUpModel {
           if (resp.status === 201) {
             Bus.emit('onSuccessAuth', data);
           } else {
-            return resp.json();
+            resp.json()
+                .then((error) => {
+                  Bus.emit('onFailedAuth', error);
+                });
           }
-        })
-        .then((error) => {
-          Bus.emit('onFailedAuth', error);
         })
         .catch((error) => {
           console.log('SignUp failed : ', error);
