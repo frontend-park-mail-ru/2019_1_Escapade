@@ -1,4 +1,5 @@
 import Bus from '../utils/bus';
+import {Net} from '../utils/net';
 /**
  *
  */
