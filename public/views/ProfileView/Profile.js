@@ -1,21 +1,35 @@
 import ProfileTemplate from './Profile.pug';
-import {Net} from '../../utils/net.js';
 import {validateEmail, validatePass, validateLogin, makeSafe}
   from '../../utils/validation.js';
 import {User} from '../../utils/user.js';
 import BaseView from '../BaseView';
-import router from '../../main';
 import Bus from '../../utils/bus';
 /**
  *
  */
-export class ProfileView extends BaseView {
+export default class ProfileView extends BaseView {
   /**
    *
    * @param {*} parent
    */
   constructor(parent) {
     super(parent, ProfileTemplate);
+
+    Bus.on('onSuccessChange', (usr) => {
+      usr.password = '';
+      usr.repassword = '';
+      User.setUser({...usr});
+      Bus.emit('userUpdate');
+    });
+    Bus.on('onFailedChange', (error) => {
+      this._showWarning(this._warnings.email, error.message);
+    });
+    Bus.on('onSuccessUpload', this._onSuccessUpload.bind(this));
+    Bus.on('onFailedUpload', (error) => {
+      this._showWarning(this._warnings.email, error.message);
+    });
+    Bus.on('onSuccessAvatarGet', this._onSuccessAvatarGet.bind(this));
+    Bus.on('onFailedAvatarGet', this._onFailedAvatarGet.bind(this));
   }
 
   /** */
@@ -23,7 +37,7 @@ export class ProfileView extends BaseView {
     this.data = User;
     super.render();
 
-    this._getAvatar();
+    Bus.emit('getAvatar');
     this._form = this.parent.querySelector('.profile__form');
     this._warnings = {};
     this._warnings.email = this.parent.querySelector('.js-warning-email');
@@ -51,11 +65,10 @@ export class ProfileView extends BaseView {
     data.name = this._form.elements['login'].value;
     data.password = this._form.elements['password'].value;
     data.repass = this._form.elements['password-repeat'].value;
-    console.log(this._data);
     if (this._validateInput(data)) {
-      console.log(' hello56 ' + data.email, ' ',
+      console.log(' Data : ' + data.email, ' ',
           data.name, ' ', data.password, ' ', data.repass);
-      this._changeProfile(data);
+      Bus.emit('changeProfile', data);
     }
   }
 
@@ -126,32 +139,6 @@ export class ProfileView extends BaseView {
 
   /**
    *
-   * @param {*} file
-   */
-  _uploadAvatar(file) {
-    const formData = new FormData();
-    formData.append('file', file);
-    console.log('upload photo');
-    Net.postPhoto({url: '/avatar', body: formData})
-        .then((resp) => {
-          if (resp.status === 201) {
-            resp
-                .json()
-                .then((json) => {
-                  console.log('Okey photo');
-                });
-          } else {
-            resp
-                .json()
-                .then((error) => {
-                  this._showWarning(this._warnings.email, error.error);
-                });
-          }
-        });
-  }
-
-  /**
-   *
    * @param {*} evt
    * @param {*} h
    * @param {*} w
@@ -164,7 +151,13 @@ export class ProfileView extends BaseView {
       alert('Image only please....');
       return;
     }
-    this._uploadAvatar(f);
+    Bus.emit('uploadAvatar', f);
+  }
+
+  /**
+   * @param {*} img
+   */
+  _onSuccessUpload(img) {
     const reader = new FileReader();
     // Closure to capture the file information.
     reader.onload = ((theFile) => {
@@ -175,64 +168,30 @@ export class ProfileView extends BaseView {
             '" src="', e.target.result, '" width="' + w +
             '" height="' + h + '"  />'].join('');
       };
-    })(f);
+    })(img);
     // Read in the image file as a data URL.
-    reader.readAsDataURL(f);
+    reader.readAsDataURL(img);
   }
 
   /**
    *
-   * @param {*} w
-   * @param {*} h
    */
-  _getAvatar(w = 250, h = 250) {
-    Net.get({url: '/avatar'})
-        .then((resp) => {
-          console.log(resp.status);
-          if (resp.status === 200) {
-            const buffer = resp.blob();
-            return buffer;
-          } else {
-            document.getElementById('output')
-                .innerHTML = ['<img class="thumb" ', '" src="./img/qrosh.png"'
-              + ' width="' + w + '" height="' + h + '"  />'].join('');
-            return;
-          }
-        })
-        .then((myBlob) => {
-          console.log(myBlob);
-          if (myBlob === undefined) {
-            return;
-          }
-          const objectURL = URL.createObjectURL(myBlob);
-          console.log('_getAvatar112' + objectURL);
-          document.getElementById('output')
-              .innerHTML = ['<img class="thumb" ',
-                '" src="', objectURL + '"  />'].join('');
-        });
+  _onFailedAvatarGet() {
+    console.log('Failed to get avatar');
+    document.getElementById('output')
+        .innerHTML = ['<img class="thumb" ', '" src="./img/qrosh.png"'
+        + ' width="' + w + '" height="' + h + '"  />'].join('');
   }
 
   /**
    *
-   * @param {*} data
+   * @param {*} blob
    */
-  _changeProfile(data) {
-    console.log(data);
-    Net.put({url: '/user', body: data})
-        .then((resp) => {
-          console.log(resp.status);
-          if (resp.status === 200) {
-            data.password = '';
-            data.repassword = '';
-            User.setUser({...data});
-            Bus.emit('userUpdate', null);
-            router.open('/profile');
-          } else {
-            return resp.json();
-          }
-        })
-        .catch((error) => {
-          this._showWarning(this._warnings.email, error.message);
-        });
+  _onSuccessAvatarGet(blob) {
+    const objectURL = URL.createObjectURL(blob);
+    console.log('_getAvatar' + objectURL);
+    document.getElementById('output')
+        .innerHTML = ['<img class="thumb" ',
+          '" src="', objectURL + '"  />'].join('');
   }
 }
