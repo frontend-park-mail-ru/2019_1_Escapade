@@ -1,14 +1,13 @@
 /* eslint-disable no-invalid-this */
-const CACHE_NAME = 'Esapade';
+const CACHE_NAME = 'Escapade';
 const {cacheUrls} = global.serviceWorkerOption;
 
 self.addEventListener('install', (event) => {
   event.waitUntil(
       caches
           .open(CACHE_NAME)
-          .then((cache) => {
-            return cache.addAll(cacheUrls);
-          })
+          .then((cache) => cache.addAll(cacheUrls))
+          .catch((err) => console.log({err})),
   );
 });
 
