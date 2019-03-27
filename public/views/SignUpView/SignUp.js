@@ -3,17 +3,25 @@ import {validateEmail, validatePass, validateLogin, makeSafe}
   from '../../utils/validation.js';
 import {User} from '../../utils/user.js';
 import Bus from '../../utils/bus';
-import {Net} from '../../utils/net.js';
 import BaseView from '../BaseView';
 import router from '../../main';
 /** */
-export class SignUpView extends BaseView {
+export default class SignUpView extends BaseView {
   /**
    *
    * @param {HTMLElement} parent
    */
   constructor(parent) {
     super(parent, signUpTemplate);
+
+    Bus.on('onSuccessAuth', (usr) => {
+      User.setUser({...usr});
+      Bus.emit('userUpdate');
+      router.open('/profile');
+    });
+    Bus.on('onFailedAuth', (error) => {
+      this._showWarning(this._warnings.email, error.message);
+    });
   }
 
   /**
@@ -48,7 +56,7 @@ export class SignUpView extends BaseView {
     data.repass = this._form.elements['password-repeat'].value;
     if (this._validateInput(data)) {
       console.log(data);
-      this._auth(data);
+      Bus.emit('auth', data);
     }
   }
 
@@ -112,30 +120,5 @@ export class SignUpView extends BaseView {
   _hideWarning(warning) {
     warning.classList.add('hidden');
     warning.innerHTML = '';
-  }
-
-
-  /**
-   * Отправка запроса авторизации и заполнение объекта User
-   * @param {object} data
-   */
-  _auth(data) {
-    console.log(data);
-    Net.post({url: '/user', body: data})
-        .then((resp) => {
-          if (resp.status === 201) {
-            User.setUser({...data});
-            Bus.emit('userUpdate', null);
-            router.open('/profile');
-          } else {
-            return resp.json();
-          }
-        })
-        .then((error) => {
-          this._showWarning(this._warnings.email, error.message);
-        })
-        .catch((error) => {
-          console.log('SignUp failed', error);
-        });
   }
 }

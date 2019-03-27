@@ -1,20 +1,28 @@
 import signInTemplate from './SignIn.pug';
 import {validateEmail, validatePass, makeSafe} from '../../utils/validation.js';
 import {User} from '../../utils/user.js';
-import {Net} from '../../utils/net.js';
 import BaseView from '../BaseView';
 import router from '../../main';
 import Bus from '../../utils/bus';
 
 
 /** */
-export class SignInView extends BaseView {
+export default class SignInView extends BaseView {
   /**
    *
    * @param {*} parent
    */
   constructor(parent) {
     super(parent, signInTemplate);
+
+    Bus.on('onSuccessLogin', (usr) => {
+      User.setUser({...usr});
+      Bus.emit('userUpdate');
+      router.open('/profile');
+    });
+    Bus.on('onFailedLogin', (error) => {
+      this._showWarning(this._warnings.email, error.message);
+    });
   }
 
   /**
@@ -43,7 +51,7 @@ export class SignInView extends BaseView {
     data.email = this._form.elements['email'].value;
     data.password = this._form.elements['password'].value;
     if (this._validateInput(data)) {
-      this._login(data);
+      Bus.emit('login', data);
     }
   }
 
@@ -93,31 +101,5 @@ export class SignInView extends BaseView {
   _hideWarning(warning) {
     warning.classList.add('hidden');
     warning.innerHTML = '';
-  }
-
-  /**
-   * Отправка запроса логина и заполнение объекта User
-   * @param {object} data
-   */
-  _login(data) {
-    Net.post({url: '/session', body: data})
-        .then((resp) => {
-          if (resp.status === 200) {
-            resp.json()
-                .then((json) => {
-                  User.setUser({...json});
-                  Bus.emit('userUpdate', null);
-                  router.open('/profile');
-                });
-          } else {
-            resp.json()
-                .then((error) => {
-                  this._showWarning(this._warnings.email, error.message);
-                });
-          }
-        })
-        .catch((error) => {
-          console.log('SignIn failed', error);
-        });
   }
 }
