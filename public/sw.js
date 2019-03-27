@@ -4,8 +4,7 @@ const {cacheUrls} = global.serviceWorkerOption;
 
 self.addEventListener('install', (event) => {
   event.waitUntil(
-      caches
-          .open(CACHE_NAME)
+      caches.open(CACHE_NAME)
           .then((cache) => cache.addAll(cacheUrls))
           .catch((err) => console.log({err})),
   );

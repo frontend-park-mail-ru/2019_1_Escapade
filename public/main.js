@@ -13,6 +13,11 @@ import ProfileMV from './ModelView/ProfileMV.js';
 
 const root = document.getElementById('application');
 
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker
+      .register('./dist/sw.js')
+      .catch((err) => console.error({err}));
+}
 const router = new Router(root);
 
 router
@@ -26,9 +31,4 @@ router
 bus.on('logout', signOut);
 checkAuth(router.start.bind(router));
 
-if ('serviceWorker' in navigator) {
-  navigator.serviceWorker
-      .register('./dist/sw.js')
-      .catch((err) => console.error({err}));
-}
 export default router;
