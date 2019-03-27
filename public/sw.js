@@ -2,7 +2,7 @@
 const CACHE_NAME = 'Esapade';
 const {cacheUrls} = global.serviceWorkerOption;
 
-this.addEventListener('install', (event) => {
+self.addEventListener('install', (event) => {
   event.waitUntil(
       caches
           .open(CACHE_NAME)
@@ -12,7 +12,7 @@ this.addEventListener('install', (event) => {
   );
 });
 
-this.addEventListener('fetch', (event) => {
+self.addEventListener('fetch', (event) => {
   event.respondWith(
       caches
           .match(event.request)
