@@ -28,7 +28,7 @@ checkAuth(router.start.bind(router));
 
 if ('serviceWorker' in navigator) {
   navigator.serviceWorker
-      .register('./sw.js')
+      .register('./dist/sw.js')
       .catch((err) => console.error({err}));
 }
 export default router;
