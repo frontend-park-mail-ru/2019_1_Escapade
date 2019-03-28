@@ -10,13 +10,16 @@ import LeaderBoardMV from './ModelView/LeaderBoardMV';
 import SignInMV from './ModelView/SignInMV';
 import SignUpMV from './ModelView/SignUpMV.js';
 import ProfileMV from './ModelView/ProfileMV.js';
+import './main.css';
+
 
 const root = document.getElementById('application');
 
+import runtime from 'serviceworker-webpack-plugin/lib/runtime';
+
 if ('serviceWorker' in navigator) {
-  navigator.serviceWorker
-      .register('./dist/sw.js')
-      .catch((err) => console.error({err}));
+  const registration = runtime.register();
+  console.log(registration);
 }
 const router = new Router(root);
 

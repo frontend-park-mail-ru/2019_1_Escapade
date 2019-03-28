@@ -1,14 +1,17 @@
-/* eslint-disable no-invalid-this */
-const CACHE_NAME = 'Escapade';
-const {cacheUrls} = global.serviceWorkerOption;
+/* eslint no-restricted-globals: 1 */
+
+const KEY = 'Escapade';
+const {assets} = global.serviceWorkerOption;
+
 
 self.addEventListener('install', (event) => {
   event.waitUntil(
-      caches.open(CACHE_NAME)
-          .then((cache) => cache.addAll(cacheUrls))
+      caches.open(KEY)
+          .then((cache) => cache.addAll(assets))
           .catch((err) => console.log({err})),
   );
 });
+
 
 self.addEventListener('fetch', (event) => {
   event.respondWith(
