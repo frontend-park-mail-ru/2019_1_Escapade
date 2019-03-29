@@ -10,16 +10,22 @@ import LeaderBoardMV from './ModelView/LeaderBoardMV';
 import SignInMV from './ModelView/SignInMV';
 import SignUpMV from './ModelView/SignUpMV.js';
 import ProfileMV from './ModelView/ProfileMV.js';
+import './img/arrow-left.png';
+import './img/arrow-right.png';
+import './img/qrosh.png';
 import './main.css';
 
 
 const root = document.getElementById('application');
 
-import runtime from 'serviceworker-webpack-plugin/lib/runtime';
-
 if ('serviceWorker' in navigator) {
-  const registration = runtime.register();
-  console.log(registration);
+  navigator.serviceWorker.register('./sw.js', {scope: '/'})
+      .then((reg) => {
+        console.log('sw reg success:', reg);
+      })
+      .catch((err) => {
+        console.error('sw reg err:', err);
+      });
 }
 const router = new Router(root);
 

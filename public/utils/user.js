@@ -57,6 +57,9 @@ export function checkAuth(callback) {
         }
       })
       .catch((error) => {
+        if (!navigator.onLine) {
+          callback();
+        }
         console.log(error);
       });
 }

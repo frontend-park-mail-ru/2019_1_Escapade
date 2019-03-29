@@ -1,32 +1,40 @@
-const path = require('path');
-const ServiceWorkerWebpackPlugin = require('serviceworker-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const ServiceWorkerWebpackPlugin = require('serviceworker-webpack-plugin');
+const path = require('path');
+
 
 module.exports = {
   entry: './public/main.js',
 
+  output: {
+    publicPath: '/',
+    path: path.resolve(__dirname, 'public/dist'),
+    filename: 'bundle.js',
+  },
+
   plugins: [
-    new ServiceWorkerWebpackPlugin({
-      entry: path.join(__dirname, 'public/sw.js'),
-    }),
     new HtmlWebpackPlugin({
       template: 'public/index.html',
     }),
+    new ServiceWorkerWebpackPlugin({
+      entry: path.join(__dirname, 'public/sw.js'),
+    }),
   ],
-  output: {
-    publicPath: '/',
-    filename: 'bundle.js',
-    path: path.resolve(__dirname, 'public/dist'),
-  },
+
   module: {
-    rules: [{
-      test: /\.pug$/,
-      use: 'pug-loader',
-    },
-    {
-      test: /\.css$/,
-      use: ['style-loader', 'css-loader'],
-    },
+    rules: [
+      {
+        test: /\.css$/,
+        use: ['style-loader', 'css-loader'],
+      },
+      {
+        test: /\.pug$/,
+        loader: 'pug-loader',
+      },
+      {
+        test: /\.(img|jpeg|jpg|png)$/,
+        loader: 'file-loader?name=img/[name].[ext]',
+      },
     ],
   },
 };
