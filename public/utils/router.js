@@ -9,7 +9,7 @@ export default class Router {
    */
   constructor(root) {
     this.routes = {};
-
+    this.currentView = null;
     this.root = root;
   }
 
@@ -39,14 +39,6 @@ export default class Router {
       return;
     }
 
-    if (window.location.pathname !== path) {
-      window.history.pushState(
-          null,
-          '',
-          path
-      );
-    }
-
     let {View, view, el} = route;
 
     if (!el) {
@@ -54,9 +46,20 @@ export default class Router {
       this.root.appendChild(el);
     }
 
+
     if (!view) {
       view = new View(el);
     }
+
+    if (this.currentView !== null) {
+      if (view.isOffline === false && !navigator.onLine) {
+        this.currentView._showOfflineOverlay();
+        this.root.removeChild(view.parent);
+        return;
+      }
+    }
+
+    this.currentView = view;
 
     if (!view.active) {
       Object.values(this.routes).forEach(function({view}) {
@@ -66,6 +69,14 @@ export default class Router {
       });
 
       view.show();
+    }
+
+    if (window.location.pathname !== path) {
+      window.history.pushState(
+          null,
+          '',
+          path
+      );
     }
 
     this.routes[path] = {View, view, el};

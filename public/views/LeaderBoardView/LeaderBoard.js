@@ -10,7 +10,7 @@ export default class LeaderBoardView extends BaseView {
    * @param {*} parent
    */
   constructor(parent) {
-    super(parent, leaderBoardTemplate);
+    super(parent, leaderBoardTemplate, false);
     this._currPage = 1;
 
     Bus.on('respPagesAmount', this._initBoard.bind(this));

@@ -3,3 +3,4 @@
 @import url('views/MainMenuView/menu_style.css');
 @import url('views/SignUpView/SignUp.css');
 @import url('views/ProfileView/profile.css');
+@import url('templates/Offline/offline.css')

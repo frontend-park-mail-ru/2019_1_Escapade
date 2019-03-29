@@ -12,7 +12,7 @@ export default class SignUpView extends BaseView {
    * @param {HTMLElement} parent
    */
   constructor(parent) {
-    super(parent, signUpTemplate);
+    super(parent, signUpTemplate, false);
 
     Bus.on('onSuccessAuth', (usr) => {
       User.setUser({...usr});

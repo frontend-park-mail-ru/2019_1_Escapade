@@ -15,7 +15,6 @@ import './img/arrow-right.png';
 import './img/qrosh.png';
 import './main.css';
 
-
 const root = document.getElementById('application');
 
 if ('serviceWorker' in navigator) {

@@ -13,7 +13,7 @@ export default class SignInView extends BaseView {
    * @param {*} parent
    */
   constructor(parent) {
-    super(parent, signInTemplate);
+    super(parent, signInTemplate, false);
 
     Bus.on('onSuccessLogin', (usr) => {
       User.setUser({...usr});
