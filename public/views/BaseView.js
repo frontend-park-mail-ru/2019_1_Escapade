@@ -1,5 +1,4 @@
-import headerTmpl from '../templates/HeaderInner.pug';
-import offlineTmpl from '../templates/Offline/Offline.pug';
+import headerTmpl from './HeaderInner.pug';
 import Bus from '../utils/bus';
 
 
@@ -61,8 +60,14 @@ export default class BaseView {
   render() {
     this.parent.innerHTML = '';
     this.parent.innerHTML = this.template({data: this._data});
-    this.overlayOffline = document.getElementById('overlay__offline');
-    this.overlayOffline.innerHTML = offlineTmpl();
+    this._initOfflinePopup();
+  }
+
+  /**
+   *
+   */
+  _initOfflinePopup() {
+    this.overlayOffline = this.parent.querySelector('.overlay__offline');
     this.overlayOffline.hidden = true;
     this.hideButton =
       this.overlayOffline.querySelector('.modal__button');
@@ -83,7 +88,7 @@ export default class BaseView {
   /**
    *
    */
-  _showOfflineOverlay() {
+  showOfflineOverlay() {
     this.overlayOffline.hidden = false;
   }
 

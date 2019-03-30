@@ -46,14 +46,13 @@ export default class Router {
       this.root.appendChild(el);
     }
 
-
     if (!view) {
       view = new View(el);
     }
 
     if (this.currentView !== null) {
       if (view.isOffline === false && !navigator.onLine) {
-        this.currentView._showOfflineOverlay();
+        this.currentView.showOfflineOverlay();
         this.root.removeChild(view.parent);
         return;
       }
