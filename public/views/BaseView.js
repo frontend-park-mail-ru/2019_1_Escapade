@@ -68,6 +68,9 @@ export default class BaseView {
    */
   _initOfflinePopup() {
     this.overlayOffline = this.parent.querySelector('.overlay__offline');
+    if (!this.overlayOffline) {
+      return;
+    }
     this.overlayOffline.hidden = true;
     this.hideButton =
       this.overlayOffline.querySelector('.modal__button');
