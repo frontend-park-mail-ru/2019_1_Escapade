@@ -1,8 +1,7 @@
-
 /**
  *
  */
-class Bus {
+export class Bus {
   /**
    *
    */

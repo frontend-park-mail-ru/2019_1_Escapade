@@ -2,6 +2,7 @@
 
 import {MainMenuView} from './views/MainMenuView/MainMenu.js';
 import {AuthorsView} from './views/AuthorsView/Authors.js';
+import ChatView from './views/Chat.js';
 import signOut from './views/SignOut/SignOut';
 import {checkAuth} from './utils/user.js';
 import Router from './utils/router';
@@ -10,6 +11,7 @@ import LeaderBoardMV from './ModelView/LeaderBoardMV';
 import SignInMV from './ModelView/SignInMV';
 import SignUpMV from './ModelView/SignUpMV.js';
 import ProfileMV from './ModelView/ProfileMV.js';
+
 import './img/arrow-left.png';
 import './img/arrow-right.png';
 import './img/qrosh.png';
@@ -26,6 +28,7 @@ if ('serviceWorker' in navigator) {
         console.error('sw reg err:', err);
       });
 }
+
 const router = new Router(root);
 
 router
