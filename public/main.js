@@ -1,6 +1,7 @@
 'use strict';
 
 import {MainMenuView} from './views/MainMenuView/MainMenu.js';
+import {SinglePlayerView} from './views/SinglePlayerView/SinglePlayer.js';
 import {AuthorsView} from './views/AuthorsView/Authors.js';
 import ChatView from './views/Chat.js';
 import signOut from './views/SignOut/SignOut';
@@ -37,7 +38,8 @@ router
     .register('/sign_up', SignUpMV.view)
     .register('/leaders', LeaderBoardMV.view)
     .register('/about', AuthorsView)
-    .register('/profile', ProfileMV.view);
+    .register('/profile', ProfileMV.view)
+    .register('/single_player', SinglePlayerView);
 
 bus.on('logout', signOut);
 checkAuth(router.start.bind(router));
