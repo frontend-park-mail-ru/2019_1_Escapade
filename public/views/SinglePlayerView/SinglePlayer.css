@@ -17,3 +17,74 @@
   justify-content: center;
 }
 
+
+.cell {
+  position: absolute;
+  width: 25px;
+  height: 25px;
+  color: transparent;
+  line-height: 24px;
+  font-size: 21px;
+  padding: 0;
+  font-weight: bold;
+  font-family: 'Courier New';
+  text-align: center;
+  background:#d3d5d7;
+}
+
+.cell_close {
+  background:#d3d5d7 url('../../img/cell.png') no-repeat;
+}
+
+.cell_open0 {
+  color: #d3d5d7;
+  
+}
+
+.cell_open1 {
+  color: #4a4ab1;
+}
+
+.cell_open2 {
+  color: #4ab181;
+}
+
+.cell_open3 {
+  color: #ad993e;
+}
+
+.cell_open4 {
+  color: #9c4b1c;
+}
+
+.cell_open5 {
+  color: #a04ab1;
+}
+
+.cell_open6 {
+  color: #b14aac;
+}
+
+.cell_open7 {
+  color: #e62d36;
+}
+
+.cell_open8 {
+  color: #ff0000;
+}
+
+.cell_open9 {
+  background:#d3d5d7 url('../../img/bomb.png') no-repeat;
+}
+
+
+.map {
+  background-color: #d3d5d7;
+  text-align: center;
+  border: 5px solid #eeeeee;
+  position: relative;
+  display: block;
+  margin: auto;
+  cursor: default;
+  -webkit-tap-highlight-color: transparent;
+}
