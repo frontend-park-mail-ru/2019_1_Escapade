@@ -36,6 +36,10 @@
   background:#d3d5d7 url('../../img/cell.png') no-repeat;
 }
 
+.cell_flag {
+  background:#d3d5d7 url('../../img/flag.png') no-repeat;
+}
+
 .cell_open0 {
   color: #d3d5d7;
   
@@ -78,7 +82,7 @@
 }
 
 
-.map {
+.single_player__map {
   background-color: #d3d5d7;
   text-align: center;
   border: 5px solid #eeeeee;
