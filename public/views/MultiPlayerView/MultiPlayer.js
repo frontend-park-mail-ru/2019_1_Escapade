@@ -1,16 +1,17 @@
-import singlePlayerTemplate from './SinglePlayer.pug';
+import multiPlayerTemplate from './MultiPlayer.pug';
 import BaseView from '../BaseView';
 import {User} from '../../utils/user.js';
 import {MineSweeper} from '../../game/minesweeper.js';
+import Bus from '../../utils/bus';
 
 /** */
-export class SinglePlayerView extends BaseView {
+export default class MultiPlayer extends BaseView {
   /**
    *
    * @param {*} parent
    */
   constructor(parent) {
-    super(parent, singlePlayerTemplate);
+    super(parent, multiPlayerTemplate);
     this.cellsize = 25;
     this.cellNumbersX = 20;
     this.cellNumbersY = 20;
@@ -28,6 +29,8 @@ export class SinglePlayerView extends BaseView {
     document.body.oncontextmenu = function(e) {
       return false;
     };
+    Bus.emit('connect');
+    Bus.emit('get_rooms');
   }
 
   /**

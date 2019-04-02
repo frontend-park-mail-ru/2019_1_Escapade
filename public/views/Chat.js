@@ -1,4 +1,4 @@
-import WebSocketInterface from '../utils/webSocket.js';
+import {WebSocketInterface} from '../utils/webSocket.js';
 // создать подключение
 
 

@@ -1,7 +1,7 @@
 /* eslint-disable valid-jsdoc */
 
 /** */
-export default class WebSocketInterface {
+export class WebSocketInterface {
   /**
    *
    */
@@ -23,7 +23,7 @@ export default class WebSocketInterface {
     };
     this.ws.onerror = function(error) {
       this.connect = false;
-      alert('Error ' + error.message);
+      console.log('Error ' + error.message);
     };
   }
 
@@ -44,6 +44,13 @@ export default class WebSocketInterface {
       const incomingMessage = event.data;
       func(incomingMessage);
     };
+  }
+
+  /**
+   * closeConnection
+  */
+  closeConnection(code, reason) {
+    this.ws.close(code, reason);
   }
 }
 

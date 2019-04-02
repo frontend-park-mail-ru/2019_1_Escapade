@@ -11,6 +11,7 @@ import bus from './utils/bus.js';
 import LeaderBoardMV from './ModelView/LeaderBoardMV';
 import SignInMV from './ModelView/SignInMV';
 import SignUpMV from './ModelView/SignUpMV.js';
+import MultiplayeMV from './ModelView/MultiplayeMV';
 import ProfileMV from './ModelView/ProfileMV.js';
 
 import './img/arrow-left.png';
@@ -39,7 +40,8 @@ router
     .register('/leaders', LeaderBoardMV.view)
     .register('/about', AuthorsView)
     .register('/profile', ProfileMV.view)
-    .register('/single_player', SinglePlayerView);
+    .register('/single_player', SinglePlayerView)
+    .register('/multi_player', MultiplayeMV.view);
 
 bus.on('logout', signOut);
 checkAuth(router.start.bind(router));
