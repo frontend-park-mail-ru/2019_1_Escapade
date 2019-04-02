@@ -31,9 +31,9 @@ export class WebSocketInterface {
    * sendMessage
   */
   sendMessage(data) {
-    if (this.connect) {
-      this.ws.send(data);
-    }
+    //if (this.connect) {
+    this.ws.onopen = () => this.ws.send(data);
+    //}
   }
 
   /**

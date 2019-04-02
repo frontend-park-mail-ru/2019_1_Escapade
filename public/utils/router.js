@@ -33,7 +33,6 @@ export default class Router {
    */
   open(path) {
     const route = this.routes[path];
-
     if (!route) {
       this.open('/');
       return;

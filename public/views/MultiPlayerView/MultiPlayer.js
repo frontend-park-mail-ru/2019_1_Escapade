@@ -26,11 +26,19 @@ export default class MultiPlayer extends BaseView {
     this.mineSweeper = new MineSweeper(this.cellNumbersX, this.cellNumbersY, this.bombsCount);
     document.addEventListener('click', this._clickOnCell.bind(this));
     document.addEventListener('contextmenu', this._rightСlickOnCell.bind(this));
+    
     document.body.oncontextmenu = function(e) {
       return false;
     };
     Bus.emit('connect');
+    
     Bus.emit('get_rooms');
+
+    Bus.emit('send_info');
+
+
+
+    Bus.on('show_rooms', this._updateRooms.bind(this));
   }
 
   /**
@@ -48,6 +56,8 @@ export default class MultiPlayer extends BaseView {
     console.log('3BV = ' + this.BBBVCount);
     pointsField.textContent = '0';
     this._showMap(this.cellNumbersX, this.cellNumbersY);
+    const findRoomsButton = document.getElementsByClassName('multi_player__find_room')[0];
+    findRoomsButton.addEventListener('click', this._findRooms.bind(this));
   }
   /** */
   _showMap(XLen, YLen) {
@@ -67,6 +77,19 @@ export default class MultiPlayer extends BaseView {
       }
     }
     return;
+  }
+
+  /** */
+  _findRooms(e) {
+    console.log("FFFFF");
+    Bus.emit('get_rooms');
+    return;
+  }
+
+  /** */
+  _updateRooms(rooms) {
+    const infoRooms = document.getElementsByClassName('multi_player__room_list')[0];
+    infoRooms.textContent += rooms.Rooms;
   }
 
   /** */
