@@ -11,6 +11,7 @@ export default class MultiplayerModel {
     Bus.on('connect', this._connect.bind(this));
     Bus.on('get_rooms', this._getRooms.bind(this));
     Bus.on('send_info', this._sendInfo.bind(this));
+    Bus.on('send_cell_coord', this._sendCell.bind(this));
   }
 
   /**
@@ -33,21 +34,33 @@ export default class MultiplayerModel {
   _getRoomsCallBack(data) {
     this.rooms = JSON.parse(data);
     console.log(this.rooms);
-    
   }
 
   /**
    * _sendInfo
    */
-  _sendInfo() {
-    const roomSettingsData = {ID: -1, Width: 20, Height: 20, Players: 2, Percent: 50};
-    const cellData = {X: 0, Y: 0};
-    const data = JSON.stringify({Send: 1, RoomSettings: roomSettingsData, Cell: cellData, PlayerAction: 0});
+  _sendInfo() { // Вступить в комнату
+    const roomSettingsData = {name: 'Hey', width: 20, height: 20, players: 2, mines: 50};
+    const roomSettings = {roomSettings: roomSettingsData};
+    const data = JSON.stringify({send: roomSettings});
 
     console.log(data);
     
     this.ws.sendMessage(data);
   }
+
+  /**
+   * _sendInfo
+   */
+  _sendCell(cellCoord) {
+    const cellCoordData = {x: cellCoord.xCell, y: cellCoord.yCell};
+    const data = JSON.stringify({cell: cellCoordData});
+
+    console.log(data);
+    
+    this.ws.sendMessage(data);
+  }
+
 
   /**
    * _getInfo

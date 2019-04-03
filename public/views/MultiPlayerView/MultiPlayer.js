@@ -31,7 +31,7 @@ export default class MultiPlayer extends BaseView {
       return false;
     };
     Bus.emit('connect');
-    
+
     Bus.emit('get_rooms');
 
     Bus.emit('send_info');
@@ -101,29 +101,7 @@ export default class MultiPlayer extends BaseView {
     const idArr = e.target.id.split('_');
     const x = parseInt(idArr[1]);
     const y = parseInt(idArr[2]);
-    let res;
-    if (this.mineSweeper.map[x][y] === 9) {
-      this._openAllCels(x, y, this.cellNumbersX, this.cellNumbersY);
-      alert('You lose!');
-      return;
-    } else {
-      res = this.mineSweeper.
-          openCels(x, y, this.cellNumbersX, this.cellNumbersY);
-      this._openCels(res.cellArr);
-      this.openCellsCount += res.openCells;
-    }
-    const pointsField = document.getElementById(this.pointsFieldStringName);
-    if (!pointsField) {
-      console.log('error pointsField cannot find ' + this.pointsFieldStringName);
-      return;
-    }
-    // eslint-disable-next-line max-len
-    console.log(this.openCellsCount, ' ', this.cellNumbersX * this.cellNumbersY - this.bombsCount);
-    pointsField.textContent = (parseInt(pointsField.textContent) + res.points).toString();
-    if (this.openCellsCount === this.cellNumbersX * this.cellNumbersY - this.bombsCount) {
-      this._openAllCels(x, y, this.cellNumbersX, this.cellNumbersY);
-      alert('You win!');
-    }
+    Bus.emit('send_cell_coord', {xCell: x, yCell: y});
     return;
   }
 
