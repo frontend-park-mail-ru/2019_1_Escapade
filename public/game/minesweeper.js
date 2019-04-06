@@ -152,8 +152,8 @@ export class MineSweeper {
       let xBomb = 0;
       let yBomb = 0;
       do {
-        xBomb = this._randomInteger(0, xLen - 1);
-        yBomb = this._randomInteger(0, yLen - 1);
+        xBomb = this.randomInteger(0, xLen - 1);
+        yBomb = this.randomInteger(0, yLen - 1);
       } while (map[xBomb][yBomb] === 9);
       map[xBomb][yBomb] = 9;
       this._fillCellsAroundBomb(map, xBomb, yBomb, xLen, yLen);
@@ -191,7 +191,7 @@ export class MineSweeper {
   }
 
   /** */
-  _randomInteger(min, max) {
+  randomInteger(min, max) {
     let rand = min + Math.random() * (max + 1 - min);
     rand = Math.floor(rand);
     return rand;

@@ -10,14 +10,14 @@ export class ChatView {
    * @param {*} parent
    */
   constructor() {
-    const ws = new WebSocketInterface('ws://localhost:8081');
+    /*const ws = new WebSocketInterface('ws://localhost:8081');
     ws.setCallback(this.showMessage);
     document.forms.publish.onsubmit = function() {
       console.log("Hellooooooo");
       const outgoingMessage = this.message.value;
       ws.sendMessage(outgoingMessage);
       return false;
-    };
+    };*/
   }
 
   /**

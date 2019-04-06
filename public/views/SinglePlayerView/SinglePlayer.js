@@ -11,9 +11,9 @@ export class SinglePlayerView extends BaseView {
    */
   constructor(parent) {
     super(parent, singlePlayerTemplate);
-    this.cellsize = 25;
-    this.cellNumbersX = 20;
-    this.cellNumbersY = 20;
+    this.cellsize = 50;
+    this.cellNumbersX = 15;
+    this.cellNumbersY = 15;
     this.bombsCount = 20;
     this.openCellsCount = 0;
     this.cellCloseStringName = 'cell_close';
@@ -31,24 +31,25 @@ export class SinglePlayerView extends BaseView {
   }
 
   /**
-   * 
+   *
   */
   render() {
     this.data = User;
     super.render();
-    const pointsField = document.getElementById(this.pointsFieldStringName);
-    if (!pointsField) {
+    //const pointsField = document.getElementById(this.pointsFieldStringName);
+    /*if (!pointsField) {
       console.log('error pointsField cannot find ' + this.pointsFieldStringName);
       return;
-    }
+    }*/
     this.BBBVCount = this.mineSweeper.count3BV();
     console.log('3BV = ' + this.BBBVCount);
-    pointsField.textContent = '0';
+    //pointsField.textContent = '0';
     this._showMap(this.cellNumbersX, this.cellNumbersY);
   }
+
   /** */
   _showMap(XLen, YLen) {
-    const field = document.getElementById(this.mapStringName);
+    const field = document.getElementsByClassName(this.mapStringName)[0];
     if (!field) {
       console.log('error field cannot find ' + this.mapStringName);
     }
@@ -57,9 +58,12 @@ export class SinglePlayerView extends BaseView {
     for (let y = 0; y < YLen; y++) {
       for (let x = 0; x < XLen; x++) {
         const cell = document.createElement('div');
-        cell.setAttribute('class', this.cellStringName + ' ' + this.cellCloseStringName);
+        const strClassClose = this.cellCloseStringName + '_' + this.mineSweeper.randomInteger(1, 3);
+        cell.setAttribute('class', this.cellStringName + ' ' + this.cellCloseStringName + ' ' + strClassClose);
+        
         cell.setAttribute('id', this.cellStringName + '_' + x + '_' +y);
-        cell.setAttribute('style', 'top: ' + y * this.cellsize + 'px;' + 'left: ' + x * this.cellsize + 'px;');
+        cell.setAttribute('style', 'top: ' + y * this.cellsize + 'px;' + 'left: ' + x * this.cellsize + 'px;'
+        + 'width: ' + this.cellsize + 'px;' + 'height: ' + this.cellsize + 'px;');
         field.appendChild(cell);
       }
     }
@@ -86,14 +90,14 @@ export class SinglePlayerView extends BaseView {
       this._openCels(res.cellArr);
       this.openCellsCount += res.openCells;
     }
-    const pointsField = document.getElementById(this.pointsFieldStringName);
+    /*const pointsField = document.getElementById(this.pointsFieldStringName);
     if (!pointsField) {
       console.log('error pointsField cannot find ' + this.pointsFieldStringName);
       return;
-    }
+    }*/
     // eslint-disable-next-line max-len
     console.log(this.openCellsCount, ' ', this.cellNumbersX * this.cellNumbersY - this.bombsCount);
-    pointsField.textContent = (parseInt(pointsField.textContent) + res.points).toString();
+    //pointsField.textContent = (parseInt(pointsField.textContent) + res.points).toString();
     if (this.openCellsCount === this.cellNumbersX * this.cellNumbersY - this.bombsCount) {
       this._openAllCels(x, y, this.cellNumbersX, this.cellNumbersY);
       alert('You win!');
@@ -108,13 +112,24 @@ export class SinglePlayerView extends BaseView {
       !e.target.classList.contains(this.cellFlagStringName))) {
       return;
     }
-    if (e.target.classList.contains(this.cellFlagStringName)) {
+    if (e.target.classList.contains(this.cellFlagStringName) &&
+        e.target.classList.length >= 3) {
+      const classElems = e.target.classList[2].split('_');
+      const numClassElem = parseInt(classElems[2]);
+      e.target.classList.remove(e.target.classList[2]);
       e.target.classList.remove(this.cellFlagStringName);
       e.target.classList.add(this.cellCloseStringName);
+      e.target.classList.add(this.cellCloseStringName + '_' + numClassElem);
       return;
     }
-    e.target.classList.remove(this.cellCloseStringName);
-    e.target.classList.add(this.cellFlagStringName);
+    if (e.target.classList.length >= 3) {
+      const classElems = e.target.classList[2].split('_');
+      const numClassElem = parseInt(classElems[2]);
+      e.target.classList.remove(e.target.classList[2]);
+      e.target.classList.remove(this.cellCloseStringName);
+      e.target.classList.add(this.cellFlagStringName);
+      e.target.classList.add(this.cellFlagStringName + '_' + numClassElem);
+    }
     return;
   }
 
