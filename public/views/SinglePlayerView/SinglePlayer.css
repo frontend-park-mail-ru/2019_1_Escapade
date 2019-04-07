@@ -1,6 +1,9 @@
 body {
   background-color: #667787;
   font-family: 'system-ui';
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
 }
 
 .cell {
@@ -114,6 +117,7 @@ body {
   background-color: #4B5E70;
   position: relative;
   display:flex;
+  justify-content: space-between;
   text-align: center;
   height: 75px;
   width: 830px;
@@ -129,6 +133,26 @@ body {
   background: url('../../img/flag.png') no-repeat;
   background-size: 100%;
   float: left;
+}
+
+.single_player__player_name {
+  color: white;
+  height: 60px;
+  line-height: 60px;
+  font-size: 20px;
+  margin-top: 8px;
+  margin-left: 20px;
+}
+
+.single_player__player_score {
+  padding-left: 20px;
+  padding-right: 20px;
+  border-left: 1px solid white; 
+  border-right: 1px solid white;
+}
+
+.single_player__player_dop{
+  width: 20px;
 }
 
 .single_player__map {
@@ -259,7 +283,7 @@ body {
 .single_player__timer {
   background-color: #4B5E70;
   position: relative;
-  display:block;
+  display:flex;
   flex-direction: column;
   text-align: center;
   height: 160px;
@@ -267,6 +291,21 @@ body {
   margin-top: 15px;
   border-radius: 23px;
 }
+
+.single_player__timer_str {
+  display: block;
+  position: relative;
+  width: 310px;
+  text-align: center;
+  color: white;
+  margin-top: 45px;
+  margin-left: 90px;
+  font-size: 4rem;
+  font-weight: 900;
+  text-align: center;
+}
+
+
 .single_player__statistics {
   background-color: #4B5E70;
   position: relative;

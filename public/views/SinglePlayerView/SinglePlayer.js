@@ -1,3 +1,4 @@
+/* eslint-disable require-jsdoc */
 import singlePlayerTemplate from './SinglePlayer.pug';
 import BaseView from '../BaseView';
 import {User} from '../../utils/user.js';
@@ -36,19 +37,115 @@ export class SinglePlayerView extends BaseView {
   render() {
     this.data = User;
     super.render();
-    //const pointsField = document.getElementById(this.pointsFieldStringName);
-    /*if (!pointsField) {
+    // const pointsField = document.getElementById(this.pointsFieldStringName);
+    /* if (!pointsField) {
       console.log('error pointsField cannot find ' + this.pointsFieldStringName);
       return;
     }*/
     this.BBBVCount = this.mineSweeper.count3BV();
     console.log('3BV = ' + this.BBBVCount);
-    //pointsField.textContent = '0';
+    // pointsField.textContent = '0';
     this._showMap(this.cellNumbersX, this.cellNumbersY);
   }
 
   /** */
   _showMap(XLen, YLen) {
+    /*           */
+    (function timer() {
+
+      // declare
+      const output = document.getElementById('single_player__timer');
+      let running = false;
+      let paused = false;
+      let timer;
+
+      // timer start time
+      let then;
+      // pause duration
+      let delay;
+      // pause start time
+      let delayThen;
+
+
+      // start timer
+      const start = function() {
+        delay = 0;
+        running = true;
+        then = Date.now();
+        timer = setInterval(run, 51);
+      };
+
+
+      // parse time in ms for output
+      const parseTime = function(elapsed) {
+        // array of time multiples [hours, min, sec, decimal]
+        const d = [3600000, 60000, 1000, 10];
+        const time = [];
+        let i = 0;
+
+        while (i < d.length) {
+          let t = Math.floor(elapsed/d[i]);
+
+          // remove parsed time for next iteration
+          elapsed -= t*d[i];
+
+          // add '0' prefix to m,s,d when needed
+          t = (i > 0 && t < 10) ? '0' + t : t;
+          time.push(t);
+          i++;
+        }
+
+        return time;
+      };
+
+
+      // run
+      // eslint-disable-next-line no-var
+      var run = function() {
+        // get output array and print
+        const time = parseTime(Date.now()-then-delay);
+        output.innerHTML = time[0] + ':' + time[1] + ':' + time[2] + '.' + time[3];
+      };
+
+
+      // stop
+      const stop = function() {
+        paused = true;
+        delayThen = Date.now();
+        clearInterval(timer);
+
+        // call one last time to print exact time
+        run();
+      };
+
+
+      // resume
+      const resume = function() {
+        paused = false;
+        delay += Date.now()-delayThen;
+        timer = setInterval(run, 51);
+      };
+
+
+      // clear
+      const reset = function() {
+        running = false;
+        paused = false;
+        output.innerHTML = '0:00:00.00';
+      };
+
+
+      // evaluate and route
+      const router = function() {
+        if (!running) start();
+        else if (paused) resume();
+        else stop();
+      };
+      router();
+    })();
+
+    /*            */
+
     const field = document.getElementsByClassName(this.mapStringName)[0];
     if (!field) {
       console.log('error field cannot find ' + this.mapStringName);
@@ -60,7 +157,7 @@ export class SinglePlayerView extends BaseView {
         const cell = document.createElement('div');
         const strClassClose = this.cellCloseStringName + '_' + this.mineSweeper.randomInteger(1, 3);
         cell.setAttribute('class', this.cellStringName + ' ' + this.cellCloseStringName + ' ' + strClassClose);
-        
+
         cell.setAttribute('id', this.cellStringName + '_' + x + '_' +y);
         cell.setAttribute('style', 'top: ' + y * this.cellsize + 'px;' + 'left: ' + x * this.cellsize + 'px;'
         + 'width: ' + this.cellsize + 'px;' + 'height: ' + this.cellsize + 'px;');
@@ -90,14 +187,14 @@ export class SinglePlayerView extends BaseView {
       this._openCels(res.cellArr);
       this.openCellsCount += res.openCells;
     }
-    /*const pointsField = document.getElementById(this.pointsFieldStringName);
+    /* const pointsField = document.getElementById(this.pointsFieldStringName);
     if (!pointsField) {
       console.log('error pointsField cannot find ' + this.pointsFieldStringName);
       return;
     }*/
     // eslint-disable-next-line max-len
     console.log(this.openCellsCount, ' ', this.cellNumbersX * this.cellNumbersY - this.bombsCount);
-    //pointsField.textContent = (parseInt(pointsField.textContent) + res.points).toString();
+    // pointsField.textContent = (parseInt(pointsField.textContent) + res.points).toString();
     if (this.openCellsCount === this.cellNumbersX * this.cellNumbersY - this.bombsCount) {
       this._openAllCels(x, y, this.cellNumbersX, this.cellNumbersY);
       alert('You win!');
@@ -175,5 +272,4 @@ export class SinglePlayerView extends BaseView {
     }
     return;
   }
-
 }
