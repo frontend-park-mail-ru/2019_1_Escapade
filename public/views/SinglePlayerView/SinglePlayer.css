@@ -175,6 +175,7 @@
   color: white;
   height: 25px;
   line-height	: 25px;
+  margin-left: 5px;
   width: 50px;
   float: left;
 }
@@ -184,7 +185,7 @@
   background: red;
   height: 25px;
   width: 100px;
-  margin-left: 10px;
+  margin-left: 5px;
   float: left;
 }
 
