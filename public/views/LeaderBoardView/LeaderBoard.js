@@ -15,9 +15,7 @@ export default class LeaderBoardView extends BaseView {
 
     Bus.on('respPagesAmount', this._initBoard.bind(this));
     Bus.on('respPage', (users) => {
-      this.board.data = users;
-      this.board.render();
-      console.log('rerender board');
+      this.data = users;
     });
   }
 
@@ -37,8 +35,8 @@ export default class LeaderBoardView extends BaseView {
   _initBoard(amount) {
     this._pagesCount = amount;
     this._initButtons();
-    //this.board = new BoardComponent(
-    //   this.parent.querySelector('.leaderboard__table'));
+    this.board = new BoardComponent(
+       this.parent.querySelector('.leaderboard__board'));
     console.log('initBoard');
   }
 

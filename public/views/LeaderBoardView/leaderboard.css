@@ -52,6 +52,31 @@ min-height 15% from media avg
   float: left;
 } 
 
+.leaderboard__table_row {
+  display:flex;
+  flex-direction: row;
+  border-radius: 5px;
+  color: white;
+  margin-bottom: 5px;
+}
+
+.leaderboard__table_header {
+  text-align: center;
+  background-color:rgba(75, 94, 112, 0.71);
+  display:flex;
+  flex-direction: row;
+  border-radius: 5px;
+  color: white;
+  margin-bottom: 5px;
+}
+
+.leaderboard__table_best {
+  background-color:rgba(255, 61, 0, 0.5);
+}
+
+.leaderboard__table_usual {
+  background-color:rgba(0, 0, 0, 0.4);
+}
 
 .leaderboard__Label {
   border-radius: 0 0 5px 5px;;
@@ -59,9 +84,19 @@ min-height 15% from media avg
   color: white;
   content: "leaderboard";
   text-align: center;
-  font-size: 8vw;
+  font-size: 5vw;
   margin-bottom: 5px;
   padding: 4px;
+}
+
+.leaderboard__ava {
+  background-image: url('../../img/qrosh.png');
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.leaderboard__number {
+  text-align: center;
 }
 
 /*avg 320*/
@@ -81,6 +116,10 @@ min-height 15% from media avg
   .leaderboard__block {
     margin: 5px;
   }
+
+  .leaderboard__table_row_element {
+    font-size: 12px;
+  }
 }
 
 /*avg 400*/
@@ -92,8 +131,8 @@ min-height 15% from media avg
   }
 
   .leaderboard__board {
-    min-width: 160px;
-    min-height: 200px;
+    min-width: 320px;
+    min-height: 600px;
     border-width: 5px;
   }
 
@@ -108,6 +147,43 @@ min-height 15% from media avg
   .leaderboard__block {
     margin: 5px;
   }
+
+  .leaderboard__table_header {
+    font-size: 15px;
+    min-height: 16px;
+    padding: 2px;
+    margin: 5px;
+  }
+
+  .leaderboard__table_row_element {
+    font-size: 14px;
+    min-height: 12px;
+    padding: 1px;
+    margin: 5px;
+  }
+
+  .leaderboard__number {
+    min-width: 28px;
+  }
+  
+  .leaderboard__ava {
+    border-radius: 7px;
+    min-width: 14px;
+  }
+  
+  .leaderboard__name {
+    min-width: 160px;
+  }
+  
+  .leaderboard__points {
+    min-width: 60px;
+  }
+  
+  .leaderboard__time {
+    min-width: 60px;
+  }
+  
+  
 }
 
 /*avg 600*/
@@ -125,6 +201,11 @@ min-height 15% from media avg
 
   .leaderboard__block {
     margin: 10px;
+  }
+
+  .leaderboard__table_row_element {
+    font-size: 12px;
+    min-height: 16px;
   }
 }
 
@@ -144,6 +225,11 @@ min-height 15% from media avg
   .leaderboard__block {
     margin: 10px;
   }
+
+  .leaderboard__table_row_element {
+    font-size: 12px;
+    min-height: 16px;
+  }
 }
 
 /*avg 1200*/
@@ -161,6 +247,11 @@ min-height 15% from media avg
 
   .leaderboard__block {
     margin: 15px;
+  }
+
+  .leaderboard__table_row_element {
+    font-size: 12px;
+    min-height: 16px;
   }
 }
 
