@@ -211,9 +211,66 @@ body {
 .single_player__settings_img{
   width: 80px;
   height: 80px;
-  background: url('../../img/settings.png') no-repeat;
   float: left;
 }
+
+ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.topmenu:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+.topmenu > li {
+  width: 25%;
+  float: left;
+  position: relative;
+  font-family: 'Open Sans', sans-serif;
+}
+.topmenu > li > a {
+  text-transform: uppercase;
+  font-size: 14px;
+  font-weight: bold;
+  color: #404040;
+}
+.topmenu li a:hover { color: #D5B45B; }
+.submenu-link:after {
+  content: "\f107";
+  font-family: "FontAwesome";
+  color: inherit;
+  margin-left: 10px;
+}
+.submenu {
+  background: #273037;
+  position: absolute;
+  left: 0;
+  top: 100%;
+  z-index: 5;
+  width: 180px;
+  opacity: 0;
+  transform: scaleY(0);
+  transform-origin: 0 0;
+  transition: .5s ease-in-out;
+}
+.submenu a {
+  color: white;
+  text-align: left;
+  padding: 12px 15px;
+  font-size: 13px;
+  border-bottom: 1px solid rgba(255,255,255,.1);
+  text-decoration: none;
+  outline: none;
+  display: block;
+}
+
+.single_player__settings_list:hover .submenu {
+  opacity: 1;
+  transform: scaleY(1) translateY(-200px);
+}
+
 
 .single_player__settings_button{
   margin-top: 25px;

@@ -11,8 +11,14 @@ section(data-section-name='single_player')
       .single_player__under_map
         .single_player__percent 15%
         .single_player__loadbar
-      .single_player__settings
-        .single_player__settings_img
+      .single_player__settings  
+        ul.topmenu
+          li.single_player__settings_list
+            a(href="") #[img(src=require('../../img/settings.png')).single_player__settings_img]
+            ul.submenu
+              li #[a(href="") Сервис1]
+              li #[a(href="") Сервис2]
+              li #[a(href="") Сервис3]
         .single_player__settings_button Master mode
         .single_player__settings_button 200 width
         .single_player__settings_button 200 height

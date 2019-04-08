@@ -34,14 +34,14 @@ section(data-section-name='leaderboard')
           .leaderboard__table_row_element.leaderboard__name Ivan nitro thunderbolt
           .leaderboard__table_row_element.leaderboard__points 8883
           .leaderboard__table_row_element.leaderboard__time 00:01:45
-        //- - for(var i = 0; i < data.length;i++){
-        //-   .leaderboard__table_row.leaderboard__table_usual
-        //-     .leaderboard__table_row_element.leaderboard__number #{i}
-        //-     .leaderboard__table_row_element.leaderboard__ava 
-        //-     .leaderboard__table_row_element.leaderboard__name #{data[i].name}
-        //-     .leaderboard__table_row_element.leaderboard__points #{data[i].bestScore.String || 0}
-        //-     .leaderboard__table_row_element.leaderboard__time #{data[i].bestTime.String || 0}
-        //- - }
+        - for(var i = 0; i < data.length;i++){
+        .leaderboard__table_row.leaderboard__table_usual
+          .leaderboard__table_row_element.leaderboard__number #{i}
+          .leaderboard__table_row_element.leaderboard__ava 
+          .leaderboard__table_row_element.leaderboard__name #{data[i].name}
+          .leaderboard__table_row_element.leaderboard__points #{data[i].bestScore.String || 0}
+          .leaderboard__table_row_element.leaderboard__time #{data[i].bestTime.String || 0}
+        - }
     .leaderboard__controls
       img.arrow.arrow__inactive(src='../../img/arrow-left.png')
       img.arrow(src='../../img/arrow-right.png')
