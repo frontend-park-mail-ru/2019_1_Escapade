@@ -7,13 +7,14 @@
   display: flex;
   justify-content: center;
   display:flex;
-  flex-direction: row;
+  flex-direction: column;
 }
 
 .leaderboard__wrapper {
   margin-top: 10px;
   display:flex;
-  flex-direction: column;
+  justify-content: center;
+  flex-direction: row;
 }
 
 .leaderboard__table {
@@ -22,55 +23,145 @@
   flex-direction: column;
 }
 
+/*
+min-width  40% from media avg
+min-height 50% from media avg
+*/
+.leaderboard__board {
+  display:flex;
+  flex-direction: column;
+  /*justify-content: center;*/
+  align-items: center;
+  border-radius: 5%;
+  background-image: url('../../img/field.jpg');
+  background-repeat: no-repeat;
+  background-size: cover;
+  border-color: #46535E; 
+  border-style: solid; 
+  float: left;
+} 
+
+/*
+min-width  15% from media avg
+min-height 15% from media avg
+*/
 .flag_button_back {
   background-image: url('../../img/flag_back.png');
   background-repeat: no-repeat;
   background-size: cover;
+  float: left;
+} 
+
+
+.leaderboard__Label {
+  border-radius: 0 0 5px 5px;;
+  background-color:#46535E;
+  color: white;
+  content: "leaderboard";
+  text-align: center;
+  font-size: 8vw;
+  margin-bottom: 5px;
+  padding: 4px;
 }
 
+/*avg 320*/
 @media screen and (max-width: 320px) {
 
   .flag_button_back {
-    min-width: 100px;
-    min-height: 100px;
+    min-width: 48px;
+    min-height: 48px;
   }
 
+  .leaderboard__board {
+    min-width: 128px;
+    min-height: 160px;
+    border-width: 3px;
+  }
+
+  .leaderboard__block {
+    margin: 5px;
+  }
 }
 
+/*avg 400*/
 @media screen and (min-width: 321px)  and (max-width: 480px) {
 
   .flag_button_back {
-    min-width: 200px;
-    min-height: 200px;
+    min-width: 60px;
+    min-height: 60px;
   }
 
+  .leaderboard__board {
+    min-width: 160px;
+    min-height: 200px;
+    border-width: 5px;
+  }
+
+  /*
+  .leaderboard__left {
+    margin-left: 30px;
+    margin-right: 5x;
+    margin-bottom: 5x;
+    margin-top: 5x;
+  }*/
+
+  .leaderboard__block {
+    margin: 5px;
+  }
 }
 
+/*avg 600*/
 @media screen and (min-width: 481px) and (max-width: 768px) {
 
   .flag_button_back {
-    min-width: 400px;
-    min-height: 400px;
+    min-width: 90px;
+    min-height: 90px;
+  }
+  .leaderboard__board {
+    min-width: 240px;
+    min-height: 300px;
+    border-width: 8px;
   }
 
+  .leaderboard__block {
+    margin: 10px;
+  }
 }
 
+/*avg 1000*/
 @media screen and (min-width: 769px)  and (max-width: 1200px) {
 
   .flag_button_back {
-    min-width: 600px;
-    min-height: 600px;
+    min-width: 150px;
+    min-height: 150px;
+  }
+  .leaderboard__board {
+    min-width: 400px;
+    min-height: 500px;
+    border-width: 12px;
   }
 
+  .leaderboard__block {
+    margin: 10px;
+  }
 }
 
+/*avg 1200*/
 @media screen and (min-width: 1201px) {
 
   .flag_button_back {
-    min-width: 800px;
-    min-height: 800px;
+    min-width: 180px;
+    min-height: 180px;
+  }
+  .leaderboard__board {
+    min-width: 480px;
+    min-height: 600px;
+    border-width: 12px;
   }
 
+  .leaderboard__block {
+    margin: 15px;
+  }
 }
 
 /* .leaderboard {
