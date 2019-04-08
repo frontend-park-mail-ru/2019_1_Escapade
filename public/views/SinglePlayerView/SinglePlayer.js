@@ -24,11 +24,14 @@ export class SinglePlayerView extends BaseView {
     this.leftClicksFieldStringName = 'single_player__statistics_row_left_click';
     this.rightClicksFieldStringName = 'single_player__statistics_row_right_click';
     this.restartFieldStringName = 'single_player__restart_button';
+    this.percentOpenFieldStringName = 'single_player__percent';
+    this.loadbarFieldStringName = 'single_player__loadbar';
 
-    
+
+    this.cellsize = 50;
 
     document.addEventListener('click', this._clickOnCell.bind(this));
-    
+
     document.addEventListener('contextmenu', this._rightСlickOnCell.bind(this));
     document.body.oncontextmenu = function(e) {
       return false;
@@ -46,8 +49,10 @@ export class SinglePlayerView extends BaseView {
     this.leftClicksDocElement = document.getElementsByClassName(this.leftClicksFieldStringName)[0];
     this.rightClicksDocElement = document.getElementsByClassName(this.rightClicksFieldStringName)[0];
     this.restartDocElement = document.getElementsByClassName(this.restartFieldStringName)[0];
-    
-    
+    this.percentOpenDocElement = document.getElementsByClassName(this.percentOpenFieldStringName)[0];
+    this.loadbarDocElement = document.getElementsByClassName(this.loadbarFieldStringName)[0];
+
+
     this.restartDocElement.addEventListener('click', this._restart.bind(this));
 
     this._showMap();
@@ -61,7 +66,6 @@ export class SinglePlayerView extends BaseView {
   }
   /** */
   _showMap() {
-    this.cellsize = 50;
     this.cellNumbersX = 15;
     this.cellNumbersY = 15;
     this.minesCount = 20;
@@ -69,6 +73,7 @@ export class SinglePlayerView extends BaseView {
     this.pointsCount = 0;
     this.leftClicksCount = 0;
     this.rightClicksCount = 0;
+    this.prcentOpen = 0;
     this.minesRemainedCount = this.minesCount;
 
     this.mineSweeper = new MineSweeper(this.cellNumbersX, this.cellNumbersY, this.minesCount);
@@ -78,9 +83,11 @@ export class SinglePlayerView extends BaseView {
     this.minesDocElement.innerHTML = this.minesRemainedCount + ' mines left';
     this.leftClicksDocElement.innerHTML = this.leftClicksCount + ' left clicks';
     this.rightClicksDocElement.innerHTML = this.rightClicksCount + ' right clicks';
+    this.percentOpenDocElement.innerHTML = this.prcentOpen + ' %';
+    this.loadbarDocElement.style.width = 0 + 'px';
 
     this.timer = new Timer(document.getElementById(this.timerFieldStringName));
-    
+
     this.timer.router();
     const field = document.getElementsByClassName(this.mapStringName)[0];
     if (!field) {
@@ -127,6 +134,9 @@ export class SinglePlayerView extends BaseView {
           openCels(x, y, this.cellNumbersX, this.cellNumbersY);
       this._openCels(res.cellArr);
       this.openCellsCount += res.openCells;
+      this.prcentOpen = Math.round((this.openCellsCount / (this.cellNumbersX * this.cellNumbersY - this.minesCount)) * 100);
+      this.percentOpenDocElement.innerHTML = this.prcentOpen + ' %';
+      this.loadbarDocElement.style.width = (this.prcentOpen / 100) * (this.cellsize * this.cellNumbersX - 55) + 'px';
     }
 
     // eslint-disable-next-line max-len
@@ -218,6 +228,9 @@ export class SinglePlayerView extends BaseView {
                          this.cellOpenStringName + this.mineSweeper.map[x][y].toString();
       }
     }
+    this.prcentOpen = 100;
+    this.percentOpenDocElement.innerHTML = this.prcentOpen + ' %';
+    this.loadbarDocElement.style.width = (this.prcentOpen / 100) * (this.cellsize * this.cellNumbersX - 55) + 'px';
     return;
   }
 }
