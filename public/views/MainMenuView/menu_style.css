@@ -6,9 +6,11 @@
 }
 
 body {
-  background: #1C78A6;
-  font-family: 'Lato', sans-serif;
-  letter-spacing: 1px;
+  background-color: #667787;
+  font-family: 'system-ui';
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
 }
 
 .menu-header {

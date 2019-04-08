@@ -3,7 +3,7 @@ import singlePlayerTemplate from './SinglePlayer.pug';
 import BaseView from '../BaseView';
 import {User} from '../../utils/user.js';
 import {MineSweeper} from '../../game/minesweeper.js';
-
+import {Timer} from '../../game/timer.js';
 /** */
 export class SinglePlayerView extends BaseView {
   /**
@@ -12,19 +12,23 @@ export class SinglePlayerView extends BaseView {
    */
   constructor(parent) {
     super(parent, singlePlayerTemplate);
-    this.cellsize = 50;
-    this.cellNumbersX = 15;
-    this.cellNumbersY = 15;
-    this.bombsCount = 20;
-    this.openCellsCount = 0;
     this.cellCloseStringName = 'cell_close';
     this.cellOpenStringName = 'cell_open';
     this.cellStringName = 'cell';
     this.cellFlagStringName = 'cell_flag';
     this.mapStringName = 'single_player__map';
-    this.pointsFieldStringName = 'single_player__points';
-    this.mineSweeper = new MineSweeper(this.cellNumbersX, this.cellNumbersY, this.bombsCount);
+    this.timerFieldStringName = 'single_player__timer';
+
+    this.pointsFieldStringName = 'single_player__statistics_row_points';
+    this.minesFieldStringName = 'single_player__statistics_row_mines';
+    this.leftClicksFieldStringName = 'single_player__statistics_row_left_click';
+    this.rightClicksFieldStringName = 'single_player__statistics_row_right_click';
+    this.restartFieldStringName = 'single_player__restart_button';
+
+    
+
     document.addEventListener('click', this._clickOnCell.bind(this));
+    
     document.addEventListener('contextmenu', this._rightСlickOnCell.bind(this));
     document.body.oncontextmenu = function(e) {
       return false;
@@ -37,123 +41,56 @@ export class SinglePlayerView extends BaseView {
   render() {
     this.data = User;
     super.render();
-    // const pointsField = document.getElementById(this.pointsFieldStringName);
-    /* if (!pointsField) {
-      console.log('error pointsField cannot find ' + this.pointsFieldStringName);
-      return;
-    }*/
-    this.BBBVCount = this.mineSweeper.count3BV();
-    console.log('3BV = ' + this.BBBVCount);
-    // pointsField.textContent = '0';
-    this._showMap(this.cellNumbersX, this.cellNumbersY);
+    this.pointsDocElement = document.getElementsByClassName(this.pointsFieldStringName)[0];
+    this.minesDocElement = document.getElementsByClassName(this.minesFieldStringName)[0];
+    this.leftClicksDocElement = document.getElementsByClassName(this.leftClicksFieldStringName)[0];
+    this.rightClicksDocElement = document.getElementsByClassName(this.rightClicksFieldStringName)[0];
+    this.restartDocElement = document.getElementsByClassName(this.restartFieldStringName)[0];
+    
+    
+    this.restartDocElement.addEventListener('click', this._restart.bind(this));
+
+    this._showMap();
   }
 
+  _restart() {
+    if (this.timer) {
+      this.timer.stop();
+    }
+    this._showMap();
+  }
   /** */
-  _showMap(XLen, YLen) {
-    /*           */
-    (function timer() {
+  _showMap() {
+    this.cellsize = 50;
+    this.cellNumbersX = 15;
+    this.cellNumbersY = 15;
+    this.minesCount = 20;
+    this.openCellsCount = 0;
+    this.pointsCount = 0;
+    this.leftClicksCount = 0;
+    this.rightClicksCount = 0;
+    this.minesRemainedCount = this.minesCount;
 
-      // declare
-      const output = document.getElementById('single_player__timer');
-      let running = false;
-      let paused = false;
-      let timer;
+    this.mineSweeper = new MineSweeper(this.cellNumbersX, this.cellNumbersY, this.minesCount);
+    this.BBBVCount = this.mineSweeper.count3BV();
+    console.log('3BV = ' + this.BBBVCount);
+    this.pointsDocElement.innerHTML = this.pointsCount + ' points';
+    this.minesDocElement.innerHTML = this.minesRemainedCount + ' mines left';
+    this.leftClicksDocElement.innerHTML = this.leftClicksCount + ' left clicks';
+    this.rightClicksDocElement.innerHTML = this.rightClicksCount + ' right clicks';
 
-      // timer start time
-      let then;
-      // pause duration
-      let delay;
-      // pause start time
-      let delayThen;
-
-
-      // start timer
-      const start = function() {
-        delay = 0;
-        running = true;
-        then = Date.now();
-        timer = setInterval(run, 51);
-      };
-
-
-      // parse time in ms for output
-      const parseTime = function(elapsed) {
-        // array of time multiples [hours, min, sec, decimal]
-        const d = [3600000, 60000, 1000, 10];
-        const time = [];
-        let i = 0;
-
-        while (i < d.length) {
-          let t = Math.floor(elapsed/d[i]);
-
-          // remove parsed time for next iteration
-          elapsed -= t*d[i];
-
-          // add '0' prefix to m,s,d when needed
-          t = (i > 0 && t < 10) ? '0' + t : t;
-          time.push(t);
-          i++;
-        }
-
-        return time;
-      };
-
-
-      // run
-      // eslint-disable-next-line no-var
-      var run = function() {
-        // get output array and print
-        const time = parseTime(Date.now()-then-delay);
-        output.innerHTML = time[0] + ':' + time[1] + ':' + time[2] + '.' + time[3];
-      };
-
-
-      // stop
-      const stop = function() {
-        paused = true;
-        delayThen = Date.now();
-        clearInterval(timer);
-
-        // call one last time to print exact time
-        run();
-      };
-
-
-      // resume
-      const resume = function() {
-        paused = false;
-        delay += Date.now()-delayThen;
-        timer = setInterval(run, 51);
-      };
-
-
-      // clear
-      const reset = function() {
-        running = false;
-        paused = false;
-        output.innerHTML = '0:00:00.00';
-      };
-
-
-      // evaluate and route
-      const router = function() {
-        if (!running) start();
-        else if (paused) resume();
-        else stop();
-      };
-      router();
-    })();
-
-    /*            */
-
+    this.timer = new Timer(document.getElementById(this.timerFieldStringName));
+    
+    this.timer.router();
     const field = document.getElementsByClassName(this.mapStringName)[0];
     if (!field) {
       console.log('error field cannot find ' + this.mapStringName);
     }
+    field.innerHTML = '';
     field.setAttribute('class', this.mapStringName);
     field.setAttribute('style', 'width: ' + this.cellNumbersX * this.cellsize + 'px; ' + 'height: ' + this.cellNumbersY * this.cellsize + 'px;');
-    for (let y = 0; y < YLen; y++) {
-      for (let x = 0; x < XLen; x++) {
+    for (let y = 0; y < this.cellNumbersY; y++) {
+      for (let x = 0; x < this.cellNumbersX; x++) {
         const cell = document.createElement('div');
         const strClassClose = this.cellCloseStringName + '_' + this.mineSweeper.randomInteger(1, 3);
         cell.setAttribute('class', this.cellStringName + ' ' + this.cellCloseStringName + ' ' + strClassClose);
@@ -177,8 +114,12 @@ export class SinglePlayerView extends BaseView {
     const x = parseInt(idArr[1]);
     const y = parseInt(idArr[2]);
     let res;
+    this.leftClicksDocElement.innerHTML = (++this.leftClicksCount) + ' left clicks';
     if (this.mineSweeper.map[x][y] === 9) {
       this._openAllCels(x, y, this.cellNumbersX, this.cellNumbersY);
+      if (this.timer) {
+        this.timer.stop();
+      }
       alert('You lose!');
       return;
     } else {
@@ -187,16 +128,15 @@ export class SinglePlayerView extends BaseView {
       this._openCels(res.cellArr);
       this.openCellsCount += res.openCells;
     }
-    /* const pointsField = document.getElementById(this.pointsFieldStringName);
-    if (!pointsField) {
-      console.log('error pointsField cannot find ' + this.pointsFieldStringName);
-      return;
-    }*/
+
     // eslint-disable-next-line max-len
-    console.log(this.openCellsCount, ' ', this.cellNumbersX * this.cellNumbersY - this.bombsCount);
-    // pointsField.textContent = (parseInt(pointsField.textContent) + res.points).toString();
-    if (this.openCellsCount === this.cellNumbersX * this.cellNumbersY - this.bombsCount) {
+    console.log(this.openCellsCount, ' ', this.cellNumbersX * this.cellNumbersY - this.minesCount);
+    this.pointsDocElement.innerHTML = (this.pointsCount += res.points) + ' points';
+    if (this.openCellsCount === this.cellNumbersX * this.cellNumbersY - this.minesCount) {
       this._openAllCels(x, y, this.cellNumbersX, this.cellNumbersY);
+      if (this.timer) {
+        this.timer.stop();
+      }
       alert('You win!');
     }
     return;
@@ -209,8 +149,13 @@ export class SinglePlayerView extends BaseView {
       !e.target.classList.contains(this.cellFlagStringName))) {
       return;
     }
+    this.rightClicksDocElement.innerHTML = (++this.rightClicksCount) + ' right clicks';
+    
     if (e.target.classList.contains(this.cellFlagStringName) &&
         e.target.classList.length >= 3) {
+      if (this.minesRemainedCount < this.minesCount) {
+        this.minesDocElement.innerHTML = (++this.minesRemainedCount) + ' mines left';
+      }
       const classElems = e.target.classList[2].split('_');
       const numClassElem = parseInt(classElems[2]);
       e.target.classList.remove(e.target.classList[2]);
@@ -220,6 +165,9 @@ export class SinglePlayerView extends BaseView {
       return;
     }
     if (e.target.classList.length >= 3) {
+      if (this.minesRemainedCount > 0) {
+        this.minesDocElement.innerHTML = (--this.minesRemainedCount) + ' mines left';
+      }
       const classElems = e.target.classList[2].split('_');
       const numClassElem = parseInt(classElems[2]);
       e.target.classList.remove(e.target.classList[2]);
@@ -244,9 +192,9 @@ export class SinglePlayerView extends BaseView {
       if (!cell.classList.contains(this.cellCloseStringName)) {
         return {points: 0, openCells: 0};
       }
-      cell.classList.remove(this.cellCloseStringName);
-      cell.textContent = this.mineSweeper.map[x][y].toString();
-      cell.classList.add(this.cellOpenStringName + this.mineSweeper.map[x][y].toString());
+      cell.className = this.cellStringName + ' ' +
+                       this.cellOpenStringName + ' ' +
+                       this.cellOpenStringName + this.mineSweeper.map[x][y].toString();
     }
   }
 
@@ -258,16 +206,9 @@ export class SinglePlayerView extends BaseView {
         if (!cell) {
           console.log('error _openAllCels cannot find ' + this.cellStringName + '_' + x + '_' +y);
         }
-        if (cell.classList.contains(this.cellCloseStringName)) {
-          cell.classList.remove(this.cellCloseStringName);
-          cell.textContent = this.mineSweeper.map[x][y].toString();
-          cell.classList.add(this.cellOpenStringName + this.mineSweeper.map[x][y].toString());
-        }
-        if (cell.classList.contains(this.cellFlagStringName)) {
-          cell.classList.remove(this.cellFlagStringName);
-          cell.textContent = this.mineSweeper.map[x][y].toString();
-          cell.classList.add(this.cellOpenStringName + this.mineSweeper.map[x][y].toString());
-        }
+        cell.className = this.cellStringName + ' ' +
+                         this.cellOpenStringName + ' ' +
+                         this.cellOpenStringName + this.mineSweeper.map[x][y].toString();
       }
     }
     return;
