@@ -11,7 +11,7 @@ export default class ProfileView extends BaseView {
    * @param {*} parent
    */
   constructor(parent) {
-    super(parent, ProfileTemplate);
+    super(parent, ProfileTemplate, false);
 
     Bus.on('onSuccessUpload', this._onSuccessUpload.bind(this));
     Bus.on('onFailedUpload', (error) => {

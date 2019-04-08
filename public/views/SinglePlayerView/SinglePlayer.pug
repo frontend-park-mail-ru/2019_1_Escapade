@@ -12,17 +12,18 @@ section(data-section-name='single_player')
         .single_player__percent 15%
         .single_player__loadbar
       .single_player__settings  
-        ul.topmenu
+        ul.single_player__topmenu
           li.single_player__settings_list
             a(href="") #[img(src=require('../../img/settings.png')).single_player__settings_img]
-            ul.submenu
-              li #[a(href="") Сервис1]
-              li #[a(href="") Сервис2]
-              li #[a(href="") Сервис3]
-        .single_player__settings_button Master mode
-        .single_player__settings_button 200 width
-        .single_player__settings_button 200 height
-        .single_player__settings_button 50 mines
+            ul.single_player__submenu
+              li.single_player__submenu_item.single_player__submenu_baby Baby
+              li.single_player__submenu_item.single_player__submenu_normal Normal
+              li.single_player__submenu_item.single_player__submenu_hard Hard
+              li.single_player__submenu_item.single_player__submenu_god God
+        .single_player__settings_info.single_player__settings_info_mode Master mode
+        .single_player__settings_info.single_player__settings_info_width 200 width
+        .single_player__settings_info.single_player__settings_info_height 200 height
+        .single_player__settings_info.single_player__settings_info_mines 50 mines
     .single_player_info
       .single_player__right_menu_buttons
         .single_player__restart_button Restart
