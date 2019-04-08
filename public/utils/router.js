@@ -47,12 +47,15 @@ export default class Router {
 
     if (!view) {
       view = new View(el);
+      console.log('created view: ', view);
     }
 
     if (this.currentView !== null) {
       if (view.isOffline === false && !navigator.onLine) {
         this.currentView.showOfflineOverlay();
         this.root.removeChild(view.parent);
+        this.routes[path].view = null;
+        this.routes[path].el = null;
         return;
       }
     }
