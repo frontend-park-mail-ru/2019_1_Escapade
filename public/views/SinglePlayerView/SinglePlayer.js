@@ -150,30 +150,40 @@ export class SinglePlayerView extends BaseView {
       return;
     }
     this.rightClicksDocElement.innerHTML = (++this.rightClicksCount) + ' right clicks';
-    
-    if (e.target.classList.contains(this.cellFlagStringName) &&
-        e.target.classList.length >= 3) {
+    const idArr = e.target.id.split('_');
+    const x = parseInt(idArr[1]);
+    const y = parseInt(idArr[2]);
+    const typeOfCell = this.mineSweeper.putRemoveFlag(x, y);
+
+    if (typeOfCell == 0) {
       if (this.minesRemainedCount < this.minesCount) {
         this.minesDocElement.innerHTML = (++this.minesRemainedCount) + ' mines left';
       }
-      const classElems = e.target.classList[2].split('_');
-      const numClassElem = parseInt(classElems[2]);
-      e.target.classList.remove(e.target.classList[2]);
-      e.target.classList.remove(this.cellFlagStringName);
-      e.target.classList.add(this.cellCloseStringName);
-      e.target.classList.add(this.cellCloseStringName + '_' + numClassElem);
-      return;
-    }
-    if (e.target.classList.length >= 3) {
-      if (this.minesRemainedCount > 0) {
-        this.minesDocElement.innerHTML = (--this.minesRemainedCount) + ' mines left';
+      if (e.target.classList.length < 3) {
+        console.log('error e.target.classList.length < 3');
+        return;
       }
       const classElems = e.target.classList[2].split('_');
       const numClassElem = parseInt(classElems[2]);
-      e.target.classList.remove(e.target.classList[2]);
-      e.target.classList.remove(this.cellCloseStringName);
-      e.target.classList.add(this.cellFlagStringName);
-      e.target.classList.add(this.cellFlagStringName + '_' + numClassElem);
+      e.target.className = this.cellStringName + ' ' +
+                          this.cellCloseStringName + ' ' +
+                          this.cellCloseStringName + '_' + numClassElem;
+      return;
+    }
+
+    if (typeOfCell == 2) {
+      if (this.minesRemainedCount > 0) {
+        this.minesDocElement.innerHTML = (--this.minesRemainedCount) + ' mines left';
+      }
+      if (e.target.classList.length < 3) {
+        console.log('error e.target.classList.length < 3');
+        return;
+      }
+      const classElems = e.target.classList[2].split('_');
+      const numClassElem = parseInt(classElems[2]);
+      e.target.className = this.cellStringName + ' ' +
+                          this.cellFlagStringName + ' ' +
+                          this.cellFlagStringName + '_' + numClassElem;
     }
     return;
   }
@@ -188,9 +198,6 @@ export class SinglePlayerView extends BaseView {
       if (!cell) {
         console.log('error _openCels cannot find ' +
            this.cellStringName + '_' + x + '_' +y);
-      }
-      if (!cell.classList.contains(this.cellCloseStringName)) {
-        return {points: 0, openCells: 0};
       }
       cell.className = this.cellStringName + ' ' +
                        this.cellOpenStringName + ' ' +

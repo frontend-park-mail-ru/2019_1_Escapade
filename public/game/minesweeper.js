@@ -83,6 +83,19 @@ export class MineSweeper {
   }
 
   /** */
+  putRemoveFlag(x, y) {
+    if (x < 0 || y < 0 || x >= this.cellNumbersX || y >= this.cellNumbers) {
+      return -1;
+    }
+
+    if (this.mapLabel[x][y] === 2) {
+      this.mapLabel[x][y] = 0;
+    } else if (this.mapLabel[x][y] === 0) {
+      this.mapLabel[x][y] = 2;
+    }
+    return this.mapLabel[x][y]; // 0 - закрыта; 1 - открыта; 2 - флаг
+  }
+  /** */
   count3BV() {
     let BBBVCount = 0;
     this.mapLabel3BV = new Array(this.cellNumbersY);
