@@ -6,19 +6,89 @@
 .leaderboard {
   display: flex;
   justify-content: center;
+  display:flex;
+  flex-direction: row;
+}
+
+.leaderboard__wrapper {
+  margin-top: 10px;
+  display:flex;
+  flex-direction: column;
+}
+
+.leaderboard__table {
+  margin-top: 10px;
+  display:flex;
+  flex-direction: column;
+}
+
+.flag_button_back {
+  background-image: url('../../img/flag_back.png');
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+@media screen and (max-width: 320px) {
+
+  .flag_button_back {
+    min-width: 100px;
+    min-height: 100px;
+  }
+
+}
+
+@media screen and (min-width: 321px)  and (max-width: 480px) {
+
+  .flag_button_back {
+    min-width: 200px;
+    min-height: 200px;
+  }
+
+}
+
+@media screen and (min-width: 481px) and (max-width: 768px) {
+
+  .flag_button_back {
+    min-width: 400px;
+    min-height: 400px;
+  }
+
+}
+
+@media screen and (min-width: 769px)  and (max-width: 1200px) {
+
+  .flag_button_back {
+    min-width: 600px;
+    min-height: 600px;
+  }
+
+}
+
+@media screen and (min-width: 1201px) {
+
+  .flag_button_back {
+    min-width: 800px;
+    min-height: 800px;
+  }
+
+}
+
+/* .leaderboard {
+  display: flex;
+  justify-content: center;
   flex-direction: column;
   height: 80vh;
   background: white;
   align-items: center
-}
+} */
 
-.leaderboard__wrapper {
+/* .leaderboard__wrapper {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   min-width: fit-content;
-}
+} */
 
 .leaderboard table {
   text-align: left;

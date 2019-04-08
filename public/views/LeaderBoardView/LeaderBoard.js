@@ -37,8 +37,8 @@ export default class LeaderBoardView extends BaseView {
   _initBoard(amount) {
     this._pagesCount = amount;
     this._initButtons();
-    this.board = new BoardComponent(
-        this.parent.querySelector('.leaderboard__wrapper'));
+    //this.board = new BoardComponent(
+    //   this.parent.querySelector('.leaderboard__table'));
     console.log('initBoard');
   }
 
