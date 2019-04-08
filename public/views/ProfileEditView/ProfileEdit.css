@@ -38,4 +38,5 @@
   background-size: contain;
   align-self: center;
   border-radius: 50%;
+  cursor: pointer;
 }
