@@ -6,8 +6,8 @@
 .profile {
   display: flex;
   justify-content: center;
-  height: 80vh;
-  background: white;
+  height: 100vh;
+  background: radial-gradient(512.00px at 50% 50%, rgba(255, 255, 255, 0.34) 0%, rgba(255, 255, 255, 0) 100%), #667787;
 }
 
 .profile__wrapper {
@@ -15,39 +15,62 @@
 	align-items: center;
   justify-content: center;
   max-height: 100%;
-  margin-top: 18vh;
+  margin-top: 11vh;
 }
 
 .profile__main{
   justify-content: space-around;
   display: flex;
   align-items: center;
-}
-
-@media screen and (max-width: 720px) {
-
-  .profile__main{
-    flex-direction: column;
-  }
+  flex-direction: column
 }
 
 .profile__info{
   display: flex;
-  flex-direction: column;
-  min-width: 25vh;
+  justify-content: space-around;
+  align-items: flex-end;
 }
 
-.profile__name{
-  text-align: left;
-  color: #5f3901;
+.profile__row_score{
+  display: flex;
+  justify-content: space-evenly
+}
+
+.profile__rowname{
+  background: #46535E;
+  border-radius: 10px;
   margin-bottom: 2px;
-  font-size: 1.8vh;
+  font-family: Saira;
+  font-size: 1.2rem;
+  color: white;
+  padding: 3px 17px;
 }
 
-.profile__value{
-  padding: 5px 20px;
-  text-align: center;
-  background: rgba(230,222,193,.8);
+.profile__input{
+  background: #46535E;
+  border-radius: 20px;
+  font-size: 2.3rem;
+  font-family: Saira;
+  padding: 5px 10px;
+  padding-bottom: 8px;
+  margin: 1.5vh 0;
+  outline: none;
+  color: white;
+  border: none
+}
+
+.profile__games{
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between
+}
+
+.profile__game{
+  background: #46535E;
+  border-radius: 15px;
+  display: flex;
+  padding: 6px 15px;
+  align-items: center
 }
 
 .profile__avatar{
@@ -58,62 +81,118 @@
   grid-area: ava;
 }
 
-.profile__form{
-  display: grid;
-  text-align: center;
-}
-
 .profile__data{
   display: flex;
   flex-direction: column;
   grid-area: form;
 }
 
-.profile__form{
-grid-template-areas:  
-                      "ava form"
-                      "ava from";
-grid-template-columns: 1fr 1fr;
+.profile__default_avatar{
+  width: 290px;
+  height: 290px;
+  background: url('../../img/user.png') no-repeat;
+  background-size: contain;
+  background-position: center;
 }
 
-.avatar__button{
-  width: 50%;
-  margin-top: 1.2rem;
-}
-
-.back{
-  margin-top: 15px;
-  color: black;
-  text-decoration: none;
-  text-align: center;
-}
-
-.back:hover{
-  text-decoration: underline;
-}
-
-img {
-  display: block;
-  max-width:200px;
-  max-height:200px;
+.thumb {
+  display: inline-block;
+  max-width:290px;
+  max-height:290px;
   width: auto;
   height: auto;
   padding: 5px 10px;
   text-align: center;
-  vertical-align: middle;
   margin-left: auto;
   margin-right: auto;
+  border-radius: 50%
 }
 
 input[type="file"] {
   display: none;
 }
+
 .custom-file-upload {
-  border: 1px solid #ccc;
   display: inline-block;
-  padding: 6px 12px;
   cursor: pointer;
+  position: relative;
+  width: 40px;
+  height: 50px;
+  top: -258px;
+  left: 92px;
+  z-index: 50;
+  border-radius: 50%;
+  background: url('../../img/upload-avatar.png') #46535E no-repeat;
+  background-size: contain;
+  background-position: center;
 }
-.hrefBackToMenu {
-  text-align: center;
+
+.profile__hrefBackToMenu {
+  width: 108px;
+  height: 106px;
+  background: url('../../img/flag-right.png') no-repeat;
+  transform: matrix(-1, 0, 0, 1, 0, 0);
+  background-size: contain;
+  align-self: flex-start
+}
+
+.profile__hrefToChange {
+  width: 90px;
+  height: 90px;
+  background: url('../../img/edit-profile.png') #46535E no-repeat;
+  background-size: contain;
+  align-self: center;
+  border-radius: 50%;
+}
+
+
+
+/* Statistics Footer */
+
+
+.profile__flag_left{
+  width: 40px;
+  height: 36px;
+  background: url('../../img/flag-right.png') no-repeat;
+  transform: matrix(-1, 0, 0, 1, 0, 0);
+  background-size: contain;
+}
+
+.profile__star{
+  width: 40px;
+  height: 36px;
+  background: url('../../img/star-q.png') no-repeat;
+  background-size: contain;
+}
+
+.profile__bomb{
+  width: 40px;
+  height: 36px;
+  background: url('../../img/bomb1.png') no-repeat;
+  background-size: contain;
+  background-position: center;
+}
+
+.profile__clock{
+  width: 40px;
+  height: 36px;
+  background: url('../../img/clock.png') no-repeat;
+  background-size: contain;
+  background-position: center;
+}
+
+.profile__click_left{
+  width: 40px;
+  height: 36px;
+  background: url('../../img/left-click.png') no-repeat;
+  background-size: contain;
+  background-position: center;
+}
+
+.profile__click_right{
+  width: 35px;
+  height: 36px;
+  background: url('../../img/right-click.png') no-repeat;
+  background-size: contain;
+  background-position: center;
 }
