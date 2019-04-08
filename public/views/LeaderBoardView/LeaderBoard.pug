@@ -1,11 +1,47 @@
 section(data-section-name='leaderboard')
-  h1.leaderboard__header Таблица лидеров
   br
   .leaderboard
     .leaderboard__wrapper
-      .flag_button_back.leaderboard__block
       .leaderboard__board.leaderboard__block
         .leaderboard__Label Leaderboard
+        .row.leaderboard__table_header
+          .leaderboard__table_row_element.leaderboard__number N
+          .leaderboard__table_row_element.leaderboard__ava 
+          .leaderboard__table_row_element.leaderboard__name UserName
+          .leaderboard__table_row_element.leaderboard__points Points
+          .leaderboard__table_row_element.leaderboard__time Time
+        .leaderboard__table_row.leaderboard__table_best
+          .leaderboard__table_row_element.leaderboard__number 1
+          .leaderboard__table_row_element.leaderboard__ava 
+          .leaderboard__table_row_element.leaderboard__name Artyom the viking
+          .leaderboard__table_row_element.leaderboard__points 1000000
+          .leaderboard__table_row_element.leaderboard__time 99:99:99
+        .leaderboard__table_row.leaderboard__table_usual
+          .leaderboard__table_row_element.leaderboard__number 2
+          .leaderboard__table_row_element.leaderboard__ava 
+          .leaderboard__table_row_element.leaderboard__name Ivan nitro thunderbolt
+          .leaderboard__table_row_element.leaderboard__points 8883
+          .leaderboard__table_row_element.leaderboard__time 00:01:45
+        .leaderboard__table_row.leaderboard__table_usual
+          .leaderboard__table_row_element.leaderboard__number 3
+          .leaderboard__table_row_element.leaderboard__ava 
+          .leaderboard__table_row_element.leaderboard__name Ivan nitro thunderbolt
+          .leaderboard__table_row_element.leaderboard__points 8883
+          .leaderboard__table_row_element.leaderboard__time 00:01:45
+        .leaderboard__table_row.leaderboard__table_usual
+          .leaderboard__table_row_element.leaderboard__number 4
+          .leaderboard__table_row_element.leaderboard__ava 
+          .leaderboard__table_row_element.leaderboard__name Ivan nitro thunderbolt
+          .leaderboard__table_row_element.leaderboard__points 8883
+          .leaderboard__table_row_element.leaderboard__time 00:01:45
+        - for(var i = 0; i < data.length;i++){
+          .leaderboard__table_row.leaderboard__table_usual
+            .leaderboard__table_row_element.leaderboard__number #{i}
+            .leaderboard__table_row_element.leaderboard__ava 
+            .leaderboard__table_row_element.leaderboard__name #{data[i].name}
+            .leaderboard__table_row_element.leaderboard__points #{data[i].bestScore.String || 0}
+            .leaderboard__table_row_element.leaderboard__time #{data[i].bestTime.String || 0}
+        - }
     .leaderboard__controls
       img.arrow.arrow__inactive(src='../../img/arrow-left.png')
       img.arrow(src='../../img/arrow-right.png')
