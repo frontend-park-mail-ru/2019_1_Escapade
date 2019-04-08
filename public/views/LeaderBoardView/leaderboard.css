@@ -289,14 +289,14 @@ min-height 15% from media avg
   .leaderboard__table_header {
     font-size: 28px;
     min-height: 18px;
-    line-height: 18px;
+    line-height: 20px;
     padding: 2px;
     margin: 5px;
   }
 
   .leaderboard__table_row_element {
     font-size: 25px;
-    min-height: 12px;
+    min-height: 10px;
     padding: 1px;
     margin: 5px;
   }
@@ -334,38 +334,59 @@ min-height 15% from media avg
   .leaderboard__board {
     min-width: 480px;
     min-height: 600px;
+    border-width: 8px;
   }
 
   .leaderboard__block {
-    margin: 15px;
+    margin: 50px;
+    border-radius: 5%;
   }
 
   .leaderboard__table_row_element {
-    font-size: 12px;
-    min-height: 16px;
+    margin-bottom: 20px;
+    margin-left: 50px;
+    margin-right: 50px;
+  }
+
+  /*table elements*/
+  .leaderboard__table_header {
+    font-size: 28px;
+    min-height: 18px;
+    line-height: 20px;
+    padding: 2px;
+    margin: 5px;
+  }
+
+  .leaderboard__table_row_element {
+    font-size: 25px;
+    min-height: 10px;
+    padding: 1px;
+    margin: 10px;
+  }
+
+  .leaderboard__number {
+    min-width: 50px;
+  }
+  
+  .leaderboard__ava {
+    border-radius: 20px;
+    min-width: 40px;
+    min-height: 40px;
+  }
+  
+  .leaderboard__name {
+    min-width: 320px;
+  }
+  
+  .leaderboard__points {
+    min-width: 130px;
+  }
+  
+  .leaderboard__time {
+    min-width: 130px;
   }
 }
 
-/* .leaderboard {
-  display: flex;
-  justify-content: center;
-  flex-direction: column;
-  height: 80vh;
-  background: white;
-  align-items: center
-} */
-
-/* .leaderboard__wrapper {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  min-width: fit-content;
-} */
-
-.leaderboard table {
-  text-align: left;
-}
 
 .leaderboard__controls{
   margin-top: 15px;
