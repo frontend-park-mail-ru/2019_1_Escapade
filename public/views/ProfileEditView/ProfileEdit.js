@@ -31,15 +31,15 @@ export default class ProfileEditView extends BaseView {
     this.data = User;
     super.render();
 
-    this._form = this.parent.querySelector('.profile__form');
-    this._warnings = {};
-    this._warnings.email = this.parent.querySelector('.js-warning-email');
-    this._warnings.login = this.parent.querySelector('.js-warning-login');
-    this._warnings.pass = this.parent.querySelector('.js-warning-password');
-    this._warnings.repass = this.parent.querySelector('.js-warning-repassword');
-    this._changeButton = this.parent.querySelector('.change__submit');
-    this._changeButton
-        .addEventListener('click', this._onSubmitDataProfile.bind(this));
+    // this._form = this.parent.querySelector('.profile__form');
+    // this._warnings = {};
+    // this._warnings.email = this.parent.querySelector('.js-warning-email');
+    // this._warnings.login = this.parent.querySelector('.js-warning-login');
+    // this._warnings.pass = this.parent.querySelector('.js-warning-password');
+    // this._warnings.repass = this.parent.querySelector('.js-warning-repassword');
+    // this._changeButton = this.parent.querySelector('.change__submit');
+    // this._changeButton
+    //     .addEventListener('click', this._onSubmitDataProfile.bind(this));
   }
 
 
