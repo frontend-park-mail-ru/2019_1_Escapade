@@ -321,6 +321,7 @@ ul {
 }
 
 .single_player__quite_button {
+  text-decoration: none;
   background-color: #828282;
   position: relative;
   text-align: center;
