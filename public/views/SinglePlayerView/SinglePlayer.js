@@ -112,8 +112,9 @@ export class SinglePlayerView extends BaseView {
     this.percentOpenDocElement.innerHTML = this.prcentOpen + ' %';
     this.loadbarDocElement.style.width = 0 + 'px';
 
-    
-
+    if (this.start) {
+      this.timer.router();
+    }
     
     const field = document.getElementsByClassName(this.mapStringName)[0];
     if (!field) {
@@ -147,7 +148,7 @@ export class SinglePlayerView extends BaseView {
         this.timer.stop();
       }
     }
-    this.timer.router();
+    
     this._showMap();
   }
 
@@ -172,20 +173,27 @@ export class SinglePlayerView extends BaseView {
       this.minesCount = 40;
       this.infoMinesDocElement.innerHTML = this.minesCount + ' mines';
     }
-    this.start = false;
     if (this.timer.running) {
       this.timer.stop();
     }
-    this._openAllCels();
-    this.restartDocElement.innerHTML = 'Start';
+
+    if (!this.start) {
+      this.restartDocElement.innerHTML = 'Restart';
+      this.start = true;
+    }
+
+    this._showMap();
+
   }
 
   /** */
   _clickOnCell(e) {
-    if (!e.target.classList.contains(this.cellStringName) ||
-      e.target.classList.contains(this.cellFlagStringName)) {
-      return;
-    }
+    if (!this.start) 
+      if (!e.target.classList.contains(this.cellStringName) ||
+        e.target.classList.contains(this.cellFlagStringName) ||
+        !this.start) {
+        return;
+      }
     const idArr = e.target.id.split('_');
     const x = parseInt(idArr[1]);
     const y = parseInt(idArr[2]);
@@ -196,6 +204,7 @@ export class SinglePlayerView extends BaseView {
       if (this.timer.running) {
         this.timer.stop();
       }
+      this.start = false;
       alert('You lose!');
       return;
     } else {
@@ -216,6 +225,7 @@ export class SinglePlayerView extends BaseView {
       if (this.timer.running) {
         this.timer.stop();
       }
+      this.start = false;
       alert('You win!');
     }
     return;
@@ -223,7 +233,7 @@ export class SinglePlayerView extends BaseView {
 
   /** */
   _rightСlickOnCell(e) {
-    if (!e.target.classList.contains(this.cellStringName) ||
+    if (!e.target.classList.contains(this.cellStringName) || !this.start ||
       (!e.target.classList.contains(this.cellCloseStringName) &&
       !e.target.classList.contains(this.cellFlagStringName))) {
       return;
