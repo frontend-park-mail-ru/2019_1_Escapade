@@ -211,6 +211,7 @@ body {
 .single_player__settings_img{
   width: 80px;
   height: 80px;
+  background: url('../../img/settings.png') no-repeat;
   float: left;
 }
 
