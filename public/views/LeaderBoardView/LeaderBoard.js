@@ -1,5 +1,4 @@
 import leaderBoardTemplate from './LeaderBoard.pug';
-import {BoardComponent} from './Board/Board.js';
 import BaseView from '../BaseView';
 import Bus from '../../utils/bus';
 
@@ -14,18 +13,26 @@ export default class LeaderBoardView extends BaseView {
     this._currPage = 1;
 
     Bus.on('respPagesAmount', this._initBoard.bind(this));
-    Bus.on('respPage', (users) => {
-      this.data = users;
-    });
+    
   }
 
   /**
    * Отрисовка лидербода и получение необходимой информации с бэкэнда
   */
   render() {
-    super.render();
+    Bus.on('respPage', this.renderUsers.bind(this));
     Bus.emit('reqPagesAmount');
     Bus.emit('reqPage', 1);
+  }
+
+  /**
+   *
+   * @param {*} users
+   */
+  renderUsers(users) {
+    console.log(users);
+    this.data = users;
+    super.render();
   }
 
   /**
