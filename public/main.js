@@ -39,9 +39,10 @@ router
     .register('/sign_up', SignUpMV.view)
     .register('/leaders', LeaderBoardMV.view)
     .register('/about', AuthorsView)
-    .register('/profile', ProfileMV.view)
+    .register('/profile', ProfileMV.views.ProfileView)
     .register('/single_player', SinglePlayerView)
-    .register('/multi_player', MultiplayeMV.view);
+    .register('/multi_player', MultiplayeMV.view)
+    .register('/profile/edit', ProfileMV.views.ProfileEditView);
 
 bus.on('logout', signOut);
 checkAuth(router.start.bind(router));
