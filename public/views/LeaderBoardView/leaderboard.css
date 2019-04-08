@@ -38,6 +38,7 @@ min-height 50% from media avg
   background-size: cover;
   border-color: #46535E; 
   border-style: solid; 
+  border-width: 3px;
   float: left;
 } 
 
@@ -92,7 +93,8 @@ min-height 15% from media avg
 .leaderboard__ava {
   background-image: url('../../img/qrosh.png');
   background-repeat: no-repeat;
-  background-size: cover;
+  background-size: contain;
+  background-position: center;
 }
 
 .leaderboard__number {
@@ -110,7 +112,6 @@ min-height 15% from media avg
   .leaderboard__board {
     min-width: 128px;
     min-height: 160px;
-    border-width: 3px;
   }
 
   .leaderboard__block {
@@ -137,7 +138,6 @@ min-height 15% from media avg
   }
   
   .leaderboard__ava {
-    border-radius: 5px;
     min-width: 10px;
     min-height: 10px;
   }
@@ -166,7 +166,6 @@ min-height 15% from media avg
   .leaderboard__board {
     min-width: 320px;
     min-height: 600px;
-    border-width: 5px;
   }
 
   .leaderboard__block {
@@ -193,7 +192,6 @@ min-height 15% from media avg
   }
   
   .leaderboard__ava {
-    border-radius: 7px;
     min-width: 12px;
     min-height: 12px;
   }
@@ -219,9 +217,8 @@ min-height 15% from media avg
     min-height: 90px;
   } */
   .leaderboard__board {
-    min-width: 691px;
-    min-height: 921px;
-    border-width: 8px;
+    min-width: 500px;
+    min-height: 666;
   }
 
   .leaderboard__block {
@@ -230,15 +227,75 @@ min-height 15% from media avg
 
   /*table elements*/
   .leaderboard__table_header {
-    font-size: 25px;
+    font-size: 22px;
     min-height: 16px;
-    line-height: 5px;
+    line-height: 16px;
     padding: 2px;
     margin: 5px;
   }
 
   .leaderboard__table_row_element {
-    font-size: 22px;
+    font-size: 20px;
+    min-height: 12px;
+    padding: 1px;
+    margin: 5px;
+  }
+
+  .leaderboard__number {
+    min-width: 25px;
+  }
+  
+  .leaderboard__ava {
+    border-radius: 8px;
+    min-width: 16px;
+    min-height: 16px;
+  }
+  
+  .leaderboard__name {
+    min-width: 220px;
+  }
+  
+  .leaderboard__points {
+    min-width: 80px;
+  }
+  
+  .leaderboard__time {
+    min-width: 80px;
+  }
+}
+
+/*avg 1000*/
+@media screen and (min-width: 769px)  and (max-width: 1200px) {
+
+  /* .flag_button_back {
+    min-width: 150px;
+    min-height: 150px;
+  } */
+  .leaderboard__board {
+    min-width: 750px;
+    min-height: 1000px;
+  }
+
+  .leaderboard__block {
+    margin: 10px;
+  }
+
+  .leaderboard__table_row_element {
+    font-size: 12px;
+    min-height: 16px;
+  }
+
+  /*table elements*/
+  .leaderboard__table_header {
+    font-size: 28px;
+    min-height: 18px;
+    line-height: 18px;
+    padding: 2px;
+    margin: 5px;
+  }
+
+  .leaderboard__table_row_element {
+    font-size: 25px;
     min-height: 12px;
     padding: 1px;
     margin: 5px;
@@ -249,44 +306,21 @@ min-height 15% from media avg
   }
   
   .leaderboard__ava {
-    border-radius: 7px;
-    min-width: 24px;
-    min-height: 24px;
+    border-radius: 20px;
+    min-width: 40px;
+    min-height: 40px;
   }
   
   .leaderboard__name {
-    min-width: 280px;
+    min-width: 320px;
   }
   
   .leaderboard__points {
-    min-width: 100px;
+    min-width: 130px;
   }
   
   .leaderboard__time {
-    min-width: 100px;
-  }
-}
-
-/*avg 1000*/
-@media screen and (min-width: 769px)  and (max-width: 1200px) {
-
-  .flag_button_back {
-    min-width: 150px;
-    min-height: 150px;
-  }
-  .leaderboard__board {
-    min-width: 400px;
-    min-height: 500px;
-    border-width: 12px;
-  }
-
-  .leaderboard__block {
-    margin: 10px;
-  }
-
-  .leaderboard__table_row_element {
-    font-size: 12px;
-    min-height: 16px;
+    min-width: 130px;
   }
 }
 
@@ -300,7 +334,6 @@ min-height 15% from media avg
   .leaderboard__board {
     min-width: 480px;
     min-height: 600px;
-    border-width: 12px;
   }
 
   .leaderboard__block {
