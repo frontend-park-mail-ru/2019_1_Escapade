@@ -117,8 +117,41 @@ min-height 15% from media avg
     margin: 5px;
   }
 
-  .leaderboard__table_row_element {
+  /*table elements*/
+  .leaderboard__table_header {
     font-size: 12px;
+    min-height: 10px;
+    padding: 2px;
+    margin: 5px;
+  }
+
+  .leaderboard__table_row_element {
+    font-size: 10px;
+    min-height: 8px;
+    padding: 1px;
+    margin: 5px;
+  }
+
+  .leaderboard__number {
+    min-width: 16px;
+  }
+  
+  .leaderboard__ava {
+    border-radius: 5px;
+    min-width: 10px;
+    min-height: 10px;
+  }
+  
+  .leaderboard__name {
+    min-width: 110px;
+  }
+  
+  .leaderboard__points {
+    min-width: 40px;
+  }
+  
+  .leaderboard__time {
+    min-width: 40px;
   }
 }
 
@@ -136,18 +169,11 @@ min-height 15% from media avg
     border-width: 5px;
   }
 
-  /*
-  .leaderboard__left {
-    margin-left: 30px;
-    margin-right: 5x;
-    margin-bottom: 5x;
-    margin-top: 5x;
-  }*/
-
   .leaderboard__block {
     margin: 5px;
   }
 
+  /*table elements*/
   .leaderboard__table_header {
     font-size: 15px;
     min-height: 16px;
@@ -156,46 +182,45 @@ min-height 15% from media avg
   }
 
   .leaderboard__table_row_element {
-    font-size: 14px;
-    min-height: 12px;
+    font-size: 12px;
+    min-height: 10px;
     padding: 1px;
     margin: 5px;
   }
 
   .leaderboard__number {
-    min-width: 28px;
+    min-width: 22px;
   }
   
   .leaderboard__ava {
     border-radius: 7px;
-    min-width: 14px;
+    min-width: 12px;
+    min-height: 12px;
   }
   
   .leaderboard__name {
-    min-width: 160px;
+    min-width: 140px;
   }
   
   .leaderboard__points {
-    min-width: 60px;
+    min-width: 50px;
   }
   
   .leaderboard__time {
-    min-width: 60px;
+    min-width: 50px;
   }
-  
-  
 }
 
 /*avg 600*/
 @media screen and (min-width: 481px) and (max-width: 768px) {
 
-  .flag_button_back {
+  /* .flag_button_back {
     min-width: 90px;
     min-height: 90px;
-  }
+  } */
   .leaderboard__board {
-    min-width: 240px;
-    min-height: 300px;
+    min-width: 691px;
+    min-height: 921px;
     border-width: 8px;
   }
 
@@ -203,9 +228,42 @@ min-height 15% from media avg
     margin: 10px;
   }
 
-  .leaderboard__table_row_element {
-    font-size: 12px;
+  /*table elements*/
+  .leaderboard__table_header {
+    font-size: 25px;
     min-height: 16px;
+    line-height: 5px;
+    padding: 2px;
+    margin: 5px;
+  }
+
+  .leaderboard__table_row_element {
+    font-size: 22px;
+    min-height: 12px;
+    padding: 1px;
+    margin: 5px;
+  }
+
+  .leaderboard__number {
+    min-width: 50px;
+  }
+  
+  .leaderboard__ava {
+    border-radius: 7px;
+    min-width: 24px;
+    min-height: 24px;
+  }
+  
+  .leaderboard__name {
+    min-width: 280px;
+  }
+  
+  .leaderboard__points {
+    min-width: 100px;
+  }
+  
+  .leaderboard__time {
+    min-width: 100px;
   }
 }
 
