@@ -24,9 +24,10 @@ export default class ProfileView extends BaseView {
   /** */
   render() {
     this.data = User;
+    console.log('RRrrrr ', User);
     super.render();
 
-    Bus.emit('getAvatar');
+    Bus.emit('getAvatar', User.name);
     document.getElementById('file')
         .addEventListener('change', this._handleFileSelect.bind(this), false);
   }
@@ -72,17 +73,20 @@ export default class ProfileView extends BaseView {
    * @param {*} img
    */
   _onSuccessUpload(img) {
+    console.log('_onSuccessUpload ');
     const reader = new FileReader();
     // Closure to capture the file information.
-    reader.onload = ((theFile) => {
+    reader.onload = ((imgFile) => {
       return function(e) {
-        // Render thumbnail.
+        // Render thumbnail.'
+        console.log('_onSuccessUpload ', imgFile);
         const img = document.createElement('img');
-        img.src = window.URL.createObjectURL(e.target.result);
+        img.src = window.URL.createObjectURL(imgFile);
         img.className = 'thumb';
         img.onload = function() {
           window.URL.revokeObjectURL(this.src);
         };
+        document.getElementById('output').innerHTML = '';
         document.getElementById('output').appendChild(img);
       };
     })(img);
@@ -112,6 +116,7 @@ export default class ProfileView extends BaseView {
     img.onload = function() {
       window.URL.revokeObjectURL(this.src);
     };
+    document.getElementById('output').innerHTML = '';
     document.getElementById('output').appendChild(img);
   }
 }

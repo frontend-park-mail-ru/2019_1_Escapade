@@ -47,7 +47,8 @@ export default class ProfileModel {
     console.log('upload photo');
     Net.postPhoto({url: '/avatar', body: formData})
         .then((resp) => {
-          if (resp.status === 201) {
+          if (resp.status === 200) {
+            console.log('_uploadAvatar(file) { ');
             bus.emit('onSuccessUpload', file);
             console.log('Okey photo');
           } else {
@@ -64,11 +65,10 @@ export default class ProfileModel {
 
   /**
    *
-   * @param {*} w
-   * @param {*} h
+   * @param {*} name
    */
-  _getAvatar() {
-    Net.get({url: '/avatar'})
+  _getAvatar(name) {
+    Net.get({url: `/avatar/${name}`})
         .then((resp) => {
           console.log(resp.status);
           if (resp.status === 200) {
