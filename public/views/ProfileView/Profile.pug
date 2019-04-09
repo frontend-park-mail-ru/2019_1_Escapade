@@ -1,35 +1,34 @@
 section(data-section-name='profile')
   .profile
-    .profile__wrapper
-      .profile__main
-        .profile__info(novalidate='novalidate')
-          a.profile__hrefBackToMenu(data-href='menu', href='menu')
-          .profile__avatar
-            .inner#output
-            label(for="file" class="custom-file-upload button")
-            input(id="file" type="file")
-          .profile__data.mr-2
-            .profile__row.pl-4
+    .profile__main
+      .profile__info(novalidate='novalidate')
+        a.profile__hrefBackToMenu(data-href='menu', href='menu')
+        .profile__avatar
+          .inner#output
+          label(for="file" class="custom-file-upload button")
+          input(id="file" type="file")
+        .profile__data.mr-2
+          .profile__row.pl-4
+            div
+              span.profile__rowname nickname:
+            input.profile__input.text-white(value=data.name)
+          .profile__row.pl-4
+            div
+              span.profile__rowname email:
+            input.profile__input.text-white(value=data.email)
+          .profile__row_score.pl-1
+            .profile__score
               div
-                span.profile__rowname nickname:
-              input.profile__input.text-white(value=data.name)
-            .profile__row.pl-4
+                span.profile__rowname best score:
+              .profile__input.text-center.text-white 22380
+            .profile__score
               div
-                span.profile__rowname email:
-              input.profile__input.text-white(value=data.email)
-            .profile__row_score.pl-1
-              .profile__score
-                div
-                  span.profile__rowname best score:
-                .profile__input.text-center.text-white 22380
-              .profile__score
-                div
-                  span.profile__rowname best time:
-                .profile__input.text-center.text-white 223
-          a.profile__hrefToChange(data-href='profile/edit', href='profile/edit')
-        .profile__games
-          .mb-3
-            span.profile__rowname games:
-          include ./Profile__game.pug
-          include ./Profile__game.pug
-          include ./Profile__game.pug
+                span.profile__rowname best time:
+              .profile__input.text-center.text-white 223
+        a.profile__hrefToChange(data-href='profile/edit', href='profile/edit')
+      .profile__games
+        .mb-3
+          span.profile__rowname games:
+        include ./Profile__game.pug
+        include ./Profile__game.pug
+        include ./Profile__game.pug

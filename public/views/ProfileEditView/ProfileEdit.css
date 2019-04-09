@@ -5,11 +5,6 @@
   background: radial-gradient(512.00px at 50% 50%, rgba(255, 255, 255, 0.34) 0%, rgba(255, 255, 255, 0) 100%), #667787;
 }
 
-.profile_edit__wrapper {
-  display: flex;
-  width: 100%
-}
-
 .profile_edit__main{
   justify-content: space-evenly;
   display: flex;
