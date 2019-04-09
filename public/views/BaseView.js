@@ -1,4 +1,3 @@
-import headerTmpl from './HeaderInner.pug';
 import Bus from '../utils/bus';
 
 
@@ -20,8 +19,8 @@ export default class BaseView {
     this.template = template;
     this.isOffline = isOffline;
     this._emitFuncStr = emitFuncStr;
-
-    Bus.on('userUpdate', this.onUserUpdate.bind(this));
+    this._data = null;
+    this._user = null;
   }
   /** */
   get active() {
@@ -59,6 +58,13 @@ export default class BaseView {
   }
 
   /**
+   * @param {Object} user
+  */
+  set user(user = []) {
+    this._user = user;
+  }
+
+  /**
    * @param {Object} data
   */
   set emitFuncStr(data) {
@@ -70,7 +76,7 @@ export default class BaseView {
    */
   render() {
     this.parent.innerHTML = '';
-    this.parent.innerHTML = this.template({data: this._data});
+    this.parent.innerHTML = this.template({data: this._data, user: this._user});
     this._initOfflinePopup();
   }
 
@@ -87,16 +93,6 @@ export default class BaseView {
       this.overlayOffline.querySelector('.modal__button');
     this.hideButton.addEventListener('click',
         this._hideOfflineOverlay.bind(this));
-  }
-
-  /**
-   *
-   */
-  onUserUpdate() {
-    const header = this.parent.querySelector('.menu-header');
-    if (header) {
-      header.innerHTML = headerTmpl({data: this._data});
-    }
   }
 
   /**
