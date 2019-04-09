@@ -4,7 +4,7 @@ section(data-section-name='leaderboard')
     .leaderboard__wrapper
       .leaderboard__board.leaderboard__block
         .leaderboard__Label Leaderboard
-        .row.leaderboard__table_header
+        .leaderboard__table_row.leaderboard__table_header
           .leaderboard__table_row_element.leaderboard__number N
           .leaderboard__table_row_element.leaderboard__ava 
           .leaderboard__table_row_element.leaderboard__name UserName
@@ -13,11 +13,15 @@ section(data-section-name='leaderboard')
         - for(var i = 0; i < data.length;i++){
         .leaderboard__table_row.leaderboard__table_usual
           .leaderboard__table_row_element.leaderboard__number #{i + 1}
-          .leaderboard__table_row_element.leaderboard__ava 
+          .leaderboard__ava 
           .leaderboard__table_row_element.leaderboard__name #{data[i].name}
           .leaderboard__table_row_element.leaderboard__points #{data[i].bestScore.String || 0}
           .leaderboard__table_row_element.leaderboard__time #{data[i].bestTime.String || 0}
         - }
+        .leaderboard__table_row.leaderboard__panel
+          .leaderboard__table_row_element.leaderboard__left
+          .leaderboard__table_row_element.leaderboard__page 1
+          .leaderboard__table_row_element.leaderboard__right
     .leaderboard__controls
       img.arrow.arrow__inactive(src='../../img/arrow-left.png')
       img.arrow(src='../../img/arrow-right.png')
