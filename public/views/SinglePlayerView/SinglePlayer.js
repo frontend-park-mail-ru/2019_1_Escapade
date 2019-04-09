@@ -88,7 +88,7 @@ export class SinglePlayerView extends BaseView {
     this.infoMinesDocElement.innerHTML = this.minesCount + ' mines';
     this.infoWidthDocElement.innerHTML = this.cellNumbersX + ' width';
     this.infoHeightDocElement.innerHTML = this.cellNumbersY + ' height';
-    if (this.data) {
+    if (User.name) {
       this.playerNameDocElement.innerHTML = User.name;
       this.playerScoreDocElement.innerHTML = '0'; // получать из user
       this.playerTimeDocElement.innerHTML = '0:00:00:00';

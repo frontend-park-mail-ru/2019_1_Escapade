@@ -31,7 +31,7 @@ export default class LeaderBoardModel {
   }
   /**
    *
-   * @param {int} page
+   * @param {int} pageStruct
    */
   _getPage(pageStruct) {
     Net.get({url: `/users/pages?page=${pageStruct.page}&per_page=${pageStruct.per_page}`})
