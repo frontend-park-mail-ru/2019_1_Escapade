@@ -21,8 +21,13 @@ export default class LeaderBoardView extends BaseView {
   */
   render() {
     Bus.on('respPage', this.renderUsers.bind(this));
-    Bus.emit('reqPagesAmount');
-    Bus.emit('reqPage', 1);
+    // const leaderboardTableRowDomElement = document.getElementsByClassName('leaderboard__table_row')[0];
+    const maxHeight = screen.height;
+    console.log(maxHeight, ' ', Math.round(maxHeight / 20) - 1);
+    const divisionHeight = Math.round(maxHeight / 20) - 1;
+    this.pageStruct = {page: 1, per_page: divisionHeight};
+    Bus.emit('reqPagesAmount', this.pageStruct.per_page);
+    Bus.emit('reqPage', this.pageStruct);
   }
 
   /**
