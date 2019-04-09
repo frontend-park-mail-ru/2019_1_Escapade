@@ -7,6 +7,7 @@ export class Timer {
     this.timerHTMLElement = timerHTMLElement;
     this.running = false;
     this.paused = false;
+    this.timeStr = '';
   }
 
   /**
@@ -44,7 +45,8 @@ export class Timer {
    */
   run() {
     const time = this._parseTime(Date.now()-this.then-this.delay);
-    this.timerHTMLElement.innerHTML = time[0] + ':' + time[1] + ':' + time[2] + '.' + time[3];
+    this.timeStr = time[0] + ':' + time[1] + ':' + time[2] + '.' + time[3];
+    this.timerHTMLElement.innerHTML = this.timeStr;
   };
 
   /**
@@ -72,7 +74,8 @@ export class Timer {
   reset() {
     this.running = false;
     this.paused = false;
-    this.timerHTMLElement.innerHTML = '0:00:00.00';
+    this.timeStr = '0:00:00.00';
+    this.timerHTMLElement.innerHTML = this.timeStr;
   };
 
   /**

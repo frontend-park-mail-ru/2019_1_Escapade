@@ -128,7 +128,8 @@ min-height 15% from media avg
 
   .leaderboard__table_row_element {
     font-size: 10px;
-    min-height: 8px;
+    /*min-height: 8px;*/
+    min-height: 10px;
     padding: 1px;
     margin: 5px;
   }
@@ -236,7 +237,8 @@ min-height 15% from media avg
 
   .leaderboard__table_row_element {
     font-size: 20px;
-    min-height: 12px;
+    /*min-height: 12px;*/
+    min-height: 10px;
     padding: 1px;
     margin: 5px;
   }
@@ -282,7 +284,8 @@ min-height 15% from media avg
 
   .leaderboard__table_row_element {
     font-size: 12px;
-    min-height: 16px;
+    /*min-height: 16px;*/
+    min-height: 10px;
   }
 
   /*table elements*/

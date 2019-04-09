@@ -36,11 +36,15 @@ export class SinglePlayerView extends BaseView {
     this.infoHeightFieldStringName = 'single_player__settings_info_height';
     this.infoMinesFieldStringName = 'single_player__settings_info_mines';
 
+    this.playerNameFieldStringName = 'single_player__player_name';
+    this.playerScoreFieldStringName = 'single_player__player_score';
+    this.playerTimeFieldStringName = 'single_player__player_time';
+
 
     this.cellsize = 50;
     this.cellNumbersX = 15;
     this.cellNumbersY = 15;
-    this.minesCount = 20;
+    this.minesCount = 1;
     this.start = false;
 
     document.addEventListener('click', this._clickOnBody.bind(this));
@@ -71,6 +75,10 @@ export class SinglePlayerView extends BaseView {
     this.infoHeightDocElement = document.getElementsByClassName(this.infoHeightFieldStringName)[0];
     this.infoMinesDocElement = document.getElementsByClassName(this.infoMinesFieldStringName)[0];
 
+    this.playerNameDocElement = document.getElementsByClassName(this.playerNameFieldStringName)[0];
+    this.playerScoreDocElement = document.getElementsByClassName(this.playerScoreFieldStringName)[0];
+    this.playerTimeDocElement = document.getElementsByClassName(this.playerTimeFieldStringName)[0];
+
     this.timer = new Timer(document.getElementById(this.timerFieldStringName));
 
     this.restartDocElement.addEventListener('click', this._restart.bind(this));
@@ -80,6 +88,20 @@ export class SinglePlayerView extends BaseView {
     this.infoMinesDocElement.innerHTML = this.minesCount + ' mines';
     this.infoWidthDocElement.innerHTML = this.cellNumbersX + ' width';
     this.infoHeightDocElement.innerHTML = this.cellNumbersY + ' height';
+    if (this.data) {
+      this.playerNameDocElement.innerHTML = User.name;
+      this.playerScoreDocElement.innerHTML = '0'; // получать из user
+      this.playerTimeDocElement.innerHTML = '0:00:00:00';
+      this.maxPointsCount = 0;
+      this.minTimeCount = '1:24:60:60';
+    } else {
+      this.playerNameDocElement.innerHTML = 'Guest';
+      this.playerScoreDocElement.innerHTML = '0';
+      this.playerTimeDocElement.innerHTML = '0:00:00:00';
+      this.maxPointsCount = 0;
+      this.minTimeCount = '1:24:60:60';
+    }
+    
 
     this._showMap();
   }
@@ -197,7 +219,6 @@ export class SinglePlayerView extends BaseView {
     const idArr = e.target.id.split('_');
     const x = parseInt(idArr[1]);
     const y = parseInt(idArr[2]);
-    let res;
     this.leftClicksDocElement.innerHTML = (++this.leftClicksCount) + ' left clicks';
     if (this.mineSweeper.map[x][y] === 9) {
       this._openAllCels(x, y, this.cellNumbersX, this.cellNumbersY);
@@ -207,25 +228,31 @@ export class SinglePlayerView extends BaseView {
       this.start = false;
       alert('You lose!');
       return;
-    } else {
-      res = this.mineSweeper.
-          openCels(x, y, this.cellNumbersX, this.cellNumbersY);
-      this._openCels(res.cellArr);
-      this.openCellsCount += res.openCells;
-      this.prcentOpen = Math.round((this.openCellsCount / (this.cellNumbersX * this.cellNumbersY - this.minesCount)) * 100);
-      this.percentOpenDocElement.innerHTML = this.prcentOpen + ' %';
-      this.loadbarDocElement.style.width = (this.prcentOpen / 100) * (this.cellsize * this.cellNumbersX - 55) + 'px';
     }
-
-    // eslint-disable-next-line max-len
+    const res = this.mineSweeper.
+        openCels(x, y, this.cellNumbersX, this.cellNumbersY);
+    this._openCels(res.cellArr);
+    this.openCellsCount += res.openCells;
+    this.prcentOpen = Math.round((this.openCellsCount / (this.cellNumbersX * this.cellNumbersY - this.minesCount)) * 100);
+    this.percentOpenDocElement.innerHTML = this.prcentOpen + ' %';
+    this.loadbarDocElement.style.width = (this.prcentOpen / 100) * (this.cellsize * this.cellNumbersX - 55) + 'px';
     console.log(this.openCellsCount, ' ', this.cellNumbersX * this.cellNumbersY - this.minesCount);
     this.pointsDocElement.innerHTML = (this.pointsCount += res.points) + ' points';
+
     if (this.openCellsCount === this.cellNumbersX * this.cellNumbersY - this.minesCount) {
       this._openAllCels(x, y, this.cellNumbersX, this.cellNumbersY);
       if (this.timer.running) {
         this.timer.stop();
       }
       this.start = false;
+      if (this.maxPointsCount < this.pointsCount) {
+        this.maxPointsCount = this.pointsCount;
+        this.playerScoreDocElement.innerHTML = this.pointsCount;
+      }
+      if (this.minTimeCount > this.timer.timeStr) {
+        this.minTimeCount = this.timer.timeStr;
+        this.playerTimeDocElement.innerHTML = this.minTimeCount;
+      }
       alert('You win!');
     }
     return;
