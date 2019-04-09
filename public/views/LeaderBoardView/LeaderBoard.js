@@ -38,6 +38,8 @@ export default class LeaderBoardView extends BaseView {
     const usersStruct = {users: users, page: this._currPage, per_page: this.pageStruct.per_page};
     this.data = usersStruct;
     super.render();
+    this.leaderBoardPageDomElement = this.parent.querySelector('.leaderboard__page');
+    this.leaderBoardPageDomElement.innerHTML = this._currPage;
     this._initButtons();
   }
 
@@ -55,18 +57,18 @@ export default class LeaderBoardView extends BaseView {
    */
   _initButtons() {
     ([this._leftArrow, this._rightArrow] =
-      this.parent.querySelectorAll('.arrow'));
+      this.parent.querySelectorAll('.leaderboard__arrow'));
     this._leftArrow.addEventListener('click', this._prevPage.bind(this));
     this._rightArrow.addEventListener('click', this._nextPage.bind(this));
     if (this._currPage === 1) {
-      this._leftArrow.classList.add('arrow__inactive');
+      this._leftArrow.classList.add('leaderboard__arrow__inactive');
     } else {
-      this._leftArrow.classList.remove('arrow__inactive');
+      this._leftArrow.classList.remove('leaderboard__arrow__inactive');
     }
     if (this._currPage === this._pagesCount) {
-      this._rightArrow.classList.add('arrow__inactive');
+      this._rightArrow.classList.add('leaderboard__arrow__inactive');
     } else {
-      this._rightArrow.classList.remove('arrow__inactive');
+      this._rightArrow.classList.remove('leaderboard__arrow__inactive');
     }
   }
 
@@ -80,10 +82,8 @@ export default class LeaderBoardView extends BaseView {
     const maxHeight = screen.height * 0.7;
     console.log(maxHeight, ' ', Math.round(maxHeight / 70) );
     const divisionHeight = Math.round(maxHeight / 70);
-    this.pageStruct = {page: this._currPage + 1, per_page: divisionHeight};
+    this.pageStruct = {page: ++this._currPage, per_page: divisionHeight};
     Bus.emit('reqPage', this.pageStruct);
-    
-    this._currPage += 1;
   }
 
   /**
@@ -95,10 +95,9 @@ export default class LeaderBoardView extends BaseView {
     }
     const maxHeight = screen.height * 0.7;
     const divisionHeight = Math.round(maxHeight / 70);
-    this.pageStruct = {page: this._currPage - 1, per_page: divisionHeight};
+    this.pageStruct = {page: --this._currPage, per_page: divisionHeight};
     Bus.emit('reqPage', this.pageStruct);
     
-    this._currPage -= 1;
 
   }
 }

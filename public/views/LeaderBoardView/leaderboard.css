@@ -416,10 +416,10 @@ min-height 15% from media avg
   justify-content: space-between;
   min-width: 6rem;
 }
-.arrow{
+.leaderboard__arrow{
   cursor: pointer;
 }
-.arrow__inactive{
+.leaderboard__arrow__inactive{
   opacity: 0.2;
 }
 

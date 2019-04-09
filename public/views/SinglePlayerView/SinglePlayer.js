@@ -61,6 +61,7 @@ export class SinglePlayerView extends BaseView {
   */
   render() {
     this.data = User;
+    console.log(User);
     super.render();
     this.pointsDocElement = document.getElementsByClassName(this.pointsFieldStringName)[0];
     this.minesDocElement = document.getElementsByClassName(this.minesFieldStringName)[0];
@@ -88,21 +89,6 @@ export class SinglePlayerView extends BaseView {
     this.infoMinesDocElement.innerHTML = this.minesCount + ' mines';
     this.infoWidthDocElement.innerHTML = this.cellNumbersX + ' width';
     this.infoHeightDocElement.innerHTML = this.cellNumbersY + ' height';
-    if (User.name) {
-      this.playerNameDocElement.innerHTML = User.name;
-      this.playerScoreDocElement.innerHTML = '0'; // получать из user
-      this.playerTimeDocElement.innerHTML = '0:00:00:00';
-      this.maxPointsCount = 0;
-      this.minTimeCount = '1:24:60:60';
-    } else {
-      this.playerNameDocElement.innerHTML = 'Guest';
-      this.playerScoreDocElement.innerHTML = '0';
-      this.playerTimeDocElement.innerHTML = '0:00:00:00';
-      this.maxPointsCount = 0;
-      this.minTimeCount = '1:24:60:60';
-    }
-    
-
     this._showMap();
   }
 
@@ -117,6 +103,19 @@ export class SinglePlayerView extends BaseView {
 
   /** */
   _showMap() {
+    if (User.name) {
+      this.playerNameDocElement.innerHTML = User.name;
+      this.playerScoreDocElement.innerHTML = '0'; // получать из user
+      this.playerTimeDocElement.innerHTML = '0:00:00:00';
+      this.maxPointsCount = 0;
+      this.minTimeCount = '1:24:60:60';
+    } else {
+      this.playerNameDocElement.innerHTML = 'Guest';
+      this.playerScoreDocElement.innerHTML = '0';
+      this.playerTimeDocElement.innerHTML = '0:00:00:00';
+      this.maxPointsCount = 0;
+      this.minTimeCount = '1:24:60:60';
+    }
     this.openCellsCount = 0;
     this.pointsCount = 0;
     this.leftClicksCount = 0;

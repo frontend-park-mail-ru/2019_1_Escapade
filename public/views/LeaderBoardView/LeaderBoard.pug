@@ -19,10 +19,7 @@ section(data-section-name='leaderboard')
           .leaderboard__table_row_element.leaderboard__time #{data.users[i].bestTime.String || 0}
         - }
         .leaderboard__table_row.leaderboard__panel
-          .leaderboard__table_row_element.leaderboard__left
+          .leaderboard__table_row_element.leaderboard__left.leaderboard__arrow
           .leaderboard__table_row_element.leaderboard__page 1
-          .leaderboard__table_row_element.leaderboard__right
-    .leaderboard__controls
-      img.arrow(src='../../img/arrow-left.png')
-      img.arrow(src='../../img/arrow-right.png')
+          .leaderboard__table_row_element.leaderboard__right.leaderboard__arrow
     a.back(data-href='menu', href='menu') Назад в меню
