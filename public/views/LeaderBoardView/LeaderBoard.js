@@ -24,7 +24,7 @@ export default class LeaderBoardView extends BaseView {
     // const leaderboardTableRowDomElement = document.getElementsByClassName('leaderboard__table_row')[0];
     const maxHeight = screen.height * 0.7;
     console.log(maxHeight, ' ', Math.round(maxHeight / 70) );
-    const divisionHeight = Math.round(maxHeight / 70) ;
+    const divisionHeight = Math.round(maxHeight / 70);
     this.pageStruct = {page: 1, per_page: divisionHeight};
     Bus.emit('reqPagesAmount', this.pageStruct.per_page);
     Bus.emit('reqPage', this.pageStruct);
@@ -35,9 +35,10 @@ export default class LeaderBoardView extends BaseView {
    * @param {*} users
    */
   renderUsers(users) {
-    console.log(users);
-    this.data = users;
+    const usersStruct = {users: users, page: this._currPage, per_page: this.pageStruct.per_page};
+    this.data = usersStruct;
     super.render();
+    this._initButtons();
   }
 
   /**
@@ -46,10 +47,7 @@ export default class LeaderBoardView extends BaseView {
    */
   _initBoard(amount) {
     this._pagesCount = amount;
-    this._initButtons();
-    this.board = new BoardComponent(
-        this.parent.querySelector('.leaderboard__board'));
-    console.log('initBoard');
+    
   }
 
   /**
@@ -60,8 +58,15 @@ export default class LeaderBoardView extends BaseView {
       this.parent.querySelectorAll('.arrow'));
     this._leftArrow.addEventListener('click', this._prevPage.bind(this));
     this._rightArrow.addEventListener('click', this._nextPage.bind(this));
-    if (this._pagesCount === 1) {
+    if (this._currPage === 1) {
+      this._leftArrow.classList.add('arrow__inactive');
+    } else {
+      this._leftArrow.classList.remove('arrow__inactive');
+    }
+    if (this._currPage === this._pagesCount) {
       this._rightArrow.classList.add('arrow__inactive');
+    } else {
+      this._rightArrow.classList.remove('arrow__inactive');
     }
   }
 
@@ -72,14 +77,13 @@ export default class LeaderBoardView extends BaseView {
     if (this._currPage === this._pagesCount) {
       return;
     }
-    Bus.emit('reqPage', this._currPage + 1);
-    if (this._currPage === 1) {
-      this._leftArrow.classList.remove('arrow__inactive');
-    }
+    const maxHeight = screen.height * 0.7;
+    console.log(maxHeight, ' ', Math.round(maxHeight / 70) );
+    const divisionHeight = Math.round(maxHeight / 70);
+    this.pageStruct = {page: this._currPage + 1, per_page: divisionHeight};
+    Bus.emit('reqPage', this.pageStruct);
+    
     this._currPage += 1;
-    if (this._currPage === this._pagesCount) {
-      this._rightArrow.classList.add('arrow__inactive');
-    }
   }
 
   /**
@@ -89,13 +93,12 @@ export default class LeaderBoardView extends BaseView {
     if (this._currPage == 1) {
       return;
     }
-    Bus.emit('reqPage', this._currPage - 1);
-    if (this._currPage === this._pagesCount) {
-      this._rightArrow.classList.remove('arrow__inactive');
-    }
+    const maxHeight = screen.height * 0.7;
+    const divisionHeight = Math.round(maxHeight / 70);
+    this.pageStruct = {page: this._currPage - 1, per_page: divisionHeight};
+    Bus.emit('reqPage', this.pageStruct);
+    
     this._currPage -= 1;
-    if (this._currPage === 1) {
-      this._leftArrow.classList.add('arrow__inactive');
-    }
+
   }
 }
