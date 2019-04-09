@@ -77,9 +77,13 @@ export default class ProfileView extends BaseView {
     reader.onload = ((theFile) => {
       return function(e) {
         // Render thumbnail.
-        document.getElementById('output').innerHTML =
-          `<img class="thumb" title=${escape(theFile.name)}
-           src= ${e.target.result} />`;
+        const img = document.createElement('img');
+        img.src = window.URL.createObjectURL(e.target.result);
+        img.className = 'thumb';
+        img.onload = function() {
+          window.URL.revokeObjectURL(this.src);
+        };
+        document.getElementById('output').appendChild(img);
       };
     })(img);
     // Read in the image file as a data URL.
@@ -102,7 +106,12 @@ export default class ProfileView extends BaseView {
   _onSuccessAvatarGet(blob) {
     const objectURL = URL.createObjectURL(blob);
     console.log('_getAvatar' + objectURL);
-    document.getElementById('output')
-        .innerHTML = `<img class="thumb" src=${objectURL}/>`;
+    const img = document.createElement('img');
+    img.src = window.URL.createObjectURL(blob);
+    img.className = 'thumb';
+    img.onload = function() {
+      window.URL.revokeObjectURL(this.src);
+    };
+    document.getElementById('output').appendChild(img);
   }
 }
