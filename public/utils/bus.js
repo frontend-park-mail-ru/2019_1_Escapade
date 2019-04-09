@@ -36,6 +36,9 @@ export class Bus {
    * @param {*} data
    */
   emit(event, data) { // публикуем (диспатчим, эмитим) событие
+    if (!this.listeners[event]) {
+      return;
+    }
     this.listeners[event].forEach(function(listener) {
       listener(data);
     });

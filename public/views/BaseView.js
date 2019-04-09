@@ -12,12 +12,14 @@ export default class BaseView {
    * @param {HTMLElement} parent
    * @param {*} template
    * @param {*} isOffline
+   * @param {*} emitFuncStr
    */
-  constructor(parent, template, isOffline) {
+  constructor(parent, template, isOffline, emitFuncStr = '') {
     this.parent = parent;
     this.parent.hidden = true;
     this.template = template;
     this.isOffline = isOffline;
+    this._emitFuncStr = emitFuncStr;
 
     Bus.on('userUpdate', this.onUserUpdate.bind(this));
   }
@@ -44,6 +46,8 @@ export default class BaseView {
     if (!this.rendered) {
       this.render();
     }
+    console.log('UUUUhuuu ', this._emitFuncStr);
+    Bus.emit(this._emitFuncStr);
     this.parent.hidden = false;
   }
 
@@ -52,6 +56,13 @@ export default class BaseView {
   */
   set data(data = []) {
     this._data = data;
+  }
+
+  /**
+   * @param {Object} data
+  */
+  set emitFuncStr(data) {
+    this._emitFuncStr = data;
   }
 
   /**

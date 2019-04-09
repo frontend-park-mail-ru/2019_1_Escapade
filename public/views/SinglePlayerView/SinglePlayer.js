@@ -4,6 +4,7 @@ import BaseView from '../BaseView';
 import {User} from '../../utils/user.js';
 import {MineSweeper} from '../../game/minesweeper.js';
 import {Timer} from '../../game/timer.js';
+import Bus from '../../utils/bus';
 /** */
 export class SinglePlayerView extends BaseView {
   /**
@@ -11,7 +12,7 @@ export class SinglePlayerView extends BaseView {
    * @param {*} parent
    */
   constructor(parent) {
-    super(parent, singlePlayerTemplate);
+    super(parent, singlePlayerTemplate, false, 'updateUserInfo');
     this.cellCloseStringName = 'cell_close';
     this.cellOpenStringName = 'cell_open';
     this.cellStringName = 'cell';
@@ -40,6 +41,10 @@ export class SinglePlayerView extends BaseView {
     this.playerScoreFieldStringName = 'single_player__player_score';
     this.playerTimeFieldStringName = 'single_player__player_time';
 
+    this.messageBoxFieldStringName = 'single_player__popup';
+    this.messageBoxMessageFieldStringName = 'single_player__popup_text';
+    this.messageBoxOkButtonFieldStringName = 'single_player__popup_ok_button';
+
 
     this.cellsize = 50;
     this.cellNumbersX = 15;
@@ -48,12 +53,13 @@ export class SinglePlayerView extends BaseView {
     this.start = false;
 
     document.addEventListener('click', this._clickOnBody.bind(this));
-    
+
 
     document.addEventListener('contextmenu', this._rightСlickOnCell.bind(this));
     document.body.oncontextmenu = function(e) {
       return false;
     };
+    Bus.on('updateUserInfo', this._updateUserInfo.bind(this));
   }
 
   /**
@@ -61,7 +67,6 @@ export class SinglePlayerView extends BaseView {
   */
   render() {
     this.data = User;
-    console.log(User);
     super.render();
     this.pointsDocElement = document.getElementsByClassName(this.pointsFieldStringName)[0];
     this.minesDocElement = document.getElementsByClassName(this.minesFieldStringName)[0];
@@ -79,6 +84,10 @@ export class SinglePlayerView extends BaseView {
     this.playerNameDocElement = document.getElementsByClassName(this.playerNameFieldStringName)[0];
     this.playerScoreDocElement = document.getElementsByClassName(this.playerScoreFieldStringName)[0];
     this.playerTimeDocElement = document.getElementsByClassName(this.playerTimeFieldStringName)[0];
+
+    this.messageBoxDocElement = document.getElementsByClassName(this.messageBoxFieldStringName)[0];
+    this.messageBoxMessageDocElement = document.getElementsByClassName(this.messageBoxMessageFieldStringName)[0];
+    this.messageBoxDocElement.hidden = true;
 
     this.timer = new Timer(document.getElementById(this.timerFieldStringName));
 
@@ -98,11 +107,12 @@ export class SinglePlayerView extends BaseView {
       this._changeHard(e);
     } else if (e.target.classList.contains(this.cellStringName)) {
       this._clickOnCell(e);
+    } else if (e.target.classList.contains(this.messageBoxOkButtonFieldStringName)) {
+      this._closeMessage();
     }
   }
 
-  /** */
-  _showMap() {
+  _updateUserInfo() {
     if (User.name) {
       this.playerNameDocElement.innerHTML = User.name;
       this.playerScoreDocElement.innerHTML = '0'; // получать из user
@@ -116,6 +126,10 @@ export class SinglePlayerView extends BaseView {
       this.maxPointsCount = 0;
       this.minTimeCount = '1:24:60:60';
     }
+  }
+
+  /** */
+  _showMap() {
     this.openCellsCount = 0;
     this.pointsCount = 0;
     this.leftClicksCount = 0;
@@ -136,7 +150,7 @@ export class SinglePlayerView extends BaseView {
     if (this.start) {
       this.timer.router();
     }
-    
+
     const field = document.getElementsByClassName(this.mapStringName)[0];
     if (!field) {
       console.log('error field cannot find ' + this.mapStringName);
@@ -169,10 +183,9 @@ export class SinglePlayerView extends BaseView {
         this.timer.stop();
       }
     }
-    
+
     this._showMap();
   }
-
 
 
   /** */
@@ -204,17 +217,15 @@ export class SinglePlayerView extends BaseView {
     }
 
     this._showMap();
-
   }
 
   /** */
   _clickOnCell(e) {
-    if (!this.start) 
-      if (!e.target.classList.contains(this.cellStringName) ||
-        e.target.classList.contains(this.cellFlagStringName) ||
-        !this.start) {
-        return;
-      }
+    if (!e.target.classList.contains(this.cellStringName) ||
+      e.target.classList.contains(this.cellFlagStringName) ||
+      !this.start) {
+      return;
+    }
     const idArr = e.target.id.split('_');
     const x = parseInt(idArr[1]);
     const y = parseInt(idArr[2]);
@@ -225,7 +236,7 @@ export class SinglePlayerView extends BaseView {
         this.timer.stop();
       }
       this.start = false;
-      alert('You lose!');
+      this._showMessage('You lose!');
       return;
     }
     const res = this.mineSweeper.
@@ -252,7 +263,7 @@ export class SinglePlayerView extends BaseView {
         this.minTimeCount = this.timer.timeStr;
         this.playerTimeDocElement.innerHTML = this.minTimeCount;
       }
-      alert('You win!');
+      this._showMessage('You win!');
     }
     return;
   }
@@ -272,7 +283,12 @@ export class SinglePlayerView extends BaseView {
 
     if (typeOfCell == 0) {
       if (this.minesRemainedCount < this.minesCount) {
-        this.minesDocElement.innerHTML = (++this.minesRemainedCount) + ' mines left';
+        ++this.minesRemainedCount;
+        if (this.minesRemainedCount < 0) {
+          this.minesDocElement.innerHTML = 0 + ' mines left';
+        } else {
+          this.minesDocElement.innerHTML = this.minesRemainedCount + ' mines left';
+        }
       }
       if (e.target.classList.length < 3) {
         console.log('error e.target.classList.length < 3');
@@ -287,8 +303,11 @@ export class SinglePlayerView extends BaseView {
     }
 
     if (typeOfCell == 2) {
-      if (this.minesRemainedCount > 0) {
-        this.minesDocElement.innerHTML = (--this.minesRemainedCount) + ' mines left';
+      --this.minesRemainedCount;
+      if (this.minesRemainedCount < 0) {
+        this.minesDocElement.innerHTML = 0 + ' mines left';
+      } else {
+        this.minesDocElement.innerHTML = this.minesRemainedCount + ' mines left';
       }
       if (e.target.classList.length < 3) {
         console.log('error e.target.classList.length < 3');
@@ -301,6 +320,16 @@ export class SinglePlayerView extends BaseView {
                           this.cellFlagStringName + '_' + numClassElem;
     }
     return;
+  }
+
+  /** */
+  _showMessage(mess) {
+    this.messageBoxDocElement.hidden = false;
+    this.messageBoxMessageDocElement.innerHTML = mess;
+  }
+
+  _closeMessage() {
+    this.messageBoxDocElement.hidden = true;
   }
 
   /** */
