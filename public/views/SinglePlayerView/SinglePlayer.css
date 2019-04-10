@@ -121,6 +121,9 @@ body {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+
+  
+  transition: .5s ease-in-out;
 }
 
 .single_player__popup_ok_button {
@@ -138,6 +141,10 @@ body {
   line-height: 70px;
   border: 1px solid #000000;
   border-radius: 10px;
+}
+
+.single_player__popup_ok_button .single_player__popup_content {
+  opacity: 0;
 }
 
 .single_player__popup_text {
@@ -175,7 +182,7 @@ body {
   height: 75px;
   width: 830px;
   flex-direction: row;
-  margin-left: 27px;
+  /*margin-left: 27px;*/
   border-radius: 50px 15px 15px 50px;
 }
 
@@ -219,7 +226,7 @@ body {
   margin-top: 15px;
   float:left;
   
-  margin-left: 100px;
+  margin-left: 75px;
   cursor: default;
   -webkit-tap-highlight-color: transparent;
 }
@@ -254,8 +261,8 @@ body {
   position: relative;
   display:flex;
   flex-direction: row;
-  margin-top: 15px;
-  margin-left: 20px;
+  /*margin-top: 15px;*/
+  /*margin-left: 20px;*/
   text-align: center;
   height: 80px;
   width: 833px;
@@ -515,13 +522,56 @@ ul {
   right: 0;
   background: url('../../img/explosion.png') no-repeat;
 }
-@media screen and (max-width: 720px) {
 
+
+@media screen and (max-width: 320px) {
   .single_player {
     display: flex;
     align-items: center;
     flex-direction: column;
-    height: 80px;
   }
+}
+
+@media screen and (min-width: 321px)  and (max-width: 480px) {
+  .single_player {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+  }
+  
+}
+
+@media screen and (min-width: 481px) and (max-width: 768px) {
+  .single_player {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+  }
+  .single_player__player {
+    width: 760px;
+    margin-left: 70px;
+  }
+  .single_player__settings {
+    width: 760px;
+    margin-left: 65px;
+  }
+  .single_player_info{
+    margin-left: 30px;
+  }
+  .single_player__under_map {
+    margin-left: 75px;
+  }
+
+}
+
+@media screen and (min-width: 769px)  and (max-width: 1200px) {
+  .single_player {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+  }
+}
+
+@media screen and (min-width: 1201px) {
 
 }
