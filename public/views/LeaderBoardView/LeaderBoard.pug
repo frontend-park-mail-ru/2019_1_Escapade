@@ -12,12 +12,12 @@ section(data-section-name='leaderboard')
         - for(var i = 0; i < data.users.length;i++){
         .leaderboard__table_row.leaderboard__table_usual
           .leaderboard__table_row_element.leaderboard__number #{(i + 1)  +  (data.page - 1) * data.per_page}
-          .leaderboard__ava 
+          .leaderboard__ava
           .leaderboard__table_row_element.leaderboard__name #{data.users[i].name}
           .leaderboard__table_row_element.leaderboard__points #{data.users[i].bestScore.String || 0}
           .leaderboard__table_row_element.leaderboard__time #{data.users[i].bestTime.String || 0}
         - }
-        .leaderboard__table_row.leaderboard__panel
+        .leaderboard__panel
           .leaderboard__table_row_element.leaderboard__left.leaderboard__arrow
           .leaderboard__table_row_element.leaderboard__page 1
           .leaderboard__table_row_element.leaderboard__right.leaderboard__arrow

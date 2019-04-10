@@ -1,6 +1,6 @@
 import menuTemplate from './MainMenu.pug';
 import BaseView from '../BaseView';
-import headerTmpl from '../HeaderInner.pug';
+//import headerTmpl from '../HeaderInner.pug';
 import {User} from '../../utils/user.js';
 import Bus from '../../utils/bus';
 /** */
@@ -19,6 +19,19 @@ export class MainMenuView extends BaseView {
   */
   render() {
     this.user = User;
+    /*
+    let value = 1;
+    let width = elems[0].style.width
+    let maxWidth = elems[0].style.width
+    var elems = document.getElementsByClassName('menu__logo');
+    let elem = elems[0]
+    setInterval(function(){
+          if (elems[0].style.width > 
+          elems[0].style.width++;
+          elems[0].style.width++;
+          
+    },60);
+    */
     super.render();
   }
 
@@ -26,9 +39,11 @@ export class MainMenuView extends BaseView {
    *
    */
   onUserUpdate() {
+    /*
     const header = this.parent.querySelector('.menu-header');
     if (header) {
       header.innerHTML = headerTmpl({user: this._user});
     }
+   */ 
   }
 }

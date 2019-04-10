@@ -83,7 +83,6 @@ min-height 15% from media avg
   color: white;
   content: "leaderboard";
   text-align: center;
-  font-size: 5vw;
   margin-bottom: 5px;
   padding: 4px;
 }
@@ -105,7 +104,6 @@ min-height 15% from media avg
   flex-direction: row;
   border-radius: 5px;
   color: white;
-  padding:10px;
   background-color:rgba(0, 0, 0, 0.55);
 }
 
@@ -134,7 +132,11 @@ min-height 15% from media avg
 @media screen and (max-width: 320px) {
 
   .leaderboard__block {
-    margin: 5px;
+    margin: 1px;
+  }
+
+  .leaderboard__Label {
+    font-size: 30px;
   }
 
   .leaderboard__board {
@@ -153,6 +155,8 @@ min-height 15% from media avg
   .leaderboard__panel {
     margin-top: 100px;
     min-height: 20px;
+    padding: 10px;
+    margin: 20px;
   }
 
   .leaderboard__left {
@@ -161,6 +165,7 @@ min-height 15% from media avg
   }
 
   .leaderboard__page {
+    font-size: 24px;
     min-height: 20px;
     min-width: 200px;
   }
@@ -172,24 +177,24 @@ min-height 15% from media avg
 
   /*table row*/
   .leaderboard__table_row {
-    margin-left: 15px;
-    margin-right: 15px;
-    font-size: 14px;
+    margin-left: 5px;
+    margin-right: 5px;
+    font-size: 12px;
     min-height: 12px;
     padding: 1px;
   }
 
   .leaderboard__number {
-    min-width: 30px;
+    min-width: 20px;
   }
   
   .leaderboard__ava {
-    min-width: 20px;
-    min-height: 20px;
+    min-width: 16px;
+    min-height: 16px;
   }
   
   .leaderboard__name {
-    min-width: 110px;
+    min-width: 140px;
   }
   
   .leaderboard__points {
@@ -205,7 +210,7 @@ min-height 15% from media avg
 @media screen and (min-width: 321px)  and (max-width: 480px) {
 
   .leaderboard__block {
-    margin: 5px;
+    margin: 1px;
   }
 
   .leaderboard__board {
@@ -224,6 +229,8 @@ min-height 15% from media avg
   .leaderboard__panel {
     margin-top: 100px;
     min-height: 20px;
+    padding: 10px;
+    margin: 20px;
   }
 
   .leaderboard__left {
@@ -242,10 +249,14 @@ min-height 15% from media avg
     min-width: 30px;
   }
 
+  .leaderboard__Label {
+    font-size: 36px;
+  }
+
   /*table row*/
   .leaderboard__table_row {
-    margin-left: 15px;
-    margin-right: 15px;
+    margin-left: 2px;
+    margin-right: 2px;
     font-size: 14px;
     min-height: 14px;
     padding: 1px;
@@ -266,7 +277,7 @@ min-height 15% from media avg
   }
   
   .leaderboard__name {
-    min-width: 90px;
+    min-width: 150px;
   }
   
   .leaderboard__points {
@@ -286,6 +297,10 @@ min-height 15% from media avg
     border-width: 5px;
   } 
 
+  .leaderboard__Label {
+    font-size: 45px;
+  }
+
   /*table elements*/
   .leaderboard__table_header {
     font-size: 22px;
@@ -299,22 +314,24 @@ min-height 15% from media avg
   .leaderboard__panel {
     margin-top: 100px;
     min-height: 20px;
+    padding: 10px;
+    margin: 20px;
   }
 
   .leaderboard__left {
-    min-height: 30px;
-    min-width: 30px;
+    min-height: 100px;
+    min-width: 100px;
   }
 
   .leaderboard__page {
-    font-size: 25px;
-    min-height: 30px;
+    font-size: 100px;
+    min-height: 100px;
     min-width: 200px;
   }
 
   .leaderboard__right {
-    min-height: 30px;
-    min-width: 30px;
+    min-height: 100px;
+    min-width: 100px;
   }
 
   .leaderboard__table_row {
@@ -361,6 +378,10 @@ min-height 15% from media avg
     border-width: 5px;
   } 
 
+  .leaderboard__Label {
+    font-size: 80px;
+  }
+
   /*table elements*/
   .leaderboard__table_header {
     font-size: 28px;
@@ -373,23 +394,25 @@ min-height 15% from media avg
   /*bottom panel*/
   .leaderboard__panel {
     margin-top: 100px;
-    min-height: 20px;
+    min-height: 50px;
+    padding: 10px;
+    margin: 20px;
   }
 
   .leaderboard__left {
-    min-height: 30px;
-    min-width: 30px;
+    min-height: 100px;
+    min-width: 100px;
   }
 
   .leaderboard__page {
-    font-size: 25px;
-    min-height: 30px;
+    font-size: 100px;
+    min-height: 100px;
     min-width: 200px;
   }
-  
+
   .leaderboard__right {
-    min-height: 30px;
-    min-width: 30px;
+    min-height: 100px;
+    min-width: 100px;
   }
 
   .leaderboard__table_row {

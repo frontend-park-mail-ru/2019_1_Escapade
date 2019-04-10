@@ -1,10 +1,15 @@
-extends ../Header.pug
-
 block content
   section(data-section-name='menu')
-    #main.menu-wrapper
-      #menu.menu-wrapper__menu
-        a.menu__link(href='multi_player', data-href='sign_in') Играть вдвоем
-        a.menu__link(href='single_player', data-href='single_player') Играть одному
-        a.menu__link(href='leaders', data-href='leaders') Таблица лидеров
-        a.menu__link(href='about', data-href='about') О нас
+  .menu
+    .menu__labels
+      a.menu__label(href='leaders', data-href='leaders') Leaderboard
+      a.menu__label(href='rules') Rules
+    .menu__wrapper
+      a.menu__logo(href='single_player', data-href='single_player')
+      a.menu__name(href='sign_up', data-href='sign_up') Anonymous
+      .menu__or or
+      .menu__row
+        a.menu__enter(href='sign_in', data-href='sign_in') sign in
+        .menu__enter |
+        a.menu__enter(href='sign_up', data-href='sign_up') sign up
+      a.menu__escapade(href='about', data-href='about') Escapade
