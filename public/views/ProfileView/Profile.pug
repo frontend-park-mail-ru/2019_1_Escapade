@@ -8,23 +8,7 @@ section(data-section-name='profile')
           label(for="file" class="custom-file-upload button")
           input(id="file" type="file")
         .profile__data.mr-2
-          .profile__row.pl-4
-            div
-              span.profile__rowname nickname:
-            input.profile__input.text-white(value=data.name)
-          .profile__row.pl-4
-            div
-              span.profile__rowname email:
-            input.profile__input.text-white(value=data.email)
-          .profile__row_score.pl-1
-            .profile__score
-              div
-                span.profile__rowname best score:
-              .profile__input.text-center.text-white 22380
-            .profile__score
-              div
-                span.profile__rowname best time:
-              .profile__input.text-center.text-white 223
+          include ./Profile__data.pug
         a.profile__hrefToChange(data-href='profile/edit', href='profile/edit')
       .profile__games
         .mb-3

@@ -1,4 +1,5 @@
 import ProfileTemplate from './Profile.pug';
+import profileData from './Profile__data.pug';
 import {User} from '../../utils/user.js';
 import BaseView from '../BaseView';
 import Bus from '../../utils/bus';
@@ -13,6 +14,7 @@ export default class ProfileView extends BaseView {
   constructor(parent) {
     super(parent, ProfileTemplate, false);
 
+    Bus.on('userUpdate', this.onUserUpdate.bind(this));
     Bus.on('onSuccessUpload', this._onSuccessUpload.bind(this));
     Bus.on('onFailedUpload', (error) => {
       this._showWarning(this._warnings.email, error.message);
@@ -23,7 +25,7 @@ export default class ProfileView extends BaseView {
 
   /** */
   render() {
-    this.data = User;
+    this.user = User;
     console.log('RRrrrr ', User);
     super.render();
 
@@ -118,5 +120,13 @@ export default class ProfileView extends BaseView {
     };
     document.getElementById('output').innerHTML = '';
     document.getElementById('output').appendChild(img);
+  }
+
+  /**
+   *
+   */
+  onUserUpdate() {
+    const userInfo = this.parent.querySelector('.profile__data');
+    userInfo.innerHTML = profileData({user: this._user});
   }
 }
