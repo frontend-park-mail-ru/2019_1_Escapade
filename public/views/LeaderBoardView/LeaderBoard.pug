@@ -6,14 +6,13 @@ section(data-section-name='leaderboard')
         .leaderboard__Label Leaderboard
         .leaderboard__table_row.leaderboard__table_header
           .leaderboard__table_row_element.leaderboard__number N
-          .leaderboard__table_row_element.leaderboard__ava 
           .leaderboard__table_row_element.leaderboard__name UserName
           .leaderboard__table_row_element.leaderboard__points Points
           .leaderboard__table_row_element.leaderboard__time Time
         - for(var i = 0; i < data.users.length;i++){
         .leaderboard__table_row.leaderboard__table_usual
           .leaderboard__table_row_element.leaderboard__number #{(i + 1)  +  (data.page - 1) * data.per_page}
-          .leaderboard__table_row_element.leaderboard__ava 
+          .leaderboard__ava 
           .leaderboard__table_row_element.leaderboard__name #{data.users[i].name}
           .leaderboard__table_row_element.leaderboard__points #{data.users[i].bestScore.String || 0}
           .leaderboard__table_row_element.leaderboard__time #{data.users[i].bestTime.String || 0}

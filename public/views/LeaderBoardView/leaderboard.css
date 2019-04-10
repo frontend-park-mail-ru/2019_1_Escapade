@@ -114,6 +114,7 @@ min-height 15% from media avg
   background-repeat: no-repeat;
   background-size: contain;
   background-position: center;
+  cursor: pointer;
 }
 
 .leaderboard__right {
@@ -121,10 +122,12 @@ min-height 15% from media avg
   background-repeat: no-repeat;
   background-size: contain;
   background-position: center;
+  cursor: pointer;
 }
 
 .leaderboard__page {
   color: white;
+  font-weight: 600;
 }
 
 /*avg 320*/
@@ -206,28 +209,51 @@ min-height 15% from media avg
   }
 
   .leaderboard__board {
-    border-radius: 8px;
+    border-radius: 20px;
     border-width: 4px;
   } 
 
   /*table elements*/
   .leaderboard__table_header {
-    font-size: 15px;
+    font-size: 20px;
     min-height: 16px;
     padding: 2px;
-    margin: 5px;
   }
 
+  /*bottom panel*/
+  .leaderboard__panel {
+    margin-top: 100px;
+    min-height: 20px;
+  }
+
+  .leaderboard__left {
+    min-height: 30px;
+    min-width: 30px;
+  }
+
+  .leaderboard__page {
+    font-size: 25px;
+    min-height: 30px;
+    min-width: 200px;
+  }
+  
+  .leaderboard__right {
+    min-height: 30px;
+    min-width: 30px;
+  }
+
+  /*table row*/
   .leaderboard__table_row {
     margin-left: 15px;
     margin-right: 15px;
+    font-size: 14px;
+    min-height: 14px;
+    padding: 1px;
   }
 
   .leaderboard__table_row_element {
-    font-size: 12px;
-    min-height: 10px;
     padding: 1px;
-    margin: 5px;
+    margin: 2px;
   }
 
   .leaderboard__number {
@@ -235,12 +261,12 @@ min-height 15% from media avg
   }
   
   .leaderboard__ava {
-    min-width: 20px;
-    min-height: 20px;
+    min-width: 28px;
+    min-height: 28px;
   }
   
   .leaderboard__name {
-    min-width: 100px;
+    min-width: 90px;
   }
   
   .leaderboard__points {
@@ -267,6 +293,28 @@ min-height 15% from media avg
     line-height: 16px;
     padding: 2px;
     margin: 5px;
+  }
+
+  /*bottom panel*/
+  .leaderboard__panel {
+    margin-top: 100px;
+    min-height: 20px;
+  }
+
+  .leaderboard__left {
+    min-height: 30px;
+    min-width: 30px;
+  }
+
+  .leaderboard__page {
+    font-size: 25px;
+    min-height: 30px;
+    min-width: 200px;
+  }
+
+  .leaderboard__right {
+    min-height: 30px;
+    min-width: 30px;
   }
 
   .leaderboard__table_row {
@@ -322,6 +370,28 @@ min-height 15% from media avg
     margin: 5px;
   }
 
+  /*bottom panel*/
+  .leaderboard__panel {
+    margin-top: 100px;
+    min-height: 20px;
+  }
+
+  .leaderboard__left {
+    min-height: 30px;
+    min-width: 30px;
+  }
+
+  .leaderboard__page {
+    font-size: 25px;
+    min-height: 30px;
+    min-width: 200px;
+  }
+  
+  .leaderboard__right {
+    min-height: 30px;
+    min-width: 30px;
+  }
+
   .leaderboard__table_row {
     margin-left: 15px;
     margin-right: 15px;
@@ -374,6 +444,28 @@ min-height 15% from media avg
     margin: 5px;
   }
 
+  /*bottom panel*/
+  .leaderboard__panel {
+    margin-top: 100px;
+    min-height: 20px;
+  }
+
+  .leaderboard__left {
+    min-height: 30px;
+    min-width: 30px;
+  }
+
+  .leaderboard__page {
+    font-size: 25px;
+    min-height: 30px;
+    min-width: 200px;
+  }
+  
+  .leaderboard__right {
+    min-height: 30px;
+    min-width: 30px;
+  }
+
   .leaderboard__table_row {
     margin-left: 15px;
     margin-right: 15px;
@@ -408,7 +500,6 @@ min-height 15% from media avg
     min-width: 130px;
   }
 }
-
 
 .leaderboard__controls{
   margin-top: 15px;
