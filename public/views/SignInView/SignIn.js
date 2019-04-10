@@ -29,7 +29,7 @@ export default class SignInView extends BaseView {
    * Отрисовка формы логина и добавление лисенеров
   */
   render() {
-    this.data = User;
+    this.user = User;
     super.render();
     this._warnings = {};
     this._warnings.email = this.parent.querySelector('.js-warning-email');
