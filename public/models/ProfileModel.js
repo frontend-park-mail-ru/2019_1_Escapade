@@ -1,6 +1,6 @@
 import Bus from '../utils/bus';
 import {Net} from '../utils/net';
-import bus from '../utils/bus';
+import {storage} from '../utils/firebase';
 /**
  *
  */
@@ -42,24 +42,18 @@ export default class ProfileModel {
    * @param {*} file
    */
   _uploadAvatar(file) {
-    const formData = new FormData();
-    formData.append('file', file);
-    console.log('upload photo');
-    Net.postPhoto({url: '/avatar', body: formData})
-        .then((resp) => {
-          if (resp.status === 200) {
-            console.log('_uploadAvatar(file) { ');
-            bus.emit('onSuccessUpload', file);
-            console.log('Okey photo');
-          } else {
-            resp.json()
-                .then((error) => {
-                  Bus.emit('onFailedUpload', error);
-                });
-          }
+    const ref = storage.ref('test/' + file.name);
+    ref.put(file)
+        .then((snapshot) => {
+        // console.log('Uploaded a file!', snapshot);
+          snapshot.ref.getDownloadURL().then(function(downloadURL) {
+            console.log('File available at', downloadURL);
+            Bus.emit('onSuccessUpload', downloadURL);
+          });
         })
         .catch((error) => {
-          console.log('Avatar upload error : ', error);
+          console.log('error during file upload: ', error);
+          Bus.emit('onFailedUpload', error);
         });
   }
 

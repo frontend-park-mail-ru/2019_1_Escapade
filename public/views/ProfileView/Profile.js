@@ -60,7 +60,7 @@ export default class ProfileView extends BaseView {
    * @param {*} h
    * @param {*} w
    */
-  _handleFileSelect(evt, h = 250, w = 250) {
+  _handleFileSelect(evt) {
     const file = evt.target.files; // FileList object
     const f = file[0];
     // Only process image files.
@@ -72,28 +72,16 @@ export default class ProfileView extends BaseView {
   }
 
   /**
-   * @param {*} img
+   * @param {*} uploadURL
    */
-  _onSuccessUpload(img) {
+  _onSuccessUpload(uploadURL) {
     console.log('_onSuccessUpload ');
-    const reader = new FileReader();
-    // Closure to capture the file information.
-    reader.onload = ((imgFile) => {
-      return function(e) {
-        // Render thumbnail.'
-        console.log('_onSuccessUpload ', imgFile);
-        const img = document.createElement('img');
-        img.src = window.URL.createObjectURL(imgFile);
-        img.className = 'thumb';
-        img.onload = function() {
-          window.URL.revokeObjectURL(this.src);
-        };
-        document.getElementById('output').innerHTML = '';
-        document.getElementById('output').appendChild(img);
-      };
-    })(img);
-    // Read in the image file as a data URL.
-    reader.readAsDataURL(img);
+    // Render thumbnail.'
+    const img = document.createElement('img');
+    img.src = uploadURL;
+    img.className = 'thumb';
+    document.getElementById('output').innerHTML = '';
+    document.getElementById('output').appendChild(img);
   }
 
   /**
