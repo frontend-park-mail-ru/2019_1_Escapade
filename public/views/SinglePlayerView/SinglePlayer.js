@@ -12,7 +12,7 @@ export class SinglePlayerView extends BaseView {
    * @param {*} parent
    */
   constructor(parent) {
-    super(parent, singlePlayerTemplate, false, 'updateUserInfo');
+    super(parent, singlePlayerTemplate, true, 'updateUserInfo');
     this.cellCloseStringName = 'cell_close';
     this.cellOpenStringName = 'cell_open';
     this.cellStringName = 'cell';
@@ -66,7 +66,7 @@ export class SinglePlayerView extends BaseView {
    *
   */
   render() {
-    this.data = User;
+    this.user = User;
     super.render();
     this.pointsDocElement = document.getElementsByClassName(this.pointsFieldStringName)[0];
     this.minesDocElement = document.getElementsByClassName(this.minesFieldStringName)[0];
@@ -164,9 +164,9 @@ export class SinglePlayerView extends BaseView {
         const strClassClose = this.cellCloseStringName + '_' + this.mineSweeper.randomInteger(1, 3);
         cell.setAttribute('class', this.cellStringName + ' ' + this.cellCloseStringName + ' ' + strClassClose);
 
-        cell.setAttribute('id', this.cellStringName + '_' + x + '_' +y);
+        cell.setAttribute('id', this.cellStringName + '_' + x + '_' + y);
         cell.setAttribute('style', 'top: ' + y * this.cellsize + 'px;' + 'left: ' + x * this.cellsize + 'px;'
-        + 'width: ' + this.cellsize + 'px;' + 'height: ' + this.cellsize + 'px;');
+          + 'width: ' + this.cellsize + 'px;' + 'height: ' + this.cellsize + 'px;');
         field.appendChild(cell);
       }
     }
@@ -272,7 +272,7 @@ export class SinglePlayerView extends BaseView {
   _rightСlickOnCell(e) {
     if (!e.target.classList.contains(this.cellStringName) || !this.start ||
       (!e.target.classList.contains(this.cellCloseStringName) &&
-      !e.target.classList.contains(this.cellFlagStringName))) {
+        !e.target.classList.contains(this.cellFlagStringName))) {
       return;
     }
     this.rightClicksDocElement.innerHTML = (++this.rightClicksCount) + ' right clicks';
@@ -297,8 +297,8 @@ export class SinglePlayerView extends BaseView {
       const classElems = e.target.classList[2].split('_');
       const numClassElem = parseInt(classElems[2]);
       e.target.className = this.cellStringName + ' ' +
-                          this.cellCloseStringName + ' ' +
-                          this.cellCloseStringName + '_' + numClassElem;
+        this.cellCloseStringName + ' ' +
+        this.cellCloseStringName + '_' + numClassElem;
       return;
     }
 
@@ -316,8 +316,8 @@ export class SinglePlayerView extends BaseView {
       const classElems = e.target.classList[2].split('_');
       const numClassElem = parseInt(classElems[2]);
       e.target.className = this.cellStringName + ' ' +
-                          this.cellFlagStringName + ' ' +
-                          this.cellFlagStringName + '_' + numClassElem;
+        this.cellFlagStringName + ' ' +
+        this.cellFlagStringName + '_' + numClassElem;
     }
     return;
   }
@@ -338,14 +338,14 @@ export class SinglePlayerView extends BaseView {
       const x = arrCells[i][0];
       const y = arrCells[i][1];
       const cell = document.
-          getElementById(this.cellStringName+ '_' + x + '_' +y);
+          getElementById(this.cellStringName + '_' + x + '_' + y);
       if (!cell) {
         console.log('error _openCels cannot find ' +
-           this.cellStringName + '_' + x + '_' +y);
+          this.cellStringName + '_' + x + '_' + y);
       }
       cell.className = this.cellStringName + ' ' +
-                       this.cellOpenStringName + ' ' +
-                       this.cellOpenStringName + this.mineSweeper.map[x][y].toString();
+        this.cellOpenStringName + ' ' +
+        this.cellOpenStringName + this.mineSweeper.map[x][y].toString();
     }
   }
 
@@ -353,13 +353,13 @@ export class SinglePlayerView extends BaseView {
   _openAllCels() {
     for (let y = 0; y < this.cellNumbersY; y++) {
       for (let x = 0; x < this.cellNumbersX; x++) {
-        const cell = document.getElementById(this.cellStringName + '_' + x + '_' +y);
+        const cell = document.getElementById(this.cellStringName + '_' + x + '_' + y);
         if (!cell) {
-          console.log('error _openAllCels cannot find ' + this.cellStringName + '_' + x + '_' +y);
+          console.log('error _openAllCels cannot find ' + this.cellStringName + '_' + x + '_' + y);
         }
         cell.className = this.cellStringName + ' ' +
-                         this.cellOpenStringName + ' ' +
-                         this.cellOpenStringName + this.mineSweeper.map[x][y].toString();
+          this.cellOpenStringName + ' ' +
+          this.cellOpenStringName + this.mineSweeper.map[x][y].toString();
       }
     }
     this.prcentOpen = 100;

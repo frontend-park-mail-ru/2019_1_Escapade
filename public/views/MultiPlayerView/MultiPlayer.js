@@ -11,7 +11,7 @@ export default class MultiPlayer extends BaseView {
    * @param {*} parent
    */
   constructor(parent) {
-    super(parent, multiPlayerTemplate);
+    super(parent, multiPlayerTemplate, false);
     this.cellsize = 25;
     this.cellNumbersX = 20;
     this.cellNumbersY = 20;
@@ -26,7 +26,7 @@ export default class MultiPlayer extends BaseView {
     this.mineSweeper = new MineSweeper(this.cellNumbersX, this.cellNumbersY, this.bombsCount);
     document.addEventListener('click', this._clickOnCell.bind(this));
     document.addEventListener('contextmenu', this._rightСlickOnCell.bind(this));
-    
+
     document.body.oncontextmenu = function(e) {
       return false;
     };
@@ -37,15 +37,14 @@ export default class MultiPlayer extends BaseView {
     Bus.emit('send_info');
 
 
-
     Bus.on('show_rooms', this._updateRooms.bind(this));
   }
 
   /**
-   * 
+   *
   */
   render() {
-    this.data = User;
+    this.user = User;
     super.render();
     const pointsField = document.getElementById(this.pointsFieldStringName);
     if (!pointsField) {
@@ -71,7 +70,7 @@ export default class MultiPlayer extends BaseView {
       for (let x = 0; x < XLen; x++) {
         const cell = document.createElement('div');
         cell.setAttribute('class', this.cellStringName + ' ' + this.cellCloseStringName);
-        cell.setAttribute('id', this.cellStringName + '_' + x + '_' +y);
+        cell.setAttribute('id', this.cellStringName + '_' + x + '_' + y);
         cell.setAttribute('style', 'top: ' + y * this.cellsize + 'px;' + 'left: ' + x * this.cellsize + 'px;');
         field.appendChild(cell);
       }
@@ -81,7 +80,7 @@ export default class MultiPlayer extends BaseView {
 
   /** */
   _findRooms(e) {
-    console.log("FFFFF");
+    console.log('FFFFF');
     Bus.emit('get_rooms');
     return;
   }
@@ -109,7 +108,7 @@ export default class MultiPlayer extends BaseView {
   _rightСlickOnCell(e) {
     if (!e.target.classList.contains(this.cellStringName) ||
       (!e.target.classList.contains(this.cellCloseStringName) &&
-      !e.target.classList.contains(this.cellFlagStringName))) {
+        !e.target.classList.contains(this.cellFlagStringName))) {
       return;
     }
     if (e.target.classList.contains(this.cellFlagStringName)) {
@@ -128,10 +127,10 @@ export default class MultiPlayer extends BaseView {
       const x = arrCells[i][0];
       const y = arrCells[i][1];
       const cell = document.
-          getElementById(this.cellStringName+ '_' + x + '_' +y);
+          getElementById(this.cellStringName + '_' + x + '_' + y);
       if (!cell) {
         console.log('error _openCels cannot find ' +
-           this.cellStringName + '_' + x + '_' +y);
+          this.cellStringName + '_' + x + '_' + y);
       }
       if (!cell.classList.contains(this.cellCloseStringName)) {
         return {points: 0, openCells: 0};
@@ -146,9 +145,9 @@ export default class MultiPlayer extends BaseView {
   _openAllCels() {
     for (let y = 0; y < this.cellNumbersY; y++) {
       for (let x = 0; x < this.cellNumbersX; x++) {
-        const cell = document.getElementById(this.cellStringName + '_' + x + '_' +y);
+        const cell = document.getElementById(this.cellStringName + '_' + x + '_' + y);
         if (!cell) {
-          console.log('error _openAllCels cannot find ' + this.cellStringName + '_' + x + '_' +y);
+          console.log('error _openAllCels cannot find ' + this.cellStringName + '_' + x + '_' + y);
         }
         if (cell.classList.contains(this.cellCloseStringName)) {
           cell.classList.remove(this.cellCloseStringName);
@@ -164,5 +163,4 @@ export default class MultiPlayer extends BaseView {
     }
     return;
   }
-
 }
