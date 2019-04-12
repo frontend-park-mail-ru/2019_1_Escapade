@@ -26,9 +26,10 @@ export default class ProfileView extends BaseView {
   /** */
   render() {
     this.user = User;
-    console.log('RRrrrr ', User);
+    console.log('User ', User);
     super.render();
-
+    this._warnings = {};
+    this._warnings.email = this.parent.querySelector('.js-warning-email');
     Bus.emit('getAvatar', User.name);
     document.getElementById('file')
         .addEventListener('change', this._handleFileSelect.bind(this), false);
@@ -95,17 +96,12 @@ export default class ProfileView extends BaseView {
 
   /**
    *
-   * @param {*} blob
+   * @param {*} url
    */
-  _onSuccessAvatarGet(blob) {
-    const objectURL = URL.createObjectURL(blob);
-    console.log('_getAvatar' + objectURL);
+  _onSuccessAvatarGet(url) {
     const img = document.createElement('img');
-    img.src = window.URL.createObjectURL(blob);
+    img.src = url;
     img.className = 'thumb';
-    img.onload = function() {
-      window.URL.revokeObjectURL(this.src);
-    };
     document.getElementById('output').innerHTML = '';
     document.getElementById('output').appendChild(img);
   }

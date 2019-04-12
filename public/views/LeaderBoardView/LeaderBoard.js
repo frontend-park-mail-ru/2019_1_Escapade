@@ -13,46 +13,47 @@ export default class LeaderBoardView extends BaseView {
     this._currPage = 1;
 
     Bus.on('respPagesAmount', this._initBoard.bind(this));
-    
   }
 
   /**
    * Отрисовка лидербода и получение необходимой информации с бэкэнда
   */
+  _getPageAmount() {
+    const devWidth = screen.width;
+    let devHeight = screen.height * 0.9;
+    //   if (window.matchMedia("(orientation: portrait)").matches) {
+    //     // you're in PORTRAIT mode
+    //  }
 
- _getPageAmount() {
-  let devWidth = screen.width;
-  let devHeight = screen.height * 0.9;
-//   if (window.matchMedia("(orientation: portrait)").matches) {
-//     // you're in PORTRAIT mode
-//  }
- 
- if (window.matchMedia("(orientation: landscape)").matches) {
-  devWidth, devHeight = devHeight, devWidth
- }
+    if (window.matchMedia('(orientation: landscape)').matches) {
+      devWidth, devHeight = devHeight, devWidth;
+    }
 
-  let fieldHeight = 1
-  if (devWidth < 320) {
-    fieldHeight = 50
-  } else if (devWidth < 480){
-    fieldHeight = 60
-  } else if (devWidth < 768){
-    fieldHeight = 70
-  }else if (devWidth < 1200){
-    fieldHeight = 80
-  }else {
-    fieldHeight = 90
+    let fieldHeight = 1;
+    if (devWidth < 320) {
+      fieldHeight = 50;
+    } else if (devWidth < 480) {
+      fieldHeight = 60;
+    } else if (devWidth < 768) {
+      fieldHeight = 70;
+    } else if (devWidth < 1200) {
+      fieldHeight = 80;
+    } else {
+      fieldHeight = 90;
+    }
+
+    console.log(devWidth, ' wow ', devHeight, fieldHeight, Math.round(devHeight / fieldHeight));
+
+    return Math.round(devHeight / fieldHeight);
   }
 
-  console.log(devWidth, ' wow ', devHeight, fieldHeight, Math.round(devHeight / fieldHeight) );
-    
-  return Math.round(devHeight / fieldHeight);
-}
-
+  /**
+   *
+   */
   render() {
     Bus.on('respPage', this.renderUsers.bind(this));
     // const leaderboardTableRowDomElement = document.getElementsByClassName('leaderboard__table_row')[0];
-    
+
     this.divisionHeight = this._getPageAmount();
     this.pageStruct = {page: 1, per_page: this.divisionHeight};
     Bus.emit('reqPagesAmount', this.pageStruct.per_page);
@@ -78,7 +79,6 @@ export default class LeaderBoardView extends BaseView {
    */
   _initBoard(amount) {
     this._pagesCount = amount;
-    
   }
 
   /**
@@ -108,7 +108,7 @@ export default class LeaderBoardView extends BaseView {
     if (this._currPage === this._pagesCount) {
       return;
     }
-    
+
     this.divisionHeight = this._getPageAmount();
     this.pageStruct = {page: ++this._currPage, per_page: this.divisionHeight};
     Bus.emit('reqPage', this.pageStruct);
@@ -125,7 +125,5 @@ export default class LeaderBoardView extends BaseView {
     this.divisionHeight = this._getPageAmount();
     this.pageStruct = {page: --this._currPage, per_page: this.divisionHeight};
     Bus.emit('reqPage', this.pageStruct);
-    
-
   }
 }

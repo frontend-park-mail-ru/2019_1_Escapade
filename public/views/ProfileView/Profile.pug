@@ -7,6 +7,7 @@ section(data-section-name='profile')
           .inner#output
           label(for="file" class="custom-file-upload button")
           input(id="file" type="file")
+          .warning.signup__warning.hidden.js-warning-email
         .profile__data.mr-2.ml-3
           include ./Profile__data.pug
         a.profile__hrefToChange(data-href='profile/edit', href='profile/edit')

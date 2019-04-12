@@ -124,14 +124,15 @@ body {
 }
 
 .menu__label {
-  border-radius: 20px;
-  border-color: white;
+  border: 9px solid #FFFFFF;
+  border-radius: 30px;
   background-color:#46535E;
   color: white;
   content: "leaderboard";
   text-align: center;
   padding: 4px;
   border-radius: 5px;
+  text-decoration: none;
 }
 
 

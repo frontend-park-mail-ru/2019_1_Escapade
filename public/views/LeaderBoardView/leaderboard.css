@@ -88,10 +88,12 @@ min-height 15% from media avg
 }
 
 .leaderboard__ava {
-  background-image: url('../../img/qrosh.png');
+  /* background-image: url('../../img/qrosh.png'); */
   background-repeat: no-repeat;
   background-size: contain;
   background-position: center;
+  width: 40px;
+  height: 40px;
 }
 
 .leaderboard__number {

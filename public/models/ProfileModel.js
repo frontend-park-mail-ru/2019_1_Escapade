@@ -1,6 +1,5 @@
 import Bus from '../utils/bus';
 import {Net} from '../utils/net';
-import {storage} from '../utils/firebase';
 /**
  *
  */
@@ -42,20 +41,32 @@ export default class ProfileModel {
    * @param {*} file
    */
   _uploadAvatar(file) {
-    const ref = storage.ref('test/' + file.name);
-    ref.put(file)
-        .then((snapshot) => {
-        // console.log('Uploaded a file!', snapshot);
-          snapshot.ref.getDownloadURL().then(function(downloadURL) {
-            console.log('File available at', downloadURL);
-            Bus.emit('onSuccessUpload', downloadURL);
-          });
+    const formData = new FormData();
+    formData.append('file', file);
+    console.log('upload photo');
+    Net.postPhoto({url: '/avatar', body: formData})
+        .then((resp) => {
+          if (resp.status === 200) {
+            console.log('Okey photo');
+            return resp.json();
+          } else {
+            resp.json()
+                .then((error) => {
+                  console.log(error);
+                  Bus.emit('onFailedUpload', error);
+                });
+          }
+        })
+        .then((url) => {
+          console.log(url.url);
+          Bus.emit('onSuccessUpload', url.url);
         })
         .catch((error) => {
-          console.log('error during file upload: ', error);
           Bus.emit('onFailedUpload', error);
+          console.log('Avatar upload error : ', error);
         });
   }
+
 
   /**
    *
@@ -66,20 +77,18 @@ export default class ProfileModel {
         .then((resp) => {
           console.log(resp.status);
           if (resp.status === 200) {
-            const buffer = resp.blob();
-            return buffer;
+            return resp.json();
           } else {
             Bus.emit('onFailedAvatarGet');
-            return;
           }
         })
-        .then((myBlob) => {
-          console.log(myBlob);
-          if (myBlob === undefined) {
+        .then((url) => {
+          console.log(url.url);
+          if (url.url === undefined) {
             Bus.emit('onFailedAvatarGet');
             return;
           }
-          Bus.emit('onSuccessAvatarGet', myBlob);
+          Bus.emit('onSuccessAvatarGet', url.url);
         })
         .catch((error) => {
           console.log('Avatar get error : ', error);
