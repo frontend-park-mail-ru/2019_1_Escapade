@@ -1,10 +1,5 @@
 @import url(https://fonts.googleapis.com/css?family=Lato:400,700italic);
 
-* {
-  padding: 0;
-  margin: 0;
-}
-
 body {
   background-color: #667787;
   font-family: 'system-ui';
@@ -13,73 +8,19 @@ body {
   -ms-user-select: none;
 }
 
-.menu-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  height: 3em;
-  padding: 1em 5%;
-  background: #2c3e50;
-  color: #fff;
-}
-
-.menu-header nav {
-  display: inline-flex;
-}
-
-.menu-header h1 {
-  font-size: 2em;
-  font-style: italic;
-}
-
-.menu-header nav a {
-  white-space: nowrap;
-  padding-right: 1em;
-}
-/*
-@media screen and (max-width: 720px) {
-
-  .menu-header {
-    height: auto;
-  }
-
-  .menu-header nav {
-    display: flex;
-    flex-direction: column;
-    text-align: left;
-  }
-
-  .menu-header nav a:first-child {
-    padding-bottom: 0.7em;
-  }
-
-}
-*/
 
 .menu {
   text-decoration: none;
-
-  color: #FFF0FF;
-  /* Цвет обычной ссылки */
-  text-decoration: none;
-  /* Убираем подчеркивание у ссылок */
-}
-
-.menu:hover{
-  /* Цвет ссылки при наведении на нее курсора мыши */
-  text-decoration: underline;
-  /* Добавляем подчеркивание */
-}
-
-.menu {
   display: flex;
-  justify-content: center;
+  justify-content: space-evenly;
   flex-direction: column;
+  height: 100vh;
+  background: radial-gradient(512.00px at 50% 50%, rgba(255, 255, 255, 0.34) 0%, rgba(255, 255, 255, 0) 100%), #667787;
 }
 
 .menu__labels {
   display: flex;
-  justify-content: center;
+  justify-content: space-evenly;
 }
 
 .menu__wrapper {
@@ -94,6 +35,8 @@ body {
   background-image: url('../../img/logo_single.png');
   background-repeat: no-repeat;
   background-size: cover;
+  height: 36vw;
+  width: 36vw;
 }
 
 .menu__row {
@@ -110,7 +53,9 @@ body {
 
 .menu__name {
   color: white;
-  font-weight: 400;
+  font-family: Saira;
+  font-size: 3vw;
+  text-decoration: none;
 }
 
 .menu__or {
@@ -121,266 +66,25 @@ body {
 .menu__escapade {
   color: rgba(196, 196, 196, 1);
   font-weight: 100;
+  text-decoration: none
 }
 
 .menu__label {
-  border: 9px solid #FFFFFF;
+  border: 0.5vw solid #FFFFFF;
   border-radius: 30px;
-  background-color:#46535E;
+  background-color: #46535E;
   color: white;
-  content: "leaderboard";
   text-align: center;
-  padding: 4px;
-  border-radius: 5px;
   text-decoration: none;
+  font-family: Saira;
+  width: 20vw;
+  font-size: 3vw;
 }
 
-
-
-/*avg 320*/
-@media screen and (max-width: 320px) {
-
-  .menu__labels {
-    flex-direction: column;
-  }
-  
-  .menu__logo {
-    margin-top: 10px;
-    min-width: 250px;
-    min-height: 250px;
-  }
-  
-  .menu__enter {
-    font-size: 16px;
-    min-width: 30px;
-    min-height: 18px;
-  }
-  
-  .menu__name {
-    display: none;
-    font-size: 18px;
-    min-width: 100px;
-    min-height: 18px;
-    margin-top: 10px;
-  }
-  
-  .menu__or {
-    display: none;
-    font-size: 16px;
-    min-width: 10px;
-    min-height: 15px;
-  }
-  
-  .menu__escapade {
-    font-size: 14px;
-    min-width: 30px;
-    min-height: 15px;
-  }
-  
+@media screen and (max-width: 725px) {
   .menu__label {
-    font-size: 30px;
-    min-width: 100px;
-    height: 40px;
-    margin-left: 20px;
-    margin-right: 20px;
-    margin-top: 20px;
+    width: calc(20vw + 3rem);
+    font-size: calc(3vw + 0.5rem);
   }
+
 }
-
-/*avg 400*/
-@media screen and (min-width: 321px)  and (max-width: 480px) {
-
-  .menu__labels {
-    flex-direction: column;
-  }
-  
-  .menu__logo {
-    margin-top: 50px;
-    min-width: 300px;
-    min-height: 300px;
-  }
-  
-  .menu__enter {
-    font-size: 20px;
-    min-width: 50px;
-    min-height: 20px;
-  }
-  
-  .menu__name {
-    font-size: 24px;
-    min-width: 100px;
-    min-height: 20px;
-    margin-top: 10px;
-  }
-  
-  .menu__or {
-    font-size: 16px;
-    min-width: 10px;
-    min-height: 15px;
-  }
-  
-  .menu__escapade {
-    font-size: 16px;
-    min-width: 30px;
-    min-height: 15px;
-  }
-  
-  .menu__label {
-    font-size: 32px;
-    min-width: 100px;
-    height: 40px;
-    margin-left: 20px;
-    margin-right: 20px;
-    margin-top: 20px;
-  }
-}
-
-/*avg 600*/
-@media screen and (min-width: 481px) and (max-width: 768px) {
-
-  .menu__labels {
-    flex-direction: row;
-  }
-  
-  .menu__logo {
-    margin-top: 50px;
-    min-width: 500px;
-    min-height: 500px;
-  }
-  
-  .menu__enter {
-    font-size: 28px;
-    min-width: 50px;
-    min-height: 20px;
-  }
-  
-  .menu__name {
-    font-size: 36px;
-    min-width: 100px;
-    min-height: 20px;
-    margin-top: 10px;
-  }
-  
-  .menu__or {
-    font-size: 24px;
-    min-width: 10px;
-    min-height: 15px;
-  }
-  
-  .menu__escapade {
-    font-size: 24px;
-    min-width: 30px;
-    min-height: 15px;
-  }
-  
-  .menu__label {
-    font-size: 34px;
-    min-width: 200px;
-    height: 40px;
-    padding: 20px;
-    margin-left: 20px;
-    margin-right: 20px;
-    margin-top: 20px;
-  }
-}
-
-/*avg 1000*/
-@media screen and (min-width: 769px)  and (max-width: 1200px) {
-  .menu__labels {
-    flex-direction: row;
-  }
-  
-  .menu__logo {
-    margin-top: 50px;
-    min-width: 700px;
-    min-height: 700px;
-  }
-  
-  .menu__enter {
-    font-size: 42px;
-    min-width: 80px;
-    min-height: 40px;
-  }
-  
-  .menu__name {
-    font-size: 46px;
-    min-width: 100px;
-    min-height: 20px;
-    margin-top: 10px;
-  }
-  
-  .menu__or {
-    display:none;
-    font-size: 28px;
-    min-width: 10px;
-    min-height: 15px;
-  }
-  
-  .menu__escapade {
-    font-size: 40px;
-    min-width: 100px;
-    min-height: 15px;
-    margin-top: 20px;
-  }
-  
-  .menu__label {
-    font-size: 50px;
-    min-width: 400px;
-    height: 60px;
-    padding: 20px;
-    margin-top: 20px;
-    margin-left: 100px;
-    margin-right: 100px;
-  }
-}
-
-/*avg 1200*/
-@media screen and (min-width: 1201px) {
-  .menu__labels {
-    flex-direction: row;
-  }
-  
-  .menu__logo {
-    margin-top: 50px;
-    min-width: 700px;
-    min-height: 700px;
-  }
-  
-  .menu__enter {
-    font-size: 42px;
-    min-width: 80px;
-    min-height: 40px;
-  }
-  
-  .menu__name {
-    font-size: 46px;
-    min-width: 100px;
-    min-height: 20px;
-    margin-top: 10px;
-  }
-  
-  .menu__or {
-    display:none;
-    font-size: 28px;
-    min-width: 10px;
-    min-height: 15px;
-  }
-  
-  .menu__escapade {
-    font-size: 40px;
-    min-width: 100px;
-    min-height: 15px;
-    margin-top: 20px;
-  }
-  
-  .menu__label {
-    font-size: 50px;
-    min-width: 400px;
-    height: 60px;
-    padding: 20px;
-    margin-top: 20px;
-    margin-left: 300px;
-    margin-right: 300px;
-  }
-}
-
