@@ -25,7 +25,7 @@ export class ChatView {
  * show message
  * @param {function} message
  */
-  showMessage(message) {
+  showMessage(message: string) {
     const messageElem = document.createElement('div');
     messageElem.appendChild(document.createTextNode(message));
     document.getElementById('subscribe').appendChild(messageElem);

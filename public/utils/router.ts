@@ -4,10 +4,13 @@ import bus from './bus';
  *
  */
 export default class Router {
+  routes: {};
+  currentView: any;
+  root: any;
   /**
    * @param {*} root
    */
-  constructor(root) {
+  constructor(root: any) {
     this.routes = {};
     this.currentView = null;
     this.root = root;
@@ -18,7 +21,7 @@ export default class Router {
    * @param {BaseView} View
    * @return {*} this
    */
-  register(path, View) {
+  register(path: string, View: typeof import("../views/MainMenuView/MainMenu").MainMenuView) {
     this.routes[path] = {
       View: View,
       view: null,
@@ -31,7 +34,7 @@ export default class Router {
   /**
    * @param {string} path
    */
-  open(path) {
+  open(path: string) {
     const route = this.routes[path];
     if (!route) {
       this.open('/');
@@ -87,7 +90,7 @@ export default class Router {
    *
    */
   start() {
-    this.root.addEventListener('click', function(event) {
+    this.root.addEventListener('click', function(event: { target: { classList: { contains: (arg0: string) => void; }; }; preventDefault: () => void; }) {
       if (!(event.target instanceof HTMLAnchorElement) ||
         event.target.classList.contains('team__a')) {
         return;

@@ -5,7 +5,7 @@ import {BLACKLIST_TAGS, WHITELIST_ATTRS,
    * @param {*} email
    * @return {boolean}
    */
-export function validateEmail(email) {
+export function validateEmail(email: { length: number; }) {
   let message = '';
   if (R_EMAIL.test(String(email).toLowerCase()) !== true) {
     message = 'Invalid email format';
@@ -21,7 +21,7 @@ export function validateEmail(email) {
  * @param {*} password
  * @return {boolean}
  */
-export function validatePass(password) {
+export function validatePass(password: string) {
   let message = '';
   if (R_PASSWORD.test(password) !== true) {
     message = `Password must be at least 3 letters`;
@@ -38,7 +38,7 @@ export function validatePass(password) {
  * @param {*} login
  * @return {boolean}
  */
-export function validateLogin(login) {
+export function validateLogin(login: { length: number; }) {
   let message = '';
   if (login.length < 3) {
     message = 'Login must be at least 3 letters';

@@ -6,6 +6,14 @@ import Bus from '../utils/bus';
  * @module BaseView
  */
 export default class BaseView {
+  parent: any;
+  template: any;
+  isOffline: any;
+  _emitFuncStr: string;
+  _data: any;
+  _user: any;
+  overlayOffline: any;
+  hideButton: any;
   /**
    *
    * @param {HTMLElement} parent
@@ -53,14 +61,14 @@ export default class BaseView {
   /**
    * @param {Object} data
   */
-  set data(data = []) {
+  set data(data: object = []) {
     this._data = data;
   }
 
   /**
    * @param {Object} user
   */
-  set user(user = []) {
+  set user(user: object = []) {
     this._user = user;
   }
 

@@ -7,6 +7,66 @@ import {Timer} from '../../game/timer';
 import Bus from '../../utils/bus';
 /** */
 export class SinglePlayerView extends BaseView {
+  cellCloseStringName: string;
+  cellOpenStringName: string;
+  cellStringName: string;
+  cellFlagStringName: string;
+  mapStringName: string;
+  timerFieldStringName: string;
+  pointsFieldStringName: string;
+  minesFieldStringName: string;
+  leftClicksFieldStringName: string;
+  rightClicksFieldStringName: string;
+  restartFieldStringName: string;
+  percentOpenFieldStringName: string;
+  loadbarFieldStringName: string;
+  babyFieldStringName: string;
+  normalFieldStringName: string;
+  hardFieldStringName: string;
+  godFieldStringName: string;
+  itemListFieldStringName: string;
+  infoModeFieldStringName: string;
+  infoWidthFieldStringName: string;
+  infoHeightFieldStringName: string;
+  infoMinesFieldStringName: string;
+  playerNameFieldStringName: string;
+  playerScoreFieldStringName: string;
+  playerTimeFieldStringName: string;
+  messageBoxFieldStringName: string;
+  messageBoxMessageFieldStringName: string;
+  messageBoxOkButtonFieldStringName: string;
+  cellsize: number;
+  cellNumbersX: number;
+  cellNumbersY: number;
+  minesCount: number;
+  start: boolean;
+  pointsDocElement: Element;
+  minesDocElement: Element;
+  leftClicksDocElement: Element;
+  rightClicksDocElement: Element;
+  restartDocElement: Element;
+  percentOpenDocElement: Element;
+  loadbarDocElement: Element;
+  infoModeDocElement: Element;
+  infoWidthDocElement: Element;
+  infoHeightDocElement: Element;
+  infoMinesDocElement: Element;
+  playerNameDocElement: Element;
+  playerScoreDocElement: Element;
+  playerTimeDocElement: Element;
+  messageBoxDocElement: Element;
+  messageBoxMessageDocElement: Element;
+  timer: Timer;
+  maxPointsCount: number;
+  minTimeCount: string;
+  openCellsCount: number;
+  pointsCount: number;
+  leftClicksCount: number;
+  rightClicksCount: number;
+  prcentOpen: number;
+  minesRemainedCount: any;
+  mineSweeper: MineSweeper;
+  BBBVCount: any;
   /**
    *
    * @param {*} parent
@@ -231,7 +291,7 @@ export class SinglePlayerView extends BaseView {
     const y = parseInt(idArr[2]);
     this.leftClicksDocElement.innerHTML = (++this.leftClicksCount) + ' left clicks';
     if (this.mineSweeper.map[x][y] === 9) {
-      this._openAllCels(x, y, this.cellNumbersX, this.cellNumbersY);
+      this._openAllCels();
       if (this.timer.running) {
         this.timer.stop();
       }
@@ -250,14 +310,14 @@ export class SinglePlayerView extends BaseView {
     this.pointsDocElement.innerHTML = (this.pointsCount += res.points) + ' points';
 
     if (this.openCellsCount === this.cellNumbersX * this.cellNumbersY - this.minesCount) {
-      this._openAllCels(x, y, this.cellNumbersX, this.cellNumbersY);
+      this._openAllCels();
       if (this.timer.running) {
         this.timer.stop();
       }
       this.start = false;
       if (this.maxPointsCount < this.pointsCount) {
         this.maxPointsCount = this.pointsCount;
-        this.playerScoreDocElement.innerHTML = this.pointsCount;
+        this.playerScoreDocElement.innerHTML = this.pointsCount.toString();
       }
       if (this.minTimeCount > this.timer.timeStr) {
         this.minTimeCount = this.timer.timeStr;

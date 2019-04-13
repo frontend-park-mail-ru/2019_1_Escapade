@@ -4,6 +4,8 @@ import {WebSocketInterface} from '../utils/webSocket';
  *
  */
 export default class MultiplayerModel {
+  ws: WebSocketInterface;
+  rooms: any;
   /**
    *
    */

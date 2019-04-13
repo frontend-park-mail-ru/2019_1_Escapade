@@ -5,6 +5,8 @@ import MultiplayerModel from '../models/Multiplayer';
  *
  */
 class MultiplayeMV {
+  view: typeof MultiplayerView;
+  model: MultiplayerModel;
   /**
    *
    */

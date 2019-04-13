@@ -1,5 +1,13 @@
 /** */
 export class Timer {
+  timerHTMLElement: any;
+  running: boolean;
+  paused: boolean;
+  timeStr: string;
+  delay: number;
+  then: number;
+  timer: NodeJS.Timeout;
+  delayThen: number;
   /**
    *
    */
@@ -31,9 +39,8 @@ export class Timer {
     while (i < d.length) {
       let t = Math.floor(elapsed/d[i]);
       elapsed -= t*d[i];
-
-      t = (i > 0 && t < 10) ? '0' + t : t;
-      time.push(t);
+      let strT = ((i > 0 && t < 10) ? '0' + t : t).toString();
+      time.push(strT);
       i++;
     }
 

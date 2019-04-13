@@ -6,6 +6,8 @@ import ProfileEditView from '../views/ProfileEditView/ProfileEdit';
  *
  */
 class ProfileMV {
+  views: { ProfileView: typeof ProfileView; ProfileEditView: typeof ProfileEditView; };
+  model: ProfileModel;
   /**
    *
    */

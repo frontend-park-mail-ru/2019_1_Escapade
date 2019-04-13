@@ -6,11 +6,24 @@ import Bus from '../../utils/bus';
 
 /** */
 export default class MultiPlayer extends BaseView {
+  cellsize: number;
+  cellNumbersX: number;
+  cellNumbersY: number;
+  bombsCount: number;
+  openCellsCount: number;
+  cellCloseStringName: string;
+  cellOpenStringName: string;
+  cellStringName: string;
+  cellFlagStringName: string;
+  mapStringName: string;
+  pointsFieldStringName: string;
+  mineSweeper: MineSweeper;
+  BBBVCount: any;
   /**
    *
    * @param {*} parent
    */
-  constructor(parent) {
+  constructor(parent: any) {
     super(parent, multiPlayerTemplate, false);
     this.cellsize = 25;
     this.cellNumbersX = 20;

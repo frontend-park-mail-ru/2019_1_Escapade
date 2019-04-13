@@ -17,14 +17,14 @@ module.exports = {
       template: 'public/index.html',
     }),
     new ServiceWorkerWebpackPlugin({
-      entry: path.join(__dirname, 'public/sw.ts'),
+      entry: path.join(__dirname, 'public/sw.js'),
     }),
   ],
 
   resolve: {
     extensions: ['.ts', '.js', '.json'],
   },
- 
+
   module: {
     rules: [
       {
@@ -64,7 +64,4 @@ module.exports = {
       },
     ],
   },
-
-    
-
 };

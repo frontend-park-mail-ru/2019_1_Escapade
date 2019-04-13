@@ -8,19 +8,23 @@ import Bus from '../../utils/bus';
 
 /** */
 export default class SignInView extends BaseView {
+  _warnings: any;
+  parent: any;
+  _form: any;
+  _submitButton: any;
   /**
    *
    * @param {*} parent
    */
-  constructor(parent) {
+  constructor(parent: any) {
     super(parent, signInTemplate, false);
 
-    Bus.on('onSuccessLogin', (usr) => {
+    Bus.on('onSuccessLogin', (usr: { email: any; played: any; avatar: any; name: any; }) => {
       User.setUser({...usr});
       Bus.emit('userUpdate');
       router.open('/profile');
     });
-    Bus.on('onFailedLogin', (error) => {
+    Bus.on('onFailedLogin', (error: { message: any; }) => {
       this._showWarning(this._warnings.email, error.message);
     });
   }
@@ -45,7 +49,7 @@ export default class SignInView extends BaseView {
    * Действие при сабмите формы регистрации
    * @param {Event} event
    */
-  _onSubmit(event) {
+  _onSubmit(event: { preventDefault: () => void; }) {
     event.preventDefault();
     const data = {};
     data.email = this._form.elements['email'].value;
@@ -88,7 +92,7 @@ export default class SignInView extends BaseView {
    * @param {*} warning
    * @param {*} message
    */
-  _showWarning(warning, message) {
+  _showWarning(warning: { classList: { remove: (arg0: string) => void; }; innerHTML: string; }, message: string) {
     warning.classList.remove('hidden');
     warning.innerHTML = '';
     warning.innerHTML += message;
@@ -98,7 +102,7 @@ export default class SignInView extends BaseView {
    * Скрыть предупреждение валидации
    * @param {*} warning
    */
-  _hideWarning(warning) {
+  _hideWarning(warning: { classList: { add: (arg0: string) => void; }; innerHTML: string; }) {
     warning.classList.add('hidden');
     warning.innerHTML = '';
   }

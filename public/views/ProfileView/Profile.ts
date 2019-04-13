@@ -7,6 +7,9 @@ import Bus from '../../utils/bus';
  *
  */
 export default class ProfileView extends BaseView {
+  _warnings: any;
+  parent: any;
+  _user: any;
   /**
    *
    * @param {*} parent

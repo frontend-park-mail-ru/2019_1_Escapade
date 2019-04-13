@@ -8,11 +8,16 @@ import Bus from '../../utils/bus';
  *
  */
 export default class ProfileEditView extends BaseView {
+  _warnings: any;
+  _form: any;
+  parent: any;
+  _changeButton: any;
+  _data: any;
   /**
    *
    * @param {*} parent
    */
-  constructor(parent) {
+  constructor(parent: any) {
     super(parent, ProfileEditTemplate, false);
 
     Bus.on('onSuccessChange', (usr) => {

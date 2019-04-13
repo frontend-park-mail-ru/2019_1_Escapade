@@ -7,6 +7,10 @@ import BaseView from '../BaseView';
 import router from '../../main';
 /** */
 export default class SignUpView extends BaseView {
+  _warnings: any;
+  parent: any;
+  _form: any;
+  _submitButton: any;
   /**
    *
    * @param {HTMLElement} parent

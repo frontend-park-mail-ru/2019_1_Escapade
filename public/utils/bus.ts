@@ -2,6 +2,7 @@
  *
  */
 export class Bus {
+  listeners: {};
   /**
    *
    */
@@ -14,7 +15,7 @@ export class Bus {
    * @param {*} event
    * @param {*} callback
    */
-  on(event, callback) { // подписываемся на событие
+  on(event: string, callback: { (usr: any): void; (error: any): void; (usr: any): void; (error: any): void; (error: any): void; (usr: any): void; (error: any): void; (): void; }) { // подписываемся на событие
     this.listeners[event] = this.listeners[event] || [];
     this.listeners[event].push(callback);
   }
@@ -24,9 +25,9 @@ export class Bus {
    * @param {*} event
    * @param {*} callback
    */
-  off(event, callback) { // отписываемся от события
+  off(event: string | number, callback: any) { // отписываемся от события
     this.listeners[event] = this.listeners[event]
-        .filter(function(listener) {
+        .filter(function(listener: any) {
           return listener !== callback;
         });
   }
@@ -35,11 +36,11 @@ export class Bus {
    * @param {*} event
    * @param {*} data
    */
-  emit(event, data) { // публикуем (диспатчим, эмитим) событие
+  emit(event: string, data = '') { // публикуем (диспатчим, эмитим) событие
     if (!this.listeners[event]) {
       return;
     }
-    this.listeners[event].forEach(function(listener) {
+    this.listeners[event].forEach(function(listener: (arg0: string) => void) {
       listener(data);
     });
   }

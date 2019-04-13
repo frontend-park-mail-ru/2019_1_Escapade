@@ -1,6 +1,10 @@
 import {Net} from './net';
 /** */
 class UserSingleton {
+  name: string;
+  email: string;
+  played: string;
+  avatar: string;
   /** */
   constructor() {
     this.name = null;
@@ -41,7 +45,7 @@ export const User = new UserSingleton();
  * Проверка авторизации пользователя при вхлоде на сайт
  * @param {function} callback
  */
-export function checkAuth(callback) {
+export function checkAuth(callback: { (): void; (): void; (): void; (): void; }) {
   Net.get({url: '/user'})
       .then((resp) => {
         if (resp.status === 200) {

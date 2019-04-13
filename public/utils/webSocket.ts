@@ -2,6 +2,8 @@
 
 /** */
 export class WebSocketInterface {
+  connect: boolean;
+  ws: WebSocket;
   /**
    *
    */
@@ -30,7 +32,7 @@ export class WebSocketInterface {
   /**
    * sendMessage
   */
-  sendMessage(data) {
+  sendMessage(data: string | ArrayBuffer | Blob | ArrayBufferView) {
     //if (this.connect) {
     this.ws.onopen = () => this.ws.send(data);
     //}
@@ -39,7 +41,7 @@ export class WebSocketInterface {
   /**
    * SetCallback
   */
-  setCallback(func) {
+  setCallback(func: (arg0: any) => void) {
     this.ws.onmessage = function(event) {
       const incomingMessage = event.data;
       func(incomingMessage);
@@ -49,7 +51,7 @@ export class WebSocketInterface {
   /**
    * closeConnection
   */
-  closeConnection(code, reason) {
+  closeConnection(code: number, reason: string) {
     this.ws.close(code, reason);
   }
 }

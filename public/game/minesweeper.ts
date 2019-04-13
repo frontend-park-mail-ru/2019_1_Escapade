@@ -1,5 +1,12 @@
 /** */
 export class MineSweeper {
+  bombsCount: number;
+  cellNumbersX: number;
+  cellNumbersY: number;
+  map: any[];
+  mapLabel: any[];
+  cellNumbers: any;
+  mapLabel3BV: any[];
   /**
    *
    */

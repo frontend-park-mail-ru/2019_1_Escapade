@@ -4,11 +4,19 @@ import Bus from '../../utils/bus';
 
 /** */
 export default class LeaderBoardView extends BaseView {
+  _currPage: number;
+  divisionHeight: number;
+  pageStruct: { page: number; per_page: any; };
+  leaderBoardPageDomElement: any;
+  parent: any;
+  _pagesCount: any;
+  _leftArrow: any;
+  _rightArrow: any;
   /**
    *
    * @param {*} parent
    */
-  constructor(parent) {
+  constructor(parent: any) {
     super(parent, leaderBoardTemplate, false);
     this._currPage = 1;
 
@@ -19,14 +27,14 @@ export default class LeaderBoardView extends BaseView {
    * Отрисовка лидербода и получение необходимой информации с бэкэнда
   */
   _getPageAmount() {
-    const devWidth = screen.width;
+    let devWidth = screen.width;
     let devHeight = screen.height * 0.9;
     //   if (window.matchMedia("(orientation: portrait)").matches) {
     //     // you're in PORTRAIT mode
     //  }
 
     if (window.matchMedia('(orientation: landscape)').matches) {
-      devWidth, devHeight = devHeight, devWidth;
+      [devWidth, devHeight] = [devHeight, devWidth];
     }
 
     let fieldHeight = 1;
@@ -64,7 +72,7 @@ export default class LeaderBoardView extends BaseView {
    *
    * @param {*} users
    */
-  renderUsers(users) {
+  renderUsers(users: any) {
     const usersStruct = {users: users, page: this._currPage, per_page: this.pageStruct.per_page};
     this.data = usersStruct;
     super.render();
@@ -77,7 +85,7 @@ export default class LeaderBoardView extends BaseView {
    *
    * @param {*} amount
    */
-  _initBoard(amount) {
+  _initBoard(amount: any) {
     this._pagesCount = amount;
   }
 

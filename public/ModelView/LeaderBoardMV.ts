@@ -5,6 +5,8 @@ import LeaderBoardModel from '../models/LeaderBoardModel';
  *
  */
 class LeaderBoardMV {
+  view: typeof LeaderBoardView;
+  model: LeaderBoardModel;
   /**
    *
    */

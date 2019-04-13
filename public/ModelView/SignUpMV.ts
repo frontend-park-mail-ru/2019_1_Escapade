@@ -5,6 +5,8 @@ import SignUpModel from '../models/SignUpModel';
  *
  */
 class SignUpMV {
+  view: typeof SignUpView;
+  model: SignUpModel;
   /**
    *
    */
