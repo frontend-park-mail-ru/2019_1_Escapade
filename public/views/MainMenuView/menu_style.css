@@ -1,98 +1,92 @@
 @import url(https://fonts.googleapis.com/css?family=Lato:400,700italic);
 
-* {
-  padding: 0;
-  margin: 0;
-}
-
 body {
-  background: #1C78A6;
-  font-family: 'Lato', sans-serif;
-  letter-spacing: 1px;
+  background-color: #667787;
+  font-family: 'system-ui';
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
 }
 
-.menu-header {
+
+.menu {
+  text-decoration: none;
   display: flex;
-  justify-content: space-between;
-  align-items: center;
-  height: 3em;
-  padding: 1em 5%;
-  background: #2c3e50;
-  color: #fff;
+  justify-content: space-evenly;
+  flex-direction: column;
+  height: 100vh;
+  background: radial-gradient(512.00px at 50% 50%, rgba(255, 255, 255, 0.34) 0%, rgba(255, 255, 255, 0) 100%), #667787;
 }
 
-.menu-header nav {
-  display: inline-flex;
-}
-
-.menu-header h1 {
-  font-size: 2em;
-  font-style: italic;
-}
-
-.menu-header nav a {
-  white-space: nowrap;
-  padding-right: 1em;
-}
-
-@media screen and (max-width: 720px) {
-
-  .menu-header {
-    height: auto;
-  }
-
-  .menu-header nav {
-    display: flex;
-    flex-direction: column;
-    text-align: left;
-  }
-
-  .menu-header nav a:first-child {
-    padding-bottom: 0.7em;
-  }
-
-}
-
-.menu-wrapper {
+.menu__labels {
   display: flex;
+  justify-content: space-evenly;
+}
+
+.menu__wrapper {
+  display:flex;
   justify-content: center;
-  height: 80vh;
-}
-
-.menu-wrapper__menu {
-  display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: space-evenly;
-  height: 40vh;
-  margin-top: 20vh;
+  text-align: center;
 }
 
-
-.menu__link {
-  display: inline-block;
-  position: relative;
-  padding: 14px 0;
-  font-family: 'Muli', sans-serif;
-  font-weight: 300;
-  font-size: 22px;
-  line-height: 1;
-  letter-spacing: 0.040em;
+.menu__logo {
+  background-image: url('../../img/logo_single.png');
+  background-repeat: no-repeat;
+  background-size: cover;
+  height: 36vw;
+  width: 36vw;
 }
 
-.menu__link,
-.menu-button {
+.menu__row {
+  display:flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: row;
+}
+
+.menu__enter {
+  color: white;
+  font-size: 1.5vw;
+  font-weight: 200;
+}
+
+.menu__name {
+  color: white;
+  font-family: Saira;
+  font-size: 3vw;
   text-decoration: none;
-
-  color: #FFF0FF;
-  /* Цвет обычной ссылки */
-  text-decoration: none;
-  /* Убираем подчеркивание у ссылок */
 }
 
-.menu__link:hover,
-.menu-button:hover{
-  /* Цвет ссылки при наведении на нее курсора мыши */
-  text-decoration: underline;
-  /* Добавляем подчеркивание */
+.menu__or {
+  color: rgba(196, 196, 196, 1);
+  font-weight: 100;
+}
+
+.menu__escapade {
+  color: rgba(196, 196, 196, 1);
+  font-size: 1vw;
+  font-weight: 100;
+  text-decoration: none
+}
+
+.menu__label {
+  border: 0.2vw solid #FFFFFF;
+  border-radius: 30px;
+  background-color: #46535E;
+  color: white;
+  text-align: center;
+  text-decoration: none;
+  font-family: Saira;
+  width: 20vw;
+  font-size: 3vw;
+}
+
+@media screen and (max-width: 725px) {
+  .menu__label {
+    width: calc(20vw + 3rem);
+    font-size: calc(3vw + 0.5rem);
+  }
+
 }

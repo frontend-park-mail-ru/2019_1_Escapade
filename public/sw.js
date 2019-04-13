@@ -14,11 +14,11 @@ const {assets} = global.serviceWorkerOption;
 
 const CACHE_NAME = 'Escapade';
 
-let assetsToCache = [...assets, './'];
+const assetsToCache = [...assets, './'];
 
-assetsToCache = assetsToCache.map((path) => {
-  return new URL(path, global.location).toString();
-});
+// assetsToCache = assetsToCache.map((path) => {
+//   return new URL(path, global.location).toString();
+// });
 
 // When the service worker is first added to a computer.
 self.addEventListener('install', (event) => {

@@ -4,7 +4,7 @@ const path = require('path');
 
 
 module.exports = {
-  entry: './public/main.js',
+  entry: './public/main.ts',
 
   output: {
     publicPath: '/',
@@ -21,8 +21,35 @@ module.exports = {
     }),
   ],
 
+  resolve: {
+    extensions: ['.ts', '.js', '.json'],
+  },
+
   module: {
     rules: [
+      {
+        test: /\.tsx?$/,
+        exclude: /(node_modules|bower_components)/,
+        use: {
+          loader:
+          'babel-loader',
+          options: {
+            presets: [
+              '@babel/typescript',
+              ['@babel/preset-env', {
+                targets: {
+                  edge: 15,
+                },
+              }],
+            ],
+          },
+        },
+      },
+      {
+        test: /\.js$/,
+        use: ['source-map-loader'],
+        enforce: 'pre',
+      },
       {
         test: /\.css$/,
         use: ['style-loader', 'css-loader'],

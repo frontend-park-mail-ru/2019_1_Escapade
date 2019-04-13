@@ -1,0 +1,26 @@
+section(data-section-name='profile_edit')
+  .profile_edit
+    .profile_edit__main
+      a.profile_edit__exit(data-href='/profile', href='/profile')
+      form.profile_edit__form
+        .profile__row
+          div
+            span.profile__rowname nickname:
+          input.profile__input.bg-white(value=data.name, name='login', type='login')
+          .warning.signup__warning.hidden.js-warning-login
+        .profile__row
+          div
+            span.profile__rowname email:
+          input.profile__input.bg-white(value=data.email, name='email', type='email')
+          .warning.signup__warning.hidden.js-warning-email
+        .profile__row
+          div
+            span.profile__rowname password:
+          input.profile__input.bg-white(type='password', name='password', autocomplete="new-password")
+          .warning.signup__warning.hidden.js-warning-password
+        .profile__row
+          div
+            span.profile__rowname repeat password:
+          input.profile__input.bg-white(type='password', name='password-repeat', autocomplete="new-password")
+          .warning.signup__warning.hidden.js-warning-repassword
+      .profile_edit__confirm
