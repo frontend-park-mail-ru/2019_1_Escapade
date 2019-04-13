@@ -1,6 +1,6 @@
 import ProfileTemplate from './Profile.pug';
 import profileData from './Profile__data.pug';
-import {User} from '../../utils/user.js';
+import {User} from '../../utils/user';
 import BaseView from '../BaseView';
 import Bus from '../../utils/bus';
 /**

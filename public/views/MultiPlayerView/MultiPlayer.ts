@@ -1,7 +1,7 @@
 import multiPlayerTemplate from './MultiPlayer.pug';
 import BaseView from '../BaseView';
-import {User} from '../../utils/user.js';
-import {MineSweeper} from '../../game/minesweeper.js';
+import {User} from '../../utils/user';
+import {MineSweeper} from '../../game/minesweeper';
 import Bus from '../../utils/bus';
 
 /** */

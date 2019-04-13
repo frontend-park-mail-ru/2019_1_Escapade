@@ -1,6 +1,6 @@
 import authorsTemplate from './Authors.pug';
 import BaseView from '../BaseView';
-import {User} from '../../utils/user.js';
+import {User} from '../../utils/user';
 
 /** */
 export class AuthorsView extends BaseView {

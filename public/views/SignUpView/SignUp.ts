@@ -1,7 +1,7 @@
 import signUpTemplate from './SignUp.pug';
 import {validateEmail, validatePass, validateLogin, makeSafe}
-  from '../../utils/validation.js';
-import {User} from '../../utils/user.js';
+  from '../../utils/validation';
+import {User} from '../../utils/user';
 import Bus from '../../utils/bus';
 import BaseView from '../BaseView';
 import router from '../../main';

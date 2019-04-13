@@ -1,5 +1,5 @@
-import {Net} from '../../utils/net.js';
-import {User} from '../../utils/user.js';
+import {Net} from '../../utils/net';
+import {User} from '../../utils/user';
 import router from '../../main';
 import Bus from '../../utils/bus';
 

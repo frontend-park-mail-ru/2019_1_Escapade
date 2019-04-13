@@ -4,7 +4,7 @@ const path = require('path');
 
 
 module.exports = {
-  entry: './public/main.js',
+  entry: './public/main.ts',
 
   output: {
     publicPath: '/',
@@ -17,19 +17,25 @@ module.exports = {
       template: 'public/index.html',
     }),
     new ServiceWorkerWebpackPlugin({
-      entry: path.join(__dirname, 'public/sw.js'),
+      entry: path.join(__dirname, 'public/sw.ts'),
     }),
   ],
 
+  resolve: {
+    extensions: ['.ts', '.js', '.json'],
+  },
+ 
   module: {
     rules: [
       {
-        test: /\.js$/,
+        test: /\.tsx?$/,
         exclude: /(node_modules|bower_components)/,
         use: {
-          loader: 'babel-loader',
+          loader:
+          'babel-loader',
           options: {
             presets: [
+              '@babel/typescript',
               ['@babel/preset-env', {
                 targets: {
                   edge: 15,
@@ -38,6 +44,11 @@ module.exports = {
             ],
           },
         },
+      },
+      {
+        test: /\.js$/,
+        use: ['source-map-loader'],
+        enforce: 'pre',
       },
       {
         test: /\.css$/,
@@ -53,4 +64,7 @@ module.exports = {
       },
     ],
   },
+
+    
+
 };

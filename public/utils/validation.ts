@@ -1,5 +1,5 @@
 import {BLACKLIST_TAGS, WHITELIST_ATTRS,
-  R_TAG, R_ATTRIBUTES, R_EMAIL, R_PASSWORD} from '../utils/constans.js';
+  R_TAG, R_ATTRIBUTES, R_EMAIL, R_PASSWORD} from './constans';
 /**
    * Валидация email
    * @param {*} email

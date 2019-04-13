@@ -1,5 +1,5 @@
-import MultiplayerView from '../views/MultiPlayerView/MultiPlayer.js';
-import MultiplayerModel from '../models/Multiplayer.js';
+import MultiplayerView from '../views/MultiPlayerView/MultiPlayer';
+import MultiplayerModel from '../models/Multiplayer';
 
 /**
  *

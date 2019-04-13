@@ -1,9 +1,9 @@
 /* eslint-disable require-jsdoc */
 import singlePlayerTemplate from './SinglePlayer.pug';
 import BaseView from '../BaseView';
-import {User} from '../../utils/user.js';
-import {MineSweeper} from '../../game/minesweeper.js';
-import {Timer} from '../../game/timer.js';
+import {User} from '../../utils/user';
+import {MineSweeper} from '../../game/minesweeper';
+import {Timer} from '../../game/timer';
 import Bus from '../../utils/bus';
 /** */
 export class SinglePlayerView extends BaseView {

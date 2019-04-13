@@ -1,18 +1,18 @@
 'use strict';
 
-import {MainMenuView} from './views/MainMenuView/MainMenu.js';
-import {SinglePlayerView} from './views/SinglePlayerView/SinglePlayer.js';
-import {AuthorsView} from './views/AuthorsView/Authors.js';
-import ChatView from './views/Chat.js';
+import {MainMenuView} from './views/MainMenuView/MainMenu';
+import {SinglePlayerView} from './views/SinglePlayerView/SinglePlayer';
+import {AuthorsView} from './views/AuthorsView/Authors';
+import ChatView from './views/Chat.ts';
 import signOut from './views/SignOut/SignOut';
-import {checkAuth} from './utils/user.js';
+import {checkAuth} from './utils/user';
 import Router from './utils/router';
-import bus from './utils/bus.js';
+import bus from './utils/bus';
 import LeaderBoardMV from './ModelView/LeaderBoardMV';
 import SignInMV from './ModelView/SignInMV';
-import SignUpMV from './ModelView/SignUpMV.js';
+import SignUpMV from './ModelView/SignUpMV';
 import MultiplayeMV from './ModelView/MultiplayeMV';
-import ProfileMV from './ModelView/ProfileMV.js';
+import ProfileMV from './ModelView/ProfileMV';
 
 import './img/arrow-left.png';
 import './img/arrow-right.png';
@@ -22,7 +22,7 @@ import './main.css';
 const root = document.getElementById('application');
 
 if ('serviceWorker' in navigator) {
-  navigator.serviceWorker.register('./sw.js', {scope: '/'})
+  navigator.serviceWorker.register('./sw.ts', {scope: '/'})
       .then((reg) => {
         console.log('sw reg success:', reg);
       })

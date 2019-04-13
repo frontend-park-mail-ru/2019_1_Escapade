@@ -1,5 +1,5 @@
 import Bus from '../utils/bus';
-import {WebSocketInterface} from '../utils/webSocket.js';
+import {WebSocketInterface} from '../utils/webSocket';
 /**
  *
  */

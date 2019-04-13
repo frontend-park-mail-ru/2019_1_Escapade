@@ -1,4 +1,4 @@
-import {Net} from './net.js';
+import {Net} from './net';
 /** */
 class UserSingleton {
   /** */
