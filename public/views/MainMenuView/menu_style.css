@@ -48,6 +48,7 @@ body {
 
 .menu__enter {
   color: white;
+  font-size: 1.5vw;
   font-weight: 200;
 }
 
@@ -65,12 +66,13 @@ body {
 
 .menu__escapade {
   color: rgba(196, 196, 196, 1);
+  font-size: 1vw;
   font-weight: 100;
   text-decoration: none
 }
 
 .menu__label {
-  border: 0.5vw solid #FFFFFF;
+  border: 0.2vw solid #FFFFFF;
   border-radius: 30px;
   background-color: #46535E;
   color: white;

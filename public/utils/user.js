@@ -61,6 +61,8 @@ export function checkAuth(callback) {
           callback();
           return;
         }
+        User.removeUser();
+        callback();
         console.log(error);
       });
 }
