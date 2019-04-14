@@ -3,6 +3,7 @@
 import { MainMenuView } from './views/MainMenuView/MainMenu';
 import { SinglePlayerView } from './views/SinglePlayerView/SinglePlayer';
 import { AuthorsView } from './views/AuthorsView/Authors';
+import { RulesView } from './views/RulesView/Rules';
 import ChatView from './views/Chat.ts';
 import signOut from './views/SignOut/SignOut';
 import { checkAuth } from './utils/user';
@@ -39,6 +40,7 @@ router
   .register('/sign_up', SignUpMV.view)
   .register('/leaders', LeaderBoardMV.view)
   .register('/about', AuthorsView)
+  .register('/rules', RulesView)
   .register('/profile', ProfileMV.views.ProfileView)
   .register('/single_player', SinglePlayerView)
   .register('/multi_player', MultiplayeMV.view)
