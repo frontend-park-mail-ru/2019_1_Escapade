@@ -4,7 +4,7 @@ import bus from './bus';
  *
  */
 export default class Router {
-  routes: {};
+  routes: any;
   currentView: any;
   root: any;
   /**

@@ -1,4 +1,4 @@
-import authorsTemplate from './Rules.pug';
+import rulesTemplate from './Rules.pug';
 import BaseView from '../BaseView';
 import {User} from '../../utils/user';
 
@@ -8,8 +8,8 @@ export class RulesView extends BaseView {
    *
    * @param {*} parent
    */
-  constructor(parent) {
-    super(parent, authorsTemplate, true);
+  constructor(parent: any) {
+    super(parent, rulesTemplate, true);
   }
 
   /** */

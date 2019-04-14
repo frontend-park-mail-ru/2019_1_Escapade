@@ -71,7 +71,7 @@ export class SinglePlayerView extends BaseView {
    *
    * @param {*} parent
    */
-  constructor(parent) {
+  constructor(parent: any) {
     super(parent, singlePlayerTemplate, true, 'updateUserInfo');
     this.cellCloseStringName = 'cell_close';
     this.cellOpenStringName = 'cell_open';
@@ -162,7 +162,7 @@ export class SinglePlayerView extends BaseView {
   }
 
   /** */
-  _clickOnBody(e) {
+  _clickOnBody(e : any) {
     if (e.target.classList.contains(this.itemListFieldStringName)) {
       this._changeHard(e);
     } else if (e.target.classList.contains(this.cellStringName)) {
@@ -249,7 +249,7 @@ export class SinglePlayerView extends BaseView {
 
 
   /** */
-  _changeHard(e) {
+  _changeHard(e : any) {
     if (e.target.classList.contains(this.babyFieldStringName)) {
       this.infoModeDocElement.innerHTML = 'Baby mode';
       this.minesCount = 10;
@@ -280,7 +280,7 @@ export class SinglePlayerView extends BaseView {
   }
 
   /** */
-  _clickOnCell(e) {
+  _clickOnCell(e : any) {
     if (!e.target.classList.contains(this.cellStringName) ||
       e.target.classList.contains(this.cellFlagStringName) ||
       !this.start) {
@@ -329,7 +329,7 @@ export class SinglePlayerView extends BaseView {
   }
 
   /** */
-  _rightСlickOnCell(e) {
+  _rightСlickOnCell(e : any) {
     if (!e.target.classList.contains(this.cellStringName) || !this.start ||
       (!e.target.classList.contains(this.cellCloseStringName) &&
         !e.target.classList.contains(this.cellFlagStringName))) {
@@ -383,7 +383,7 @@ export class SinglePlayerView extends BaseView {
   }
 
   /** */
-  _showMessage(mess) {
+  _showMessage(mess : string) {
     this.messageBoxDocElement.hidden = false;
     this.messageBoxMessageDocElement.innerHTML = mess;
   }
@@ -393,7 +393,7 @@ export class SinglePlayerView extends BaseView {
   }
 
   /** */
-  _openCels(arrCells) {
+  _openCels(arrCells : number[][]) {
     for (let i = 0; i < arrCells.length; i++) {
       const x = arrCells[i][0];
       const y = arrCells[i][1];

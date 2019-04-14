@@ -72,7 +72,7 @@ export default class MultiPlayer extends BaseView {
     findRoomsButton.addEventListener('click', this._findRooms.bind(this));
   }
   /** */
-  _showMap(XLen, YLen) {
+  _showMap(XLen: number, YLen: number) {
     const field = document.getElementById(this.mapStringName);
     if (!field) {
       console.log('error field cannot find ' + this.mapStringName);
@@ -92,14 +92,14 @@ export default class MultiPlayer extends BaseView {
   }
 
   /** */
-  _findRooms(e) {
+  _findRooms(e: any) {
     console.log('FFFFF');
     Bus.emit('get_rooms');
     return;
   }
 
   /** */
-  _updateRooms(rooms) {
+  _updateRooms(rooms: { Rooms: string; }) {
     const infoRooms = document.getElementsByClassName('multi_player__room_list')[0];
     infoRooms.textContent += rooms.Rooms;
   }
@@ -135,7 +135,7 @@ export default class MultiPlayer extends BaseView {
   }
 
   /** */
-  _openCels(arrCells) {
+  _openCels(arrCells: any[][]) {
     for (let i = 0; i < arrCells.length; i++) {
       const x = arrCells[i][0];
       const y = arrCells[i][1];

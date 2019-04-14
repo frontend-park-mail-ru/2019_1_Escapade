@@ -49,7 +49,7 @@ export default class SignInView extends BaseView {
    * Действие при сабмите формы регистрации
    * @param {Event} event
    */
-  _onSubmit(event: { preventDefault: () => void; }) {
+  _onSubmit(event : any) {
     event.preventDefault();
     const data = {};
     data.email = this._form.elements['email'].value;
@@ -64,7 +64,7 @@ export default class SignInView extends BaseView {
    * @param  {...any} data
    * @return {boolean}
    */
-  _validateInput({ email, password }) {
+  _validateInput({ email = '', password = ''}) {
     let isValid = true;
     let message = '';
 

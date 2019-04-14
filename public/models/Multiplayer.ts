@@ -33,7 +33,7 @@ export default class MultiplayerModel {
   /**
    * _getRoomsCallBack
    */
-  _getRoomsCallBack(data) {
+  _getRoomsCallBack(data: string) {
     this.rooms = JSON.parse(data);
     console.log(this.rooms);
   }
@@ -54,7 +54,7 @@ export default class MultiplayerModel {
   /**
    * _sendInfo
    */
-  _sendCell(cellCoord) {
+  _sendCell(cellCoord: { xCell: any; yCell: any; }) {
     const cellCoordData = {x: cellCoord.xCell, y: cellCoord.yCell};
     const data = JSON.stringify({cell: cellCoordData});
 
