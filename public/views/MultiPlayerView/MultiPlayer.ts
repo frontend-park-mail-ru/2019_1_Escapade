@@ -74,10 +74,10 @@ export default class MultiPlayer extends BaseView {
    */
   constructor(parent: any) {
     super(parent, multiPlayerTemplate, true, 'updateUserInfoMult');
-    this.cellCloseStringName = 'cell_close';
-    this.cellOpenStringName = 'cell_open';
-    this.cellStringName = 'cell';
-    this.cellFlagStringName = 'cell_flag';
+    this.cellCloseStringName = 'multi_player_cell_close';
+    this.cellOpenStringName = 'multi_player_cell_open';
+    this.cellStringName = 'multi_player_cell';
+    this.cellFlagStringName = 'multi_player_cell_flag';
     this.mapStringName = 'multi_player__map';
     this.timerFieldStringName = 'multi_player__timer';
 
@@ -144,6 +144,7 @@ export default class MultiPlayer extends BaseView {
     infoRooms.textContent += rooms.Rooms;
   }
 
+
   /**
    *
   */
@@ -169,7 +170,7 @@ export default class MultiPlayer extends BaseView {
 
     this.messageBoxDocElement = document.getElementsByClassName(this.messageBoxFieldStringName)[0];
     this.messageBoxMessageDocElement = document.getElementsByClassName(this.messageBoxMessageFieldStringName)[0];
-    this.messageBoxDocElement.hidden = true;
+    
 
     this.timer = new Timer(document.getElementById(this.timerFieldStringName));
 
@@ -181,6 +182,7 @@ export default class MultiPlayer extends BaseView {
     this.infoWidthDocElement.innerHTML = this.cellNumbersX + ' width';
     this.infoHeightDocElement.innerHTML = this.cellNumbersY + ' height';
     this._showMap();
+    Bus.on('stop_reset_timer', this._stop_reset_timer.bind(this))
   }
 
   /** */
@@ -195,6 +197,7 @@ export default class MultiPlayer extends BaseView {
   }
 
   _updateUserInfo() {
+    console.log("_updateUserInfo here");
     if (User.name) {
       this.playerNameDocElement.innerHTML = User.name;
       this.playerScoreDocElement.innerHTML = '0'; // получать из user
@@ -208,10 +211,13 @@ export default class MultiPlayer extends BaseView {
       this.maxPointsCount = 0;
       this.minTimeCount = '1:24:60:60';
     }
+    this._showMap();
   }
 
   /** */
   _showMap() {
+    console.log('ahaha');
+    this.messageBoxDocElement.hidden = true;
     this.openCellsCount = 0;
     this.pointsCount = 0;
     this.leftClicksCount = 0;
@@ -253,6 +259,11 @@ export default class MultiPlayer extends BaseView {
       }
     }
     return;
+  }
+
+  _stop_reset_timer(){
+    this.timer.stop();
+    this.timer.reset();
   }
 
   /** */
@@ -297,20 +308,22 @@ export default class MultiPlayer extends BaseView {
       this.restartDocElement.innerHTML = 'Restart';
       this.start = true;
     }
-
     this._showMap();
   }
 
   /** */
   _clickOnCell(e : any) {
-    if (!e.target.classList.contains(this.cellStringName) ||
-      e.target.classList.contains(this.cellFlagStringName) ||
-      !this.start) {
+    console.log('prev check _click')
+    if (!e.target.classList.contains(this.cellStringName) || !this.start) {
       return;
     }
+    console.log('after check _click')
     const idArr = e.target.id.split('_');
-    const x = parseInt(idArr[1]);
-    const y = parseInt(idArr[2]);
+    const x = parseInt(idArr[3]);
+    const y = parseInt(idArr[4]);
+    if (this.mineSweeper.mapLabel[x][y] != 0) { // если не закрыта
+      return;
+    }
     this.leftClicksDocElement.innerHTML = (++this.leftClicksCount) + ' left clicks';
     if (this.mineSweeper.map[x][y] === 9) {
       this._openAllCels();
@@ -352,17 +365,18 @@ export default class MultiPlayer extends BaseView {
 
   /** */
   _rightСlickOnCell(e : any) {
-    if (!e.target.classList.contains(this.cellStringName) || !this.start ||
-      (!e.target.classList.contains(this.cellCloseStringName) &&
-        !e.target.classList.contains(this.cellFlagStringName))) {
+    if (!e.target.classList.contains(this.cellStringName) || !this.start) {
       return;
     }
-    this.rightClicksDocElement.innerHTML = (++this.rightClicksCount) + ' right clicks';
     const idArr = e.target.id.split('_');
-    const x = parseInt(idArr[1]);
-    const y = parseInt(idArr[2]);
+    const x = parseInt(idArr[3]);
+    const y = parseInt(idArr[4]);
     const typeOfCell = this.mineSweeper.putRemoveFlag(x, y);
+    if (typeOfCell == 1) {
+      return;
+    }
 
+    this.rightClicksDocElement.innerHTML = (++this.rightClicksCount) + ' right clicks';
     if (typeOfCell == 0) {
       if (this.minesRemainedCount < this.minesCount) {
         ++this.minesRemainedCount;
@@ -377,7 +391,7 @@ export default class MultiPlayer extends BaseView {
         return;
       }
       const classElems = e.target.classList[2].split('_');
-      const numClassElem = parseInt(classElems[2]);
+      const numClassElem = parseInt(classElems[4]);
       e.target.className = this.cellStringName + ' ' +
         this.cellCloseStringName + ' ' +
         this.cellCloseStringName + '_' + numClassElem;
@@ -396,7 +410,7 @@ export default class MultiPlayer extends BaseView {
         return;
       }
       const classElems = e.target.classList[2].split('_');
-      const numClassElem = parseInt(classElems[2]);
+      const numClassElem = parseInt(classElems[4]);
       e.target.className = this.cellStringName + ' ' +
         this.cellFlagStringName + ' ' +
         this.cellFlagStringName + '_' + numClassElem;

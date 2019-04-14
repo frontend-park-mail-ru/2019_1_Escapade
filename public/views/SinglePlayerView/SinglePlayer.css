@@ -278,8 +278,8 @@ body {
 }
 
 .single_player__settings_img:hover {
-  -webkit-transform: rotate(360deg);
-          transform: rotate(360deg);
+  -webkit-transform: rotate(180deg);
+          transform: rotate(180deg);
 }
 
 

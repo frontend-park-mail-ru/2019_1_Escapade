@@ -284,18 +284,21 @@ export class SinglePlayerView extends BaseView {
       this.restartDocElement.innerHTML = 'Restart';
       this.start = true;
     }
+    this._showMap();
   }
 
   /** */
   _clickOnCell(e : any) {
-    if (!e.target.classList.contains(this.cellStringName) ||
-      e.target.classList.contains(this.cellFlagStringName) ||
-      !this.start) {
+    
+    if (!e.target.classList.contains(this.cellStringName) || !this.start) {
       return;
     }
     const idArr = e.target.id.split('_');
     const x = parseInt(idArr[1]);
     const y = parseInt(idArr[2]);
+    if (this.mineSweeper.mapLabel[x][y] != 0) { // если не закрыта
+      return;
+    }
     this.leftClicksDocElement.innerHTML = (++this.leftClicksCount) + ' left clicks';
     if (this.mineSweeper.map[x][y] === 9) {
       this._openAllCels();
@@ -337,17 +340,18 @@ export class SinglePlayerView extends BaseView {
 
   /** */
   _rightСlickOnCell(e : any) {
-    if (!e.target.classList.contains(this.cellStringName) || !this.start ||
-      (!e.target.classList.contains(this.cellCloseStringName) &&
-        !e.target.classList.contains(this.cellFlagStringName))) {
+    if (!e.target.classList.contains(this.cellStringName) || !this.start) {
       return;
     }
-    this.rightClicksDocElement.innerHTML = (++this.rightClicksCount) + ' right clicks';
     const idArr = e.target.id.split('_');
     const x = parseInt(idArr[1]);
     const y = parseInt(idArr[2]);
     const typeOfCell = this.mineSweeper.putRemoveFlag(x, y);
+    if (typeOfCell == 1) {
+      return;
+    }
 
+    this.rightClicksDocElement.innerHTML = (++this.rightClicksCount) + ' right clicks';
     if (typeOfCell == 0) {
       if (this.minesRemainedCount < this.minesCount) {
         ++this.minesRemainedCount;
