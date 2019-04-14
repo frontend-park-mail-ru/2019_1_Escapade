@@ -75,8 +75,8 @@
 }
 
 .signup_edit__confirm{
-  width: 110px;
-  height: 110px;
+  width: calc(1rem + 7vw);
+  height: calc(1rem + 7vw);
   background: url('../../img/signup.png') #46535E no-repeat;
   background-size: contain;
   align-self: center;
@@ -85,8 +85,8 @@
 }
 
 .signin_edit__confirm{
-  width: 110px;
-  height: 110px;
+  width: calc(1rem + 7vw);
+  height: calc(1rem + 7vw);
   background: url('../../img/check.png') #46535E no-repeat;
   background-size: contain;
   align-self: center;

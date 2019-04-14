@@ -1,7 +1,6 @@
 section(data-section-name='signin')
   .profile_edit
     .profile_edit__main
-      a.profile_edit__exit(data-href='/', href='/')
       form.profile_edit__form
         .profile__row
           div
@@ -13,4 +12,6 @@ section(data-section-name='signin')
             span.profile__rowname password:
           input.profile__input.bg-white(type='password', name='password', autocomplete="new-password")
           .warning.signup__warning.hidden.js-warning-password
-      .signin_edit__confirm
+        .login__buttons
+          a.profile_edit__exit(data-href='/', href='/')
+          .signin_edit__confirm
