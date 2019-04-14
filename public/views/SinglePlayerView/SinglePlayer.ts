@@ -159,6 +159,7 @@ export class SinglePlayerView extends BaseView {
     this.infoWidthDocElement.innerHTML = this.cellNumbersX + ' width';
     this.infoHeightDocElement.innerHTML = this.cellNumbersY + ' height';
     this._showMap();
+    Bus.on('stop_reset_timer', this._stop_reset_timer.bind(this))
   }
 
   /** */
@@ -236,6 +237,11 @@ export class SinglePlayerView extends BaseView {
     return;
   }
 
+  _stop_reset_timer(){
+    this.timer.stop();
+    this.timer.reset();
+  }
+
   /** */
   _restart() {
     if (!this.start) {
@@ -278,8 +284,6 @@ export class SinglePlayerView extends BaseView {
       this.restartDocElement.innerHTML = 'Restart';
       this.start = true;
     }
-
-    this._showMap();
   }
 
   /** */

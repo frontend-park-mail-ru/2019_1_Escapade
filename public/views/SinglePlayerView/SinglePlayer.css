@@ -236,7 +236,7 @@ body {
   display: flex;
   flex-direction: row;
   float: left;
-  margin-left: 100px;
+  margin-left: 75px;
 }
 .single_player__percent {
   position: relative;

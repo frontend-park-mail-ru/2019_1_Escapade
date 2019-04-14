@@ -35,6 +35,7 @@ export default class Router {
    * @param {string} path
    */
   open(path: string) {
+    bus.emit('stop_reset_timer', '')
     const route = this.routes[path];
     if (!route) {
       this.open('/');
