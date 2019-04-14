@@ -393,7 +393,7 @@ export class SinglePlayerView extends BaseView {
   }
 
   /** */
-  _openCels(arrCells : number[][]) {
+  _openCels(arrCells : any) {
     for (let i = 0; i < arrCells.length; i++) {
       const x = arrCells[i][0];
       const y = arrCells[i][1];
