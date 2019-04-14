@@ -4,6 +4,7 @@ import {validateEmail, validatePass, validateLogin, makeSafe}
 import {User} from '../../utils/user';
 import BaseView from '../BaseView';
 import Bus from '../../utils/bus';
+import router from '../../main';
 /**
  *
  */
@@ -25,6 +26,7 @@ export default class ProfileEditView extends BaseView {
       usr.repassword = '';
       User.setUser({...usr});
       Bus.emit('userUpdate');
+      router.open('/profile');
     });
     Bus.on('onFailedChange', (error) => {
       this._showWarning(this._warnings.email, error.message);

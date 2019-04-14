@@ -1,7 +1,7 @@
 import signUpTemplate from './SignUp.pug';
-import {validateEmail, validatePass, validateLogin, makeSafe}
+import { validateEmail, validatePass, validateLogin, makeSafe }
   from '../../utils/validation';
-import {User} from '../../utils/user';
+import { User } from '../../utils/user';
 import Bus from '../../utils/bus';
 import BaseView from '../BaseView';
 import router from '../../main';
@@ -19,7 +19,7 @@ export default class SignUpView extends BaseView {
     super(parent, signUpTemplate, false);
 
     Bus.on('onSuccessAuth', (usr) => {
-      User.setUser({...usr});
+      User.setUser({ ...usr });
       Bus.emit('userUpdate');
       router.open('/profile');
     });
@@ -32,16 +32,15 @@ export default class SignUpView extends BaseView {
    * Отрисовка формы регистрации и добавление лисенеров
   */
   render() {
-    this.user = User;
     super.render();
     this._warnings = {};
     this._warnings.email = this.parent.querySelector('.js-warning-email');
     this._warnings.login = this.parent.querySelector('.js-warning-login');
     this._warnings.pass = this.parent.querySelector('.js-warning-password');
     this._warnings.repass = this.parent.querySelector('.js-warning-repassword');
-    this._form = this.parent.querySelector('.signup__form');
+    this._form = this.parent.querySelector('.profile_edit__form');
 
-    this._submitButton = this.parent.querySelector('.signup__submit');
+    this._submitButton = this.parent.querySelector('.signup_edit__confirm');
 
     this._submitButton.addEventListener('click', this._onSubmit.bind(this));
   }
@@ -69,7 +68,7 @@ export default class SignUpView extends BaseView {
    * @param  {...any} data
    * @return {boolean}
    */
-  _validateInput({email, name, password, repass}) {
+  _validateInput({ email, name, password, repass }) {
     let isValid = true;
     let message = '';
 
