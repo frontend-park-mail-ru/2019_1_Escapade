@@ -39,6 +39,14 @@ body {
   width: 36vw;
 }
 
+.menu__multi_logo {
+  background-image: url('../../img/logo_multi.png');
+  background-repeat: no-repeat;
+  background-size: cover;
+  height: 6vw;
+  width: 6vw;
+}
+
 .menu__row {
   display:flex;
   justify-content: center;
