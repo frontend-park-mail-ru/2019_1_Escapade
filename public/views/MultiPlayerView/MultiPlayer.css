@@ -97,7 +97,7 @@ body {
               url('../../img/cell_open0.png') no-repeat;
 }
 
-.single_player__popup{
+.multi_player__popup{
   width: 100%;
   min-height: 100%;
   background-color: rgba(0,0,0,0.5);
@@ -108,7 +108,7 @@ body {
   left: 0;
   overflow: auto;
 }
-.single_player__popup_content{
+.multi_player__popup_content{
   width:120px;
   height: 120px;
   padding:10px;
@@ -126,7 +126,7 @@ body {
   transition: .5s ease-in-out;
 }
 
-.single_player__popup_ok_button {
+.multi_player__popup_ok_button {
   text-decoration: none;
   background-color: #4B5E70;
   position: relative;
@@ -143,11 +143,11 @@ body {
   border-radius: 10px;
 }
 
-.single_player__popup_ok_button .single_player__popup_content {
+.multi_player__popup_ok_button .multi_player__popup_content {
   opacity: 0;
 }
 
-.single_player__popup_text {
+.multi_player__popup_text {
   text-decoration: none;
   position: relative;
   text-align: center;
@@ -158,14 +158,14 @@ body {
 
 }
 
-.single_player {
+.multi_player {
   display: flex;
   justify-content: center;
   display:flex;
   flex-direction: row;
 }
 
-.single_player__wrapper {
+.multi_player__wrapper {
   margin-top: 10px;
   display:flex;
   flex-direction: column;
@@ -173,7 +173,7 @@ body {
 
 
 
-.single_player__player {
+.multi_player__player {
   background-color: #4B5E70;
   position: relative;
   display:flex;
@@ -186,7 +186,7 @@ body {
   border-radius: 50px 15px 15px 50px;
 }
 
-.single_player__player_photo {
+.multi_player__player_photo {
   width: 75px;
   height: 75px;
   border-radius: 50%;
@@ -195,7 +195,7 @@ body {
   float: left;
 }
 
-.single_player__player_str {
+.multi_player__player_str {
   color: white;
   height: 60px;
   line-height: 60px;
@@ -204,18 +204,18 @@ body {
   margin-left: 20px;
 }
 
-.single_player__player_score {
+.multi_player__player_score {
   padding-left: 20px;
   padding-right: 20px;
   border-left: 1px solid white; 
   border-right: 1px solid white;
 }
 
-.single_player__player_dop{
+.multi_player__player_dop{
   width: 20px;
 }
 
-.single_player__map {
+.multi_player__map {
   background-color: #92a0ad;
   text-align: center;
   position: relative;
@@ -231,14 +231,14 @@ body {
   -webkit-tap-highlight-color: transparent;
 }
 
-.single_player__under_map {
+.multi_player__under_map {
   position: relative;
   display: flex;
   flex-direction: row;
   float: left;
   margin-left: 100px;
 }
-.single_player__percent {
+.multi_player__percent {
   position: relative;
   color: white;
   height: 25px;
@@ -248,7 +248,7 @@ body {
   float: left;
 }
 
-.single_player__loadbar {
+.multi_player__loadbar {
   position: relative;
   background: red;
   height: 25px;
@@ -257,7 +257,7 @@ body {
   float: left;
 }
 
-.single_player__settings {
+.multi_player__settings {
   position: relative;
   display:flex;
   flex-direction: row;
@@ -268,7 +268,7 @@ body {
   width: 833px;
 } 
 
-.single_player__settings_img{
+.multi_player__settings_img{
   width: 80px;
   height: 80px;
   background: url('../../img/settings.png') no-repeat;
@@ -280,18 +280,18 @@ ul {
   margin: 0;
   padding: 0;
 }
-.single_player__topmenu:after {
+.multi_player__topmenu:after {
   content: "";
   display: table;
   clear: both;
 }
-.single_player__topmenu > li {
+.multi_player__topmenu > li {
   width: 25%;
   float: left;
   position: relative;
 }
 
-.single_player__submenu {
+.multi_player__submenu {
   background: #4B5E70;
   position: absolute;
   left: 0;
@@ -304,7 +304,7 @@ ul {
   transform-origin: 0 0;
   transition: .5s ease-in-out;
 }
-.single_player__submenu {
+.multi_player__submenu {
   
   text-align: left;
   font-size: 20px;
@@ -314,22 +314,22 @@ ul {
   display: block;
 }
 
-.single_player__settings_list:hover .single_player__submenu {
+.multi_player__settings_list:hover .multi_player__submenu {
   opacity: 1;
   transform: scaleY(1) translateY(-150%);
 }
 
-.single_player__submenu_item {
+.multi_player__submenu_item {
   color: white;
   margin: 10px;
 }
 
-.single_player__submenu_item:hover {
+.multi_player__submenu_item:hover {
   color: #D5B45B;
 }
 
 
-.single_player__settings_info{
+.multi_player__settings_info{
   margin-top: 25px;
   margin-left: 10px;
   color:black;
@@ -343,7 +343,7 @@ ul {
   float: left;
 }
 
-.single_player_info {
+.multi_player_info {
   position: relative;
   float:right;
   display:block;
@@ -357,7 +357,7 @@ ul {
 }
 
 
-.single_player__right_menu_buttons {
+.multi_player__right_menu_buttons {
   position: relative;
   display:flex;
   flex-direction: row;
@@ -366,7 +366,7 @@ ul {
   width: 500px;
 }
 
-.single_player__restart_button {
+.multi_player__restart_button {
   background-color: #4B5E70;
   position: relative;
   text-align: center;
@@ -380,7 +380,7 @@ ul {
   border-radius: 10px;
 }
 
-.single_player__quite_button {
+.multi_player__quite_button {
   text-decoration: none;
   background-color: #828282;
   position: relative;
@@ -396,7 +396,7 @@ ul {
   border-radius: 10px;
 }
 
-.single_player__timer {
+.multi_player__timer {
   background-color: #4B5E70;
   position: relative;
   display:flex;
@@ -408,7 +408,7 @@ ul {
   border-radius: 23px;
 }
 
-.single_player__timer_str {
+.multi_player__timer_str {
   display: block;
   position: relative;
   width: 310px;
@@ -422,7 +422,7 @@ ul {
 }
 
 
-.single_player__statistics {
+.multi_player__statistics {
   background-color: #4B5E70;
   position: relative;
   display:block;
@@ -434,7 +434,7 @@ ul {
   border-radius: 23px;
 }
 
-.single_player__statistics_row {
+.multi_player__statistics_row {
   position: relative;
   display:flex;
   flex-direction: row;
@@ -443,7 +443,7 @@ ul {
   width: 500px;
 }
 
-.single_player__statistics_row_str {
+.multi_player__statistics_row_str {
   position: relative;
   text-align: center;
   height: 50px;
@@ -458,27 +458,27 @@ ul {
   float: right;
 }
 
-.single_player__statistics_row_points {
+.multi_player__statistics_row_points {
   margin-top: 56px;
   margin-left: 11px;
 }
 
-.single_player__statistics_row_mines {
+.multi_player__statistics_row_mines {
   margin-top: 90px;
   margin-left: 11px;
 }
 
-.single_player__statistics_row_left_click {
+.multi_player__statistics_row_left_click {
   margin-top: 120px;
   margin-left: 5px;
 }
 
-.single_player__statistics_row_right_click {
+.multi_player__statistics_row_right_click {
   margin-top: 150px;
   margin-left: 5px;
 }
 
-.single_player__statistics_points_img{
+.multi_player__statistics_points_img{
   width: 70px;
   height: 70px;
   background: url('../../img/star.png') no-repeat;
@@ -487,7 +487,7 @@ ul {
   float: left;
 }
 
-.single_player__statistics_mines_img{
+.multi_player__statistics_mines_img{
   width: 77px;
   height: 77px;
   background: url('../../img/bomb_w.png') no-repeat;
@@ -496,7 +496,7 @@ ul {
   float: left;
 }
 
-.single_player__statistics_left_click_img{
+.multi_player__statistics_left_click_img{
   width: 70px;
   height: 100px;
   background: url('../../img/left_click.png') no-repeat;
@@ -505,7 +505,7 @@ ul {
   float: left;
 }
 
-.single_player__statistics_right_click_img{
+.multi_player__statistics_right_click_img{
   width: 70px;
   height: 100px;
   background: url('../../img/right_click.png') no-repeat;
@@ -514,7 +514,7 @@ ul {
   float: left;
 }
 
-.single_player_logo {
+.multi_player_logo {
   width: 140px;
   height: 140px;
   position: absolute;
@@ -525,7 +525,7 @@ ul {
 
 
 @media screen and (max-width: 320px) {
-  .single_player {
+  .multi_player {
     display: flex;
     align-items: center;
     flex-direction: column;
@@ -533,7 +533,7 @@ ul {
 }
 
 @media screen and (min-width: 321px)  and (max-width: 480px) {
-  .single_player {
+  .multi_player {
     display: flex;
     align-items: center;
     flex-direction: column;
@@ -542,30 +542,30 @@ ul {
 }
 
 @media screen and (min-width: 481px) and (max-width: 768px) {
-  .single_player {
+  .multi_player {
     display: flex;
     align-items: center;
     flex-direction: column;
   }
-  .single_player__player {
+  .multi_player__player {
     width: 760px;
     margin-left: 70px;
   }
-  .single_player__settings {
+  .multi_player__settings {
     width: 760px;
     margin-left: 65px;
   }
-  .single_player_info{
+  .multi_player_info{
     margin-left: 30px;
   }
-  .single_player__under_map {
+  .multi_player__under_map {
     margin-left: 75px;
   }
 
 }
 
 @media screen and (min-width: 769px)  and (max-width: 1200px) {
-  .single_player {
+  .multi_player {
     display: flex;
     align-items: center;
     flex-direction: column;

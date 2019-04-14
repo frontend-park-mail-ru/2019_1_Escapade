@@ -269,11 +269,20 @@ body {
 } 
 
 .single_player__settings_img{
-  width: 80px;
-  height: 80px;
-  background: url('../../img/settings.png') no-repeat;
+  width: 70px;
+  height: 70px;
+  background: url('../../img/settings2.png') no-repeat;
   float: left;
+  -webkit-transition: -webkit-transform .8s ease-in-out;
+  transition:         transform .8s ease-in-out;
 }
+
+.single_player__settings_img:hover {
+  -webkit-transform: rotate(360deg);
+          transform: rotate(360deg);
+}
+
+
 
 ul {
   list-style: none;
@@ -330,7 +339,7 @@ ul {
 
 
 .single_player__settings_info{
-  margin-top: 25px;
+  margin-top: 15px;
   margin-left: 10px;
   color:black;
   width: 180px;

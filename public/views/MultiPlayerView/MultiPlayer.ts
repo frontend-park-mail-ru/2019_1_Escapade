@@ -73,38 +73,38 @@ export default class MultiPlayer extends BaseView {
    * @param {*} parent
    */
   constructor(parent: any) {
-    super(parent, multiPlayerTemplate, true, 'updateUserInfo');
+    super(parent, multiPlayerTemplate, true, 'updateUserInfoMult');
     this.cellCloseStringName = 'cell_close';
     this.cellOpenStringName = 'cell_open';
     this.cellStringName = 'cell';
     this.cellFlagStringName = 'cell_flag';
-    this.mapStringName = 'single_player__map';
-    this.timerFieldStringName = 'single_player__timer';
+    this.mapStringName = 'multi_player__map';
+    this.timerFieldStringName = 'multi_player__timer';
 
-    this.pointsFieldStringName = 'single_player__statistics_row_points';
-    this.minesFieldStringName = 'single_player__statistics_row_mines';
-    this.leftClicksFieldStringName = 'single_player__statistics_row_left_click';
-    this.rightClicksFieldStringName = 'single_player__statistics_row_right_click';
-    this.restartFieldStringName = 'single_player__restart_button';
-    this.percentOpenFieldStringName = 'single_player__percent';
-    this.loadbarFieldStringName = 'single_player__loadbar';
-    this.babyFieldStringName = 'single_player__submenu_baby';
-    this.normalFieldStringName = 'single_player__submenu_normal';
-    this.hardFieldStringName = 'single_player__submenu_hard';
-    this.godFieldStringName = 'single_player__submenu_god';
-    this.itemListFieldStringName = 'single_player__submenu_item';
-    this.infoModeFieldStringName = 'single_player__settings_info_mode';
-    this.infoWidthFieldStringName = 'single_player__settings_info_width';
-    this.infoHeightFieldStringName = 'single_player__settings_info_height';
-    this.infoMinesFieldStringName = 'single_player__settings_info_mines';
+    this.pointsFieldStringName = 'multi_player__statistics_row_points';
+    this.minesFieldStringName = 'multi_player__statistics_row_mines';
+    this.leftClicksFieldStringName = 'multi_player__statistics_row_left_click';
+    this.rightClicksFieldStringName = 'multi_player__statistics_row_right_click';
+    this.restartFieldStringName = 'multi_player__restart_button';
+    this.percentOpenFieldStringName = 'multi_player__percent';
+    this.loadbarFieldStringName = 'multi_player__loadbar';
+    this.babyFieldStringName = 'multi_player__submenu_baby';
+    this.normalFieldStringName = 'multi_player__submenu_normal';
+    this.hardFieldStringName = 'multi_player__submenu_hard';
+    this.godFieldStringName = 'multi_player__submenu_god';
+    this.itemListFieldStringName = 'multi_player__submenu_item';
+    this.infoModeFieldStringName = 'multi_player__settings_info_mode';
+    this.infoWidthFieldStringName = 'multi_player__settings_info_width';
+    this.infoHeightFieldStringName = 'multi_player__settings_info_height';
+    this.infoMinesFieldStringName = 'multi_player__settings_info_mines';
 
-    this.playerNameFieldStringName = 'single_player__player_name';
-    this.playerScoreFieldStringName = 'single_player__player_score';
-    this.playerTimeFieldStringName = 'single_player__player_time';
+    this.playerNameFieldStringName = 'multi_player__player_name';
+    this.playerScoreFieldStringName = 'multi_player__player_score';
+    this.playerTimeFieldStringName = 'multi_player__player_time';
 
-    this.messageBoxFieldStringName = 'single_player__popup';
-    this.messageBoxMessageFieldStringName = 'single_player__popup_text';
-    this.messageBoxOkButtonFieldStringName = 'single_player__popup_ok_button';
+    this.messageBoxFieldStringName = 'multi_player__popup';
+    this.messageBoxMessageFieldStringName = 'multi_player__popup_text';
+    this.messageBoxOkButtonFieldStringName = 'multi_player__popup_ok_button';
 
 
     this.cellsize = 50;
@@ -120,7 +120,7 @@ export default class MultiPlayer extends BaseView {
     document.body.oncontextmenu = function(e) {
       return false;
     };
-    Bus.on('updateUserInfo', this._updateUserInfo.bind(this));
+    Bus.on('updateUserInfoMult', this._updateUserInfo.bind(this));
     Bus.emit('connect');
 
     Bus.emit('get_rooms');

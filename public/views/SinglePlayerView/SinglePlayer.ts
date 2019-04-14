@@ -147,7 +147,7 @@ export class SinglePlayerView extends BaseView {
 
     this.messageBoxDocElement = document.getElementsByClassName(this.messageBoxFieldStringName)[0];
     this.messageBoxMessageDocElement = document.getElementsByClassName(this.messageBoxMessageFieldStringName)[0];
-    this.messageBoxDocElement.hidden = true;
+    
 
     this.timer = new Timer(document.getElementById(this.timerFieldStringName));
 
@@ -173,6 +173,7 @@ export class SinglePlayerView extends BaseView {
   }
 
   _updateUserInfo() {
+    console.log("_updateUserInfo here");
     if (User.name) {
       this.playerNameDocElement.innerHTML = User.name;
       this.playerScoreDocElement.innerHTML = '0'; // получать из user
@@ -186,10 +187,12 @@ export class SinglePlayerView extends BaseView {
       this.maxPointsCount = 0;
       this.minTimeCount = '1:24:60:60';
     }
+    this._showMap();
   }
 
   /** */
   _showMap() {
+    this.messageBoxDocElement.hidden = true;
     this.openCellsCount = 0;
     this.pointsCount = 0;
     this.leftClicksCount = 0;
