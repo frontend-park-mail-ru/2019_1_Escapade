@@ -17,7 +17,7 @@ export default class ProfileModel {
    *
    * @param {*} data
    */
-  _changeProfile(data) {
+  _changeProfile(data: string) {
     console.log(data);
     Net.put({url: '/user', body: data})
         .then((resp) => {
@@ -40,28 +40,28 @@ export default class ProfileModel {
    *
    * @param {*} file
    */
-  _uploadAvatar(file) {
+  _uploadAvatar(file: string | Blob) {
     const formData = new FormData();
     formData.append('file', file);
     console.log('upload photo');
     Net.postPhoto({url: '/avatar', body: formData})
-        .then((resp) => {
+        .then((resp: { status: number; json: { (): void; (): { then: (arg0: (error: string) => void) => void; }; }; }) => {
           if (resp.status === 200) {
             console.log('Okey photo');
             return resp.json();
           } else {
             resp.json()
-                .then((error) => {
+                .then((error: string) => {
                   console.log(error);
                   Bus.emit('onFailedUpload', error);
                 });
           }
         })
-        .then((url) => {
+        .then((url: { url: string; }) => {
           console.log(url.url);
           Bus.emit('onSuccessUpload', url.url);
         })
-        .catch((error) => {
+        .catch((error: string) => {
           Bus.emit('onFailedUpload', error);
           console.log('Avatar upload error : ', error);
         });
@@ -72,7 +72,7 @@ export default class ProfileModel {
    *
    * @param {*} name
    */
-  _getAvatar(name) {
+  _getAvatar(name: any) {
     Net.get({url: `/avatar/${name}`})
         .then((resp) => {
           console.log(resp.status);

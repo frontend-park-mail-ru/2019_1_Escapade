@@ -236,7 +236,7 @@ body {
   display: flex;
   flex-direction: row;
   float: left;
-  margin-left: 100px;
+  margin-left: 75px;
 }
 .single_player__percent {
   position: relative;
@@ -269,11 +269,20 @@ body {
 } 
 
 .single_player__settings_img{
-  width: 80px;
-  height: 80px;
-  background: url('../../img/settings.png') no-repeat;
+  width: 70px;
+  height: 70px;
+  background: url('../../img/settings2.png') no-repeat;
   float: left;
+  -webkit-transition: -webkit-transform .8s ease-in-out;
+  transition:         transform .8s ease-in-out;
 }
+
+.single_player__settings_img:hover {
+  -webkit-transform: rotate(180deg);
+          transform: rotate(180deg);
+}
+
+
 
 ul {
   list-style: none;
@@ -330,7 +339,7 @@ ul {
 
 
 .single_player__settings_info{
-  margin-top: 25px;
+  margin-top: 15px;
   margin-left: 10px;
   color:black;
   width: 180px;
@@ -378,6 +387,38 @@ ul {
   line-height	: 75px;
   border: 1px solid #000000;
   border-radius: 10px;
+  -webkit-animation: pulsing 3s infinite;
+  animation: pulsing 3s infinite;
+}
+
+@-webkit-keyframes pulsing {
+  0% {
+    -webkit-transform: scale(0.9, 0.9);
+    transform: scale(0.9, 0.9)
+  }
+  50% {
+    -webkit-transform: scale(1.0, 1.0);
+    transform: scale(1.0, 1.0);
+  }
+  100% {
+    -webkit-transform: scale(0.9, 0.9);
+    transform: scale(0.9, 0.9);
+  }
+}
+
+@keyframes pulsing {
+  0% {
+    -webkit-transform: scale(0.9, 0.9);
+    transform: scale(0.9, 0.9)
+  }
+  50% {
+    -webkit-transform: scale(1.0, 1.0);
+    transform: scale(1.0, 1.0);
+  }
+  100% {
+    -webkit-transform: scale(0.9, 0.9);
+    transform: scale(0.9, 0.9);
+  }
 }
 
 .single_player__quite_button {

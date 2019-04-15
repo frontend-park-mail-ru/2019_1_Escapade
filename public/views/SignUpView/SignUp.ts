@@ -15,15 +15,15 @@ export default class SignUpView extends BaseView {
    *
    * @param {HTMLElement} parent
    */
-  constructor(parent) {
+  constructor(parent: HTMLElement) {
     super(parent, signUpTemplate, false);
 
-    Bus.on('onSuccessAuth', (usr) => {
+    Bus.on('onSuccessAuth', (usr : any) => {
       User.setUser({ ...usr });
       Bus.emit('userUpdate');
       router.open('/profile');
     });
-    Bus.on('onFailedAuth', (error) => {
+    Bus.on('onFailedAuth', (error : any) => {
       this._showWarning(this._warnings.email, error.message);
     });
   }
@@ -49,7 +49,7 @@ export default class SignUpView extends BaseView {
    * Действие при сабмите формы логина
    * @param {Event} event
    */
-  _onSubmit(event) {
+  _onSubmit(event : any) {
     console.log('event');
     event.preventDefault();
     const data = {};
@@ -68,7 +68,7 @@ export default class SignUpView extends BaseView {
    * @param  {...any} data
    * @return {boolean}
    */
-  _validateInput({ email, name, password, repass }) {
+  _validateInput({ email = '', name = '', password = '', repass = '' }) {
     let isValid = true;
     let message = '';
 
@@ -110,7 +110,7 @@ export default class SignUpView extends BaseView {
    * @param {HTMLElement} warning
    * @param {String} message
    */
-  _showWarning(warning, message) {
+  _showWarning(warning : any, message : string) {
     warning.classList.remove('hidden');
     warning.innerHTML = '';
     warning.innerHTML += message;
@@ -120,7 +120,7 @@ export default class SignUpView extends BaseView {
    * Скрыть предупреждение валидации
    * @param {*} warning
    */
-  _hideWarning(warning) {
+  _hideWarning(warning : any) {
     warning.classList.add('hidden');
     warning.innerHTML = '';
   }

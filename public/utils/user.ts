@@ -3,7 +3,7 @@ import {Net} from './net';
 class UserSingleton {
   name: string;
   email: string;
-  played: string;
+  played: number;
   avatar: string;
   /** */
   constructor() {
@@ -20,7 +20,7 @@ class UserSingleton {
    * @param {string} avatar
    * @param {string} name
    */
-  setUser({email, played, avatar, name} = {}) {
+  setUser({email = '', played = 0, avatar = '', name = ''} = {}) {
     this.email = email || null;
     this.played = played || 0;
     this.avatar = avatar || './img/qrosh.png';

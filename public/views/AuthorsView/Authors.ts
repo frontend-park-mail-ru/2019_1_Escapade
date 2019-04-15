@@ -8,7 +8,7 @@ export class AuthorsView extends BaseView {
    *
    * @param {*} parent
    */
-  constructor(parent) {
+  constructor(parent: any) {
     super(parent, authorsTemplate, true);
   }
 
