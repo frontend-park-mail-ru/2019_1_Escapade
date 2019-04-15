@@ -5,12 +5,16 @@ class UserSingleton {
   email: string;
   played: number;
   avatar: string;
+  bestScore: any;
+  bestTime: any;
   /** */
   constructor() {
     this.name = null;
     this.email = null;
     this.played = null;
     this.avatar = null;
+    this.bestScore = null;
+    this.bestTime = null;
   }
 
   /**
@@ -20,11 +24,13 @@ class UserSingleton {
    * @param {string} avatar
    * @param {string} name
    */
-  setUser({email = '', played = 0, avatar = '', name = ''} = {}) {
+  setUser({email = '', played = 0, avatar = '', name = '', bestTime = '', bestScore = ''} = {}) {
     this.email = email || null;
     this.played = played || 0;
     this.avatar = avatar || './img/qrosh.png';
     this.name = name || null;
+    this.bestTime = bestTime;
+    this.bestScore = bestScore;
   }
 
   /**
@@ -35,6 +41,8 @@ class UserSingleton {
     this.played = null;
     this.avatar = null;
     this.name = null;
+    this.bestTime = null;
+    this.bestScore = null;
   }
 }
 
@@ -45,12 +53,13 @@ export const User = new UserSingleton();
  * Проверка авторизации пользователя при вхлоде на сайт
  * @param {function} callback
  */
-export function checkAuth(callback: { (): void; (): void; (): void; (): void; }) {
-  Net.get({url: '/user'})
+export function checkAuth(callback: any, difficult = 1) {
+  Net.get({url: `/user?difficult=${difficult}`})
       .then((resp) => {
         if (resp.status === 200) {
           resp.json()
               .then((json) => {
+                console.log(json);
                 User.setUser({...json});
                 callback();
               });

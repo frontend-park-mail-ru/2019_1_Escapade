@@ -4,10 +4,11 @@ import BaseView from '../BaseView';
 import {User} from '../../utils/user';
 import {MineSweeper} from '../../game/minesweeper';
 import {Timer} from '../../game/timer';
+import { checkAuth } from '../../utils/user';
 import Bus from '../../utils/bus';
 import { ConfigSinglePlayerView } from './ConfigSinglePlayer';
 /** */
-export class SinglePlayerView extends BaseView {
+export default class SinglePlayerView extends BaseView {
   cellsize: number;
   cellNumbersX: number;
   cellNumbersY: number;
@@ -41,6 +42,7 @@ export class SinglePlayerView extends BaseView {
   mineSweeper: MineSweeper;
   BBBVCount: any;
   config: ConfigSinglePlayerView;
+  difficult: number;
   /**
    *
    * @param {*} parent
@@ -52,7 +54,7 @@ export class SinglePlayerView extends BaseView {
     this.cellNumbersY = 15;
     this.minesCount = 1;
     this.start = false;
-
+    
     document.addEventListener('click', this._clickOnBody.bind(this));
 
 
@@ -95,7 +97,8 @@ export class SinglePlayerView extends BaseView {
     this.restartDocElement.addEventListener('click', this._restart.bind(this));
     this.restartDocElement.innerHTML = 'Start';
     this.infoModeDocElement.innerHTML = 'Normal mode';
-    this.minesCount = 20;
+    this.difficult = 1;
+    this.minesCount = 20;   
     this.infoMinesDocElement.innerHTML = `${this.minesCount} mines`;
     this.infoWidthDocElement.innerHTML = `${this.cellNumbersX} width`;
     this.infoHeightDocElement.innerHTML = `${this.cellNumbersY} height`;
@@ -113,13 +116,21 @@ export class SinglePlayerView extends BaseView {
       this._closeMessage();
     }
   }
-
   _updateUserInfo() {
+    checkAuth(this._updateUserInfoCalback.bind(this), this.difficult)
+  }
+  _updateUserInfoCalback() {
     console.log("_updateUserInfo here");
     if (User.name) {
       this.playerNameDocElement.innerHTML = User.name;
-      this.playerScoreDocElement.innerHTML = '0'; // получать из user
-      this.playerTimeDocElement.innerHTML = '0:00:00:00';
+      if (User.bestScore.String) {
+        this.playerScoreDocElement.innerHTML = User.bestScore.String; // получать из user
+        this.playerTimeDocElement.innerHTML = User.bestTime.String;
+      } else {
+        this.playerScoreDocElement.innerHTML = '-'; // получать из user
+        this.playerTimeDocElement.innerHTML = '-';
+      }
+
       this.maxPointsCount = 0;
       this.minTimeCount = '1:24:60:60';
     } else {
@@ -202,21 +213,26 @@ export class SinglePlayerView extends BaseView {
   _changeHard(e : any) {
     if (e.target.classList.contains(this.config.babyFieldStringName)) {
       this.infoModeDocElement.innerHTML = 'Baby mode';
+      this.difficult = 0;
       this.minesCount = 10;
       this.infoMinesDocElement.innerHTML = this.minesCount + ' mines';
     } else if (e.target.classList.contains(this.config.normalFieldStringName)) {
       this.infoModeDocElement.innerHTML = 'Normal mode';
+      this.difficult = 1;
       this.minesCount = 20;
       this.infoMinesDocElement.innerHTML = this.minesCount + ' mines';
     } else if (e.target.classList.contains(this.config.hardFieldStringName)) {
       this.infoModeDocElement.innerHTML = 'Hard mode';
+      this.difficult = 2;
       this.minesCount = 30;
       this.infoMinesDocElement.innerHTML = this.minesCount + ' mines';
     } else if (e.target.classList.contains(this.config.godFieldStringName)) {
       this.infoModeDocElement.innerHTML = 'God mode';
+      this.difficult = 3;
       this.minesCount = 40;
       this.infoMinesDocElement.innerHTML = this.minesCount + ' mines';
     }
+    checkAuth(this._updateUserInfoCalback.bind(this), this.difficult)
     if (this.timer.running) {
       this.timer.stop();
     }
@@ -247,6 +263,8 @@ export class SinglePlayerView extends BaseView {
         this.timer.stop();
       }
       this.start = false;
+      const data = JSON.stringify({difficult: this.difficult, singleTotal: 1, singleWin: 0});
+      Bus.emit('sendResultsSingleGame', data);
       this._showMessage('You lose!');
       return;
     }
@@ -263,6 +281,11 @@ export class SinglePlayerView extends BaseView {
 
     if (this.openCellsCount === this.cellNumbersX * this.cellNumbersY - this.minesCount) {
       this._openAllCels();
+      console.log(this.timer.timeStr);
+      const timeArr = this.timer.timeStr.split(':');
+      const timeSec = parseInt(timeArr[0]) * 3600 + parseInt(timeArr[1]) * 60 + parseInt(timeArr[2]) + parseInt(timeArr[3]) / 100
+      const data = {score: this.pointsCount, time: timeSec, difficult: this.difficult, singleTotal: 1, singleWin: 1};
+      Bus.emit('sendResultsSingleGame', data);
       if (this.timer.running) {
         this.timer.stop();
       }
