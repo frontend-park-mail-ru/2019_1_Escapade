@@ -1,0 +1,186 @@
+
+.lobby {
+  display: flex;
+  justify-content: center;
+  height: 100vh;
+  background: radial-gradient(512.00px at 50% 50%, rgba(255, 255, 255, 0.34) 0%, rgba(255, 255, 255, 0) 100%), #667787;
+}
+
+.lobby__main{
+  display: flex;
+  justify-content: center;
+  flex-direction: column
+}
+
+.back {
+  width: 108px;
+  height: 106px;
+  background: url('../../img/flag-right.png') no-repeat;
+  transform: matrix(-1, 0, 0, 1, 0, 0);
+  background-size: contain;
+  align-self: flex-start
+}
+
+.row {
+  display: flex;
+  flex-direction: row;
+}
+
+.center {
+  justify-content: center;
+}
+
+.column {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.label {
+  border-radius: 10px;
+  margin-bottom: 2px;
+  font-family: Saira;
+  font-size: calc(1.2rem + 5vw);
+  color: white;
+  padding: 3px 17px;
+}
+
+.lobby__back {
+  margin-bottom: 10vw;
+}
+.lobby__label {
+  margin-right: 30vw;
+}
+
+.button {
+  border-radius: 30px;
+  border: 0.2vw solid rgb(150, 159, 167);
+  background-color: rgba(75, 94, 112, 1);
+  color: white;
+  cursor: pointer;
+  font-family: Saira;
+  font-size: 2.5vw;
+  margin: 5px;
+  padding: 2vw;
+  min-width:12vw;
+  min-height:2vw;
+  max-height:4vw;
+  background-repeat: no-repeat;
+  background-size: 2.5vw;
+  background-position: left;
+  text-indent: 4vw;
+  right: 1vw;
+}
+
+.lobby__find_game{
+  background-image: url('../../img/magnifier.png');
+}
+
+.lobby__create_game{
+  background-image: url('../../img/create.png');
+}
+
+.lobby__room {
+  display:flex;
+  flex-direction: row;
+  border-radius: 5px;
+  color: white;
+  font-size: 1vw;
+  margin-bottom: 5px;
+  text-align: center;
+}
+
+.lobby__free_room {
+  background-color:rgba(70, 83, 94, 1);
+}
+
+.lobby__buzy_room {
+  background-color:rgba(130, 130, 130, 1);
+}
+
+.element {
+  margin: 3px;
+  padding: 4px;
+}
+
+.with_image {
+  background-repeat: no-repeat;
+  background-size: 1.5vw;
+  background-position: left;
+  text-indent: 1vw;
+}
+
+.name {
+  background-image: url('../../img/room.png');
+  width: 10vw;
+}
+.players {
+  background-image: url('../../img/player.png');
+  width: 10vw;
+}
+.difficult {
+  background-image: url('../../img/difficult.png');
+  width: 10vw;
+}
+.size {
+  background-image: url('../../img/size.png');
+  width: 10vw;
+}
+.mines {
+  background-image: url('../../img/mine_icon.png');
+  width: 10vw;
+}
+.time {
+  background-image: url('../../img/clock.png');
+  width: 30vw;
+}
+.time_have {
+  background-image: url('../../img/clock.png');
+  width: 10vw;
+}
+.observers {
+  background-image: url('../../img/observer.png');
+  width: 10vw;
+}
+.status {
+  background-image: url('../../img/status.png');
+  width: 10vw;
+}
+
+
+.paginator {
+  text-align: center;
+  display:flex;
+  flex-direction: row;
+  justify-content: center;
+  width: 20vw;
+  height: 5vw;
+  border-radius: 5px;
+  color: white;
+  background-color:rgba(0, 0, 0, 0.55);
+}
+
+.paginator_left {
+  background-image: url('../../img/flag_back.png');
+  background-repeat: no-repeat;
+  background-size: 4vw;
+  background-position: center;
+  cursor: pointer;
+  min-width: 4vw;
+}
+
+.paginator_right {
+  background-image: url('../../img/flag_ahead.png');
+  background-repeat: no-repeat;
+  background-size: 4vw;
+  background-position: center;
+  cursor: pointer;
+  min-width: 4vw;
+}
+
+.paginator_page {
+  color: white;
+  font-size: calc(0.5rem + 3vw);
+  font-weight: 600;
+}

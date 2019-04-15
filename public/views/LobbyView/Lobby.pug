@@ -1,0 +1,30 @@
+section(data-section-name='lobby')
+  .lobby
+    .lobby__main
+      a.back.lobby__back(data-href='menu', href='menu')
+      .column
+        .row
+          .label.lobby__label Rooms
+          .row
+            .button.lobby__find_game random room
+            .button.lobby__create_game create room
+        .lobby__room.lobby__free_room
+          .element.name.with_image NoName
+          .element.players.with_image 1/2 players
+          .element.difficult.with_image baby
+          .element.size.with_image 12x12
+          .element.mines.with_image 10
+          .element.time.with_image 00:01:30
+        .lobby__room.lobby__buzy_room
+          .element.name.with_image NoName
+          .element.players.with_image 2 players
+          .element.difficult.with_image baby
+          .element.size.with_image 12x12
+          .element.mines.with_image 10
+          .element.time_have.with_image 00:01:30
+          .element.observers.with_image 10
+          .element.status.with_image finished
+        .paginator
+          .element.paginator_left
+          .element.paginator_page 1
+          .element.paginator_right
