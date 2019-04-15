@@ -1,12 +1,17 @@
-block content
-  section.signup
-    form.signup__form(novalidate='novalidate')
-      input.input.signup__input.text-h2(type='email', name='email', autofocus='true', placeholder='Email')
-      .warning.signup__warning.hidden.js-warning-email
-      input.input.signup__input.text-h2(type='password', name='password', autocomplete='autocomplete', placeholder='Password')
-      .warning.signup__warning.hidden.js-warning-password
-      input.button.signup__submit.text-h2(type='submit', name='submit', value='Sign in')
-      .signup__footer
-        a.button.header-bar__button.text-base(data-href='menu', href='menu') Back to Menu
-        .text-base or
-        a.button.header-bar__button.text-base(data-href='sign_up', href='sign_up') Sign Up
+section(data-section-name='signin')
+  .profile_edit
+    .profile_edit__main
+      form.profile_edit__form
+        .profile__row
+          div
+            span.profile__rowname email:
+          input.profile__input.bg-white(name='email', type='email')
+          .warning.signup__warning.hidden.js-warning-email
+        .profile__row
+          div
+            span.profile__rowname password:
+          input.profile__input.bg-white(type='password', name='password', autocomplete="new-password")
+          .warning.signup__warning.hidden.js-warning-password
+        .login__buttons
+          a.profile_edit__exit(data-href='/', href='/')
+          .signin_edit__confirm

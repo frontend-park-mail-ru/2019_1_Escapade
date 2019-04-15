@@ -1,6 +1,6 @@
 import signInTemplate from './SignIn.pug';
-import {validateEmail, validatePass, makeSafe} from '../../utils/validation';
-import {User} from '../../utils/user';
+import { validateEmail, validatePass, makeSafe } from '../../utils/validation';
+import { User } from '../../utils/user';
 import BaseView from '../BaseView';
 import router from '../../main';
 import Bus from '../../utils/bus';
@@ -20,7 +20,7 @@ export default class SignInView extends BaseView {
     super(parent, signInTemplate, false);
 
     Bus.on('onSuccessLogin', (usr: { email: any; played: any; avatar: any; name: any; }) => {
-      User.setUser({...usr});
+      User.setUser({ ...usr });
       Bus.emit('userUpdate');
       router.open('/profile');
     });
@@ -38,9 +38,9 @@ export default class SignInView extends BaseView {
     this._warnings = {};
     this._warnings.email = this.parent.querySelector('.js-warning-email');
     this._warnings.pass = this.parent.querySelector('.js-warning-password');
-    this._form = this.parent.querySelector('.signup__form');
+    this._form = this.parent.querySelector('.profile_edit__form');
 
-    this._submitButton = this.parent.querySelector('.signup__submit');
+    this._submitButton = this.parent.querySelector('.signin_edit__confirm');
 
     this._submitButton.addEventListener('click', this._onSubmit.bind(this));
   }
@@ -49,7 +49,7 @@ export default class SignInView extends BaseView {
    * Действие при сабмите формы регистрации
    * @param {Event} event
    */
-  _onSubmit(event: { preventDefault: () => void; }) {
+  _onSubmit(event : any) {
     event.preventDefault();
     const data = {};
     data.email = this._form.elements['email'].value;
@@ -64,7 +64,7 @@ export default class SignInView extends BaseView {
    * @param  {...any} data
    * @return {boolean}
    */
-  _validateInput({email, password}) {
+  _validateInput({ email = '', password = ''}) {
     let isValid = true;
     let message = '';
 

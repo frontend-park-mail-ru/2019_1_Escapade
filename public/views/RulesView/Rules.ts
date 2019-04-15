@@ -1,15 +1,15 @@
-import authorsTemplate from './Authors.pug';
+import rulesTemplate from './Rules.pug';
 import BaseView from '../BaseView';
 import {User} from '../../utils/user';
 
 /** */
-export class AuthorsView extends BaseView {
+export class RulesView extends BaseView {
   /**
    *
    * @param {*} parent
    */
   constructor(parent: any) {
-    super(parent, authorsTemplate, true);
+    super(parent, rulesTemplate, true);
   }
 
   /** */

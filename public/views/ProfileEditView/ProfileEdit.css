@@ -18,8 +18,8 @@
 }
 
 .profile_edit__exit{
-  width: 110px;
-  height: 110px;
+  width: calc(1rem + 7vw);
+  height: calc(1rem + 7vw);
   background: url('../../img/cancel.png') #CED6DD no-repeat;
   background-size: contain;
   align-self: center;
@@ -27,8 +27,8 @@
 }
 
 .profile_edit__confirm{
-  width: 110px;
-  height: 110px;
+  width: calc(1rem + 7vw);
+  height: calc(1rem + 7vw);
   background: url('../../img/save.png') #46535E no-repeat;
   background-size: contain;
   align-self: center;

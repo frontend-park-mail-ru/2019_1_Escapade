@@ -6,7 +6,7 @@ import Bus from '../../utils/bus';
 export default class LeaderBoardView extends BaseView {
   _currPage: number;
   divisionHeight: number;
-  pageStruct: { page: number; per_page: any; };
+  pageStruct: any;
   leaderBoardPageDomElement: any;
   parent: any;
   _pagesCount: any;

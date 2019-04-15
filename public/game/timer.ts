@@ -11,7 +11,7 @@ export class Timer {
   /**
    *
    */
-  constructor(timerHTMLElement) {
+  constructor(timerHTMLElement: HTMLElement) {
     this.timerHTMLElement = timerHTMLElement;
     this.running = false;
     this.paused = false;
@@ -31,7 +31,7 @@ export class Timer {
   /**
    *
    */
-  _parseTime(elapsed) {
+  _parseTime(elapsed: number) {
     const d = [3600000, 60000, 1000, 10];
     const time = [];
     let i = 0;

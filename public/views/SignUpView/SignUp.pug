@@ -1,16 +1,26 @@
-block content
-  section.signup
-    form.signup__form(novalidate='novalidate')
-      input.input.signup__input.text-h2(type='email', name='email', autocomplete='autocomplete', autofocus='true', placeholder='Email')
-      .warning.signup__warning.hidden.js-warning-email
-      input.input.signup__input.text-h2(type='login', name='login', autocomplete='autocomplete', autofocus='true', placeholder='Login')
-      .warning.signup__warning.hidden.js-warning-login
-      input.input.signup__input.text-h2(type='password', name='password', , autocomplete="new-password", placeholder='Password')
-      .warning.signup__warning.hidden.js-warning-password
-      input.input.signup__input.text-h2(type='password', name='password-repeat', , autocomplete="new-password", placeholder='Repeat Password')
-      .warning.signup__warning.hidden.js-warning-repassword
-      input.button.signup__submit.text-h2(type='submit', name='submit', value='Sign up')
-      .signup__footer
-        a.button.header-bar__button.text-base(data-href='menu', href='menu') Back to Menu
-        .text-base or
-        a.button.header-bar__button.text-base(data-href='sign_in' href='sign_in') Sign In
+section(data-section-name='signup')
+  .profile_edit
+    .profile_edit__main
+      a.profile_edit__exit(data-href='/', href='/')
+      form.profile_edit__form
+        .profile__row
+          div
+            span.profile__rowname nickname:
+          input.profile__input.bg-white(name='login', type='login')
+          .warning.signup__warning.hidden.js-warning-login
+        .profile__row
+          div
+            span.profile__rowname email:
+          input.profile__input.bg-white(name='email', type='email')
+          .warning.signup__warning.hidden.js-warning-email
+        .profile__row
+          div
+            span.profile__rowname password:
+          input.profile__input.bg-white(type='password', name='password', autocomplete="new-password")
+          .warning.signup__warning.hidden.js-warning-password
+        .profile__row
+          div
+            span.profile__rowname repeat password:
+          input.profile__input.bg-white(type='password', name='password-repeat', autocomplete="new-password")
+          .warning.signup__warning.hidden.js-warning-repassword
+      .signup_edit__confirm

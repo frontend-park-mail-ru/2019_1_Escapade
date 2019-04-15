@@ -4,7 +4,7 @@ import bus from './bus';
  *
  */
 export default class Router {
-  routes: {};
+  routes: any;
   currentView: any;
   root: any;
   /**
@@ -35,6 +35,7 @@ export default class Router {
    * @param {string} path
    */
   open(path: string) {
+    bus.emit('stop_reset_timer', '')
     const route = this.routes[path];
     if (!route) {
       this.open('/');

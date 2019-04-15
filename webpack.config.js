@@ -17,7 +17,7 @@ module.exports = {
       template: 'public/index.html',
     }),
     new ServiceWorkerWebpackPlugin({
-      entry: path.join(__dirname, 'public/sw.js'),
+      entry: path.join(__dirname, 'public/sw.ts'),
     }),
   ],
 
@@ -32,7 +32,7 @@ module.exports = {
         exclude: /(node_modules|bower_components)/,
         use: {
           loader:
-          'babel-loader',
+            'babel-loader',
           options: {
             presets: [
               '@babel/typescript',
