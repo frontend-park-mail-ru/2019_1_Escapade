@@ -71,7 +71,7 @@ export class SinglePlayerView extends BaseView {
    *
    * @param {*} parent
    */
-  constructor(parent) {
+  constructor(parent: any) {
     super(parent, singlePlayerTemplate, true, 'updateUserInfo');
     this.cellCloseStringName = 'cell_close';
     this.cellOpenStringName = 'cell_open';
@@ -147,7 +147,7 @@ export class SinglePlayerView extends BaseView {
 
     this.messageBoxDocElement = document.getElementsByClassName(this.messageBoxFieldStringName)[0];
     this.messageBoxMessageDocElement = document.getElementsByClassName(this.messageBoxMessageFieldStringName)[0];
-    this.messageBoxDocElement.hidden = true;
+    
 
     this.timer = new Timer(document.getElementById(this.timerFieldStringName));
 
@@ -159,10 +159,11 @@ export class SinglePlayerView extends BaseView {
     this.infoWidthDocElement.innerHTML = this.cellNumbersX + ' width';
     this.infoHeightDocElement.innerHTML = this.cellNumbersY + ' height';
     this._showMap();
+    Bus.on('stop_reset_timer', this._stop_reset_timer.bind(this))
   }
 
   /** */
-  _clickOnBody(e) {
+  _clickOnBody(e : any) {
     if (e.target.classList.contains(this.itemListFieldStringName)) {
       this._changeHard(e);
     } else if (e.target.classList.contains(this.cellStringName)) {
@@ -173,6 +174,7 @@ export class SinglePlayerView extends BaseView {
   }
 
   _updateUserInfo() {
+    console.log("_updateUserInfo here");
     if (User.name) {
       this.playerNameDocElement.innerHTML = User.name;
       this.playerScoreDocElement.innerHTML = '0'; // получать из user
@@ -186,10 +188,12 @@ export class SinglePlayerView extends BaseView {
       this.maxPointsCount = 0;
       this.minTimeCount = '1:24:60:60';
     }
+    this._showMap();
   }
 
   /** */
   _showMap() {
+    this.messageBoxDocElement.hidden = true;
     this.openCellsCount = 0;
     this.pointsCount = 0;
     this.leftClicksCount = 0;
@@ -233,6 +237,11 @@ export class SinglePlayerView extends BaseView {
     return;
   }
 
+  _stop_reset_timer(){
+    this.timer.stop();
+    this.timer.reset();
+  }
+
   /** */
   _restart() {
     if (!this.start) {
@@ -249,7 +258,7 @@ export class SinglePlayerView extends BaseView {
 
 
   /** */
-  _changeHard(e) {
+  _changeHard(e : any) {
     if (e.target.classList.contains(this.babyFieldStringName)) {
       this.infoModeDocElement.innerHTML = 'Baby mode';
       this.minesCount = 10;
@@ -275,20 +284,21 @@ export class SinglePlayerView extends BaseView {
       this.restartDocElement.innerHTML = 'Restart';
       this.start = true;
     }
-
     this._showMap();
   }
 
   /** */
-  _clickOnCell(e) {
-    if (!e.target.classList.contains(this.cellStringName) ||
-      e.target.classList.contains(this.cellFlagStringName) ||
-      !this.start) {
+  _clickOnCell(e : any) {
+    
+    if (!e.target.classList.contains(this.cellStringName) || !this.start) {
       return;
     }
     const idArr = e.target.id.split('_');
     const x = parseInt(idArr[1]);
     const y = parseInt(idArr[2]);
+    if (this.mineSweeper.mapLabel[x][y] != 0) { // если не закрыта
+      return;
+    }
     this.leftClicksDocElement.innerHTML = (++this.leftClicksCount) + ' left clicks';
     if (this.mineSweeper.map[x][y] === 9) {
       this._openAllCels();
@@ -329,18 +339,19 @@ export class SinglePlayerView extends BaseView {
   }
 
   /** */
-  _rightСlickOnCell(e) {
-    if (!e.target.classList.contains(this.cellStringName) || !this.start ||
-      (!e.target.classList.contains(this.cellCloseStringName) &&
-        !e.target.classList.contains(this.cellFlagStringName))) {
+  _rightСlickOnCell(e : any) {
+    if (!e.target.classList.contains(this.cellStringName) || !this.start) {
       return;
     }
-    this.rightClicksDocElement.innerHTML = (++this.rightClicksCount) + ' right clicks';
     const idArr = e.target.id.split('_');
     const x = parseInt(idArr[1]);
     const y = parseInt(idArr[2]);
     const typeOfCell = this.mineSweeper.putRemoveFlag(x, y);
+    if (typeOfCell == 1) {
+      return;
+    }
 
+    this.rightClicksDocElement.innerHTML = (++this.rightClicksCount) + ' right clicks';
     if (typeOfCell == 0) {
       if (this.minesRemainedCount < this.minesCount) {
         ++this.minesRemainedCount;
@@ -383,7 +394,7 @@ export class SinglePlayerView extends BaseView {
   }
 
   /** */
-  _showMessage(mess) {
+  _showMessage(mess : string) {
     this.messageBoxDocElement.hidden = false;
     this.messageBoxMessageDocElement.innerHTML = mess;
   }
@@ -393,7 +404,7 @@ export class SinglePlayerView extends BaseView {
   }
 
   /** */
-  _openCels(arrCells) {
+  _openCels(arrCells : any) {
     for (let i = 0; i < arrCells.length; i++) {
       const x = arrCells[i][0];
       const y = arrCells[i][1];

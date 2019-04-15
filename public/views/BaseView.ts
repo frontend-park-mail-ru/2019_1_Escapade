@@ -21,7 +21,7 @@ export default class BaseView {
    * @param {*} isOffline
    * @param {*} emitFuncStr
    */
-  constructor(parent, template, isOffline, emitFuncStr = '') {
+  constructor(parent = '', template = '', isOffline = false, emitFuncStr = '') {
     this.parent = parent;
     this.parent.hidden = true;
     this.template = template;
@@ -75,7 +75,7 @@ export default class BaseView {
   /**
    * @param {Object} data
   */
-  set emitFuncStr(data) {
+  set emitFuncStr(data: string) {
     this._emitFuncStr = data;
   }
 

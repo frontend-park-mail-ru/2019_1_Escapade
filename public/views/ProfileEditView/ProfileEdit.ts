@@ -4,6 +4,7 @@ import {validateEmail, validatePass, validateLogin, makeSafe}
 import {User} from '../../utils/user';
 import BaseView from '../BaseView';
 import Bus from '../../utils/bus';
+import router from '../../main';
 /**
  *
  */
@@ -20,13 +21,14 @@ export default class ProfileEditView extends BaseView {
   constructor(parent: any) {
     super(parent, ProfileEditTemplate, false);
 
-    Bus.on('onSuccessChange', (usr) => {
+    Bus.on('onSuccessChange', (usr: { email?: any; played?: any; avatar?: any; name?: any; password?: any; repassword?: any; }) => {
       usr.password = '';
       usr.repassword = '';
       User.setUser({...usr});
       Bus.emit('userUpdate');
+      router.open('/profile');
     });
-    Bus.on('onFailedChange', (error) => {
+    Bus.on('onFailedChange', (error: { message: any; }) => {
       this._showWarning(this._warnings.email, error.message);
     });
   }
@@ -52,10 +54,10 @@ export default class ProfileEditView extends BaseView {
    *
    * @param {*} event
    */
-  _onSubmitDataProfile(event) {
+  _onSubmitDataProfile(event: { preventDefault: () => void; }) {
     event.preventDefault();
     console.log('event _onSubmitDataProfile');
-    const data = {};
+    const data : any = {};
     data.email = this._form.elements['email'].value;
     data.name = this._form.elements['login'].value;
     data.password = this._form.elements['password'].value;
@@ -72,7 +74,7 @@ export default class ProfileEditView extends BaseView {
    * @param  {...any} data
    * @return {boolean}
    */
-  _validateInput(data) {
+  _validateInput(data: { email?: any; name?: any; password?: any; repass?: any; }) {
     let message = '';
     let isValid = true;
     this._hideWarning(this._warnings.email);
@@ -118,7 +120,7 @@ export default class ProfileEditView extends BaseView {
    * @param {*} warning
    * @param {*} message
    */
-  _showWarning(warning, message) {
+  _showWarning(warning: { classList: { remove: (arg0: string) => void; }; innerHTML: string; }, message: string) {
     warning.classList.remove('hidden');
     warning.innerHTML = '';
     warning.innerHTML += message;
@@ -127,7 +129,7 @@ export default class ProfileEditView extends BaseView {
    *
    * @param {*} warning
    */
-  _hideWarning(warning) {
+  _hideWarning(warning: { classList: { add: (arg0: string) => void; }; innerHTML: string; }) {
     warning.classList.add('hidden');
     warning.innerHTML = '';
   }

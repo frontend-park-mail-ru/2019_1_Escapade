@@ -23,12 +23,7 @@ export class MineSweeper {
   }
 
   /** */
-  openCels(x, y, xLen, yLen) {
-    x = parseInt(x);
-    y = parseInt(y);
-    xLen = parseInt(xLen);
-    yLen = parseInt(yLen);
-
+  openCels(x: number, y: number, xLen: number, yLen: number) {
     if (x < 0 || x >= xLen || y < 0 || y >= yLen) {
       return {cellArr: [], points: 0, openCells: 0};
     }
@@ -36,7 +31,7 @@ export class MineSweeper {
       return {cellArr: [], points: 0, openCells: 0};
     }
     this.mapLabel[x][y] = 1;
-    const pointsAndNumOpenCells = {cellArr: [], points: 0, openCells: 0};
+    const pointsAndNumOpenCells = {cellArr: [] as number[][], points: 0, openCells: 0};
     let res;
     if ( this.map[x][y] === 0 ) {
       res = this.openCels(x - 1, y - 1, xLen, yLen);
@@ -90,7 +85,7 @@ export class MineSweeper {
   }
 
   /** */
-  putRemoveFlag(x, y) {
+  putRemoveFlag(x: number, y: number) {
     if (x < 0 || y < 0 || x >= this.cellNumbersX || y >= this.cellNumbers) {
       return -1;
     }
@@ -136,11 +131,7 @@ export class MineSweeper {
   }
 
   /** */
-  _markNeighbor(x, y, xLen, yLen) {
-    x = parseInt(x);
-    y = parseInt(y);
-    xLen = parseInt(xLen);
-    yLen = parseInt(yLen);
+  _markNeighbor(x: number, y: number, xLen: number, yLen: number) {
     // console.log(x, ' ', y, ' ', xLen, ' ', yLen, ' ', mapLabel3BV);
     if (x < 0 || x >= xLen || y < 0 || y >= yLen ||
         this.mapLabel3BV[x][y] != 0) {
@@ -161,7 +152,7 @@ export class MineSweeper {
   }
 
   /** */
-  _createMap(xLen, yLen, bombNumber) {
+  _createMap(xLen: number, yLen: number, bombNumber: number) {
     const map = new Array(yLen);
 
     for (let i = 0; i < yLen; i++) {
@@ -182,7 +173,7 @@ export class MineSweeper {
   }
 
   /** */
-  _fillCellsAroundBomb(map, xBomb, yBomb, xLen, yLen) {
+  _fillCellsAroundBomb(map: any[] | { [x: string]: number; }[], xBomb: number, yBomb: number, xLen: number, yLen: number) {
     if (xBomb - 1 >= 0 && yBomb - 1 >= 0 && map[xBomb - 1][yBomb - 1] < 9) {
       map[xBomb - 1][yBomb - 1] += 1;
     }
@@ -211,7 +202,7 @@ export class MineSweeper {
   }
 
   /** */
-  randomInteger(min, max) {
+  randomInteger(min: number, max: number) {
     let rand = min + Math.random() * (max + 1 - min);
     rand = Math.floor(rand);
     return rand;

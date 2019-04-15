@@ -14,12 +14,12 @@ export default class ProfileView extends BaseView {
    *
    * @param {*} parent
    */
-  constructor(parent) {
+  constructor(parent: any ) {
     super(parent, ProfileTemplate, false);
 
     Bus.on('userUpdate', this.onUserUpdate.bind(this));
     Bus.on('onSuccessUpload', this._onSuccessUpload.bind(this));
-    Bus.on('onFailedUpload', (error) => {
+    Bus.on('onFailedUpload', (error: { message: any; }) => {
       this._showWarning(this._warnings.email, error.message);
     });
     Bus.on('onSuccessAvatarGet', this._onSuccessAvatarGet.bind(this));
@@ -44,7 +44,7 @@ export default class ProfileView extends BaseView {
    * @param {*} warning
    * @param {*} message
    */
-  _showWarning(warning, message) {
+  _showWarning(warning : any, message : any) {
     warning.classList.remove('hidden');
     warning.innerHTML = '';
     warning.innerHTML += message;
@@ -53,7 +53,7 @@ export default class ProfileView extends BaseView {
    *
    * @param {*} warning
    */
-  _hideWarning(warning) {
+  _hideWarning(warning : any) {
     warning.classList.add('hidden');
     warning.innerHTML = '';
   }
@@ -64,7 +64,7 @@ export default class ProfileView extends BaseView {
    * @param {*} h
    * @param {*} w
    */
-  _handleFileSelect(evt) {
+  _handleFileSelect(evt : any) {
     const file = evt.target.files; // FileList object
     const f = file[0];
     // Only process image files.
@@ -78,7 +78,7 @@ export default class ProfileView extends BaseView {
   /**
    * @param {*} uploadURL
    */
-  _onSuccessUpload(uploadURL) {
+  _onSuccessUpload(uploadURL : any) {
     console.log('_onSuccessUpload ');
     // Render thumbnail.'
     const img = document.createElement('img');
@@ -101,7 +101,7 @@ export default class ProfileView extends BaseView {
    *
    * @param {*} url
    */
-  _onSuccessAvatarGet(url) {
+  _onSuccessAvatarGet(url : any) {
     const img = document.createElement('img');
     img.src = url;
     img.className = 'thumb';

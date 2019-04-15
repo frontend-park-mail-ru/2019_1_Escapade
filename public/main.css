@@ -1,9 +1,12 @@
 @import url('views/AuthorsView/about.css');
+@import url('views/RulesView/rules.css');
 @import url('views/LeaderBoardView/leaderboard.css');
 @import url('views/MainMenuView/menu_style.css');
 @import url('views/SignUpView/SignUp.css');
+@import url('views/SignInView/SignIn.css');
 @import url('views/ProfileView/profile.css');
 @import url('views/SinglePlayerView/SinglePlayer.css');
+@import url('views/MultiPlayerView/MultiPlayer.css');
 @import url('components/OfflinePoppup/offline.css');
 @import url('views/ProfileEditView/ProfileEdit.css');
 @import url('common.css')

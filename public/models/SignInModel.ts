@@ -15,7 +15,7 @@ export default class SignInModel {
    * Отправка запроса логина и заполнение объекта User
    * @param {object} data
    */
-  _login(data) {
+  _login(data: {}) {
     Net.post({url: '/session', body: data})
         .then((resp) => {
           if (resp.status === 200) {

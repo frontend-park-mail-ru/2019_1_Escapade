@@ -2,7 +2,7 @@
  *
  */
 export class Bus {
-  listeners: {};
+  listeners: any;
   /**
    *
    */
@@ -15,7 +15,7 @@ export class Bus {
    * @param {*} event
    * @param {*} callback
    */
-  on(event: string, callback: { (usr: any): void; (error: any): void; (usr: any): void; (error: any): void; (error: any): void; (usr: any): void; (error: any): void; (): void; }) { // подписываемся на событие
+  on(event: string, callback : any) { // подписываемся на событие
     this.listeners[event] = this.listeners[event] || [];
     this.listeners[event].push(callback);
   }

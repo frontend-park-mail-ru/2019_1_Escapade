@@ -15,7 +15,7 @@ export default class SignUpModel {
    * Отправка запроса авторизации и заполнение объекта User
    * @param {object} data
    */
-  _auth(data) {
+  _auth(data: string) {
     console.log(data);
     Net.post({url: '/user', body: data})
         .then((resp) => {
