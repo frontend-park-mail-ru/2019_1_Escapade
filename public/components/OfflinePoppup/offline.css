@@ -1,0 +1,45 @@
+.overlay {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 1050;
+}
+
+
+.modal {
+  background: white;
+  position: relative;
+  top: 50%; 
+  margin-right: 35%;
+  margin-left: 35%;
+  border-radius: 5px;
+  text-align: center;
+}
+
+.modal__inner{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px
+}
+
+.close {
+  font-family: sans-serif;
+  font-size: 24px;
+  font-weight: 700;
+  line-height: 1;
+  color: #000;
+  text-shadow: 0 1px 0 #fff;
+  opacity: .5;
+  text-decoration: none;
+}
+
+.close:focus, .close:hover {
+  color: #000;
+  text-decoration: none;
+  cursor: pointer;
+  opacity: .75;
+}

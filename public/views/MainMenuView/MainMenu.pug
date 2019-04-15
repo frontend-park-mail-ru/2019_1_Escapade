@@ -1,0 +1,21 @@
+section(data-section-name='menu')
+  .menu
+    .menu__labels
+      a.menu__label(href='leaders', data-href='leaders') Leaderboard
+      a.menu__label(href='rules', data-href='rules') Rules
+    .menu__wrapper
+      a.menu__logo(href='single_player', data-href='single_player')
+      - if (user.name !== null){
+      a.menu__name(href='profile', data-href='profile') #{user.name}
+      a.menu__enter(href='sign_out', data-href='sign_out') logout
+      - }
+      - else {
+      a.menu__name(href='sign_in', data-href='sign_in') Anonymus
+      .menu__or.mt-1 or
+      .menu__row.mt-1
+        a.menu__enter(href='sign_in', data-href='sign_in') sign in
+        .menu__enter.ml-1.mr-1 |
+        a.menu__enter(href='sign_up', data-href='sign_up') sign up
+      - }
+      a.menu__escapade.mt-2(href='about', data-href='about') Escapade
+include ../../components/OfflinePoppup/Offline.pug

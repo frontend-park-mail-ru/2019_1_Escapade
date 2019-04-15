@@ -1,0 +1,70 @@
+.about__header {
+  text-align: center;
+  padding-top: 1.5rem;
+}
+
+.about {
+  display: flex;
+  justify-content: center;
+  height: 100vh;
+  background: radial-gradient(512.00px at 50% 50%, rgba(255, 255, 255, 0.34) 0%, rgba(255, 255, 255, 0) 100%), #667787;
+}
+
+.about__wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.team {
+  margin: 1vmin;
+  margin-top: 4vmin;
+  display: grid;
+  font-size: 2.5vmin;
+  grid-template-columns: 1.5fr 1.5fr;
+  grid-column-gap: 10px;
+  grid-row-gap: 10px;
+}
+
+.team__name,
+.team__role {
+  font-family: Saira;
+  padding: 1vmin;
+  text-align: center;
+  background: #46535E;
+  border-radius: 30px;
+  color: white;
+  font-size: calc(1rem + 2vw)
+}
+
+.team__a {
+  color: white;
+  text-decoration: none
+}
+
+.team__a:hover{
+  text-decoration: underline
+}
+
+.about__header{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.about__back{
+  width: 108px;
+  height: 106px;
+  background: url(/img/flag-right.png) no-repeat;
+  transform: matrix(-1, 0, 0, 1, 0, 0);
+  background-size: contain;
+}
+
+.about__escapade{
+  background: #FF3D00;
+  border-radius: 30px;
+  text-align: center;
+  color: white;
+  font-size: calc(1rem + 2vw);
+  padding: 10px 10px
+}

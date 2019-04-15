@@ -1,0 +1,63 @@
+export class ConfigSinglePlayerView {
+  cellCloseStringName: string;
+  cellOpenStringName: string;
+  cellStringName: string;
+  cellFlagStringName: string;
+  mapStringName: string;
+  timerFieldStringName: string;
+  pointsFieldStringName: string;
+  minesFieldStringName: string;
+  leftClicksFieldStringName: string;
+  rightClicksFieldStringName: string;
+  restartFieldStringName: string;
+  percentOpenFieldStringName: string;
+  loadbarFieldStringName: string;
+  babyFieldStringName: string;
+  normalFieldStringName: string;
+  hardFieldStringName: string;
+  godFieldStringName: string;
+  itemListFieldStringName: string;
+  infoModeFieldStringName: string;
+  infoWidthFieldStringName: string;
+  infoHeightFieldStringName: string;
+  infoMinesFieldStringName: string;
+  playerNameFieldStringName: string;
+  playerScoreFieldStringName: string;
+  playerTimeFieldStringName: string;
+  messageBoxFieldStringName: string;
+  messageBoxMessageFieldStringName: string;
+  messageBoxOkButtonFieldStringName: string;
+  cellsize: number;
+
+  constructor() {
+    this.cellCloseStringName = 'cell_close';
+    this.cellOpenStringName = 'cell_open';
+    this.cellStringName = 'cell';
+    this.cellFlagStringName = 'cell_flag';
+    this.mapStringName = 'single_player__map';
+    this.timerFieldStringName = 'single_player__timer';
+    this.pointsFieldStringName = 'single_player__statistics_row_points';
+    this.minesFieldStringName = 'single_player__statistics_row_mines';
+    this.leftClicksFieldStringName = 'single_player__statistics_row_left_click';
+    this.rightClicksFieldStringName = 'single_player__statistics_row_right_click';
+    this.restartFieldStringName = 'single_player__restart_button';
+    this.percentOpenFieldStringName = 'single_player__percent';
+    this.loadbarFieldStringName = 'single_player__loadbar';
+    this.babyFieldStringName = 'single_player__submenu_baby';
+    this.normalFieldStringName = 'single_player__submenu_normal';
+    this.hardFieldStringName = 'single_player__submenu_hard';
+    this.godFieldStringName = 'single_player__submenu_god';
+    this.itemListFieldStringName = 'single_player__submenu_item';
+    this.infoModeFieldStringName = 'single_player__settings_info_mode';
+    this.infoWidthFieldStringName = 'single_player__settings_info_width';
+    this.infoHeightFieldStringName = 'single_player__settings_info_height';
+    this.infoMinesFieldStringName = 'single_player__settings_info_mines';
+    this.playerNameFieldStringName = 'single_player__player_name';
+    this.playerScoreFieldStringName = 'single_player__player_score';
+    this.playerTimeFieldStringName = 'single_player__player_time';
+    this.messageBoxFieldStringName = 'single_player__popup';
+    this.messageBoxMessageFieldStringName = 'single_player__popup_text';
+    this.messageBoxOkButtonFieldStringName = 'single_player__popup_ok_button';
+    this.cellsize = 50;
+  }
+}
