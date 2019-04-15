@@ -1,5 +1,9 @@
-@import url('components/Authors/about.css');
-@import url('components/LeaderBoard/leaderboard.css');
-@import url('components/MainMenu/menu_style.css');
-@import url('components/SignUp/SignUp.css');
-@import url('components/Profile/profile.css');
+@import url('views/AuthorsView/about.css');
+@import url('views/LeaderBoardView/leaderboard.css');
+@import url('views/MainMenuView/menu_style.css');
+@import url('views/SignUpView/SignUp.css');
+@import url('views/ProfileView/profile.css');
+@import url('views/SinglePlayerView/SinglePlayer.css');
+@import url('components/OfflinePoppup/offline.css');
+@import url('views/ProfileEditView/ProfileEdit.css');
+@import url('common.css')

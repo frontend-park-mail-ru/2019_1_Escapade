@@ -1,0 +1,19 @@
+section(data-section-name='profile')
+  .profile
+    .profile__main
+      .profile__info(novalidate='novalidate')
+        a.profile__hrefBackToMenu(data-href='menu', href='menu')
+        .profile__avatar
+          .inner#output
+          label(for="file" class="custom-file-upload button")
+          input(id="file" type="file")
+          .warning.signup__warning.hidden.js-warning-email
+        .profile__data.mr-2.ml-3
+          include ./Profile__data.pug
+        a.profile__hrefToChange(data-href='profile/edit', href='profile/edit')
+      .profile__games
+        .mb-3
+          span.profile__rowname games:
+        include ./Profile__game.pug
+        include ./Profile__game.pug
+        include ./Profile__game.pug

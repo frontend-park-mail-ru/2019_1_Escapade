@@ -1,0 +1,24 @@
+section(data-section-name='leaderboard')
+  br
+  .leaderboard
+    .leaderboard__wrapper
+      .leaderboard__board.leaderboard__block
+        .leaderboard__Label Leaderboard
+        .leaderboard__table_row.leaderboard__table_header
+          .leaderboard__table_row_element.leaderboard__number N
+          .leaderboard__table_row_element.leaderboard__name UserName
+          .leaderboard__table_row_element.leaderboard__points Points
+          .leaderboard__table_row_element.leaderboard__time Time
+        - for(var i = 0; i < data.users.length;i++){
+        .leaderboard__table_row.leaderboard__table_usual
+          .leaderboard__table_row_element.leaderboard__number #{(i + 1)  +  (data.page - 1) * data.per_page}
+          img.leaderboard__ava(src=data.users[i].photo)
+          .leaderboard__table_row_element.leaderboard__name #{data.users[i].name}
+          .leaderboard__table_row_element.leaderboard__points #{data.users[i].bestScore.String || 0}
+          .leaderboard__table_row_element.leaderboard__time #{data.users[i].bestTime.String || 0}
+        - }
+        .leaderboard__panel
+          .leaderboard__table_row_element.leaderboard__left.leaderboard__arrow
+          .leaderboard__table_row_element.leaderboard__page 1
+          .leaderboard__table_row_element.leaderboard__right.leaderboard__arrow
+    a.back(data-href='menu', href='menu') Назад в меню
