@@ -1,4 +1,5 @@
 import {WebSocketInterface} from '../utils/webSocket.js';
+import {WS_LOCAL_ADDRESS} from '../utils/constans';
 // создать подключение
 
 
@@ -10,7 +11,7 @@ export class ChatView {
    * @param {*} parent
    */
   constructor() {
-    /*const ws = new WebSocketInterface('ws://localhost:8081');
+    /*const ws = new WebSocketInterface(WS_LOCAL_ADDRESS);
     ws.setCallback(this.showMessage);
     document.forms.publish.onsubmit = function() {
       console.log("Hellooooooo");

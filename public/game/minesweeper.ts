@@ -24,7 +24,7 @@ export class MineSweeper {
 
   /** */
   openCels(x: number, y: number, xLen: number, yLen: number) {
-    if (x < 0 || x >= xLen || y < 0 || y >= yLen) {
+    if (typeof x !== 'number' || typeof y !== 'number' || x < 0 || x >= xLen || y < 0 || y >= yLen) {
       return {cellArr: [], points: 0, openCells: 0};
     }
     if (this.mapLabel[x][y] != 0) {
@@ -32,48 +32,19 @@ export class MineSweeper {
     }
     this.mapLabel[x][y] = 1;
     const pointsAndNumOpenCells = {cellArr: [] as number[][], points: 0, openCells: 0};
-    let res;
-    if ( this.map[x][y] === 0 ) {
-      res = this.openCels(x - 1, y - 1, xLen, yLen);
-      pointsAndNumOpenCells.points += res.points;
-      pointsAndNumOpenCells.openCells += res.openCells;
-      pointsAndNumOpenCells.cellArr =
-        pointsAndNumOpenCells.cellArr.concat(res.cellArr);
-      res = this.openCels(x - 1, y + 1, xLen, yLen);
-      pointsAndNumOpenCells.points += res.points;
-      pointsAndNumOpenCells.openCells += res.openCells;
-      pointsAndNumOpenCells.cellArr =
-        pointsAndNumOpenCells.cellArr.concat(res.cellArr);
-      res = this.openCels(x - 1, y, xLen, yLen);
-      pointsAndNumOpenCells.points += res.points;
-      pointsAndNumOpenCells.openCells += res.openCells;
-      pointsAndNumOpenCells.cellArr =
-        pointsAndNumOpenCells.cellArr.concat(res.cellArr);
-      res = this.openCels(x, y - 1, xLen, yLen);
-      pointsAndNumOpenCells.points += res.points;
-      pointsAndNumOpenCells.openCells += res.openCells;
-      pointsAndNumOpenCells.cellArr =
-        pointsAndNumOpenCells.cellArr.concat(res.cellArr);
-      res = this.openCels(x, y + 1, xLen, yLen);
-      pointsAndNumOpenCells.points += res.points;
-      pointsAndNumOpenCells.openCells += res.openCells;
-      pointsAndNumOpenCells.cellArr =
-        pointsAndNumOpenCells.cellArr.concat(res.cellArr);
-      res = this.openCels(x + 1, y - 1, xLen, yLen);
-      pointsAndNumOpenCells.points += res.points;
-      pointsAndNumOpenCells.openCells += res.openCells;
-      pointsAndNumOpenCells.cellArr =
-        pointsAndNumOpenCells.cellArr.concat(res.cellArr);
-      res = this.openCels(x + 1, y + 1, xLen, yLen);
-      pointsAndNumOpenCells.points += res.points;
-      pointsAndNumOpenCells.openCells += res.openCells;
-      pointsAndNumOpenCells.cellArr =
-        pointsAndNumOpenCells.cellArr.concat(res.cellArr);
-      res = this.openCels(x + 1, y, xLen, yLen);
-      pointsAndNumOpenCells.points += res.points;
-      pointsAndNumOpenCells.openCells += res.openCells;
-      pointsAndNumOpenCells.cellArr =
-        pointsAndNumOpenCells.cellArr.concat(res.cellArr);
+    if (this.map[x][y] === 0 ) {
+      for (let i = -1; i <= 1; i++) {
+        for (let j = -1; j <= 1; j++) {
+          if (i === 0 && j === 0) {
+            continue;
+          }
+          let res = this.openCels(x + j, y + i, xLen, yLen);
+          pointsAndNumOpenCells.points += res.points;
+          pointsAndNumOpenCells.openCells += res.openCells;
+          pointsAndNumOpenCells.cellArr =
+            pointsAndNumOpenCells.cellArr.concat(res.cellArr);
+        }
+      }
     } else {
       if (this.map[x][y] < 9) {
         pointsAndNumOpenCells.points += this.map[x][y];
@@ -139,14 +110,14 @@ export class MineSweeper {
     }
     this.mapLabel3BV[x][y] = 1;
     if ( this.map[x][y] === 0 ) {
-      this._markNeighbor(x - 1, y - 1, xLen, yLen);
-      this._markNeighbor(x - 1, y + 1, xLen, yLen);
-      this._markNeighbor(x - 1, y, xLen, yLen);
-      this._markNeighbor(x, y - 1, xLen, yLen);
-      this._markNeighbor(x, y + 1, xLen, yLen);
-      this._markNeighbor(x + 1, y - 1, xLen, yLen);
-      this._markNeighbor(x + 1, y + 1, xLen, yLen);
-      this._markNeighbor(x + 1, y, xLen, yLen);
+      for (let i = -1; i <= 1; i++) {
+        for (let j = -1; j <= 1; j++) {
+          if (i === 0 && j === 0) {
+            continue;
+          }
+          this._markNeighbor(x + j, y + i, xLen, yLen);
+        }
+      }
     }
     return;
   }
@@ -173,30 +144,16 @@ export class MineSweeper {
   }
 
   /** */
-  _fillCellsAroundBomb(map: any[] | { [x: string]: number; }[], xBomb: number, yBomb: number, xLen: number, yLen: number) {
-    if (xBomb - 1 >= 0 && yBomb - 1 >= 0 && map[xBomb - 1][yBomb - 1] < 9) {
-      map[xBomb - 1][yBomb - 1] += 1;
-    }
-    if (xBomb - 1 >= 0 && yBomb >= 0 && map[xBomb - 1][yBomb] < 9) {
-      map[xBomb - 1][yBomb] += 1;
-    }
-    if (xBomb - 1 >= 0 && yBomb + 1 < yLen && map[xBomb - 1][yBomb + 1] < 9) {
-      map[xBomb - 1][yBomb + 1] += 1;
-    }
-    if (xBomb >= 0 && yBomb - 1 >= 0 && map[xBomb][yBomb - 1] < 9) {
-      map[xBomb][yBomb - 1] += 1;
-    }
-    if (xBomb >= 0 && yBomb + 1 < yLen && map[xBomb][yBomb + 1] < 9) {
-      map[xBomb][yBomb + 1] += 1;
-    }
-    if (xBomb + 1 < xLen && yBomb - 1 >= 0 && map[xBomb + 1][yBomb - 1] < 9) {
-      map[xBomb + 1][yBomb - 1] += 1;
-    }
-    if (xBomb + 1 < xLen && yBomb >= 0 && map[xBomb + 1][yBomb] < 9) {
-      map[xBomb + 1][yBomb] += 1;
-    }
-    if (xBomb + 1 < xLen && yBomb + 1 < yLen && map[xBomb + 1][yBomb + 1] < 9) {
-      map[xBomb + 1][yBomb + 1] += 1;
+  _fillCellsAroundBomb(map: number[][], xBomb: number, yBomb: number, xLen: number, yLen: number) {
+    for (let i = -1; i <= 1; i++) {
+      for (let j = -1; j <= 1; j++) {
+        if (i === 0 && j === 0) {
+          continue;
+        }
+        if (xBomb + j >= 0 && xBomb + j < xLen && yBomb + i >= 0 && yBomb + i < yLen && map[xBomb + j][yBomb + i] < 9) {
+          map[xBomb + j][yBomb + i] += 1;
+        }
+      }
     }
     return;
   }

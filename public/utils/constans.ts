@@ -8,6 +8,8 @@ export const WHITELIST_ATTRS = [
   'alt',
 ];
 
+export const WS_LOCAL_ADDRESS = 'ws://localhost:8081';
+
 export const R_TAG = /<(\w+)\s?(.*?)>.*?(<\/(.*?)>)?/;
 export const R_ATTRIBUTES = /(\w+\s*)=(\s*".*?")/g;
 export const R_EMAIL = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/i;

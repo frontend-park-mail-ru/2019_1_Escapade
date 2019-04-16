@@ -1,0 +1,42 @@
+.about__header {
+	text-align: center;
+	padding-top: 1.5rem;
+}
+
+body {
+	background: rgb(24, 143, 202);	
+}
+
+.about {
+	display: flex;
+	justify-content: center;
+	height: 80vh;
+}
+
+.about__wrapper {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	background: rgb(24, 143, 202);	
+}
+
+.team {
+	margin: 1vmin;
+	margin-top: 4vmin;
+	display: grid;
+	font-size: 2.5vmin;
+	grid-template-columns: 1.5fr 1.5fr;
+	margin-bottom: 2rem;
+	width: 70vmin;
+}
+
+.team__name,
+.team__role {
+	padding: 1vmin;
+	text-align: center;
+}
+
+.about a {
+	color: black;
+}

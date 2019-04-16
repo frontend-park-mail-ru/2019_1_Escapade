@@ -1,5 +1,3 @@
-'use strict';
-
 const express = require('express');
 const morgan = require('morgan');
 const WebSocketServer = require('ws');
@@ -43,4 +41,8 @@ webSocketServer.on('connection', function(ws) {
     console.log('connection close' + id);
     delete clients[id];
   });
+
+  ws.onerror = function(error) {
+    console.log('Error ' + error.message);
+  };
 });
