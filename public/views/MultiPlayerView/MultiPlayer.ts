@@ -1,8 +1,8 @@
-import multiPlayerTemplate from './MultiPlayer.pug';
+const multiPlayerTemplate = require('./MultiPlayer.pug');
 import BaseView from '../BaseView';
-import {User} from '../../utils/user';
-import {MineSweeper} from '../../game/minesweeper';
-import {Timer} from '../../game/timer';
+import { User } from '../../utils/user';
+import { MineSweeper } from '../../game/minesweeper';
+import { Timer } from '../../game/timer';
 import Bus from '../../utils/bus';
 
 /** */
@@ -44,22 +44,22 @@ export default class MultiPlayer extends BaseView {
   messageBoxOkButtonFieldStringName: string;
   minesCount: number;
   start: boolean;
-  pointsDocElement: Element;
-  minesDocElement: Element;
-  leftClicksDocElement: Element;
-  rightClicksDocElement: Element;
-  restartDocElement: Element;
-  percentOpenDocElement: Element;
-  loadbarDocElement: Element;
-  infoModeDocElement: Element;
-  infoWidthDocElement: Element;
-  infoHeightDocElement: Element;
-  infoMinesDocElement: Element;
-  playerNameDocElement: Element;
-  playerScoreDocElement: Element;
-  playerTimeDocElement: Element;
-  messageBoxDocElement: Element;
-  messageBoxMessageDocElement: Element;
+  pointsDocElement: HTMLElement;
+  minesDocElement: HTMLElement;
+  leftClicksDocElement: HTMLElement;
+  rightClicksDocElement: HTMLElement;
+  restartDocElement: HTMLElement;
+  percentOpenDocElement: HTMLElement;
+  loadbarDocElement: HTMLElement;
+  infoModeDocElement: HTMLElement;
+  infoWidthDocElement: HTMLElement;
+  infoHeightDocElement: HTMLElement;
+  infoMinesDocElement: HTMLElement;
+  playerNameDocElement: HTMLElement;
+  playerScoreDocElement: HTMLElement;
+  playerTimeDocElement: HTMLElement;
+  messageBoxDocElement: HTMLElement;
+  messageBoxMessageDocElement: HTMLElement;
   timer: any;
   maxPointsCount: number;
   minTimeCount: string;
@@ -117,7 +117,7 @@ export default class MultiPlayer extends BaseView {
 
 
     document.addEventListener('contextmenu', this._rightСlickOnCell.bind(this));
-    document.body.oncontextmenu = function(e) {
+    document.body.oncontextmenu = function (e) {
       return false;
     };
     Bus.on('updateUserInfoMult', this._updateUserInfo.bind(this));
@@ -132,15 +132,14 @@ export default class MultiPlayer extends BaseView {
   }
 
   /** */
-  _findRooms(e) {
-    console.log('FFFFF');
+  _findRooms(e: any) {
     Bus.emit('get_rooms');
     return;
   }
 
   /** */
-  _updateRooms(rooms) {
-    const infoRooms = document.getElementsByClassName('multi_player__room_list')[0];
+  _updateRooms(rooms: any) {
+    const infoRooms = document.querySelector('multi_player__room_list');
     infoRooms.textContent += rooms.Rooms;
   }
 
@@ -151,26 +150,26 @@ export default class MultiPlayer extends BaseView {
   render() {
     this.user = User;
     super.render();
-    this.pointsDocElement = document.getElementsByClassName(this.pointsFieldStringName)[0];
-    this.minesDocElement = document.getElementsByClassName(this.minesFieldStringName)[0];
-    this.leftClicksDocElement = document.getElementsByClassName(this.leftClicksFieldStringName)[0];
-    this.rightClicksDocElement = document.getElementsByClassName(this.rightClicksFieldStringName)[0];
-    this.restartDocElement = document.getElementsByClassName(this.restartFieldStringName)[0];
-    this.percentOpenDocElement = document.getElementsByClassName(this.percentOpenFieldStringName)[0];
-    this.loadbarDocElement = document.getElementsByClassName(this.loadbarFieldStringName)[0];
+    this.pointsDocElement = document.querySelector(this.pointsFieldStringName);
+    this.minesDocElement = document.querySelector(this.minesFieldStringName);
+    this.leftClicksDocElement = document.querySelector(this.leftClicksFieldStringName);
+    this.rightClicksDocElement = document.querySelector(this.rightClicksFieldStringName);
+    this.restartDocElement = document.querySelector(this.restartFieldStringName);
+    this.percentOpenDocElement = document.querySelector(this.percentOpenFieldStringName);
+    this.loadbarDocElement = document.querySelector(this.loadbarFieldStringName);
 
-    this.infoModeDocElement = document.getElementsByClassName(this.infoModeFieldStringName)[0];
-    this.infoWidthDocElement = document.getElementsByClassName(this.infoWidthFieldStringName)[0];
-    this.infoHeightDocElement = document.getElementsByClassName(this.infoHeightFieldStringName)[0];
-    this.infoMinesDocElement = document.getElementsByClassName(this.infoMinesFieldStringName)[0];
+    this.infoModeDocElement = document.querySelector(this.infoModeFieldStringName);
+    this.infoWidthDocElement = document.querySelector(this.infoWidthFieldStringName);
+    this.infoHeightDocElement = document.querySelector(this.infoHeightFieldStringName);
+    this.infoMinesDocElement = document.querySelector(this.infoMinesFieldStringName);
 
-    this.playerNameDocElement = document.getElementsByClassName(this.playerNameFieldStringName)[0];
-    this.playerScoreDocElement = document.getElementsByClassName(this.playerScoreFieldStringName)[0];
-    this.playerTimeDocElement = document.getElementsByClassName(this.playerTimeFieldStringName)[0];
+    this.playerNameDocElement = document.querySelector(this.playerNameFieldStringName);
+    this.playerScoreDocElement = document.querySelector(this.playerScoreFieldStringName);
+    this.playerTimeDocElement = document.querySelector(this.playerTimeFieldStringName);
 
-    this.messageBoxDocElement = document.getElementsByClassName(this.messageBoxFieldStringName)[0];
-    this.messageBoxMessageDocElement = document.getElementsByClassName(this.messageBoxMessageFieldStringName)[0];
-    
+    this.messageBoxDocElement = document.querySelector(this.messageBoxFieldStringName);
+    this.messageBoxMessageDocElement = document.querySelector(this.messageBoxMessageFieldStringName);
+
 
     this.timer = new Timer(document.getElementById(this.timerFieldStringName));
 
@@ -186,7 +185,7 @@ export default class MultiPlayer extends BaseView {
   }
 
   /** */
-  _clickOnBody(e : any) {
+  _clickOnBody(e: any) {
     if (e.target.classList.contains(this.itemListFieldStringName)) {
       this._changeHard(e);
     } else if (e.target.classList.contains(this.cellStringName)) {
@@ -239,7 +238,7 @@ export default class MultiPlayer extends BaseView {
       this.timer.router();
     }
 
-    const field = document.getElementsByClassName(this.mapStringName)[0];
+    const field = document.querySelector(this.mapStringName);
     if (!field) {
       console.log('error field cannot find ' + this.mapStringName);
     }
@@ -261,7 +260,7 @@ export default class MultiPlayer extends BaseView {
     return;
   }
 
-  _stop_reset_timer(){
+  _stop_reset_timer() {
     this.timer.stop();
     this.timer.reset();
   }
@@ -282,7 +281,7 @@ export default class MultiPlayer extends BaseView {
 
 
   /** */
-  _changeHard(e : any) {
+  _changeHard(e: any) {
     if (e.target.classList.contains(this.babyFieldStringName)) {
       this.infoModeDocElement.innerHTML = 'Baby mode';
       this.minesCount = 10;
@@ -312,7 +311,7 @@ export default class MultiPlayer extends BaseView {
   }
 
   /** */
-  _clickOnCell(e : any) {
+  _clickOnCell(e: any) {
     console.log('prev check _click')
     if (!e.target.classList.contains(this.cellStringName) || !this.start) {
       return;
@@ -335,7 +334,7 @@ export default class MultiPlayer extends BaseView {
       return;
     }
     const res = this.mineSweeper.
-        openCels(x, y, this.cellNumbersX, this.cellNumbersY);
+      openCels(x, y, this.cellNumbersX, this.cellNumbersY);
     this._openCels(res.cellArr);
     this.openCellsCount += res.openCells;
     this.prcentOpen = Math.round((this.openCellsCount / (this.cellNumbersX * this.cellNumbersY - this.minesCount)) * 100);
@@ -364,7 +363,7 @@ export default class MultiPlayer extends BaseView {
   }
 
   /** */
-  _rightСlickOnCell(e : any) {
+  _rightСlickOnCell(e: any) {
     if (!e.target.classList.contains(this.cellStringName) || !this.start) {
       return;
     }
@@ -419,7 +418,7 @@ export default class MultiPlayer extends BaseView {
   }
 
   /** */
-  _showMessage(mess : string) {
+  _showMessage(mess: string) {
     this.messageBoxDocElement.hidden = false;
     this.messageBoxMessageDocElement.innerHTML = mess;
   }
@@ -429,12 +428,12 @@ export default class MultiPlayer extends BaseView {
   }
 
   /** */
-  _openCels(arrCells : any) {
+  _openCels(arrCells: any) {
     for (let i = 0; i < arrCells.length; i++) {
-      const x = arrCells[i][0];
+      const x = arrCells[i];
       const y = arrCells[i][1];
       const cell = document.
-          getElementById(this.cellStringName + '_' + x + '_' + y);
+        getElementById(this.cellStringName + '_' + x + '_' + y);
       if (!cell) {
         console.log('error _openCels cannot find ' +
           this.cellStringName + '_' + x + '_' + y);

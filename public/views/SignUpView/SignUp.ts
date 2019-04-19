@@ -1,4 +1,4 @@
-import signUpTemplate from './SignUp.pug';
+const signUpTemplate = require('./SignUp.pug');
 import { validateEmail, validatePass, validateLogin, makeSafe }
   from '../../utils/validation';
 import { User } from '../../utils/user';
@@ -18,12 +18,12 @@ export default class SignUpView extends BaseView {
   constructor(parent: HTMLElement) {
     super(parent, signUpTemplate, false);
 
-    Bus.on('onSuccessAuth', (usr : any) => {
+    Bus.on('onSuccessAuth', (usr: any) => {
       User.setUser({ ...usr });
       Bus.emit('userUpdate');
       router.open('/profile');
     });
-    Bus.on('onFailedAuth', (error : any) => {
+    Bus.on('onFailedAuth', (error: any) => {
       this._showWarning(this._warnings.email, error.message);
     });
   }
@@ -49,10 +49,10 @@ export default class SignUpView extends BaseView {
    * Действие при сабмите формы логина
    * @param {Event} event
    */
-  _onSubmit(event : any) {
+  _onSubmit(event: any) {
     console.log('event');
     event.preventDefault();
-    const data = {};
+    const data: any = {};
     data.email = this._form.elements['email'].value;
     data.name = this._form.elements['login'].value;
     data.password = this._form.elements['password'].value;
@@ -110,7 +110,7 @@ export default class SignUpView extends BaseView {
    * @param {HTMLElement} warning
    * @param {String} message
    */
-  _showWarning(warning : any, message : string) {
+  _showWarning(warning: any, message: string) {
     warning.classList.remove('hidden');
     warning.innerHTML = '';
     warning.innerHTML += message;
@@ -120,7 +120,7 @@ export default class SignUpView extends BaseView {
    * Скрыть предупреждение валидации
    * @param {*} warning
    */
-  _hideWarning(warning : any) {
+  _hideWarning(warning: any) {
     warning.classList.add('hidden');
     warning.innerHTML = '';
   }

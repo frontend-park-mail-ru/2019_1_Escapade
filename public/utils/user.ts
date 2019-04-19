@@ -1,4 +1,4 @@
-import {Net} from './net';
+import { Net } from './net';
 /** */
 class UserSingleton {
   name: string;
@@ -24,7 +24,7 @@ class UserSingleton {
    * @param {string} avatar
    * @param {string} name
    */
-  setUser({email = '', played = 0, avatar = '', name = '', bestTime = '', bestScore = ''} = {}) {
+  setUser({ email = '', played = 0, avatar = '', name = '', bestTime = '', bestScore = '' } = {}) {
     this.email = email || null;
     this.played = played || 0;
     this.avatar = avatar || './img/qrosh.png';
@@ -53,29 +53,26 @@ export const User = new UserSingleton();
  * Проверка авторизации пользователя при вхлоде на сайт
  * @param {function} callback
  */
-export function checkAuth(callback: any, difficult = 1) {
-  Net.get({url: `/user?difficult=${difficult}`})
-      .then((resp) => {
-        if (resp.status === 200) {
-          resp.json()
-              .then((json) => {
-                console.log(json);
-                User.setUser({...json});
-                callback();
-              });
-        } else {
-          console.log('No Auth');
-          User.removeUser();
-          callback();
-        }
-      })
-      .catch((error) => {
-        if (!navigator.onLine) {
-          callback();
-          return;
-        }
+export function checkAuth(callback: CallableFunction, difficult = 1) {
+  Net.get(`/user?difficult=${difficult}`)
+    .then((resp) => {
+      if (resp.status === 200) {
+        resp.json()
+          .then((json) => {
+            User.setUser({ ...json });
+            callback();
+          });
+      } else {
         User.removeUser();
         callback();
-        console.log(error);
-      });
+      }
+    })
+    .catch((error) => {
+      if (!navigator.onLine) {
+        callback();
+        return;
+      }
+      User.removeUser();
+      callback();
+    });
 }

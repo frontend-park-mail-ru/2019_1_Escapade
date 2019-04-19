@@ -37,8 +37,8 @@ export class Timer {
     let i = 0;
 
     while (i < d.length) {
-      let t = Math.floor(elapsed/d[i]);
-      elapsed -= t*d[i];
+      let t = Math.floor(elapsed / d[i]);
+      elapsed -= t * d[i];
       let strT = ((i > 0 && t < 10) ? '0' + t : t).toString();
       time.push(strT);
       i++;
@@ -51,7 +51,7 @@ export class Timer {
    *
    */
   run() {
-    const time = this._parseTime(Date.now()-this.then-this.delay);
+    const time = this._parseTime(Date.now() - this.then - this.delay);
     this.timeStr = time[0] + ':' + time[1] + ':' + time[2] + ':' + time[3];
     this.timerHTMLElement.innerHTML = this.timeStr;
   };
@@ -71,7 +71,7 @@ export class Timer {
    */
   resume() {
     this.paused = false;
-    this.delay += Date.now()-this.delayThen;
+    this.delay += Date.now() - this.delayThen;
     this.timer = setInterval(this.run.bind(this), 51);
   };
 

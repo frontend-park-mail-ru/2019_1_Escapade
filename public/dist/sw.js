@@ -1,5 +1,9 @@
 var serviceWorkerOption = {
   "assets": [
+    "/img/flag_back.png",
+    "/img/flag_ahead.png",
+    "/img/flag-right.png",
+    "/img/clock.png",
     "/img/cell1.png",
     "/img/cell2.png",
     "/img/cell3.png",
@@ -24,21 +28,26 @@ var serviceWorkerOption = {
     "/img/arrow-right.png",
     "/img/qrosh.png",
     "/img/field.jpg",
-    "/img/flag_back.png",
-    "/img/flag_ahead.png",
     "/img/logo_single.png",
     "/img/logo_multi.png",
     "/img/signup.png",
     "/img/check.png",
     "/img/user.png",
     "/img/upload-avatar.png",
-    "/img/flag-right.png",
     "/img/edit-profile.png",
     "/img/star-q.png",
     "/img/bomb1.png",
-    "/img/clock.png",
     "/img/left-click.png",
     "/img/right-click.png",
+    "/img/magnifier.png",
+    "/img/create.png",
+    "/img/room.png",
+    "/img/player.png",
+    "/img/difficult.png",
+    "/img/size.png",
+    "/img/mine_icon.png",
+    "/img/observer.png",
+    "/img/status.png",
     "/img/settings2.png",
     "/img/settings.png",
     "/img/cancel.png",
@@ -48,4 +57,4 @@ var serviceWorkerOption = {
   ]
 };
         
-        !function(e){var t={};function n(r){if(t[r])return t[r].exports;var o=t[r]={i:r,l:!1,exports:{}};return e[r].call(o.exports,o,o.exports,n),o.l=!0,o.exports}n.m=e,n.c=t,n.d=function(e,t,r){n.o(e,t)||Object.defineProperty(e,t,{enumerable:!0,get:r})},n.r=function(e){"undefined"!=typeof Symbol&&Symbol.toStringTag&&Object.defineProperty(e,Symbol.toStringTag,{value:"Module"}),Object.defineProperty(e,"__esModule",{value:!0})},n.t=function(e,t){if(1&t&&(e=n(e)),8&t)return e;if(4&t&&"object"==typeof e&&e&&e.__esModule)return e;var r=Object.create(null);if(n.r(r),Object.defineProperty(r,"default",{enumerable:!0,value:e}),2&t&&"string"!=typeof e)for(var o in e)n.d(r,o,function(t){return e[t]}.bind(null,o));return r},n.n=function(e){var t=e&&e.__esModule?function(){return e.default}:function(){return e};return n.d(t,"a",t),t},n.o=function(e,t){return Object.prototype.hasOwnProperty.call(e,t)},n.p="/",n(n.s=0)}([function(e,t,n){(function(e){const t=e.serviceWorkerOption.assets,n=[...t,"./"];self.addEventListener("install",t=>{console.log("[SW] Install event"),t.waitUntil(e.caches.open("Escapade").then(e=>e.addAll(n)).then(()=>{console.log("Cached assets: main",n)}).catch(e=>{throw console.error(e),e}))}),self.addEventListener("fetch",e=>{e.respondWith(caches.match(e.request).then(t=>!navigator.onLine&&t?t:fetch(e.request)))})}).call(this,n(1))},function(e,t){var n;n=function(){return this}();try{n=n||new Function("return this")()}catch(e){"object"==typeof window&&(n=window)}e.exports=n}]);
+        !function(e){var t={};function n(r){if(t[r])return t[r].exports;var o=t[r]={i:r,l:!1,exports:{}};return e[r].call(o.exports,o,o.exports,n),o.l=!0,o.exports}n.m=e,n.c=t,n.d=function(e,t,r){n.o(e,t)||Object.defineProperty(e,t,{enumerable:!0,get:r})},n.r=function(e){"undefined"!=typeof Symbol&&Symbol.toStringTag&&Object.defineProperty(e,Symbol.toStringTag,{value:"Module"}),Object.defineProperty(e,"__esModule",{value:!0})},n.t=function(e,t){if(1&t&&(e=n(e)),8&t)return e;if(4&t&&"object"==typeof e&&e&&e.__esModule)return e;var r=Object.create(null);if(n.r(r),Object.defineProperty(r,"default",{enumerable:!0,value:e}),2&t&&"string"!=typeof e)for(var o in e)n.d(r,o,function(t){return e[t]}.bind(null,o));return r},n.n=function(e){var t=e&&e.__esModule?function(){return e.default}:function(){return e};return n.d(t,"a",t),t},n.o=function(e,t){return Object.prototype.hasOwnProperty.call(e,t)},n.p="/",n(n.s=0)}([function(e,t,n){(function(e){const{assets:t}=e.serviceWorkerOption,n=[...t,"./"];self.addEventListener("install",t=>{console.log("[SW] Install event"),t.waitUntil(e.caches.open("Escapade").then(e=>e.addAll(n)).then(()=>{console.log("Cached assets: main",n)}).catch(e=>{throw console.error(e),e}))}),self.addEventListener("fetch",e=>{e.respondWith(caches.match(e.request).then(t=>!navigator.onLine&&t?t:fetch(e.request)))})}).call(this,n(1))},function(e,t){var n;n=function(){return this}();try{n=n||new Function("return this")()}catch(e){"object"==typeof window&&(n=window)}e.exports=n}]);

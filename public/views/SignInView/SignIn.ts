@@ -1,4 +1,4 @@
-import signInTemplate from './SignIn.pug';
+const signInTemplate = require('./SignIn.pug');
 import { validateEmail, validatePass, makeSafe } from '../../utils/validation';
 import { User } from '../../utils/user';
 import BaseView from '../BaseView';
@@ -49,9 +49,9 @@ export default class SignInView extends BaseView {
    * Действие при сабмите формы регистрации
    * @param {Event} event
    */
-  _onSubmit(event : any) {
+  _onSubmit(event: any) {
     event.preventDefault();
-    const data = {};
+    const data: any = {};
     data.email = this._form.elements['email'].value;
     data.password = this._form.elements['password'].value;
     if (this._validateInput(data)) {
@@ -64,7 +64,7 @@ export default class SignInView extends BaseView {
    * @param  {...any} data
    * @return {boolean}
    */
-  _validateInput({ email = '', password = ''}) {
+  _validateInput({ email = '', password = '' }) {
     let isValid = true;
     let message = '';
 

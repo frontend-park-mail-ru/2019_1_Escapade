@@ -1,6 +1,6 @@
-import lobbyTemplate from './Lobby.pug';
-import lobbyData from './Lobby__data.pug';
-import {User} from '../../utils/user';
+const lobbyTemplate = require('./Lobby.pug');
+const lobbyData = require('./Lobby__data.pug');
+import { User } from '../../utils/user';
 import BaseView from '../BaseView';
 import Bus from '../../utils/bus';
 /**
@@ -14,7 +14,7 @@ export default class LobbyView extends BaseView {
    *
    * @param {*} parent
    */
-  constructor(parent) {
+  constructor(parent: HTMLElement) {
     super(parent, lobbyTemplate, false);
   }
 

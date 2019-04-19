@@ -1,5 +1,5 @@
 import Bus from '../utils/bus';
-import {Net} from '../utils/net';
+import { Net } from '../utils/net';
 /**
  *
  */
@@ -15,22 +15,22 @@ export default class SignUpModel {
    * Отправка запроса авторизации и заполнение объекта User
    * @param {object} data
    */
-  _auth(data: any) {
+  _auth(data: object) {
     console.log(data);
 
-    Net.post({url: '/user', body: data})
-        .then((resp) => {
-          if (resp.status === 201) {
-            Bus.emit('onSuccessAuth', data);
-          } else {
-            resp.json()
-                .then((error) => {
-                  Bus.emit('onFailedAuth', error);
-                });
-          }
-        })
-        .catch((error) => {
-          console.log('SignUp failed : ', error);
-        });
+    Net.post(data, '/user')
+      .then((resp) => {
+        if (resp.status === 201) {
+          Bus.emit('onSuccessAuth', data);
+        } else {
+          resp.json()
+            .then((error) => {
+              Bus.emit('onFailedAuth', error);
+            });
+        }
+      })
+      .catch((error) => {
+        console.log('SignUp failed : ', error);
+      });
   }
 }

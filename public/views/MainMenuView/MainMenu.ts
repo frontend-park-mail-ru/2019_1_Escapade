@@ -1,7 +1,7 @@
-import menuTemplate from './MainMenu.pug';
+const menuTemplate = require('./MainMenu.pug');
 import BaseView from '../BaseView';
 // import headerTmpl from '../HeaderInner.pug';
-import {User} from '../../utils/user';
+import { User } from '../../utils/user';
 import Bus from '../../utils/bus';
 /** */
 export class MainMenuView extends BaseView {

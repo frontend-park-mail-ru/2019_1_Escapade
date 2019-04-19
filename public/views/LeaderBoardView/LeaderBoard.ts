@@ -1,4 +1,4 @@
-import leaderBoardTemplate from './LeaderBoard.pug';
+const leaderBoardTemplate = require('./LeaderBoard.pug');
 import BaseView from '../BaseView';
 import Bus from '../../utils/bus';
 
@@ -63,7 +63,7 @@ export default class LeaderBoardView extends BaseView {
     // const leaderboardTableRowDomElement = document.getElementsByClassName('leaderboard__table_row')[0];
 
     this.divisionHeight = this._getPageAmount();
-    this.pageStruct = {page: 1, per_page: this.divisionHeight};
+    this.pageStruct = { page: 1, per_page: this.divisionHeight };
     Bus.emit('reqPagesAmount', this.pageStruct.per_page);
     Bus.emit('reqPage', this.pageStruct);
   }
@@ -73,7 +73,7 @@ export default class LeaderBoardView extends BaseView {
    * @param {*} users
    */
   renderUsers(users: any) {
-    const usersStruct = {users: users, page: this._currPage, per_page: this.pageStruct.per_page};
+    const usersStruct = { users: users, page: this._currPage, per_page: this.pageStruct.per_page };
     this.data = usersStruct;
     super.render();
     this.leaderBoardPageDomElement = this.parent.querySelector('.leaderboard__page');
@@ -118,7 +118,7 @@ export default class LeaderBoardView extends BaseView {
     }
 
     this.divisionHeight = this._getPageAmount();
-    this.pageStruct = {page: ++this._currPage, per_page: this.divisionHeight};
+    this.pageStruct = { page: ++this._currPage, per_page: this.divisionHeight };
     Bus.emit('reqPage', this.pageStruct);
   }
 
@@ -131,7 +131,7 @@ export default class LeaderBoardView extends BaseView {
     }
 
     this.divisionHeight = this._getPageAmount();
-    this.pageStruct = {page: --this._currPage, per_page: this.divisionHeight};
+    this.pageStruct = { page: --this._currPage, per_page: this.divisionHeight };
     Bus.emit('reqPage', this.pageStruct);
   }
 }

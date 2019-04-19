@@ -1,6 +1,6 @@
-import authorsTemplate from './Authors.pug';
+const authorsTemplate = require('./Authors.pug');
 import BaseView from '../BaseView';
-import {User} from '../../utils/user';
+import { User } from '../../utils/user';
 
 /** */
 export class AuthorsView extends BaseView {

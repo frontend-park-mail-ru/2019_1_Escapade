@@ -17,7 +17,7 @@ module.exports = {
       template: 'public/index.html',
     }),
     new ServiceWorkerWebpackPlugin({
-      entry: path.join(__dirname, 'public/sw.ts'),
+      entry: path.join(__dirname, 'public/sw.js'),
     }),
   ],
 
@@ -28,22 +28,9 @@ module.exports = {
   module: {
     rules: [
       {
-        test: /\.tsx?$/,
-        exclude: /(node_modules|bower_components)/,
-        use: {
-          loader:
-            'babel-loader',
-          options: {
-            presets: [
-              '@babel/typescript',
-              ['@babel/preset-env', {
-                targets: {
-                  edge: 15,
-                },
-              }],
-            ],
-          },
-        },
+        test: /\.ts$/,
+        exclude: /node_modules/,
+        loader: 'ts-loader',
       },
       {
         test: /\.js$/,

@@ -5,7 +5,7 @@ import SinglePlayerView from './views/SinglePlayerView/SinglePlayer';
 import { AuthorsView } from './views/AuthorsView/Authors';
 import { RulesView } from './views/RulesView/Rules';
 import LobbyView from './views/LobbyView/Lobby';
-import ChatView from './views/Chat.ts';
+//import ChatView from './views/Chat.ts';
 import signOut from './views/SignOut/SignOut';
 import { checkAuth } from './utils/user';
 import Router from './utils/router';

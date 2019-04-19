@@ -1,9 +1,9 @@
 /* eslint-disable require-jsdoc */
-import singlePlayerTemplate from './SinglePlayer.pug';
+const singlePlayerTemplate = require('./SinglePlayer.pug');
 import BaseView from '../BaseView';
-import {User} from '../../utils/user';
-import {MineSweeper} from '../../game/minesweeper';
-import {Timer} from '../../game/timer';
+import { User } from '../../utils/user';
+import { MineSweeper } from '../../game/minesweeper';
+import { Timer } from '../../game/timer';
 import { checkAuth } from '../../utils/user';
 import Bus from '../../utils/bus';
 import { ConfigSinglePlayerView } from './ConfigSinglePlayer';
@@ -14,22 +14,22 @@ export default class SinglePlayerView extends BaseView {
   cellNumbersY: number;
   minesCount: number;
   start: boolean;
-  pointsDocElement: Element;
-  minesDocElement: Element;
-  leftClicksDocElement: Element;
-  rightClicksDocElement: Element;
-  restartDocElement: Element;
-  percentOpenDocElement: Element;
-  loadbarDocElement: Element;
-  infoModeDocElement: Element;
-  infoWidthDocElement: Element;
-  infoHeightDocElement: Element;
-  infoMinesDocElement: Element;
-  playerNameDocElement: Element;
-  playerScoreDocElement: Element;
-  playerTimeDocElement: Element;
-  messageBoxDocElement: Element;
-  messageBoxMessageDocElement: Element;
+  pointsDocElement: HTMLElement;
+  minesDocElement: HTMLElement;
+  leftClicksDocElement: HTMLElement;
+  rightClicksDocElement: HTMLElement;
+  restartDocElement: HTMLElement;
+  percentOpenDocElement: HTMLElement;
+  loadbarDocElement: HTMLElement;
+  infoModeDocElement: HTMLElement;
+  infoWidthDocElement: HTMLElement;
+  infoHeightDocElement: HTMLElement;
+  infoMinesDocElement: HTMLElement;
+  playerNameDocElement: HTMLElement;
+  playerScoreDocElement: HTMLElement;
+  playerTimeDocElement: HTMLElement;
+  messageBoxDocElement: HTMLElement;
+  messageBoxMessageDocElement: HTMLElement;
   timer: Timer;
   maxPointsCount: number;
   minTimeCount: string;
@@ -54,12 +54,12 @@ export default class SinglePlayerView extends BaseView {
     this.cellNumbersY = 15;
     this.minesCount = 1;
     this.start = false;
-    
+
     document.addEventListener('click', this._clickOnBody.bind(this));
 
 
     document.addEventListener('contextmenu', this._rightСlickOnCell.bind(this));
-    document.body.oncontextmenu = function(e) {
+    document.body.oncontextmenu = function (e) {
       return false;
     };
     Bus.on('updateUserInfo', this._updateUserInfo.bind(this));
@@ -71,26 +71,26 @@ export default class SinglePlayerView extends BaseView {
   render() {
     this.user = User;
     super.render();
-    this.pointsDocElement = document.getElementsByClassName(this.config.pointsFieldStringName)[0];
-    this.minesDocElement = document.getElementsByClassName(this.config.minesFieldStringName)[0];
-    this.leftClicksDocElement = document.getElementsByClassName(this.config.leftClicksFieldStringName)[0];
-    this.rightClicksDocElement = document.getElementsByClassName(this.config.rightClicksFieldStringName)[0];
-    this.restartDocElement = document.getElementsByClassName(this.config.restartFieldStringName)[0];
-    this.percentOpenDocElement = document.getElementsByClassName(this.config.percentOpenFieldStringName)[0];
-    this.loadbarDocElement = document.getElementsByClassName(this.config.loadbarFieldStringName)[0];
+    this.pointsDocElement = document.querySelector(this.config.pointsFieldStringName);
+    this.minesDocElement = document.querySelector(this.config.minesFieldStringName);
+    this.leftClicksDocElement = document.querySelector(this.config.leftClicksFieldStringName);
+    this.rightClicksDocElement = document.querySelector(this.config.rightClicksFieldStringName);
+    this.restartDocElement = document.querySelector(this.config.restartFieldStringName);
+    this.percentOpenDocElement = document.querySelector(this.config.percentOpenFieldStringName);
+    this.loadbarDocElement = document.querySelector(this.config.loadbarFieldStringName);
 
-    this.infoModeDocElement = document.getElementsByClassName(this.config.infoModeFieldStringName)[0];
-    this.infoWidthDocElement = document.getElementsByClassName(this.config.infoWidthFieldStringName)[0];
-    this.infoHeightDocElement = document.getElementsByClassName(this.config.infoHeightFieldStringName)[0];
-    this.infoMinesDocElement = document.getElementsByClassName(this.config.infoMinesFieldStringName)[0];
+    this.infoModeDocElement = document.querySelector(this.config.infoModeFieldStringName);
+    this.infoWidthDocElement = document.querySelector(this.config.infoWidthFieldStringName);
+    this.infoHeightDocElement = document.querySelector(this.config.infoHeightFieldStringName);
+    this.infoMinesDocElement = document.querySelector(this.config.infoMinesFieldStringName);
 
-    this.playerNameDocElement = document.getElementsByClassName(this.config.playerNameFieldStringName)[0];
-    this.playerScoreDocElement = document.getElementsByClassName(this.config.playerScoreFieldStringName)[0];
-    this.playerTimeDocElement = document.getElementsByClassName(this.config.playerTimeFieldStringName)[0];
+    this.playerNameDocElement = document.querySelector(this.config.playerNameFieldStringName);
+    this.playerScoreDocElement = document.querySelector(this.config.playerScoreFieldStringName);
+    this.playerTimeDocElement = document.querySelector(this.config.playerTimeFieldStringName);
 
-    this.messageBoxDocElement = document.getElementsByClassName(this.config.messageBoxFieldStringName)[0];
-    this.messageBoxMessageDocElement = document.getElementsByClassName(this.config.messageBoxMessageFieldStringName)[0];
-    
+    this.messageBoxDocElement = document.querySelector(this.config.messageBoxFieldStringName);
+    this.messageBoxMessageDocElement = document.querySelector(this.config.messageBoxMessageFieldStringName);
+
 
     this.timer = new Timer(document.getElementById(this.config.timerFieldStringName));
 
@@ -98,7 +98,7 @@ export default class SinglePlayerView extends BaseView {
     this.restartDocElement.innerHTML = 'Start';
     this.infoModeDocElement.innerHTML = 'Normal mode';
     this.difficult = 1;
-    this.minesCount = 20;   
+    this.minesCount = 20;
     this.infoMinesDocElement.innerHTML = `${this.minesCount} mines`;
     this.infoWidthDocElement.innerHTML = `${this.cellNumbersX} width`;
     this.infoHeightDocElement.innerHTML = `${this.cellNumbersY} height`;
@@ -107,7 +107,7 @@ export default class SinglePlayerView extends BaseView {
   }
 
   /** */
-  _clickOnBody(e : any) {
+  _clickOnBody(e: any) {
     if (e.target.classList.contains(this.config.itemListFieldStringName)) {
       this._changeHard(e);
     } else if (e.target.classList.contains(this.config.cellStringName)) {
@@ -167,7 +167,7 @@ export default class SinglePlayerView extends BaseView {
       this.timer.router();
     }
 
-    const field = document.getElementsByClassName(this.config.mapStringName)[0];
+    const field = document.querySelector(this.config.mapStringName);
     if (!field) {
       console.log('error field cannot find ' + this.config.mapStringName);
     }
@@ -189,7 +189,7 @@ export default class SinglePlayerView extends BaseView {
     return;
   }
 
-  _stop_reset_timer(){
+  _stop_reset_timer() {
     this.timer.stop();
     this.timer.reset();
   }
@@ -210,7 +210,7 @@ export default class SinglePlayerView extends BaseView {
 
 
   /** */
-  _changeHard(e : any) {
+  _changeHard(e: any) {
     if (e.target.classList.contains(this.config.babyFieldStringName)) {
       this.infoModeDocElement.innerHTML = 'Baby mode';
       this.difficult = 0;
@@ -245,12 +245,12 @@ export default class SinglePlayerView extends BaseView {
   }
 
   /** */
-  _clickOnCell(e : any) {
-    
+  _clickOnCell(e: any) {
+
     if (!e.target.classList.contains(this.config.cellStringName) || !this.start) {
       return;
     }
-    let [,x, y] = e.target.id.split('_');
+    let [, x, y] = e.target.id.split('_');
     x = parseInt(x);
     y = parseInt(y);
     if (this.mineSweeper.mapLabel[x][y] != 0) { // если не закрыта
@@ -263,13 +263,13 @@ export default class SinglePlayerView extends BaseView {
         this.timer.stop();
       }
       this.start = false;
-      const data = JSON.stringify({difficult: this.difficult, singleTotal: 1, singleWin: 0});
+      const data = JSON.stringify({ difficult: this.difficult, singleTotal: 1, singleWin: 0 });
       Bus.emit('sendResultsSingleGame', data);
       this._showMessage('You lose!');
       return;
     }
     const res = this.mineSweeper.
-        openCels(x, y, this.cellNumbersX, this.cellNumbersY);
+      openCels(x, y, this.cellNumbersX, this.cellNumbersY);
     console.log(res);
     this._openCels(res.cellArr);
     this.openCellsCount += res.openCells;
@@ -284,7 +284,7 @@ export default class SinglePlayerView extends BaseView {
       console.log(this.timer.timeStr);
       const timeArr = this.timer.timeStr.split(':');
       const timeSec = parseInt(timeArr[0]) * 3600 + parseInt(timeArr[1]) * 60 + parseInt(timeArr[2]) + parseInt(timeArr[3]) / 100
-      const data = {score: this.pointsCount, time: timeSec, difficult: this.difficult, singleTotal: 1, singleWin: 1};
+      const data = { score: this.pointsCount, time: timeSec, difficult: this.difficult, singleTotal: 1, singleWin: 1 };
       Bus.emit('sendResultsSingleGame', data);
       if (this.timer.running) {
         this.timer.stop();
@@ -304,11 +304,11 @@ export default class SinglePlayerView extends BaseView {
   }
 
   /** */
-  _rightСlickOnCell(e : any) {
+  _rightСlickOnCell(e: any) {
     if (!e.target.classList.contains(this.config.cellStringName) || !this.start) {
       return;
     }
-    const [,x, y] = e.target.id.split('_');
+    const [, x, y] = e.target.id.split('_');
     const typeOfCell = this.mineSweeper.putRemoveFlag(x, y);
     if (typeOfCell == 1) {
       return;
@@ -353,7 +353,7 @@ export default class SinglePlayerView extends BaseView {
   }
 
   /** */
-  _showMessage(mess : string) {
+  _showMessage(mess: string) {
     this.messageBoxDocElement.hidden = false;
     this.messageBoxMessageDocElement.innerHTML = mess;
   }
@@ -363,15 +363,15 @@ export default class SinglePlayerView extends BaseView {
   }
 
   /** */
-  _openCels(arrCells : any) {
+  _openCels(arrCells: any) {
     for (let i = 0; i < arrCells.length; i++) {
-      const x = arrCells[i][0];
+      const x = arrCells[i];
       const y = arrCells[i][1];
       const cell = document.
-          getElementById(`${this.config.cellStringName}_${x}_${y}`);
+        getElementById(`${this.config.cellStringName}_${x}_${y}`);
       if (!cell) {
         console.log('error _openCels cannot find ' +
-        `${this.config.cellStringName}_${x}_${y}`);
+          `${this.config.cellStringName}_${x}_${y}`);
       }
       cell.className = `${this.config.cellStringName} ${this.config.cellOpenStringName} ${this.config.cellOpenStringName}` + this.mineSweeper.map[x][y].toString();
     }
