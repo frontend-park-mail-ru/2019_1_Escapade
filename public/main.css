@@ -7,6 +7,12 @@
 @import url('views/ProfileView/profile.css');
 @import url('views/LobbyView/lobby.css');
 @import url('views/SinglePlayerView/SinglePlayer.css');
+@import url('views/GameView/Field/Field.css');
+@import url('views/GameView/Settings/Settings.css');
+@import url('views/GameView/Statistics/Statistics.css');
+@import url('views/GameView/Userinfo/Userinfo.css');
+@import url('views/GameView/Buttons/Buttons.css');
+@import url('views/MessageView/Message.css');
 @import url('views/MultiPlayerView/MultiPlayer.css');
 @import url('components/OfflinePoppup/offline.css');
 @import url('views/ProfileEditView/ProfileEdit.css');

@@ -1,0 +1,41 @@
+.single_player__player {
+  background-color: #4B5E70;
+  position: relative;
+  display:flex;
+  justify-content: space-between;
+  text-align: center;
+  height: 75px;
+  width: 830px;
+  flex-direction: row;
+  /*margin-left: 27px;*/
+  border-radius: 50px 15px 15px 50px;
+}
+
+.single_player__player_photo {
+  width: 75px;
+  height: 75px;
+  border-radius: 50%;
+  background: url('../../../img/flag.png') no-repeat;
+  background-size: 100%;
+  float: left;
+}
+
+.single_player__player_str {
+  color: white;
+  height: 60px;
+  line-height: 60px;
+  font-size: 20px;
+  margin-top: 8px;
+  margin-left: 20px;
+}
+
+.single_player__player_score {
+  padding-left: 20px;
+  padding-right: 20px;
+  border-left: 1px solid white; 
+  border-right: 1px solid white;
+}
+
+.single_player__player_dop{
+  width: 20px;
+}

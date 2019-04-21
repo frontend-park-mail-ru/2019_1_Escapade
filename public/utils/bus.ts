@@ -36,7 +36,7 @@ export class Bus {
    * @param {*} event
    * @param {*} data
    */
-  emit(event: string, data: object | string = '') { // публикуем (диспатчим, эмитим) событие
+  emit(event: string, data: any = '') { // публикуем (диспатчим, эмитим) событие
     if (!this.listeners[event]) {
       return;
     }
