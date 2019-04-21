@@ -1,4 +1,5 @@
 /** */
+import MathGame from '../utils/math';
 export class MineSweeper {
   bombsCount: number;
   cellNumbersX: number;
@@ -134,8 +135,8 @@ export class MineSweeper {
       let xBomb = 0;
       let yBomb = 0;
       do {
-        xBomb = this.randomInteger(0, xLen - 1);
-        yBomb = this.randomInteger(0, yLen - 1);
+        xBomb = MathGame.randomInteger(0, xLen - 1);
+        yBomb = MathGame.randomInteger(0, yLen - 1);
       } while (map[xBomb][yBomb] === 9);
       map[xBomb][yBomb] = 9;
       this._fillCellsAroundBomb(map, xBomb, yBomb, xLen, yLen);
@@ -156,12 +157,5 @@ export class MineSweeper {
       }
     }
     return;
-  }
-
-  /** */
-  randomInteger(min: number, max: number) {
-    let rand = min + Math.random() * (max + 1 - min);
-    rand = Math.floor(rand);
-    return rand;
   }
 }

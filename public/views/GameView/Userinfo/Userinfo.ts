@@ -22,7 +22,6 @@ export default class UserGameView {
     this.playerNameDocElement.innerHTML = name;
   }
   _userScoreInGameChange(score : number) {
-    
     this.playerScoreDocElement.innerHTML = score.toString();
   }
   _userTimeInGameChange(time : string) {

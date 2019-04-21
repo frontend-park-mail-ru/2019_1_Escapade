@@ -4,6 +4,7 @@ import { User } from '../../utils/user';
 import { MineSweeper } from '../../game/minesweeper';
 import { Timer } from '../../game/timer';
 import Bus from '../../utils/bus';
+import MathGame from '../../utils/math';
 
 /** */
 export default class MultiPlayer extends BaseView {
@@ -248,7 +249,7 @@ export default class MultiPlayer extends BaseView {
     for (let y = 0; y < this.cellNumbersY; y++) {
       for (let x = 0; x < this.cellNumbersX; x++) {
         const cell = document.createElement('div');
-        const strClassClose = this.cellCloseStringName + '_' + this.mineSweeper.randomInteger(1, 3);
+        const strClassClose = this.cellCloseStringName + '_' + MathGame.randomInteger(1, 3);
         cell.setAttribute('class', this.cellStringName + ' ' + this.cellCloseStringName + ' ' + strClassClose);
 
         cell.setAttribute('id', this.cellStringName + '_' + x + '_' + y);
