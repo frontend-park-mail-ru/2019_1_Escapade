@@ -15,21 +15,26 @@ export default class StatisticsGameView {
   minesCount: number;
 
   constructor() {
+    this.leftClicksCount = 0;
+    this.rightClicksCount = 0;
+    this.minesCount = 0;
+    this.minesRemainedCount = 0;   
+    Bus.on('addListenersStatisticsGame', this._addListeners.bind(this));
+  }
+
+  _addListeners() {
     this.pointsDocElement = document.querySelector('.single_player__statistics_row_points');
     this.minesDocElement = document.querySelector('.single_player__statistics_row_mines');
     this.leftClicksDocElement = document.querySelector('.single_player__statistics_row_left_click');
     this.rightClicksDocElement = document.querySelector('.single_player__statistics_row_right_click');
-    this.leftClicksCount = 0;
-    this.rightClicksCount = 0;
-    this.minesCount = 0;
-    this.minesRemainedCount = 0;
-    this.resetParameters(0);
     Bus.on('leftClicksStatisticsChange', this._leftClickChange.bind(this));
     Bus.on('rightClicksStatisticsChange', this._rightClickChange.bind(this));
     Bus.on('pointsStatisticsChange', this._pointsChange.bind(this));
     Bus.on('minesStatisticsChange', this._minesChange.bind(this));
     Bus.on('statisticsResetParameters', this.resetParameters.bind(this));
+    this.resetParameters(0);
   }
+
   /** */
   resetParameters(minesCount : number) {
     this.minesCount = minesCount;

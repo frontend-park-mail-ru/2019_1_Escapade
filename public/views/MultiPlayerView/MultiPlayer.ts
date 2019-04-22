@@ -172,7 +172,7 @@ export default class MultiPlayer extends BaseView {
     this.messageBoxMessageDocElement = document.querySelector(this.messageBoxMessageFieldStringName);
 
 
-    this.timer = new Timer(document.getElementById(this.timerFieldStringName));
+    this.timer = new Timer('multy_player__timer');
 
     this.restartDocElement.addEventListener('click', this._restart.bind(this));
     this.restartDocElement.innerHTML = 'Start';

@@ -10,10 +10,13 @@ export default class FieldView {
   percentOpenDocElement: any;
   loadbarDocElement: any;
   prcentOpen: number;
-  constructor(cellSize : number) {
+  constructor() {
     this.width = 0;
     this.height = 0;
-    this.cellSize = cellSize;
+    Bus.on('addListenersField', this._addListeners.bind(this));
+  }
+
+  _addListeners() {
     Bus.on('renderField', this._render.bind(this));
     Bus.on('openCell', this._openCell.bind(this));
     Bus.on('setUnsetFlagOnCell', this._setUnsetFlagOnCell.bind(this));
@@ -42,6 +45,7 @@ export default class FieldView {
   _render(fieldSize : any) {
     this.width = fieldSize.width;
     this.height = fieldSize.height;
+    this.cellSize = fieldSize.cellSize;
     this.field = document.querySelector('.game__field__map');
     this.field.innerHTML = '';
     this.field.setAttribute('class', 'game__field__map');
@@ -87,7 +91,7 @@ export default class FieldView {
     const numClassElem = parseInt(classElems[2]);
     if (type === 'flag') {
       cell.className = `cell cell_flag cell_flag_${numClassElem}`;
-    } else {
+    } else if (type === 'closing') {
       cell.className = `cell cell_close cell_close_${numClassElem}`;
     }    
   }

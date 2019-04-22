@@ -18,6 +18,10 @@ export default class SettingsGameView {
     this.minesCount = 20;
     this.width = 15;
     this.height = 15;
+    Bus.on('addListenersSettingsGame', this._addListeners.bind(this));
+  }
+
+  _addListeners() {
     this.infoModeDocElement = document.querySelector('.single_player__settings_info_mode');
     this.infoWidthDocElement = document.querySelector('.single_player__settings_info_width');
     this.infoHeightDocElement = document.querySelector('.single_player__settings_info_height');
@@ -27,8 +31,8 @@ export default class SettingsGameView {
     Bus.on('settingsChangeSize',this._sizeChange.bind(this));
     Bus.on('settingsSetParameters', this._setParameters.bind(this));
     document.addEventListener('click', this._clickOnBody.bind(this));
-    
   }
+
   /** */
   _setParameters({difficult = 1, width = 15, height = 15, mines = 20}) {
     const mode = this._getModeByDifficult(difficult);

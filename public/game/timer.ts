@@ -11,8 +11,9 @@ export class Timer {
   /**
    *
    */
-  constructor(timerHTMLElement: HTMLElement) {
-    this.timerHTMLElement = timerHTMLElement;
+  constructor(htmlElementTitle : string) {
+    
+    this.timerHTMLElement = document.getElementById(htmlElementTitle);
     this.running = false;
     this.paused = false;
     this.timeStr = '';

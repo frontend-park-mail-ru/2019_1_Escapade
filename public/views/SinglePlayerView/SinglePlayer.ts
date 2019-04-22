@@ -6,13 +6,6 @@ import { MineSweeper } from '../../game/minesweeper';
 import { Timer } from '../../game/timer';
 import { checkAuth } from '../../utils/user';
 import Bus from '../../utils/bus';
-import { ConfigSinglePlayerView } from './ConfigSinglePlayer';
-import StatisticsGameView from '../GameView/Statistics/Statistics';
-import SettingsGameView from '../GameView/Settings/Settings';
-import FieldView from '../GameView/Field/Field';
-import UserGameView from '../GameView/Userinfo/Userinfo';
-import ButtonsGameView from '../GameView/Buttons/Buttons';
-import MessageView from '../MessageView/Message';
 /** */
 export default class SinglePlayerView extends BaseView {
   cellsize: number;
@@ -27,32 +20,23 @@ export default class SinglePlayerView extends BaseView {
   pointsCount: number;
   leftClicksCount: number;
   rightClicksCount: number;
-  prcentOpen: number;
   minesRemainedCount: any;
   mineSweeper: MineSweeper;
   BBBVCount: any;
-  config: ConfigSinglePlayerView;
   difficult: number;
-  settingsPanel: SettingsGameView;
-  statisticsPanel: StatisticsGameView;
-  fieldPanel: FieldView;
-  userGameView: UserGameView;
-  messageView: MessageView;
-  buttonsGameView: ButtonsGameView;
   /**
    *
    * @param {*} parent
    */
   constructor(parent: any) {
     super(parent, singlePlayerTemplate, true, 'updateUserInfo');
-    this.config = new ConfigSinglePlayerView()
     this.cellNumbersX = 15;
     this.cellNumbersY = 15;
     this.minesCount = 20;
     this.cellsize = 50;
+    this.difficult = 1;
+    this.minesCount = 20;
     this.start = false;
-
-    document.addEventListener('click', this._clickOnBody.bind(this));
     Bus.on('leftClickOnCell', this._clickOnCell.bind(this));
     Bus.on('rightClickOnCell', this._rightСlickOnCell.bind(this));
     Bus.on('updateUserInfo', this._updateUserInfo.bind(this));
@@ -67,31 +51,23 @@ export default class SinglePlayerView extends BaseView {
   render() {
     this.user = User;
     super.render();
-    this.statisticsPanel = new StatisticsGameView();
-    this.settingsPanel = new SettingsGameView();
-    this.fieldPanel = new FieldView(this.cellsize);
-    this.userGameView = new UserGameView();
-    this.messageView = new MessageView();
-    this.buttonsGameView = new ButtonsGameView();
-    this.timer = new Timer(document.getElementById(this.config.timerFieldStringName));
-    
-    
-    this.difficult = 1;
-    this.minesCount = 20;
-    this._showMap();
+    Bus.emit('addListenersButtonsGame');
+    Bus.emit('addListenersField');
+    Bus.emit('addListenersSettingsGame');
+    Bus.emit('addListenersStatisticsGame');
+    Bus.emit('addListenersUserinfoGame');
+    Bus.emit('addListenersMessage');
+
     Bus.emit('changeTitleRestartButton', 'Start');
     Bus.on('settingsChangeHard', this._changeHard.bind(this));
     Bus.on('stop_reset_timer', this._stop_reset_timer.bind(this))
     Bus.on('restartClick', this._restart.bind(this));
+
+    this.timer = new Timer('single_player__timer');
+    this._showMap();
   }
 
   /** */
-  _clickOnBody(e: any) {
-    if (e.target.classList.contains(this.config.messageBoxOkButtonFieldStringName)) {
-      this._closeMessage();
-    }
-  }
-
   _updateUserInfo() {
     checkAuth(this._updateUserInfoCalback.bind(this), this.difficult)
   }
@@ -124,15 +100,14 @@ export default class SinglePlayerView extends BaseView {
     this.pointsCount = 0;
     this.leftClicksCount = 0;
     this.rightClicksCount = 0;
-    this.prcentOpen = 0;
+
     Bus.emit('messageBoxHide', true)
-    Bus.emit('renderField',{width : this.cellNumbersX, height : this.cellNumbersY})
+    Bus.emit('renderField',{width : this.cellNumbersX, height : this.cellNumbersY, cellSize : this.cellsize})
     Bus.emit('statisticsResetParameters', this.minesCount)
     Bus.emit('settingsSetParameters', {difficult : this.difficult,  width : this.cellNumbersX, height : this.cellNumbersY, mines : this.minesCount})
-    this.minesRemainedCount = this.minesCount;
+    
     this.mineSweeper = new MineSweeper(this.cellNumbersX, this.cellNumbersY, this.minesCount);
     this.BBBVCount = this.mineSweeper.count3BV();
-    console.log('3BV = ' + this.BBBVCount);
 
     if (this.start) {
       this.timer.router();
@@ -181,38 +156,48 @@ export default class SinglePlayerView extends BaseView {
     if (!this.start) {
       return;
     }
-    let x  = coordinatesStruct.x;
-    let y = coordinatesStruct.y;
-    x = parseInt(x);
-    y = parseInt(y);
+    const x = parseInt(coordinatesStruct.x);
+    const y = parseInt(coordinatesStruct.y);
     if (this.mineSweeper.mapLabel[x][y] != 0) { // если не закрыта
       return;
     }
     Bus.emit('leftClicksStatisticsChange', 1);
     
-    if (this.mineSweeper.map[x][y] === 9) {
+    if (this._checkOnLosing(x, y)) {
+      return;
+    }
+
+    const res = this.mineSweeper.
+      openCels(x, y, this.cellNumbersX, this.cellNumbersY);
+    this._openCels(res.cellArr);
+    this.openCellsCount += res.openCells;
+    this.pointsCount += res.points;
+    const prcentOpen = Math.round((this.openCellsCount / (this.cellNumbersX * this.cellNumbersY - this.minesCount)) * 100);
+    Bus.emit('progressGameChange', prcentOpen);
+    Bus.emit('pointsStatisticsChange', this.pointsCount);
+    this._checkOnWinning();
+    return;
+  }
+
+  _checkOnLosing(x : number, y : number) {
+    let loser = false;
+    if (this.mineSweeper.map[x][y] === 9) { // losing
       this._openAllCels();
       if (this.timer.running) {
         this.timer.stop();
       }
       this.start = false;
-      const data = JSON.stringify({ difficult: this.difficult, singleTotal: 1, singleWin: 0 });
-      Bus.emit('sendResultsSingleGame', data);
-      this._showMessage('You lose!');
-      return;
+      Bus.emit('sendResultsSingleGame', JSON.stringify({ difficult: this.difficult, singleTotal: 1, singleWin: 0 }));
+      Bus.emit('showTextInMessageBox', 'You lose!');
+      loser = true;
     }
-    const res = this.mineSweeper.
-      openCels(x, y, this.cellNumbersX, this.cellNumbersY);
-    this._openCels(res.cellArr);
-    this.openCellsCount += res.openCells;
-    this.prcentOpen = Math.round((this.openCellsCount / (this.cellNumbersX * this.cellNumbersY - this.minesCount)) * 100);
-    this.pointsCount += res.points;
-    Bus.emit('progressGameChange', this.prcentOpen);
-    Bus.emit('pointsStatisticsChange', this.pointsCount);
+    return loser;
+  }
 
+  _checkOnWinning() {
+    let winner = false;
     if (this.openCellsCount === this.cellNumbersX * this.cellNumbersY - this.minesCount) { // winning
       this._openAllCels();
-      console.log(this.timer.timeStr);
       const timeArr = this.timer.timeStr.split(':');
       const timeSec = parseInt(timeArr[0]) * 3600 + parseInt(timeArr[1]) * 60 + parseInt(timeArr[2]) + parseInt(timeArr[3]) / 100
       const data = { score: this.pointsCount, time: timeSec, difficult: this.difficult, singleTotal: 1, singleWin: 1 };
@@ -221,7 +206,6 @@ export default class SinglePlayerView extends BaseView {
         this.timer.stop();
       }
       this.start = false;
-      console.log('this.pointsCount' , this.pointsCount);
       if (this.maxPointsCount < this.pointsCount) {
         this.maxPointsCount = this.pointsCount;
         Bus.emit('userScoreInGameChange', this.pointsCount)
@@ -230,9 +214,10 @@ export default class SinglePlayerView extends BaseView {
         this.minTimeCount = this.timer.timeStr;
         Bus.emit('userTimeInGameChange', this.minTimeCount.toString());
       }
-      this._showMessage('You win!');
+      Bus.emit('showTextInMessageBox', 'You win!');
+      winner = true;
     }
-    return;
+    return winner;
   }
 
   /** */
@@ -240,9 +225,9 @@ export default class SinglePlayerView extends BaseView {
     if (!this.start) {
       return;
     }
-    let x  = coordinatesStruct.x;
-    let y = coordinatesStruct.y;
-    const typeOfCell = this.mineSweeper.putRemoveFlag(x, y);
+    const x = parseInt(coordinatesStruct.x);
+    const y = parseInt(coordinatesStruct.y);
+    const typeOfCell = this.mineSweeper.putRemoveFlag(x, y); // 0 - закрыта; 1 - открыта; 2 - флаг
     if (typeOfCell == 1) {
       return;
     }
@@ -254,20 +239,10 @@ export default class SinglePlayerView extends BaseView {
     }
 
     if (typeOfCell == 2) {
-      --this.minesRemainedCount;
       Bus.emit('minesStatisticsChange', -1);
       Bus.emit('setUnsetFlagOnCell', {x : x, y : y, type : 'flag'});
     }
     return;
-  }
-
-  /** */
-  _showMessage(mess: string) {
-    Bus.emit('showTextInMessageBox', mess);
-  }
-
-  _closeMessage() {
-    Bus.emit('messageBoxHide', true);
   }
 
   /** */      
@@ -286,7 +261,6 @@ export default class SinglePlayerView extends BaseView {
         Bus.emit('openCell', {x : x, y : y, type : this.mineSweeper.map[x][y]});
       }
     }
-    this.prcentOpen = 100;
     Bus.emit('progressGameChange', 100);
     return;
   }

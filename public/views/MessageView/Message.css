@@ -1,5 +1,4 @@
-
-.single_player__popup{
+.messagebox__popup{
   width: 100%;
   min-height: 100%;
   background-color: rgba(0,0,0,0.5);
@@ -10,7 +9,7 @@
   left: 0;
   overflow: auto;
 }
-.single_player__popup_content{
+.messagebox__popup_content{
   width:120px;
   height: 120px;
   padding:10px;
@@ -28,7 +27,7 @@
   transition: .5s ease-in-out;
 }
 
-.single_player__popup_ok_button {
+.messagebox__popup_ok_button {
   text-decoration: none;
   background-color: #4B5E70;
   position: relative;
@@ -45,11 +44,11 @@
   border-radius: 10px;
 }
 
-.single_player__popup_ok_button .single_player__popup_content {
+.messagebox__popup_ok_button .messagebox__popup_content {
   opacity: 0;
 }
 
-.single_player__popup_text {
+.messagebox__popup_text {
   text-decoration: none;
   position: relative;
   text-align: center;
