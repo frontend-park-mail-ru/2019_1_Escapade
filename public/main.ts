@@ -4,7 +4,6 @@ import { MainMenuView } from './views/MainMenuView/MainMenu';
 import SinglePlayerView from './views/SinglePlayerView/SinglePlayer';
 import { AuthorsView } from './views/AuthorsView/Authors';
 import { RulesView } from './views/RulesView/Rules';
-import LobbyView from './views/LobbyView/Lobby';
 //import ChatView from './views/Chat.ts';
 import signOut from './views/SignOut/SignOut';
 import { checkAuth } from './utils/user';
@@ -13,7 +12,7 @@ import bus from './utils/bus';
 import LeaderBoardMV from './ModelView/LeaderBoardMV';
 import SignInMV from './ModelView/SignInMV';
 import SignUpMV from './ModelView/SignUpMV';
-import MultiPlayerMV from './ModelView/MultiPlayerMV';
+import LobbyMV from './ModelView/LobbyMV';
 import SinglePlayerMV from './ModelView/SinglePlayerMV';
 import ProfileMV from './ModelView/ProfileMV';
 
@@ -43,10 +42,9 @@ router
   .register('/leaders', LeaderBoardMV.view)
   .register('/about', AuthorsView)
   .register('/rules', RulesView)
-  .register('/lobby', LobbyView)
   .register('/profile', ProfileMV.views.ProfileView)
   .register('/single_player', SinglePlayerMV.view)
-  .register('/multi_player', MultiPlayerMV.view)
+  .register('/lobby', LobbyMV.view)
   .register('/profile/edit', ProfileMV.views.ProfileEditView);
 
 bus.on('logout', signOut);

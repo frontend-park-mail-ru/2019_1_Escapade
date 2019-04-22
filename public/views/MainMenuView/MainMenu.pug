@@ -5,10 +5,10 @@ section(data-section-name='menu')
       a.menu__label(href='rules', data-href='rules') Rules
     .menu__wrapper
       a.menu__logo(href='single_player', data-href='single_player')
+      a.menu__multi_logo(href='lobby', data-href='lobby')
       - if (user.name !== null){
       a.menu__name(href='profile', data-href='profile') #{user.name}
       a.menu__enter(href='sign_out', data-href='sign_out') logout
-      a.menu__multi_logo(href='lobby', data-href='lobby')
       - }
       - else {
       a.menu__name(href='sign_in', data-href='sign_in') Anonymus

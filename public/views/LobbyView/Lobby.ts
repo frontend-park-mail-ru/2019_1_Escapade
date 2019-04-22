@@ -1,5 +1,4 @@
 const lobbyTemplate = require('./Lobby.pug');
-const lobbyData = require('./Lobby__data.pug');
 import { User } from '../../utils/user';
 import BaseView from '../BaseView';
 import Bus from '../../utils/bus';
@@ -23,5 +22,14 @@ export default class LobbyView extends BaseView {
     this.user = User;
     console.log('User ', User);
     super.render();
+    Bus.emit('connect');
+    Bus.on('returnRooms', this._getRooms.bind(this));
+    Bus.emit('get_rooms');
   }
+
+  _getRooms(data : any) {
+    console.log(data);
+  }
+
+
 }

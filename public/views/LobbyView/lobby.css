@@ -21,23 +21,23 @@
   align-self: flex-start
 }
 
-.row {
+.lobby__row {
   display: flex;
   flex-direction: row;
 }
 
-.center {
+.lobby__center {
   justify-content: center;
 }
 
-.column {
+.lobby__column {
   display: flex;
   justify-content: center;
   align-items: center;
   flex-direction: column;
 }
 
-.label {
+.lobby__label {
   border-radius: 10px;
   margin-bottom: 2px;
   font-family: Saira;
@@ -53,7 +53,7 @@
   margin-right: 30vw;
 }
 
-.button {
+.lobby__button {
   border-radius: 30px;
   border: 0.2vw solid rgb(150, 159, 167);
   background-color: rgba(75, 94, 112, 1);
@@ -99,57 +99,57 @@
   background-color:rgba(130, 130, 130, 1);
 }
 
-.element {
+.lobby__element {
   margin: 3px;
   padding: 4px;
 }
 
-.with_image {
+.lobby__with_image {
   background-repeat: no-repeat;
   background-size: 1.5vw;
   background-position: left;
   text-indent: 1vw;
 }
 
-.name {
+.lobby__name {
   background-image: url('../../img/room.png');
   width: 10vw;
 }
-.players {
+.lobby__players {
   background-image: url('../../img/player.png');
   width: 10vw;
 }
-.difficult {
+.lobby__difficult {
   background-image: url('../../img/difficult.png');
   width: 10vw;
 }
-.size {
+.lobby__size {
   background-image: url('../../img/size.png');
   width: 10vw;
 }
-.mines {
+.lobby__mines {
   background-image: url('../../img/mine_icon.png');
   width: 10vw;
 }
-.time {
+.lobby__time {
   background-image: url('../../img/clock.png');
   width: 30vw;
 }
-.time_have {
+.lobby__time_have {
   background-image: url('../../img/clock.png');
   width: 10vw;
 }
-.observers {
+.lobby__observers {
   background-image: url('../../img/observer.png');
   width: 10vw;
 }
-.status {
+.lobby__status {
   background-image: url('../../img/status.png');
   width: 10vw;
 }
 
 
-.paginator {
+.lobby__paginator {
   text-align: center;
   display:flex;
   flex-direction: row;
@@ -161,7 +161,7 @@
   background-color:rgba(0, 0, 0, 0.55);
 }
 
-.paginator_left {
+.lobby__paginator_left {
   background-image: url('../../img/flag_back.png');
   background-repeat: no-repeat;
   background-size: 4vw;
@@ -170,7 +170,7 @@
   min-width: 4vw;
 }
 
-.paginator_right {
+.lobby__paginator_right {
   background-image: url('../../img/flag_ahead.png');
   background-repeat: no-repeat;
   background-size: 4vw;
@@ -179,7 +179,7 @@
   min-width: 4vw;
 }
 
-.paginator_page {
+.lobby__paginator_page {
   color: white;
   font-size: calc(0.5rem + 3vw);
   font-weight: 600;

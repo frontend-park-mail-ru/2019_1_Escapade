@@ -1,4 +1,4 @@
-const ProfileTemplate = require('./Profile__game.pug');
+const ProfileTemplate = require('./Profile.pug');
 const profileData = require('./Profile__data.pug');
 import { User } from '../../utils/user';
 import { checkAuth } from '../../utils/user';
@@ -43,8 +43,8 @@ export default class ProfileView extends BaseView {
     this._warnings = {};
     this._warnings.email = this.parent.querySelector('.js-warning-email');
     Bus.emit('getAvatar', User.name);
-    document.getElementsByClassName('profile__input_score')[0].innerHTML = User.bestScore.String
-    document.getElementsByClassName('profile__input_time')[0].innerHTML = User.bestTime.String
+    document.getElementsByClassName('profile__input_score')[0].innerHTML = User.bestScore.String;
+    document.getElementsByClassName('profile__input_time')[0].innerHTML = User.bestTime.String;
     document.getElementById('file')
       .addEventListener('change', this._handleFileSelect.bind(this), false);
   }
