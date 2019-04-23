@@ -1,9 +1,15 @@
+import Bus from "./bus";
 
 export class WebSocketInterface {
-  connect: boolean;
   ws: WebSocket;
+  dataJSON: any;
+  connect: boolean;
 
   constructor(address = 'ws://localhost:8081') {
+    this.connectWS(address);
+  }
+
+  connectWS(address : string) {
     this.connect = true;
     // не работает ws.onopen пока не знаю почему
     this.ws = new WebSocket(address);
@@ -19,13 +25,46 @@ export class WebSocketInterface {
       console.log('Code: ' + event.code + ' cause: ' + event.reason);
     };
     this.ws.onerror = function (error) {
+      console.log('ws error');
+      return;
     };
+
+    console.log('_connect begin');
+    if (this.ws) {
+      this.setCallback(this._getInfoCallBack.bind(this));
+    }
+    console.log('_connect end');
+    //Bus.on('sendInfoToWS', this._sendInfoJSON.bind(this));
+  }
+  /**
+   * _getRoomsCallBack
+   */
+  _getInfoCallBack(data: string) {  
+    console.log('_getInfoCallBack begin') 
+    try {
+      this.dataJSON = JSON.parse(data);
+    } catch (e) {
+      console.log('debugging - ', data);
+      return;
+    }
+    Bus.emit('getInfoFromWS', this.dataJSON);
+
+    console.log('_getInfoCallBack end')
+  }
+
+  /**
+   * _sendInfo
+   */
+  sendInfoJSON(data : any) { 
+    const dataJSON = JSON.stringify(data);
+    console.log(dataJSON);
+    this.sendMessage(dataJSON);
   }
 
 
-  sendMessage(data: string | ArrayBuffer | Blob | ArrayBufferView) {
+  sendMessage(data: any) {
     //if (this.connect) {
-    this.ws.onopen = () => this.ws.send(data);
+    this.ws.send(data);
     //}
   }
 
@@ -37,8 +76,10 @@ export class WebSocketInterface {
     };
   }
 
-  closeConnection(code: number, reason: string) {
-    this.ws.close(code, reason);
+  closeConnection(code: number = 1000, reason: string = 'closing') {
+    if (this.ws) {
+      this.ws.close(code, reason);
+    }
   }
 }
 

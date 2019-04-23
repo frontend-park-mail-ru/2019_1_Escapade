@@ -27,6 +27,7 @@ export default class Router {
    * @param {string} path
    */
   open(path: string) {
+    bus.emit('currentPath', path)
     bus.emit('stop_reset_timer', '')
     const route = this.routes[path];
     if (!route) {
@@ -101,7 +102,7 @@ export default class Router {
 
     window.addEventListener('popstate', function () {
       const currentPath = window.location.pathname;
-
+      
       this.open(currentPath);
     }.bind(this));
 
