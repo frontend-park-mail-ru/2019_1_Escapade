@@ -72,11 +72,13 @@ body {
 }
 
 .menu__multi_logo {
-  background-image: url('../../img/logo_multi.png');
+  background-image: url(/img/logo_multi.png);
   background-repeat: no-repeat;
   background-size: cover;
-  height: 6vw;
-  width: 6vw;
+  height: 36vw;
+  width: 36vw;
+  -webkit-animation: pulsing 3s infinite;
+  animation: pulsing 3s infinite;
 }
 
 .menu__row {

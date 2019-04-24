@@ -1,12 +1,19 @@
 section(data-section-name='lobby')
   .lobby
     .lobby__main
-      a.back.lobby__back(data-href='menu', href='menu')
+      .lobby__row
+        a.back.lobby__back(data-href='menu', href='menu')
+        .lobby__current_room_panel
+          .lobby__row
+            .lobby__column
+              .room_status
+              .room_status_images_players
+          .room__exit
       .lobby__column
         .lobby__row
           .lobby__label.lobby__label Rooms
           .lobby__row
-            .lobby__button.lobby__find_game random room
+            .lobby__button.lobby__find_game join room
             .lobby__button.lobby__create_game create room
         .lobby__free_room_container
         .lobby__busy_room_container

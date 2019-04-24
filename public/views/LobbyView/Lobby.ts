@@ -14,9 +14,10 @@ export default class LobbyView extends BaseView {
   parent: any;
   _user: any;
   createRoomButton: any;
-  free_room_container: any;
+  freeRoomContainer: any;
   ws: WebSocketInterface;
   wsAdress: string;
+  leaveRoomButton: any;
   /**
    *
    * @param {*} parent
@@ -24,8 +25,6 @@ export default class LobbyView extends BaseView {
   constructor(parent: HTMLElement) {
     super(parent, lobbyTemplate, false);
     this.wsAdress = 'ws://localhost:3001/ws';
-    
-    
   }
 
   /** */
@@ -34,13 +33,24 @@ export default class LobbyView extends BaseView {
     console.log('User ', User);
     super.render();
     
-    this.free_room_container = this.parent.querySelector('.lobby__free_room_container');
-    this.free_room_container = this.parent.querySelector('.lobby__busy_room_container');
+    this.freeRoomContainer = this.parent.querySelector('.lobby__freeRoomContainer');
+    this.freeRoomContainer = this.parent.querySelector('.lobby__busy_room_container');
+    this.leaveRoomButton = this.parent.querySelector('.room__exit');
+
     this.createRoomButton = document.querySelector('.lobby__create_game');
     this.createRoomButton.addEventListener('click', this._createRoomEvent.bind(this));
+    this.leaveRoomButton.addEventListener('click', this._leaveRoom.bind(this));
     Bus.on('getInfoFromWS', this._getInfo.bind(this));
     this.ws = new WebSocketInterface(this.wsAdress);
     Bus.on('currentPath', this.currentPathSignalFunc.bind(this))
+    document.addEventListener('click', this._leftClickOnBody.bind(this));
+  }
+
+  _leftClickOnBody(e : any) {
+    if (e.target.classList.contains('lobby__free_room')) {
+      const name  = e.target.querySelector('.lobby__name').innerHTML;
+      this._connectToRoom(name)
+    }
   }
 
   currentPathSignalFunc(path: string) {
@@ -57,7 +67,10 @@ export default class LobbyView extends BaseView {
   _getInfo(data : any) {
     console.log('_getInfo begin ', data) 
     if (data.type === 'Lobby') {
-      this._addRooms(data);
+      if (data.allRooms) {
+        this._addRooms(data);
+      }
+      
     }
     console.log('_getInfo end') 
   }
@@ -70,12 +83,22 @@ export default class LobbyView extends BaseView {
     const mines = 20;
 
     this.ws.sendInfoJSON({send : { RoomSettings : {name : 'create', width : width, height : height, 
-    players : players, observers : observers, mines : mines}}});
+    players : players, observers : observers, prepare:10, play:100, mines : mines}}});
+
   }
 
+  _leaveRoom() {
+    this.ws.sendInfoJSON({send:{action:14}});    
+  }
+
+  _connectToRoom(name : string) {
+    this.ws.sendInfoJSON({send : { RoomSettings : {name : name}}});
+  }
+  
+
   _addRooms(data : any) {
-    this.free_room_container.innerHTML = ''
-    this.free_room_container.innerHTML = '';
+    this.freeRoomContainer.innerHTML = ''
+    this.freeRoomContainer.innerHTML = '';
     console.log('_addRooms begin ', data);
     data.allRooms.get.forEach((item : any, i : number) => {
       if (item.status === 3) {
@@ -127,12 +150,11 @@ export default class LobbyView extends BaseView {
   }
 
   _addFreeRoom(room : any) {
-    console.log(room);
-    this.free_room_container.innerHTML += lobbyTemplateFreeRoom({ room : room });
+    this.freeRoomContainer.innerHTML += lobbyTemplateFreeRoom({ room : room });
   }
 
   _addBusyRoom(room : any) {
-    this.free_room_container.innerHTML += lobbyTemplateBusyRoom({ room : room });
+    this.freeRoomContainer.innerHTML += lobbyTemplateBusyRoom({ room : room });
   }
 
 }
