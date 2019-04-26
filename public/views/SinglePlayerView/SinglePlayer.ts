@@ -136,10 +136,26 @@ export default class SinglePlayerView extends BaseView {
   /** */
   _changeHard(hardStruct : any) {
     this.difficult = hardStruct.difficult;
-    this.minesCount = hardStruct.minesCount;
-    this.cellNumbersX = hardStruct.width;
-    this.cellNumbersY = hardStruct.height;
     
+
+    switch(this.difficult) {
+      case 0 :
+        this.minesCount = 10;
+        break;
+      case 1 :
+        this.minesCount = 20;
+        break;
+      case 2 :
+        this.minesCount = 30;
+        break;
+      case 3 :
+        this.minesCount = 40;
+        break;
+    }
+    this.cellNumbersX = 15;
+    this.cellNumbersY = 15;
+    Bus.emit('settingsChangeSize', {width: this.cellNumbersX, height: this.cellNumbersY});
+    Bus.emit('settingsChangeMinesCount', this.minesCount);
     checkAuth(this._updateUserInfoCalback.bind(this), this.difficult)
     if (this.timer.running) {
       this.timer.stop();

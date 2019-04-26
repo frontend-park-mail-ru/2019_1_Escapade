@@ -70,30 +70,16 @@ export default class SettingsGameView {
   _changeHard(e: any) {
     if (e.target.classList.contains('single_player__submenu_baby')) {
       this.difficult = 0;
-      this.minesCount = 10;
-      this.width = 15;
-      this.height = 15;
     } else if (e.target.classList.contains('single_player__submenu_normal')) {
       this.difficult = 1;
-      this.minesCount = 20;
-      this.width = 15;
-      this.height = 15;
     } else if (e.target.classList.contains('single_player__submenu_hard')) {
       this.difficult = 2;
-      this.minesCount = 30;
-      this.width = 15;
-      this.height = 15;
     } else if (e.target.classList.contains('single_player__submenu_god')) {
       this.difficult = 3;
-      this.minesCount = 40;
-      this.width = 15;
-      this.height = 15;
     }
     console.log("_changeHard");
     this._modeChange(this._getModeByDifficult(this.difficult));
-    this._minesCountChange(this.minesCount);
-    this._sizeChange({width: this.width, height: this.height});
-    Bus.emit('settingsChangeHard', {difficult : this.difficult, minesCount: this.minesCount, width: this.width, height: this.height});
+    Bus.emit('settingsChangeHard', {difficult : this.difficult});
   }
   /** */
   _sizeChange({width = 15, height = 15}) {

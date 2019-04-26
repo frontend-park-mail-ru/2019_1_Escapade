@@ -5,6 +5,7 @@ import { User } from '../../utils/user';
 import BaseView from '../BaseView';
 import Bus from '../../utils/bus';
 import { WebSocketInterface } from '../../utils/webSocket';
+import { throwStatement } from 'babel-types';
 
 /**
  *
@@ -18,6 +19,11 @@ export default class LobbyView extends BaseView {
   ws: WebSocketInterface;
   wsAdress: string;
   leaveRoomButton: any;
+  busyRoomContainer: any;
+  currentRoomPanel: any;
+  roomStatusField: any;
+  roomImagesField: any;
+  roomI: any;
   /**
    *
    * @param {*} parent
@@ -33,13 +39,18 @@ export default class LobbyView extends BaseView {
     console.log('User ', User);
     super.render();
     
-    this.freeRoomContainer = this.parent.querySelector('.lobby__freeRoomContainer');
-    this.freeRoomContainer = this.parent.querySelector('.lobby__busy_room_container');
+    this.freeRoomContainer = this.parent.querySelector('.lobby__free_room_container');
+    this.busyRoomContainer = this.parent.querySelector('.lobby__busy_room_container');
     this.leaveRoomButton = this.parent.querySelector('.room__exit');
+    this.currentRoomPanel = this.parent.querySelector('.lobby__current_room_panel');
+    this.roomStatusField = this.currentRoomPanel.querySelector('.room_status');
+    this.roomImagesField = this.currentRoomPanel.querySelector('.room_status_images_players');
+    this.currentRoomPanel.hidden = true;
 
     this.createRoomButton = document.querySelector('.lobby__create_game');
     this.createRoomButton.addEventListener('click', this._createRoomEvent.bind(this));
     this.leaveRoomButton.addEventListener('click', this._leaveRoom.bind(this));
+
     Bus.on('getInfoFromWS', this._getInfo.bind(this));
     this.ws = new WebSocketInterface(this.wsAdress);
     Bus.on('currentPath', this.currentPathSignalFunc.bind(this))
@@ -52,6 +63,8 @@ export default class LobbyView extends BaseView {
       this._connectToRoom(name)
     }
   }
+
+
 
   currentPathSignalFunc(path: string) {
     if (path === '/lobby') {
@@ -70,9 +83,20 @@ export default class LobbyView extends BaseView {
       if (data.allRooms) {
         this._addRooms(data);
       }
-      
+    } else if (data.type === 'Room') {
+      this._updateCurrentRoom(data);
     }
     console.log('_getInfo end') 
+  }
+
+  _updateCurrentRoom(data : any) {
+    this.currentRoomPanel.hidden = false;
+    
+    if (!this.roomStatusField) {
+      console.log('error this.roomStatusField')
+      return;
+    }
+    this.roomStatusField.innerHTML = `Room ${data.name} waiting... ${data.players.connections.length}/${data.players.capacity}`;
   }
 
   _createRoomEvent() {
@@ -88,7 +112,11 @@ export default class LobbyView extends BaseView {
   }
 
   _leaveRoom() {
-    this.ws.sendInfoJSON({send:{action:14}});    
+    this.ws.sendInfoJSON({send:{action:14}});
+    this.roomStatusField.innerHTML = '';
+    this.roomImagesField.innerHTML = '';
+    this.currentRoomPanel.hidden = true;
+
   }
 
   _connectToRoom(name : string) {
@@ -98,7 +126,7 @@ export default class LobbyView extends BaseView {
 
   _addRooms(data : any) {
     this.freeRoomContainer.innerHTML = ''
-    this.freeRoomContainer.innerHTML = '';
+    this.busyRoomContainer.innerHTML = '';
     console.log('_addRooms begin ', data);
     data.allRooms.get.forEach((item : any, i : number) => {
       if (item.status === 3) {
@@ -154,7 +182,7 @@ export default class LobbyView extends BaseView {
   }
 
   _addBusyRoom(room : any) {
-    this.freeRoomContainer.innerHTML += lobbyTemplateBusyRoom({ room : room });
+    this.busyRoomContainer.innerHTML += lobbyTemplateBusyRoom({ room : room });
   }
 
 }
