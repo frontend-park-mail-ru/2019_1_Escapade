@@ -1,7 +1,16 @@
 .chat {
-  min-width: 5vw;
-  min-height: 5vw;
-  max-height: 5vw;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: center;
+  height: 100vh;
+  background: radial-gradient(512.00px at 50% 50%, rgba(255, 255, 255, 0.34) 0%, rgba(255, 255, 255, 0) 100%), #667787;
+}
+
+.chat__wrapper{
+  background: #4B5E70;
+  padding: 15px;
+  border-radius: 15px
 }
 
 .chat__row {
@@ -10,7 +19,11 @@
 }
 
 .chat__history {
+  display: flex;
   flex-direction: column;
+  width: 40vw;
+  height: 50vh;
+  overflow-y:scroll;
 }
 
 .chat__column {
@@ -28,6 +41,16 @@
   margin: 10px 0;
 }
 
+.chat__online{
+  text-align: center;
+  color: white;
+}
+
+.chat__typing{
+  text-align: center;
+  color: white
+}
+
 /* Clear floats */
 .chat__message::after {
   content: "";
@@ -40,12 +63,21 @@
   float: right;
   max-width: 40px;
   width: 100%;
-  margin-right: 20px;
   border-radius: 50%;
   min-width: 40px;
   min-height: 40px;
 }
 
+.chat__text{
+  display: flex;
+  align-items: center;
+}
+
+.chat__controls{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 
 /* Style time text */
 .chat__message_time {
@@ -54,11 +86,19 @@
 }
 
 .chat__send_button {
-  background-image: url('../../img/flag_ahead.png');
+  background-image: url(/img/flag_ahead.png);
   background-repeat: no-repeat;
   background-size: contain;
   background-position: center;
   cursor: pointer;
-  min-width: 20vw;
-  min-height: 5vw;
+  width: 7vw;
+  height: 5vw;
+}
+
+
+
+
+.chat_my___row{
+  display: flex;
+  flex-direction: row-reverse;
 }
