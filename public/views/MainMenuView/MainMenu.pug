@@ -1,4 +1,6 @@
 section(data-section-name='menu')
+  button.mt-2.hide_chat Скрыть чат
+  button.mt-2.open_chat Открыть чат
   .menu
     .menu__labels
       a.menu__label(href='leaders', data-href='leaders') Leaderboard
@@ -22,4 +24,6 @@ section(data-section-name='menu')
         a.menu__enter(href='sign_up', data-href='sign_up') sign up
       - }
       a.menu__escapade.mt-2(href='about', data-href='about') Escapade
+.popup__wrapper
+  iframe.chat__popup(src="http://localhost:8080/chat" frameborder="0")
 include ../../components/OfflinePoppup/Offline.pug

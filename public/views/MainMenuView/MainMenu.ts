@@ -19,19 +19,6 @@ export class MainMenuView extends BaseView {
   */
   render() {
     this.user = User;
-    /*
-    let value = 1;
-    let width = elems[0].style.width
-    let maxWidth = elems[0].style.width
-    var elems = document.getElementsByClassName('menu__logo');
-    let elem = elems[0]
-    setInterval(function(){
-          if (elems[0].style.width >
-          elems[0].style.width++;
-          elems[0].style.width++;
-
-    },60);
-    */
     super.render();
   }
 

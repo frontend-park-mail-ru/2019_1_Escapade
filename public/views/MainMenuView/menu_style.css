@@ -133,3 +133,15 @@ body {
   }
 
 }
+
+.hide_chat{
+  position: absolute;
+  top:0;
+  left: 5px;
+}
+
+.open_chat{
+  position: absolute;
+  top:30px;
+  left: 5px;
+}
