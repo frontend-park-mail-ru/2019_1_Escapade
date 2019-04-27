@@ -1,6 +1,18 @@
 section(data-section-name='chat')
   .chat
-    .chat__history
-    .chat__row
-      input.chat__input.bg-white(name='message', type='text')
-      .chat__send_button
+    .chat__wrapper
+      .chat__online.mb-2 Now Online: 5
+      .chat__history
+        include ./ChatMessage.pug
+        include ./MyChatMessage.pug
+        include ./ChatMessage.pug
+        include ./ChatMessage.pug
+        include ./MyChatMessage.pug
+        include ./ChatMessage.pug
+        include ./MyChatMessage.pug
+        include ./ChatMessage.pug
+        include ./ChatMessage.pug
+      .chat__typing.mt-3 ALex miha .... 
+      .chat__controls.mt-3
+        input.profile__input.bg-white(name="login" type="login" placeholder="Enter message")
+        .chat__send_button
