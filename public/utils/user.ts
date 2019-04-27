@@ -24,11 +24,11 @@ class UserSingleton {
    * @param {string} avatar
    * @param {string} name
    */
-  setUser({ email = '', played = 0, avatar = '', name = '', bestTime = '', bestScore = '' } = {}) {
-    console.log('HERERERE ', avatar);
+  setUser({ email = '', played = 0, photo = '', name = '', bestTime = '', bestScore = '' } = {}) {
+    console.log('HERERERE ', photo);
     this.email = email || null;
     this.played = played || 0;
-    this.avatar = avatar || './img/qrosh.png';
+    this.avatar = photo || './img/qrosh.png';
     this.name = name || null;
     this.bestTime = bestTime;
     this.bestScore = bestScore;
