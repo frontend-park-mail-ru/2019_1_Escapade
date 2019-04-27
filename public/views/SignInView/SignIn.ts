@@ -20,6 +20,7 @@ export default class SignInView extends BaseView {
     super(parent, signInTemplate, false);
 
     Bus.on('onSuccessLogin', (usr: { email: any; played: any; avatar: any; name: any; }) => {
+      console.log('signIn ' + usr);
       User.setUser({ ...usr });
       Bus.emit('userUpdate');
       router.open('/profile');

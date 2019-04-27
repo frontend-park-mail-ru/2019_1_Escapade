@@ -94,6 +94,8 @@ export default class ProfileView extends BaseView {
     // Render thumbnail.'
     const img = document.createElement('img');
     img.src = uploadURL;
+    User.avatar = uploadURL;
+    console.log(User.avatar);
     img.className = 'thumb';
     document.getElementById('output').innerHTML = '';
     document.getElementById('output').appendChild(img);
@@ -106,6 +108,7 @@ export default class ProfileView extends BaseView {
     console.log('Failed to get avatar');
     document.getElementById('output')
       .innerHTML = `<div class=profile__default_avatar></div>`;
+
   }
 
   /**

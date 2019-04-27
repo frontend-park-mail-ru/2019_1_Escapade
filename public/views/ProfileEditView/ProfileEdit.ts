@@ -24,6 +24,7 @@ export default class ProfileEditView extends BaseView {
     Bus.on('onSuccessChange', (usr: { email?: any; played?: any; avatar?: any; name?: any; password?: any; repassword?: any; }) => {
       usr.password = '';
       usr.repassword = '';
+      console.log('Edit ' + usr);
       User.setUser({ ...usr });
       Bus.emit('userUpdate');
       router.open('/profile');

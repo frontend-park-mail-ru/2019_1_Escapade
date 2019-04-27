@@ -38,10 +38,12 @@
 /* Style images */
 .chat__message_img {
   float: right;
-  max-width: 60px;
+  max-width: 40px;
   width: 100%;
   margin-right: 20px;
   border-radius: 50%;
+  min-width: 40px;
+  min-height: 40px;
 }
 
 

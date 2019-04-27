@@ -19,6 +19,7 @@ export default class SignUpView extends BaseView {
     super(parent, signUpTemplate, false);
 
     Bus.on('onSuccessAuth', (usr: any) => {
+      console.log('signUp ' + usr);
       User.setUser({ ...usr });
       Bus.emit('userUpdate');
       router.open('/profile');
