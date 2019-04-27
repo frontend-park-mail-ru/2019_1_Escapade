@@ -92,6 +92,9 @@ export default class ChatView extends BaseView {
 
   _sendMessage() {
     const messageText = this.inputMessageField.value;
+    if (messageText == '') {
+      return;
+    }
     const date = new Date();
     const timeString =  date.getHours().toString() + ':' + date.getMinutes().toString();
     this.ws.sendInfoJSON({message : messageText});
