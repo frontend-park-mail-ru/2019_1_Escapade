@@ -27,7 +27,7 @@ export default class ChatView extends BaseView {
    */
   constructor(parent: any) {
     super(parent, signInTemplate, false);
-    this.wsAdress = 'ws://localhost:3002/ws';
+    this.wsAdress = 'ws://escapade-chat.herokuapp.com/ws';
     this.chatVisitors = null;
     this.myMessage = false;
   }
