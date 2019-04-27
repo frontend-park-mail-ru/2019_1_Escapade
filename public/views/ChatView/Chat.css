@@ -79,6 +79,10 @@
   align-items: center;
 }
 
+.left_text {
+  align-content: left;
+}
+
 /* Style time text */
 .chat__message_time {
   float: left;
@@ -95,7 +99,9 @@
   height: 5vw;
 }
 
-
+.chat__mymessage {
+  background: #D3D3D3;
+}
 
 
 .chat_my___row{
