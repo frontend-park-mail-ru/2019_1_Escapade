@@ -20,6 +20,8 @@ import ProfileMV from './ModelView/ProfileMV';
 import './img/arrow-left.png';
 import './img/arrow-right.png';
 import './img/ava_guest.png';
+import './img/roomNotFound.png';
+
 import './main.css';
 
 const root = document.getElementById('application');
