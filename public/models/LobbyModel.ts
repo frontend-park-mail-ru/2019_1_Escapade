@@ -1,5 +1,6 @@
 import Bus from '../utils/bus';
 import { WebSocketInterface } from '../utils/webSocket';
+import router from '../../public/main'
 /**
  *
  */
@@ -26,6 +27,10 @@ export default class LobbyModel {
   }
 
   _currentPathSignalFunc(path: string) {
+    if (path === '/multi_player') {
+      console.log('pam pam');
+      return;
+    }
     if (path === '/lobby') {
       this.ws.closeConnection();
       this.ws.connectWS(this.wsAdress);
@@ -79,8 +84,7 @@ export default class LobbyModel {
   }
 
   _startGame() {
-    //window.location.replace("http://stackoverflow.com");
-    window.location.href = "http://localhost:8080/multi_player";
+    router.open('/multi_player');
     Bus.emit('sendPlayersToRoom', this.currentRoomConnections)
   }
 

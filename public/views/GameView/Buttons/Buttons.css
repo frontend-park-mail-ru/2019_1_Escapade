@@ -1,5 +1,5 @@
 
-.single_player__right_menu_buttons {
+.game__right_menu_buttons {
   position: relative;
   display:flex;
   flex-direction: row;
@@ -8,7 +8,7 @@
   width: 500px;
 }
 
-.single_player__restart_button {
+.game__restart_button {
   background-color: #4B5E70;
   position: relative;
   text-align: center;
@@ -54,7 +54,7 @@
   }
 }
 
-.single_player__quit_button {
+.game__quit_button {
   text-decoration: none;
   background-color: #828282;
   position: relative;

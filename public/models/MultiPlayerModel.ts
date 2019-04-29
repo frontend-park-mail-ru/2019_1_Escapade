@@ -6,55 +6,26 @@ import {WebSocketInterface} from '../utils/webSocket';
 export default class MultiplayerModel {
   ws: WebSocketInterface;
   rooms: any;
+  wsAdress: string;
   /**
    *
    */
   constructor() {
-    Bus.on('connect', this._connect.bind(this));
-    Bus.on('get_rooms', this._getRooms.bind(this));
-    Bus.on('send_info', this._sendInfo.bind(this));
-    Bus.on('send_cell_coord', this._sendCell.bind(this));
-  }
-
-  /**
-   * _connect
-   */
-  _connect() {
-    this.ws = new WebSocketInterface('ws://localhost:3001/ws');
-  }
-
-  /**
-   * _get_rooms
-   */
-  _getRooms() {
-    this.ws.setCallback(this._getRoomsCallBack.bind(this));
-  }
-
-  /**
-   * _getRoomsCallBack
-   */
-  _getRoomsCallBack(data: string) {
-    this.rooms = JSON.parse(data);
-    console.log(this.rooms);
-  }
-
-  /**
-   * _sendInfo
-   */
-  _sendInfo() { // Вступить в комнату
-    const roomSettingsData = {name: 'Hey', width: 20, height: 20, players: 2, mines: 50};
-    const roomSettings = {roomSettings: roomSettingsData};
-    const data = JSON.stringify({send: roomSettings});
-
-    console.log(data);
+    this.wsAdress = 'ws://localhost:3001/ws';
     
-    this.ws.sendMessage(data);
+    Bus.on('getInfoFromWS', this._getInfo.bind(this));
+    Bus.on('sendPlayersToRoom', this._getPlayers.bind(this));
+    this.ws = new WebSocketInterface(this.wsAdress);
+  }
+
+  _getPlayers(data : any) {
+    console.log('I am here ' + data[0].user.name);
   }
 
   /**
    * _sendInfo
    */
-  _sendCell(cellCoord: { xCell: any; yCell: any; }) {
+  _sendInfo(cellCoord: { xCell: any; yCell: any; }) {
     const cellCoordData = {x: cellCoord.xCell, y: cellCoord.yCell};
     const data = JSON.stringify({cell: cellCoordData});
 
