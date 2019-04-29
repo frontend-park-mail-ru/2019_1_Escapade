@@ -28,52 +28,57 @@ export default class LobbyView extends BaseView {
   currentRoomId: number;
   currentRoomName: string;
   paginatorPanel: any;
-  currentRoomConnections: any[];
   /**
    *
    * @param {*} parent
    */
   constructor(parent: HTMLElement) {
     super(parent, lobbyTemplate, false);
-    this.roomsHTML = [];
   }
 
   /** */
   render() {
     this.user = User;
     super.render();
-    
+    this.currentRoomId = -1;
+    this.currentRoomName = '';
+    this.roomsHTML = [];
+    this.rooms = [];
+
     this.freeRoomContainer = this.parent.querySelector('.lobby__free_room_container');
     this.busyRoomContainer = this.parent.querySelector('.lobby__busy_room_container');
     this.leaveRoomButton = this.parent.querySelector('.room__exit');
     this.currentRoomPanel = this.parent.querySelector('.lobby__current_room_panel');
     this.paginatorPanel = this.parent.querySelector('.lobby__paginator'); 
+    this.createRoomButton = this.parent.querySelector('.lobby__create_game');
     this.roomStatusField = this.currentRoomPanel.querySelector('.room_status');
     this.roomImagesField = this.currentRoomPanel.querySelector('.room_status_images_players');
     
-    this.currentRoomPanel.hidden = true;
+    this._hideCurrentRoomPanel();
 
-    this.createRoomButton = document.querySelector('.lobby__create_game');
     this.createRoomButton.addEventListener('click', this._createRoomEvent.bind(this));
-    this.leaveRoomButton.addEventListener('click', this._leaveRoom.bind(this)); 
+    this.leaveRoomButton.addEventListener('click', this._leaveRoom.bind(this));
+
     Bus.on('updateCurrentRoom', this._updateCurrentRoom.bind(this));
+    Bus.on('addRooms', this._addRooms.bind(this));
   }
 
   _updateCurrentRoom(data : any) {
-    this.currentRoomPanel.hidden = false;
-
+    this.currentRoomName = data.name;
+    this._showCurrentRoomPanel();
     this.roomStatusField.innerHTML = `Room ${data.name} waiting... ${data.length}/${data.capacity}`;
   }
 
   _createRoomEvent() {
+    this.currentRoomId = -2;
     Bus.emit('createRoom');
   }
 
   _leaveRoom() {
     this._hideCurrentRoomPanel();
-    Bus.emit('leaveRoom');
     this.currentRoomId = -1;
     this.currentRoomName = '';
+    Bus.emit('leaveRoom');
   }
 
   _hideCurrentRoomPanel() {
@@ -82,28 +87,39 @@ export default class LobbyView extends BaseView {
     this.currentRoomPanel.hidden = true;
   }
 
-  _connectToRoom(name : string) {
-    this.ws.sendInfoJSON({send : { RoomSettings : {name : name}}});
+  _showCurrentRoomPanel() {
+    this.currentRoomPanel.hidden = false;
   }
-  
+
+  _hidePaginatorPanel() {
+    this.paginatorPanel.style.display = 'none';
+  }
+
+  _showPaginatorPanel() {
+    this.paginatorPanel.style.display = 'flex';
+  }
 
   _addRooms(data : any) {
+    this.currentRoomId = -1;
     this.roomsHTML = []
     this.rooms = []
     this.freeRoomContainer.innerHTML = ''
     this.busyRoomContainer.innerHTML = '';
-    this.paginatorPanel.style.display = 'flex';
-    let hideCurrentRoomPane = true;
-    this.currentRoomId = -1;
-    if (data.allRooms.get.length === 0) {
+    this._showPaginatorPanel();
+    
+    let hideCurrentRoomPanel = true;
+    
+    if (data.allRooms.get.length === 0) { // not found rooms
       this._notFoundRoom();
-      this.paginatorPanel.style.display = 'none';
+      this._hidePaginatorPanel();
     }
+
     data.allRooms.get.forEach((item : any, i : number) => {
       const room = {name : item.name, playersCount : item.players.connections.length,
         playersCapacity : item.players.capacity, difficult : this._getModeByMines(item.field.Mines),
         width : item.field.width, height : item.field.height, mines : item.field.Mines, time : '0:00:00',
         observersCount : item.observers.get.length, status : this._getStatusByCode(item.status)}
+      
       if (item.status === 3) {   // busy room
         this._addBusyRoom(room);
       } else {
@@ -112,10 +128,11 @@ export default class LobbyView extends BaseView {
       this.rooms.push(item);
       if (this.currentRoomName === item.name) {
         this.currentRoomId = i;
-        hideCurrentRoomPane = false;
+        hideCurrentRoomPanel = false;
       }
     });
-    if (hideCurrentRoomPane) {
+
+    if (hideCurrentRoomPanel) {
       this._hideCurrentRoomPanel();
     }
 
@@ -127,7 +144,7 @@ export default class LobbyView extends BaseView {
     if (this.currentRoomId >= 0) {
       this._changeRoomStringColor(this.currentRoomId, 1);
     }
-    if (this.currentRoomId === -2) {
+    if (this.currentRoomId === -2) { 
       this.currentRoomId = this.rooms.length - 1;
       this._changeRoomStringColor(this.currentRoomId, 1);
     }
@@ -149,8 +166,7 @@ export default class LobbyView extends BaseView {
     const info = {name : this.rooms[this.currentRoomId].name, length : this.rooms[this.currentRoomId].players.connections.length,
        capacity : this.rooms[this.currentRoomId].players.capacity}
     this._updateCurrentRoom(info);
-    
-    this._connectToRoom(this.rooms[this.currentRoomId].name)
+    Bus.emit('connectToRoom', this.rooms[this.currentRoomId].name)
   }
 
   _changeRoomStringColor(i : number, typeColor : number) {

@@ -9,20 +9,18 @@ export default class LobbyModel {
   ws: WebSocketInterface;
   wsAdress: string;
   currentRoomConnections: any;
-  currentRoomId: number;
-  currentRoomName: string;
   /**
    *
    */
   constructor() {
     this.wsAdress = 'ws://localhost:3001/ws';
-    this.rooms = [];
+    
     this.currentRoomConnections = [];
-    this.currentRoomId = -1;
-    this.currentRoomName = '';
+    
     Bus.on('getInfoFromWS', this._getInfo.bind(this));
     Bus.on('currentPath', this._currentPathSignalFunc.bind(this));
     Bus.on('createRoom', this._createRoom.bind(this));
+    Bus.on('connectToRoom', this._connectToRoom.bind(this));
     Bus.on('leaveRoom', this._leaveRoom.bind(this));
     this.ws = new WebSocketInterface(this.wsAdress);
   }
@@ -41,7 +39,7 @@ export default class LobbyModel {
     console.log('_getInfo begin ', data) 
     if (data.type === 'Lobby') {
       if (data.allRooms) {
-        this._addRooms(data);
+        Bus.emit('addRooms', data);
       }
     } else if (data.type === 'Room') {
       if (!data.players) {
@@ -64,10 +62,12 @@ export default class LobbyModel {
     const players = 2;
     const observers = 10;
     const mines = 20;
-    this.currentRoomId = -2;
-
     this.ws.sendInfoJSON({send : { RoomSettings : {name : 'create', width : width, height : height, 
     players : players, observers : observers, prepare:10, play:100, mines : mines}}});
+  }
+
+  _connectToRoom(name : any) {
+    this.ws.sendInfoJSON({send : { RoomSettings : {name : name}}});
   }
 
   _leaveRoom() {
@@ -75,7 +75,6 @@ export default class LobbyModel {
   }
 
   _updateCurrentRoom(data : any) {
-    this.currentRoomName = data.name;
     Bus.emit('updateCurrentRoom', data);
   }
 
