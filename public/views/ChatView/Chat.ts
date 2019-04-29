@@ -27,7 +27,8 @@ export default class ChatView extends BaseView {
    */
   constructor(parent: any) {
     super(parent, signInTemplate, false);
-    this.wsAdress = 'ws://escapade-chat.herokuapp.com/ws';
+    //this.wsAdress = 'ws://escapade-chat.herokuapp.com/ws';
+    this.wsAdress = 'ws://localhost:3002/ws';
     this.chatVisitors = null;
     this.myMessage = false;
   }
@@ -48,7 +49,8 @@ export default class ChatView extends BaseView {
   }
 
   currentPathSignalFunc(path: string) {
-    if (path === '/chat') {
+    console.log('path ' + path)
+    if (path === '/chat' || path === '/') {
       console.log('this.ws.connectWS')
       this.ws.closeConnection();
       this.ws.connectWS(this.wsAdress);

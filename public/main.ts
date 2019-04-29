@@ -14,6 +14,7 @@ import LeaderBoardMV from './ModelView/LeaderBoardMV';
 import SignInMV from './ModelView/SignInMV';
 import SignUpMV from './ModelView/SignUpMV';
 import LobbyMV from './ModelView/LobbyMV';
+import MultiPlayerMV from './ModelView/MultiPlayerMV'
 import SinglePlayerMV from './ModelView/SinglePlayerMV';
 import ProfileMV from './ModelView/ProfileMV';
 
@@ -21,7 +22,8 @@ import './img/arrow-left.png';
 import './img/arrow-right.png';
 import './img/ava_guest.png';
 import './img/roomNotFound.png';
-
+import './img/logo_multi.png';
+import './img/logo_single.png';
 import './main.css';
 
 const root = document.getElementById('application');
@@ -48,6 +50,7 @@ router
   .register('/profile', ProfileMV.views.ProfileView)
   .register('/single_player', SinglePlayerMV.view)
   .register('/lobby', LobbyMV.view)
+  .register('/multi_player', MultiPlayerMV.view)
   .register('/chat', ChatView)
   .register('/profile/edit', ProfileMV.views.ProfileEditView);
 

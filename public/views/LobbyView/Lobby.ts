@@ -5,7 +5,6 @@ const lobbyTemplateRoomsNotFound = require('./LobbyRoomsNotFound.pug');
 import { User } from '../../utils/user';
 import BaseView from '../BaseView';
 import Bus from '../../utils/bus';
-import { WebSocketInterface } from '../../utils/webSocket';
 import { throwStatement } from 'babel-types';
 import { runInThisContext } from 'vm';
 
@@ -18,7 +17,6 @@ export default class LobbyView extends BaseView {
   _user: any;
   createRoomButton: any;
   freeRoomContainer: any;
-  ws: WebSocketInterface;
   wsAdress: string;
   leaveRoomButton: any;
   busyRoomContainer: any;
@@ -30,23 +28,19 @@ export default class LobbyView extends BaseView {
   currentRoomId: number;
   currentRoomName: string;
   paginatorPanel: any;
+  currentRoomConnections: any[];
   /**
    *
    * @param {*} parent
    */
   constructor(parent: HTMLElement) {
     super(parent, lobbyTemplate, false);
-    this.rooms = [];
     this.roomsHTML = [];
-    this.currentRoomId = -1;
-    this.currentRoomName = '';
-    this.wsAdress = 'ws://localhost:3001/ws';
   }
 
   /** */
   render() {
     this.user = User;
-    console.log('User ', User);
     super.render();
     
     this.freeRoomContainer = this.parent.querySelector('.lobby__free_room_container');
@@ -61,78 +55,23 @@ export default class LobbyView extends BaseView {
 
     this.createRoomButton = document.querySelector('.lobby__create_game');
     this.createRoomButton.addEventListener('click', this._createRoomEvent.bind(this));
-    this.leaveRoomButton.addEventListener('click', this._leaveRoom.bind(this));
-
-    Bus.on('getInfoFromWS', this._getInfo.bind(this));
-    this.ws = new WebSocketInterface(this.wsAdress);
-    Bus.on('currentPath', this.currentPathSignalFunc.bind(this));
-    //document.addEventListener('click', this._leftClickOnBody.bind(this));
-  }
-  /*
-  _leftClickOnBody(e : any) {
-    let target = e.target;
-    while (!target.classList.contains('lobby__free_room')) {
-      target = target.parentNode;
-      if (!target.classList) {
-        return;
-      }
-    }
-    if (target.classList.contains('lobby__free_room')) {
-      this._clickOnFreeRoom(target);
-    }
-  }
-  */
-
-  currentPathSignalFunc(path: string) {
-    if (path === '/lobby') {
-      console.log('this.ws.connectWS')
-      this.ws.closeConnection();
-      this.ws.connectWS(this.wsAdress);
-    } else {
-      console.log('this.ws.closeConnection')
-      this.ws.closeConnection();
-    }
-  }
-
-  _getInfo(data : any) {
-    console.log('_getInfo begin ', data) 
-    if (data.type === 'Lobby') {
-      if (data.allRooms) {
-        this._addRooms(data);
-      }
-    } else if (data.type === 'Room') {
-      const info = {name : data.name, length : data.players.connections.length, capacity : data.players.capacity}
-      this._updateCurrentRoom(info);
-    }
-    console.log('_getInfo end') 
+    this.leaveRoomButton.addEventListener('click', this._leaveRoom.bind(this)); 
+    Bus.on('updateCurrentRoom', this._updateCurrentRoom.bind(this));
   }
 
   _updateCurrentRoom(data : any) {
     this.currentRoomPanel.hidden = false;
-    
-    if (!this.roomStatusField) {
-      console.log('error this.roomStatusField')
-      return;
-    }
-    this.currentRoomName = data.name;
+
     this.roomStatusField.innerHTML = `Room ${data.name} waiting... ${data.length}/${data.capacity}`;
   }
 
   _createRoomEvent() {
-    const width = 15;
-    const height = 15;
-    const players = 2;
-    const observers = 10;
-    const mines = 20;
-    this.currentRoomId = -2;
-
-    this.ws.sendInfoJSON({send : { RoomSettings : {name : 'create', width : width, height : height, 
-    players : players, observers : observers, prepare:10, play:100, mines : mines}}});
+    Bus.emit('createRoom');
   }
 
   _leaveRoom() {
     this._hideCurrentRoomPanel();
-    this.ws.sendInfoJSON({send:{action:14}});
+    Bus.emit('leaveRoom');
     this.currentRoomId = -1;
     this.currentRoomName = '';
   }
@@ -185,7 +124,6 @@ export default class LobbyView extends BaseView {
       this.roomsHTML.push(element);
       element.addEventListener('click', this._clickOnFreeRoom.bind(this))
     });
-    console.log(this.currentRoomId);
     if (this.currentRoomId >= 0) {
       this._changeRoomStringColor(this.currentRoomId, 1);
     }
