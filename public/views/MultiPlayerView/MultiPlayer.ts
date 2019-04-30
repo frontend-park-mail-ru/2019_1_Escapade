@@ -54,15 +54,22 @@ export default class MultiPlayerView extends BaseView {
     Bus.emit('addListenersButtonsGame');
     Bus.emit('addListenersField');
     Bus.emit('addListenersMessage');
+    Bus.emit('addListenersPlayersList');
 
     Bus.emit('changeTitleRestartButton', 'Start');
     Bus.on('settingsChangeHard', this._changeHard.bind(this));
     Bus.on('stop_reset_timer', this._stop_reset_timer.bind(this))
     Bus.on('restartClick', this._restart.bind(this));
+    Bus.on('sendPlayersToRoom', this._getPlayers.bind(this));
 
     this.timer = new Timer('multi_player__timer');
     this._showMap();
   }
+
+  _getPlayers(data : any) {
+    Bus.emit('addPlayers',data);
+  }
+
 
   /** */
   _updateUserInfo() {

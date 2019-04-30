@@ -15,6 +15,7 @@
 @import url('views/MessageView/Message.css');
 @import url('views/MultiPlayerView/MultiPlayer.css');
 @import url('views/ChatView/Chat.css');
+@import url('views/GameView/PlayersList/PlayersList.css');
 @import url('components/OfflinePoppup/offline.css');
 @import url('views/ProfileEditView/ProfileEdit.css');
 @import url('common.css')
