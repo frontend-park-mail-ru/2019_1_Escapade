@@ -3,7 +3,7 @@ const singlePlayerTemplate = require('./SinglePlayer.pug');
 import BaseView from '../BaseView';
 import { User } from '../../utils/user';
 import { MineSweeper } from '../../game/minesweeper';
-import { Timer } from '../../game/timer';
+import { Stopwatch } from '../../game/stopwatch';
 import { checkAuth } from '../../utils/user';
 import Bus from '../../utils/bus';
 /** */
@@ -13,7 +13,7 @@ export default class SinglePlayerView extends BaseView {
   cellNumbersY: number;
   minesCount: number;
   start: boolean;
-  timer: Timer;
+  stopwatch: Stopwatch;
   maxPointsCount: number;
   minTimeCount: string;
   openCellsCount: number;
@@ -63,7 +63,7 @@ export default class SinglePlayerView extends BaseView {
     Bus.on('stop_reset_timer', this._stop_reset_timer.bind(this))
     Bus.on('restartClick', this._restart.bind(this));
 
-    this.timer = new Timer('single_player__timer');
+    this.stopwatch = new Stopwatch('single_player__timer');
     this._showMap();
   }
 
@@ -110,14 +110,14 @@ export default class SinglePlayerView extends BaseView {
     this.BBBVCount = this.mineSweeper.count3BV();
 
     if (this.start) {
-      this.timer.router();
+      this.stopwatch.router();
     }   
     return;
   }
 
   _stop_reset_timer() {
-    this.timer.stop();
-    this.timer.reset();
+    this.stopwatch.stop();
+    this.stopwatch.reset();
   }
 
   /** */
@@ -126,8 +126,8 @@ export default class SinglePlayerView extends BaseView {
       Bus.emit('changeTitleRestartButton', 'Restart');
       this.start = true;
     } else {
-      if (this.timer.running) {
-        this.timer.stop();
+      if (this.stopwatch.running) {
+        this.stopwatch.stop();
       }
     }
     this._showMap();
@@ -157,8 +157,8 @@ export default class SinglePlayerView extends BaseView {
     Bus.emit('settingsChangeSize', {width: this.cellNumbersX, height: this.cellNumbersY});
     Bus.emit('settingsChangeMinesCount', this.minesCount);
     checkAuth(this._updateUserInfoCalback.bind(this), this.difficult)
-    if (this.timer.running) {
-      this.timer.stop();
+    if (this.stopwatch.running) {
+      this.stopwatch.stop();
     }
     if (!this.start) {
       Bus.emit('changeTitleRestartButton', 'Restart');
@@ -199,8 +199,8 @@ export default class SinglePlayerView extends BaseView {
     let loser = false;
     if (this.mineSweeper.map[x][y] === 9) { // losing
       this._openAllCels();
-      if (this.timer.running) {
-        this.timer.stop();
+      if (this.stopwatch.running) {
+        this.stopwatch.stop();
       }
       this.start = false;
       Bus.emit('sendResultsSingleGame', JSON.stringify({ difficult: this.difficult, singleTotal: 1, singleWin: 0 }));
@@ -214,20 +214,20 @@ export default class SinglePlayerView extends BaseView {
     let winner = false;
     if (this.openCellsCount === this.cellNumbersX * this.cellNumbersY - this.minesCount) { // winning
       this._openAllCels();
-      const timeArr = this.timer.timeStr.split(':');
+      const timeArr = this.stopwatch.timeStr.split(':');
       const timeSec = parseInt(timeArr[0]) * 3600 + parseInt(timeArr[1]) * 60 + parseInt(timeArr[2]) + parseInt(timeArr[3]) / 100
       const data = { score: this.pointsCount, time: timeSec, difficult: this.difficult, singleTotal: 1, singleWin: 1 };
       Bus.emit('sendResultsSingleGame', data);
-      if (this.timer.running) {
-        this.timer.stop();
+      if (this.stopwatch.running) {
+        this.stopwatch.stop();
       }
       this.start = false;
       if (this.maxPointsCount < this.pointsCount) {
         this.maxPointsCount = this.pointsCount;
         Bus.emit('userScoreInGameChange', this.pointsCount)
       }
-      if (this.minTimeCount > this.timer.timeStr) {
-        this.minTimeCount = this.timer.timeStr;
+      if (this.minTimeCount > this.stopwatch.timeStr) {
+        this.minTimeCount = this.stopwatch.timeStr;
         Bus.emit('userTimeInGameChange', this.minTimeCount.toString());
       }
       Bus.emit('showTextInMessageBox', 'You win!');

@@ -1,45 +1,54 @@
+import Bus from "../utils/bus";
+
 /** */
 export class Timer {
   timerHTMLElement: any;
   running: boolean;
   paused: boolean;
   timeStr: string;
-  delay: number;
   then: number;
   timer: NodeJS.Timeout;
-  delayThen: number;
+  startTime: any;
+  funcCallback: any;
   /**
    *
    */
-  constructor(htmlElementTitle : string) {
+  constructor(htmlElementTitle : string, callback : any) {
     
     this.timerHTMLElement = document.getElementById(htmlElementTitle);
     this.running = false;
     this.paused = false;
     this.timeStr = '';
+    this.funcCallback = callback;
   }
 
   /**
    *
    */
-  start() {
-    this.delay = 0;
+  start({hour = 0, minute = 0, seconds = 0}) {
+    console.log('start running timer');
+    if (this.running) {
+      return;
+    }
+    console.log('start timer');
+    this.startTime = {hour : hour, minute : minute, seconds : seconds};
+    const time = this._parseTime();
+    this.timeStr = time[0] + ':' + time[1] + ':' + time[2];
+    this.timerHTMLElement.innerHTML = this.timeStr;
     this.running = true;
-    this.then = Date.now();
-    this.timer = setInterval(this.run.bind(this), 51);
+    this.timer = setInterval(this.run.bind(this), 1000);
   };
 
   /**
    *
    */
-  _parseTime(elapsed: number) {
-    const d = [3600000, 60000, 1000, 10];
+  _parseTime() {
+    const d = [this.startTime.hour, this.startTime.minute, this.startTime.seconds];
     const time = [];
     let i = 0;
 
     while (i < d.length) {
-      let t = Math.floor(elapsed / d[i]);
-      elapsed -= t * d[i];
+      let t = d[i];
       let strT = ((i > 0 && t < 10) ? '0' + t : t).toString();
       time.push(strT);
       i++;
@@ -52,47 +61,60 @@ export class Timer {
    *
    */
   run() {
-    const time = this._parseTime(Date.now() - this.then - this.delay);
-    this.timeStr = time[0] + ':' + time[1] + ':' + time[2] + ':' + time[3];
+    this.startTime.seconds -= 1;
+    if (this.startTime.seconds < 0) {
+      this.startTime.seconds = 59;
+      this.startTime.minute -= 1;
+      if (this.startTime.minute < 0) {
+        this.startTime.minute = 59;
+        this.startTime.hour -= 1;
+      }
+    }
+    
+
+    const time = this._parseTime();
+    this.timeStr = time[0] + ':' + time[1] + ':' + time[2];
     this.timerHTMLElement.innerHTML = this.timeStr;
+    console.log('run timer');
+    if ((this.startTime.seconds === 0) && (this.startTime.minute === 0) && (this.startTime.hour === 0)) {
+      this.stop();
+      this.funcCallback();
+    }
   };
 
   /**
    *
    */
   stop() {
+    console.log('stop running timer');
+    if (!this.running) {
+      return;
+    }
+    console.log('stop timer');
     this.running = false;
-    this.delayThen = Date.now();
     clearInterval(this.timer);
-    this.run();
   };
 
   /**
    *
    */
-  resume() {
-    this.paused = false;
-    this.delay += Date.now() - this.delayThen;
-    this.timer = setInterval(this.run.bind(this), 51);
-  };
-
-  /**
-   *
-   */
-  reset() {
-    this.running = false;
-    this.paused = false;
-    this.timeStr = '0:00:00:00';
+  reset({hour = 0, minute = 0, seconds = 0}) {
+    this.startTime = {hour : hour, minute : minute, seconds : seconds};
+    
+    this.timeStr = this.startTime.hour + ':' + this.startTime.minute + ':' + this.startTime.seconds;
+    
     this.timerHTMLElement.innerHTML = this.timeStr;
   };
 
   /**
    *
    */
-  router() {
-    if (!this.running) this.start();
-    else if (this.paused) this.resume();
-    else stop();
+  router(startTime : any) {
+    if (!this.running) this.start(startTime);
+    else  {
+      this.stop();
+      this.reset(this.startTime);
+    }
   };
 }
 

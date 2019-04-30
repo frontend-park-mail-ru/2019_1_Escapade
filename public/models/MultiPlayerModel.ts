@@ -14,24 +14,23 @@ export default class MultiplayerModel {
     this.wsAdress = 'ws://localhost:3001/ws';
     
     Bus.on('getInfoFromWS', this._getInfo.bind(this));
-    Bus.on('sendPlayersToRoom', this._getPlayers.bind(this));
-    this.ws = new WebSocketInterface(this.wsAdress);
+    Bus.on('getWS', this._getWS.bind(this));
+    Bus.on('leftClickOnCellWS', this._sendCell.bind(this));
+    
+    //this.ws = new WebSocketInterface(this.wsAdress);
   }
 
-  _getPlayers(data : any) {
-    console.log('I am here ' + data[0].user.name);
+  _getWS(data : any) {
+    this.ws = data;
   }
 
   /**
    * _sendInfo
    */
-  _sendInfo(cellCoord: { xCell: any; yCell: any; }) {
-    const cellCoordData = {x: cellCoord.xCell, y: cellCoord.yCell};
-    const data = JSON.stringify({cell: cellCoordData});
-
-    console.log(data);
-    
-    this.ws.sendMessage(data);
+  _sendCell(data : any) {
+    const sendInfo = {send : { cell : { x : data.x, y : data.y}}};
+    console.log(sendInfo);
+    this.ws.sendInfoJSON(sendInfo);
   }
 
 

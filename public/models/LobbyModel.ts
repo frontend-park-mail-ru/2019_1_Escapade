@@ -9,14 +9,14 @@ export default class LobbyModel {
   dataJSON: any;
   ws: WebSocketInterface;
   wsAdress: string;
-  currentRoomConnections: any;
+  currentRoomInfo: any;
   /**
    *
    */
   constructor() {
     this.wsAdress = 'ws://localhost:3001/ws';
     
-    this.currentRoomConnections = [];
+    this.currentRoomInfo = [];
     
     Bus.on('getInfoFromWS', this._getInfo.bind(this));
     Bus.on('currentPath', this._currentPathSignalFunc.bind(this));
@@ -52,7 +52,7 @@ export default class LobbyModel {
       } else {
         const info = {name : data.name, length : data.players.connections.length, capacity : data.players.capacity}
         this._updateCurrentRoom(info);
-        this.currentRoomConnections = data.players.connections;
+        this.currentRoomInfo = data;
         if (data.status === 2) {
           this._startGame();
         }
@@ -85,7 +85,8 @@ export default class LobbyModel {
 
   _startGame() {
     router.open('/multi_player');
-    Bus.emit('sendPlayersToRoom', this.currentRoomConnections)
+    Bus.emit('getWS', this.ws);
+    Bus.emit('sendPlayersToRoom', this.currentRoomInfo)
   }
 
 }

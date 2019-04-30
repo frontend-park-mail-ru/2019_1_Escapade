@@ -24,6 +24,7 @@ export default class MultiPlayerView extends BaseView {
   mineSweeper: MineSweeper;
   BBBVCount: any;
   difficult: number;
+  startTimeFlag: { hour: number; minute: number; seconds: number; };
   /**
    *
    * @param {*} parent
@@ -39,10 +40,11 @@ export default class MultiPlayerView extends BaseView {
     this.start = false;
     Bus.on('leftClickOnCell', this._clickOnCell.bind(this));
     Bus.on('rightClickOnCell', this._rightСlickOnCell.bind(this));
-    Bus.on('updateUserInfo', this._updateUserInfo.bind(this));
     document.body.oncontextmenu = function (e) {
       return false;
     };
+    this.startTimeFlag = {hour : 0, minute : 0, seconds : 10};
+    Bus.on('currentPath', this._currentPathSignalFunc.bind(this));
   }
 
   /**
@@ -57,49 +59,37 @@ export default class MultiPlayerView extends BaseView {
     Bus.emit('addListenersPlayersList');
 
     Bus.emit('changeTitleRestartButton', 'Start');
-    Bus.on('settingsChangeHard', this._changeHard.bind(this));
-    Bus.on('stop_reset_timer', this._stop_reset_timer.bind(this))
-    Bus.on('restartClick', this._restart.bind(this));
+    this.timer = new Timer('multi_player__timer', this._timeIsOver.bind(this));
+    
+    //Bus.on('restartClick', this._restart.bind(this));
     Bus.on('sendPlayersToRoom', this._getPlayers.bind(this));
-
-    this.timer = new Timer('multi_player__timer');
     this._showMap();
+    
+    console.log('render');
+  }
+
+  _currentPathSignalFunc(path: string) {
+    if (path === '/multi_player') {
+      this._showMap();
+      console.log('_currentPathSignalFunc multi_player ');
+    } else {
+      console.log('_currentPathSignalFunc else ');
+      this._stop_reset_timer();
+    }
+  }
+
+  _timeIsOver() {
+    console.log('time is over');
   }
 
   _getPlayers(data : any) {
     Bus.emit('addPlayers',data);
   }
 
-
-  /** */
-  _updateUserInfo() {
-    checkAuth(this._updateUserInfoCalback.bind(this), this.difficult)
-  }
-  _updateUserInfoCalback() {
-    console.log("_updateUserInfo here");
-    if (User.name) {
-      Bus.emit('UserNameInGameChange', User.name);
-      if (User.bestScore.String) {
-        Bus.emit('userScoreInGameChange', User.bestScore) // получать из user
-        Bus.emit('userTimeInGameChange', User.bestScore.String);
-      } else {
-        Bus.emit('userScoreInGameChange', 0)
-        Bus.emit('userTimeInGameChange', '0:00:00:00');
-      }
-      this.maxPointsCount = 0;
-      this.minTimeCount = '1:24:60:60';
-    } else {
-      Bus.emit('userNameInGameChange', 'Guest');
-      Bus.emit('userScoreInGameChange', 0)
-      Bus.emit('userTimeInGameChange', '0:00:00:00');
-      this.maxPointsCount = 0;
-      this.minTimeCount = '1:24:60:60';
-    }
-    this._showMap();
-  }
-
   /** */
   _showMap() {
+    
+    console.log('_showMap');
     this.openCellsCount = 0;
     this.pointsCount = 0;
     this.leftClicksCount = 0;
@@ -107,144 +97,39 @@ export default class MultiPlayerView extends BaseView {
 
     Bus.emit('messageBoxHide', true)
     Bus.emit('renderField',{width : this.cellNumbersX, height : this.cellNumbersY, cellSize : this.cellsize})
-    Bus.emit('statisticsResetParameters', this.minesCount)
-    Bus.emit('settingsSetParameters', {difficult : this.difficult,  width : this.cellNumbersX, height : this.cellNumbersY, mines : this.minesCount})
-    
-    this.mineSweeper = new MineSweeper(this.cellNumbersX, this.cellNumbersY, this.minesCount);
-    this.BBBVCount = this.mineSweeper.count3BV();
 
-    if (this.start) {
-      this.timer.router();
-    }   
+    //if (this.start) {
+      console.log('this.startTimeFlag ' + this.startTimeFlag);
+      this.timer.start(this.startTimeFlag);
+    //}   
     return;
   }
 
   _stop_reset_timer() {
     this.timer.stop();
-    this.timer.reset();
+    const timeStr = this.startTimeFlag.hour + ':' + this.startTimeFlag.minute + ':' + this.startTimeFlag.seconds;
+    console.log('timeStr ' + timeStr);
+    this.timer.reset(this.startTimeFlag);
   }
 
-  /** */
-  _restart() {
-    if (!this.start) {
-      Bus.emit('changeTitleRestartButton', 'Restart');
-      this.start = true;
-    } else {
-      if (this.timer.running) {
-        this.timer.stop();
-      }
-    }
-    this._showMap();
-  }
-
-  /** */
-  _changeHard(hardStruct : any) {
-    this.difficult = hardStruct.difficult;
-    
-
-    switch(this.difficult) {
-      case 0 :
-        this.minesCount = 10;
-        break;
-      case 1 :
-        this.minesCount = 20;
-        break;
-      case 2 :
-        this.minesCount = 30;
-        break;
-      case 3 :
-        this.minesCount = 40;
-        break;
-    }
-    this.cellNumbersX = 15;
-    this.cellNumbersY = 15;
-    Bus.emit('settingsChangeSize', {width: this.cellNumbersX, height: this.cellNumbersY});
-    Bus.emit('settingsChangeMinesCount', this.minesCount);
-    checkAuth(this._updateUserInfoCalback.bind(this), this.difficult)
-    if (this.timer.running) {
-      this.timer.stop();
-    }
-    if (!this.start) {
-      Bus.emit('changeTitleRestartButton', 'Restart');
-      this.start = true;
-    }
-    this._showMap();
-  }
+  
 
   /** */
   _clickOnCell(coordinatesStruct : any) {
-    if (!this.start) {
-      return;
-    }
     const x = parseInt(coordinatesStruct.x);
     const y = parseInt(coordinatesStruct.y);
-    if (this.mineSweeper.mapLabel[x][y] != 0) { // если не закрыта
-      return;
-    }
-    Bus.emit('leftClicksStatisticsChange', 1);
-    
-    if (this._checkOnLosing(x, y)) {
-      return;
-    }
+    console.log('!!!!!!!!!!!');
+    Bus.emit('leftClickOnCellWS', {x : x, y : y});
 
-    const res = this.mineSweeper.
-      openCels(x, y, this.cellNumbersX, this.cellNumbersY);
-    this._openCels(res.cellArr);
-    this.openCellsCount += res.openCells;
-    this.pointsCount += res.points;
-    const prcentOpen = Math.round((this.openCellsCount / (this.cellNumbersX * this.cellNumbersY - this.minesCount)) * 100);
-    Bus.emit('progressGameChange', prcentOpen);
-    Bus.emit('pointsStatisticsChange', this.pointsCount);
-    this._checkOnWinning();
+    //const prcentOpen = Math.round((this.openCellsCount / (this.cellNumbersX * this.cellNumbersY - this.minesCount)) * 100);
+    //Bus.emit('progressGameChange', prcentOpen);
+    //Bus.emit('pointsStatisticsChange', this.pointsCount);
+    //this._checkOnWinning();
     return;
-  }
-
-  _checkOnLosing(x : number, y : number) {
-    let loser = false;
-    if (this.mineSweeper.map[x][y] === 9) { // losing
-      this._openAllCels();
-      if (this.timer.running) {
-        this.timer.stop();
-      }
-      this.start = false;
-      Bus.emit('sendResultsSingleGame', JSON.stringify({ difficult: this.difficult, singleTotal: 1, singleWin: 0 }));
-      Bus.emit('showTextInMessageBox', 'You lose!');
-      loser = true;
-    }
-    return loser;
-  }
-
-  _checkOnWinning() {
-    let winner = false;
-    if (this.openCellsCount === this.cellNumbersX * this.cellNumbersY - this.minesCount) { // winning
-      this._openAllCels();
-      const timeArr = this.timer.timeStr.split(':');
-      const timeSec = parseInt(timeArr[0]) * 3600 + parseInt(timeArr[1]) * 60 + parseInt(timeArr[2]) + parseInt(timeArr[3]) / 100
-      const data = { score: this.pointsCount, time: timeSec, difficult: this.difficult, singleTotal: 1, singleWin: 1 };
-      Bus.emit('sendResultsSingleGame', data);
-      if (this.timer.running) {
-        this.timer.stop();
-      }
-      this.start = false;
-      if (this.maxPointsCount < this.pointsCount) {
-        this.maxPointsCount = this.pointsCount;
-        Bus.emit('userScoreInGameChange', this.pointsCount)
-      }
-      if (this.minTimeCount > this.timer.timeStr) {
-        this.minTimeCount = this.timer.timeStr;
-        Bus.emit('userTimeInGameChange', this.minTimeCount.toString());
-      }
-      Bus.emit('showTextInMessageBox', 'You win!');
-      winner = true;
-    }
-    return winner;
   }
 
   /** */
   _rightСlickOnCell(coordinatesStruct : any) {
-    if (!this.start) {
-      return;
-    }
     const x = parseInt(coordinatesStruct.x);
     const y = parseInt(coordinatesStruct.y);
     const typeOfCell = this.mineSweeper.putRemoveFlag(x, y); // 0 - закрыта; 1 - открыта; 2 - флаг
