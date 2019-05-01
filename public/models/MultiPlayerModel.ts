@@ -11,14 +11,10 @@ export default class MultiplayerModel {
    *
    */
   constructor() {
-    this.wsAdress = 'ws://localhost:3001/ws';
-    
     Bus.on('getInfoFromWS', this._getInfo.bind(this));
     Bus.on('getWS', this._getWS.bind(this));
-    Bus.on('leftClickOnCellWS', this._sendCell.bind(this));
-    
-    //this.ws = new WebSocketInterface(this.wsAdress);
-  }
+    Bus.on('sendCellWS', this._sendCell.bind(this));
+ }
 
   _getWS(data : any) {
     this.ws = data;
@@ -37,7 +33,16 @@ export default class MultiplayerModel {
   /**
    * _getInfo
    */
-  _getInfo() {
-    // JSON.stringify({"email": "hey@mail.com", "password": "101010"});
+  _getInfo(data : any) {
+    console.log('_getInfo begin ', data) 
+    switch(data.type) {
+      case 'RoomNewCells' :
+        Bus.emit('updateFieldWS', data);
+        break;
+      case 'RoomPlayerPoints' :
+        Bus.emit('updatePointsWS', data);
+        break;
+    }
+    console.log('_getInfo end') 
   }
 }

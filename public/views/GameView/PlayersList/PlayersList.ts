@@ -16,14 +16,17 @@ export default class PlayersListView {
     this.playersListContainer = document.querySelector('.game__players_list_container');
     this.observersListContainer = document.querySelector('.game__observer_list_container');
     Bus.on('addPlayers', this._addPlayers.bind(this));
-    Bus.on('addObservers', this._addObservers.bind(this));
+    Bus.on('addObserver', this._addObserver.bind(this));
+    Bus.on('updatePoints', this._updatePoints.bind(this));
+    
+    
     this.playersHTML = [];
   }
 
 
   _addPlayers(data : any) {
-    const connections = data.players.connections;
-    const players = data.players.players;
+    const connections = data.value.players.connections;
+    const players = data.value.players.players;
     this.playersHTML = [];
     this.playersListContainer.innerHTML = '';
     connections.forEach((item : any, i : number) => {
@@ -34,17 +37,26 @@ export default class PlayersListView {
     var elements = [].slice.call(document.querySelectorAll('.game__players_list_row'));
     elements.forEach((element : any, i : number) => {
       element.querySelector('.game__players_list_disconnect_img').hidden = true;
-      let hiddenExploseImg = true;
-      if (players[i].Finished) {
-        hiddenExploseImg = false;
-      }
-      element.querySelector('.game__players_list_explose_img').hidden = hiddenExploseImg;
+      element.querySelector('.game__players_list_explose_img').hidden = true;
       this.playersHTML.push(element);
     });
   }
 
-  _addObservers(data : any) {
-    const observers = data.observers.get;
+  _updatePoints() {
+    
+  }
+  
+
+  _explosePlayer(i : number){
+    this.playersHTML[i].querySelector('.game__players_list_explose_img').hidden = false;
+  }
+
+  _disconnectPlayer(i : number){
+    this.playersHTML[i].querySelector('.game__players_list_disconnect_img').hidden = false;
+  }
+
+  _addObserver(data : any) {
+    const observers = data.value.observers.get;
     this.observersListContainer.innerHTML = '';
     observers.forEach((item : any, i : number) => {
       const dataJSON = {name : item.user.name};

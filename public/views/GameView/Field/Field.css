@@ -83,52 +83,66 @@
 }
 
 
+.cell_flagmulti_1 {
+  background: url('../../../img/flag_empty_multi.png') no-repeat,
+              url('../../../img/cell1.png') no-repeat;
+}
+
+.cell_flagmulti_2 {
+  background: url('../../../img/flag_empty_multi.png') no-repeat,
+              url('../../../img/cell2.png') no-repeat;
+}
+
+.cell_flagmulti_3 {
+  background: url('../../../img/flag_empty_multi.png') no-repeat,
+              url('../../../img/cell3.png') no-repeat;
+}
+
 .cell_open0 {
-  background: url('../../../img/cell_open0.png') no-repeat;
-  
+  background-color: #b9c0c9;
 }
 
 .cell_open1 {
-  background: url('../../../img/cell_open_1.png') no-repeat, 
-              url('../../../img/cell_open0.png') no-repeat;
+  background: url('../../../img/cell_open_1.png') no-repeat;
+  background-color: #b9c0c9;
 }
 
 .cell_open2 {
-  background: url('../../../img/cell_open_2.png') no-repeat, 
-              url('../../../img/cell_open0.png') no-repeat;
+  background: url('../../../img/cell_open_2.png') no-repeat;
+  background-color: #b9c0c9;
 }
 
 .cell_open3 {
-  background: url('../../../img/cell_open_3.png') no-repeat, 
-              url('../../../img/cell_open0.png') no-repeat;
+  background: url('../../../img/cell_open_3.png') no-repeat;
+  background-color: #b9c0c9;
 }
 
 .cell_open4 {
-  background: url('../../../img/cell_open_4.png') no-repeat, 
-              url('../../../img/cell_open0.png') no-repeat;
+  background: url('../../../img/cell_open_4.png') no-repeat;
+  background-color: #b9c0c9;
 }
 
 .cell_open5 {
-  background: url('../../../img/cell_open_5.png') no-repeat, 
-              url('../../../img/cell_open0.png') no-repeat;
+  background: url('../../../img/cell_open_5.png') no-repeat;
+  background-color: #b9c0c9;
 }
 
 .cell_open6 {
-  background: url('../../../img/cell_open_6.png') no-repeat, 
-              url('../../../img/cell_open0.png') no-repeat;
+  background: url('../../../img/cell_open_6.png') no-repeat;
+  background-color: #b9c0c9;
 }
 
 .cell_open7 {
-  background: url('../../../img/cell_open_7.png') no-repeat, 
-              url('../../../img/cell_open0.png') no-repeat;
+  background: url('../../../img/cell_open_7.png') no-repeat;
+  background-color: #b9c0c9;
 }
 
 .cell_open8 {
-  background: url('../../../img/cell_open_8.png') no-repeat, 
-              url('../../../img/cell_open0.png') no-repeat;
+  background: url('../../../img/cell_open_8.png') no-repeat;
+  background-color: #b9c0c9;
 }
 
 .cell_open9 {
-  background: url('../../../img/bomb.png') no-repeat,
-              url('../../../img/cell_open0.png') no-repeat;
+  background: url('../../../img/bomb.png') no-repeat;
+  background-color: #b9c0c9;
 }

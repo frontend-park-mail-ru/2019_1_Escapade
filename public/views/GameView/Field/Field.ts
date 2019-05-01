@@ -20,7 +20,9 @@ export default class FieldView {
     Bus.on('renderField', this._render.bind(this));
     Bus.on('openCell', this._openCell.bind(this));
     Bus.on('setUnsetFlagOnCell', this._setUnsetFlagOnCell.bind(this));
+    Bus.on('setUnsetFlagMultiOnCell', this._setUnsetFlagMultiOnCell.bind(this));
     Bus.on('progressGameChange', this._progressGameChange.bind(this));
+    
     document.addEventListener('click', this._leftClickOnBody.bind(this));
     document.addEventListener('contextmenu', this._rightСlickOnCell.bind(this));
   }
@@ -68,7 +70,7 @@ export default class FieldView {
     this.loadbarDocElement.style.width = '0px';
   }
 
-  _openCell({x = 0, y = 0, type = 0 }){
+  _openCell({x = 0, y = 0, type = 0, }){
     const cell = document.
       getElementById(`cell_${x}_${y}`);
     if (!cell) {
@@ -79,7 +81,7 @@ export default class FieldView {
     cell.className = `cell cell_open cell_open${type}`;
   }
 
-  _setUnsetFlagOnCell({x = 0, y = 0, type = '' }){
+  _setUnsetFlagOnCell({x = 0, y = 0, type = 'flag' }){
     const cell = document.
       getElementById(`cell_${x}_${y}`);
     if (!cell) {
@@ -91,6 +93,23 @@ export default class FieldView {
     const numClassElem = parseInt(classElems[2]);
     if (type === 'flag') {
       cell.className = `cell cell_flag cell_flag_${numClassElem}`;
+    } else if (type === 'closing') {
+      cell.className = `cell cell_close cell_close_${numClassElem}`;
+    }    
+  }
+
+  _setUnsetFlagMultiOnCell({x = 0, y = 0, type = 'flag' }){
+    const cell = document.
+      getElementById(`cell_${x}_${y}`);
+    if (!cell) {
+      console.log('error _openCels cannot find ' +
+        `cell${x}_${y}`);
+      return;
+    }
+    const classElems = cell.classList[2].split('_');
+    const numClassElem = parseInt(classElems[2]);
+    if (type === 'flag') {
+      cell.className = `cell cell_flag cell_flagmulti_${numClassElem}`;
     } else if (type === 'closing') {
       cell.className = `cell cell_close cell_close_${numClassElem}`;
     }    

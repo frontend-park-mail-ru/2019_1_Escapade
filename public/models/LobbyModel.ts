@@ -10,6 +10,7 @@ export default class LobbyModel {
   ws: WebSocketInterface;
   wsAdress: string;
   currentRoomInfo: any;
+  curPath: string;
   /**
    *
    */
@@ -23,6 +24,7 @@ export default class LobbyModel {
     Bus.on('createRoom', this._createRoom.bind(this));
     Bus.on('connectToRoom', this._connectToRoom.bind(this));
     Bus.on('leaveRoom', this._leaveRoom.bind(this));
+    this.curPath = '';
     this.ws = new WebSocketInterface(this.wsAdress);
   }
 
@@ -32,31 +34,43 @@ export default class LobbyModel {
       return;
     }
     if (path === '/lobby') {
+      this.curPath = path;
       this.ws.closeConnection();
       this.ws.connectWS(this.wsAdress);
     } else {
-      this.ws.closeConnection();
+      if (this.curPath === '/lobby') {
+        this._leaveRoom();
+        this.ws.closeConnection();
+        this.curPath = '';
+      }
     }
   }
 
 
   _getInfo(data : any) {
     console.log('_getInfo begin ', data) 
-    if (data.type === 'Lobby') {
-      if (data.allRooms) {
-        Bus.emit('addRooms', data);
-      }
-    } else if (data.type === 'Room') {
-      if (!data.players) {
-        return;
-      } else {
-        const info = {name : data.name, length : data.players.connections.length, capacity : data.players.capacity}
-        this._updateCurrentRoom(info);
-        this.currentRoomInfo = data;
-        if (data.status === 2) {
-          this._startGame();
+    switch(data.type) {
+      case 'Lobby' :
+        Bus.emit('updateRooms', data.value);
+        break;
+      case 'LobbyRoomCreate' :
+        Bus.emit('addRoom', data.value);
+        break;
+      case 'LobbyRoomUpdate' :
+        Bus.emit('updateRoom', data.value);
+        break;
+      case 'Room' :
+        if (!data.value.players) {
+          return;
+        } else {
+          const info = {name : data.value.name, length : data.value.players.connections.length, capacity : data.value.players.capacity}
+          this._updateCurrentRoom(info);
+          this.currentRoomInfo = data;
+          if (data.value.status === 2) {
+            this._startGame();
+          }
         }
-      }
+        break;
     }
     console.log('_getInfo end') 
   }
@@ -67,7 +81,7 @@ export default class LobbyModel {
     const players = 2;
     const observers = 10;
     const mines = 20;
-    this.ws.sendInfoJSON({send : { RoomSettings : {name : 'create', width : width, height : height, 
+    this.ws.sendInfoJSON({send : { RoomSettings : {name : 'my room', id : 'create', width : width, height : height, 
     players : players, observers : observers, prepare:10, play:100, mines : mines}}});
   }
 

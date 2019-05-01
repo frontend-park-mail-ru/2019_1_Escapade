@@ -25,6 +25,10 @@ export default class MultiPlayerView extends BaseView {
   BBBVCount: any;
   difficult: number;
   startTimeFlag: { hour: number; minute: number; seconds: number; };
+  flagPlacing: boolean;
+  startGame: boolean;
+  players: any[];
+  playersListContainer: any;
   /**
    *
    * @param {*} parent
@@ -37,9 +41,13 @@ export default class MultiPlayerView extends BaseView {
     this.cellsize = 50;
     this.difficult = 1;
     this.minesCount = 20;
-    this.start = false;
+    this.flagPlacing = true;
+    this.startGame = false;
+    this.players = [];
     Bus.on('leftClickOnCell', this._clickOnCell.bind(this));
     Bus.on('rightClickOnCell', this._rightСlickOnCell.bind(this));
+    Bus.on('updateFieldWS', this._updateField.bind(this));
+    Bus.on('updatePointsWS', this._updatePoints.bind(this));
     document.body.oncontextmenu = function (e) {
       return false;
     };
@@ -57,12 +65,11 @@ export default class MultiPlayerView extends BaseView {
     Bus.emit('addListenersField');
     Bus.emit('addListenersMessage');
     Bus.emit('addListenersPlayersList');
-
     Bus.emit('changeTitleRestartButton', 'Start');
+    Bus.on('sendPlayersToRoom', this._getPlayers.bind(this));
+    
     this.timer = new Timer('multi_player__timer', this._timeIsOver.bind(this));
     
-    //Bus.on('restartClick', this._restart.bind(this));
-    Bus.on('sendPlayersToRoom', this._getPlayers.bind(this));
     this._showMap();
     
     console.log('render');
@@ -79,16 +86,25 @@ export default class MultiPlayerView extends BaseView {
   }
 
   _timeIsOver() {
+    this.startGame = true;
     console.log('time is over');
   }
 
   _getPlayers(data : any) {
+    const dataConnections = data.value.players.connections;
+    const dataPlayers = data.value.players.players;
+    this.players = [];
+    dataConnections.forEach((item : any, i : number) => {
+      this.players.push({user : item.user, id : dataPlayers[item.index].ID});
+    });
+    console.log('this.players ' + this.players[0].id + ' ' + this.players[1].id);
     Bus.emit('addPlayers',data);
   }
 
   /** */
   _showMap() {
-    
+    this.flagPlacing = true;
+    this.startGame = false;
     console.log('_showMap');
     this.openCellsCount = 0;
     this.pointsCount = 0;
@@ -98,11 +114,21 @@ export default class MultiPlayerView extends BaseView {
     Bus.emit('messageBoxHide', true)
     Bus.emit('renderField',{width : this.cellNumbersX, height : this.cellNumbersY, cellSize : this.cellsize})
 
-    //if (this.start) {
-      console.log('this.startTimeFlag ' + this.startTimeFlag);
-      this.timer.start(this.startTimeFlag);
-    //}   
+    this.timer.start(this.startTimeFlag);
     return;
+  }
+
+  _updateField(data : any) {
+    const cells = data.value;
+    cells.forEach((item : any, i : number) => {
+      if (item.value < 10) {
+        Bus.emit('openCell', {x: item.x, y: item.y, type: item.value })
+      }
+    });
+  }
+
+  _updatePoints(data : any) {
+    
   }
 
   _stop_reset_timer() {
@@ -116,11 +142,17 @@ export default class MultiPlayerView extends BaseView {
 
   /** */
   _clickOnCell(coordinatesStruct : any) {
+    if (!this.flagPlacing && !this.startGame) {
+      return;
+    }
     const x = parseInt(coordinatesStruct.x);
     const y = parseInt(coordinatesStruct.y);
-    console.log('!!!!!!!!!!!');
-    Bus.emit('leftClickOnCellWS', {x : x, y : y});
-
+    Bus.emit('sendCellWS', {x : x, y : y});
+    if (this.flagPlacing) {
+      Bus.emit('setUnsetFlagMultiOnCell', {x : x, y : y, type : 'flag'})
+      this.flagPlacing = false;
+    }
+    
     //const prcentOpen = Math.round((this.openCellsCount / (this.cellNumbersX * this.cellNumbersY - this.minesCount)) * 100);
     //Bus.emit('progressGameChange', prcentOpen);
     //Bus.emit('pointsStatisticsChange', this.pointsCount);
@@ -130,6 +162,9 @@ export default class MultiPlayerView extends BaseView {
 
   /** */
   _rightСlickOnCell(coordinatesStruct : any) {
+    if (!this.startGame) {
+      return;
+    }
     const x = parseInt(coordinatesStruct.x);
     const y = parseInt(coordinatesStruct.y);
     const typeOfCell = this.mineSweeper.putRemoveFlag(x, y); // 0 - закрыта; 1 - открыта; 2 - флаг
