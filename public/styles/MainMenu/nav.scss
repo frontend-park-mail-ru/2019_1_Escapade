@@ -1,0 +1,42 @@
+
+.menu {
+
+  &__nav {
+    display: flex;
+    justify-content: space-evenly;
+  }
+
+  @media screen and (max-width: $mobile){
+    &__nav {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-evenly;
+      align-items: center;
+    }
+  }
+
+  &__label {
+    border: 0.2vw solid #FFFFFF;
+    border-radius: 30px;
+    background-color: #46535E;
+    color: white;
+    text-align: center;
+    text-decoration: none;
+    font-family: Saira;
+    width: 20vw;
+    font-size: 3vw;
+    margin: 12px;
+    transition: all, .5s, ease-in-out;
+  }
+
+  &__label:hover{
+    transform: scale(1.2)
+  }
+
+  @media screen and (max-width: $tablet) {
+    &__label {
+      width: calc(20vw + 3rem);
+      font-size: calc(3vw + 0.5rem);
+    }
+  }
+}

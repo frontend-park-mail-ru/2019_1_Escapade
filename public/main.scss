@@ -1,10 +1,11 @@
+@import './thresholds.scss';
 @import url('views/AuthorsView/about.css');
 @import url('views/RulesView/rules.css');
 @import url('views/LeaderBoardView/leaderboard.css');
-@import url('views/MainMenuView/menu_style.css');
-@import url('views/SignUpView/SignUp.css');
-@import url('views/SignInView/SignIn.css');
-@import url('views/ProfileView/profile.css');
+@import './views/MainMenuView/menuStyle.scss';
+@import './views/SignUpView/SignUp.scss';
+@import url('views/SignInView/SignIn.scss');
+@import url('views/ProfileView/profile.scss');
 @import url('views/LobbyView/lobby.css');
 @import url('views/SinglePlayerView/SinglePlayer.css');
 @import url('views/GameView/Field/Field.css');
@@ -18,4 +19,4 @@
 @import url('views/GameView/PlayersList/PlayersList.css');
 @import url('components/OfflinePoppup/offline.css');
 @import url('views/ProfileEditView/ProfileEdit.css');
-@import url('common.css')
+@import url('common.css');
