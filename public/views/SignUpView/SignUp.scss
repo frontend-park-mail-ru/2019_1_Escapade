@@ -1,61 +1,67 @@
-@import '../../styles/SignUp/input.scss';
-
 .signup{
-  height: 80vh;
+  height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-}
+  background: $escapade-gradient;
 
-.signup__form {
-  text-align: center;
-  display: flex;
-  flex-direction: column;
 
-}
-
-@media screen and (min-width: 720px) {
-  .signup__form{
-    min-width: 35vh;
+  &__main{
+    justify-content: space-evenly;
+    display: flex;
+    align-items: center;
+    width: 100%
   }
 
-}
+  &__form {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
 
-.signup__submit{
-  border: none;
-  text-align: center;
-  background-color: #fffff2;
-  font-size: calc(1.7vw + .2rem);
-  margin: 1.5vh;
-}
+  }
 
-.button{
-  user-select: none;
-  padding: 5px 10px;
-  cursor: pointer;
-  display: inline-block;
-  text-decoration: none;
-  color: #6e4c1a;
-}
+  @media screen and (min-width: 720px) {
+    &__form{
+      min-width: 35vh;
+    }
 
-.signup__footer{
-  font-size: calc(1vw + .2rem);
-}
+  }
 
-.signup__footer .button{
-  color: black
-}
+  &__submit{
+    border: none;
+    text-align: center;
+    background-color: #fffff2;
+    font-size: calc(1.7vw + .2rem);
+    margin: 1.5vh;
+  }
 
-.signup__footer .button:hover{
-  text-decoration: underline
-}
+  &__warning{
+    width: 80%;
+    align-self: center;
+    margin-top: -5px;
+    margin-bottom: 5px;
+  }
 
-.signup__warning{
-  width: 80%;
-  align-self: center;
-  margin-top: -5px;
-  margin-bottom: 5px;
+  &__confirm{
+    width: calc(1rem + 7vw);
+    height: calc(1rem + 7vw);
+    background: url('/img/signup.png') #46535E no-repeat;
+    background-size: contain;
+    align-self: center;
+    border-radius: 50%;
+    cursor: pointer;
+  }
+
+  &__exit{
+    width: calc(1rem + 7vw);
+    height: calc(1rem + 7vw);
+    background: url('/img/cancel.png') #CED6DD no-repeat;
+    background-size: contain;
+    align-self: center;
+    border-radius: 50%;
+  }
+
 }
 
 .warning{
@@ -67,22 +73,11 @@
   display: none !important
 }
 
-.signup_edit__confirm{
-  width: calc(1rem + 7vw);
-  height: calc(1rem + 7vw);
-  background: url('/img/signup.png') #46535E no-repeat;
-  background-size: contain;
-  align-self: center;
-  border-radius: 50%;
+.button{
+  user-select: none;
+  padding: 5px 10px;
   cursor: pointer;
-}
-
-.signin_edit__confirm{
-  width: calc(1rem + 7vw);
-  height: calc(1rem + 7vw);
-  background: url('/img/check.png') #46535E no-repeat;
-  background-size: contain;
-  align-self: center;
-  border-radius: 50%;
-  cursor: pointer;
+  display: inline-block;
+  text-decoration: none;
+  color: #6e4c1a;
 }

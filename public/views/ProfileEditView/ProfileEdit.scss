@@ -1,6 +1,5 @@
 
-.signin {
-  
+.profile_edit{
   display: flex;
   justify-content: center;
   height: 100vh;
@@ -12,10 +11,14 @@
     align-items: center;
     width: 100%
   }
-  
-  &__buttons{
-    display: flex;
-    justify-content: space-between;
+
+  &__exit{
+    width: calc(1rem + 7vw);
+    height: calc(1rem + 7vw);
+    background: url('/img/cancel.png') #CED6DD no-repeat;
+    background-size: contain;
+    align-self: center;
+    border-radius: 50%;
   }
 
   &__confirm{
@@ -28,12 +31,4 @@
     cursor: pointer;
   }
 
-  &__exit{
-    width: calc(1rem + 7vw);
-    height: calc(1rem + 7vw);
-    background: url('/img/cancel.png') #CED6DD no-repeat;
-    background-size: contain;
-    align-self: center;
-    border-radius: 50%;
-  }
 }

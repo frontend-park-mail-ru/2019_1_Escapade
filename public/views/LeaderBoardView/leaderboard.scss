@@ -31,7 +31,7 @@ min-height 50% from media avg
   flex-direction: column;
   /*justify-content: center;*/
   align-items: center;
-  background-image: url('../../img/field.jpg');
+  background-image: url('/img/field.jpg');
   background-repeat: no-repeat;
   background-size: cover;
   border-color: #46535E; 
@@ -44,7 +44,7 @@ min-width  15% from media avg
 min-height 15% from media avg
 */
 .flag_button_back {
-  background-image: url('../../img/flag_back.png');
+  background-image: url('/img/flag_back.png');
   background-repeat: no-repeat;
   background-size: cover;
   float: left;
@@ -110,7 +110,7 @@ min-height 15% from media avg
 }
 
 .leaderboard__left {
-  background-image: url('../../img/flag_back.png');
+  background-image: url('/img/flag_back.png');
   background-repeat: no-repeat;
   background-size: contain;
   background-position: center;
@@ -118,7 +118,7 @@ min-height 15% from media avg
 }
 
 .leaderboard__right {
-  background-image: url('../../img/flag_ahead.png');
+  background-image: url('/img/flag_ahead.png');
   background-repeat: no-repeat;
   background-size: contain;
   background-position: center;

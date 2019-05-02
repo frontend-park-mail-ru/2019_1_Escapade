@@ -39,9 +39,9 @@ export default class SignUpView extends BaseView {
     this._warnings.login = this.parent.querySelector('.js-warning-login');
     this._warnings.pass = this.parent.querySelector('.js-warning-password');
     this._warnings.repass = this.parent.querySelector('.js-warning-repassword');
-    this._form = this.parent.querySelector('.profile_edit__form');
+    this._form = this.parent.querySelector('.signup__form');
 
-    this._submitButton = this.parent.querySelector('.signup_edit__confirm');
+    this._submitButton = this.parent.querySelector('.signup__confirm');
 
     this._submitButton.addEventListener('click', this._onSubmit.bind(this));
   }
