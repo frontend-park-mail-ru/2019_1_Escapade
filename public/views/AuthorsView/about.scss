@@ -7,7 +7,7 @@
   display: flex;
   justify-content: center;
   height: 100vh;
-  background: radial-gradient(512.00px at 50% 50%, rgba(255, 255, 255, 0.34) 0%, rgba(255, 255, 255, 0) 100%), #667787;
+  background: $escapade-gradient
 }
 
 .about__wrapper {

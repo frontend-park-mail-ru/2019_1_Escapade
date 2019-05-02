@@ -39,9 +39,9 @@ export default class SignInView extends BaseView {
     this._warnings = {};
     this._warnings.email = this.parent.querySelector('.js-warning-email');
     this._warnings.pass = this.parent.querySelector('.js-warning-password');
-    this._form = this.parent.querySelector('.profile_edit__form');
+    this._form = this.parent.querySelector('.signin__form');
 
-    this._submitButton = this.parent.querySelector('.signin_edit__confirm');
+    this._submitButton = this.parent.querySelector('.signin__confirm');
 
     this._submitButton.addEventListener('click', this._onSubmit.bind(this));
   }
