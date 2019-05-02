@@ -1,5 +1,6 @@
 /* eslint-disable require-jsdoc */
 const singlePlayerTemplate = require('./MultiPlayer.pug');
+import MathGame from '../../utils/math';
 import BaseView from '../BaseView';
 import { User } from '../../utils/user';
 import { MineSweeper } from '../../game/minesweeper';
@@ -29,6 +30,8 @@ export default class MultiPlayerView extends BaseView {
   startGame: boolean;
   players: any[];
   playersListContainer: any;
+  myID: number;
+  colorArr: string[];
   /**
    *
    * @param {*} parent
@@ -44,10 +47,16 @@ export default class MultiPlayerView extends BaseView {
     this.flagPlacing = true;
     this.startGame = false;
     this.players = [];
+    this.myID = 0;
+    this.colorArr = ['#b6b4ca', '#cab4be', '#b4cabd', '#cac7b4', '#cab4b4', '#dedede', '#94c9b4', '#b9bfc9'];
     Bus.on('leftClickOnCell', this._clickOnCell.bind(this));
     Bus.on('rightClickOnCell', this._rightСlickOnCell.bind(this));
     Bus.on('updateFieldWS', this._updateField.bind(this));
     Bus.on('updatePointsWS', this._updatePoints.bind(this));
+    Bus.on('roomActionWS', this._roomAction.bind(this));
+    
+    Bus.on('gameOwerWS', this._gameOver.bind(this));
+    
     document.body.oncontextmenu = function (e) {
       return false;
     };
@@ -75,6 +84,25 @@ export default class MultiPlayerView extends BaseView {
     console.log('render');
   }
 
+  /** */
+  _showMap() {
+    this.flagPlacing = true;
+    this.startGame = false;
+    console.log('_showMap');
+    this.openCellsCount = 0;
+    this.pointsCount = 0;
+    this.leftClicksCount = 0;
+    this.rightClicksCount = 0;
+    this.myID = 0;
+    this.players = [];
+
+    Bus.emit('messageBoxHide', true)
+    Bus.emit('renderField',{width : this.cellNumbersX, height : this.cellNumbersY, cellSize : this.cellsize})
+
+    this.timer.start(this.startTimeFlag);
+    return;
+  }
+
   _currentPathSignalFunc(path: string) {
     if (path === '/multi_player') {
       this._showMap();
@@ -90,45 +118,113 @@ export default class MultiPlayerView extends BaseView {
     console.log('time is over');
   }
 
+  _fromDecToHex(num : number) {
+    if (num < 0 || num > 15) {
+      return '0';
+    }
+    if (num < 10) {
+      return num.toString();
+    } else {
+      return String.fromCharCode('a'.charCodeAt(0) + (num - 10)); 
+    }
+  }
+
+  _createColorForPlayer(i : number) {
+    /*let color = '#'
+    for (let i = 0; i < 6; i++) {
+      color += this._fromDecToHex(MathGame.randomInteger(0,15));
+    }*/
+    while (i >= this.colorArr.length) {
+      i = i - this.colorArr.length;
+    }
+    return this.colorArr[i];
+  }
+
   _getPlayers(data : any) {
+    Bus.emit('clearParametersPlayerList');
     const dataConnections = data.value.players.connections;
     const dataPlayers = data.value.players.players;
     this.players = [];
+    const colorRandom = MathGame.randomInteger(0,8);
     dataConnections.forEach((item : any, i : number) => {
-      this.players.push({user : item.user, id : dataPlayers[item.index].ID});
+      let color = this._createColorForPlayer(i + colorRandom)
+      let me = false;
+      if (User.name === item.user.name) {
+        this.myID = dataPlayers[item.index].ID;
+        me = true;
+      }
+      Bus.emit('addPlayer',{player : item.user, color : color, me : me});
+      this.players.push({user : item.user, id : dataPlayers[item.index].ID, points : dataPlayers[item.index].Points, me : me, color : color});
     });
-    console.log('this.players ' + this.players[0].id + ' ' + this.players[1].id);
-    Bus.emit('addPlayers',data);
-  }
-
-  /** */
-  _showMap() {
-    this.flagPlacing = true;
-    this.startGame = false;
-    console.log('_showMap');
-    this.openCellsCount = 0;
-    this.pointsCount = 0;
-    this.leftClicksCount = 0;
-    this.rightClicksCount = 0;
-
-    Bus.emit('messageBoxHide', true)
-    Bus.emit('renderField',{width : this.cellNumbersX, height : this.cellNumbersY, cellSize : this.cellsize})
-
-    this.timer.start(this.startTimeFlag);
-    return;
+    
   }
 
   _updateField(data : any) {
     const cells = data.value;
-    cells.forEach((item : any, i : number) => {
-      if (item.value < 10) {
-        Bus.emit('openCell', {x: item.x, y: item.y, type: item.value })
+    let color = '#b9c0c9';
+    const my = cells[0].playerID === this.myID;
+    for (let i = 0; i < this.players.length; i++) {
+      if (this.players[i].id === cells[0].playerID) {
+        color = this.players[i].color;
+        break;
       }
+    }
+    cells.forEach((item : any, i : number) => {
+      Bus.emit('openCell', {x: item.x, y: item.y, type: item.value, color : color, my : my})
     });
   }
 
   _updatePoints(data : any) {
-    
+    const points = data.value;
+    for (let i = 0; i < this.players.length; i++) {
+      if (this.players[i].id === points.ID) {
+        Bus.emit('updatePoints', {number : i, points : points.Points});
+        this.players[i].points = points.Points;
+        break;
+      }
+    }
+    console.log('this.players ' + this.players[0].id + ' ' + this.players[1].id);
+  }
+
+
+  _gameOver(data : any) {
+    const dataPlayers = data.value;
+    for (let i = 0; i < dataPlayers.length; i++) {
+      if (!dataPlayers[i].Finished) {
+        console.log('!dataPlayers[i].Finished');
+        Bus.emit('winPlayer', i);
+      }
+      if (dataPlayers[i].ID === this.myID) {
+        if (dataPlayers[i].Finished) {
+          Bus.emit('showTextInMessageBox', 'You lose!');
+        } else {
+          Bus.emit('showTextInMessageBox', 'You win!');
+        }
+      }
+    }
+  }
+
+  _roomAction(data : any) {
+    const action = data.value;
+    for (let i = 0; i < this.players.length; i++) {
+      if (this.players[i].id === action.player) {
+        switch(action.action) {
+          case 7 :
+            Bus.emit('explosePlayer', i);
+            break;
+          case 10 :
+            Bus.emit('findFlagPlayer', i);
+            break;
+          case 4 :
+            Bus.emit('disconnectPlayer', i);
+            break;
+          case 15 : 
+            Bus.emit('timeIsOverPlayer', i);
+            break;
+        }
+        break;
+      }
+    }
   }
 
   _stop_reset_timer() {
@@ -165,23 +261,10 @@ export default class MultiPlayerView extends BaseView {
     if (!this.startGame) {
       return;
     }
+    console.log('rightСlickOnCell')
     const x = parseInt(coordinatesStruct.x);
     const y = parseInt(coordinatesStruct.y);
-    const typeOfCell = this.mineSweeper.putRemoveFlag(x, y); // 0 - закрыта; 1 - открыта; 2 - флаг
-    if (typeOfCell == 1) {
-      return;
-    }
-    Bus.emit('rightClicksStatisticsChange', 1);
-    if (typeOfCell == 0) {
-      Bus.emit('minesStatisticsChange', 1);
-      Bus.emit('setUnsetFlagOnCell', {x : x, y : y, type : 'closing'});
-      return;
-    }
-
-    if (typeOfCell == 2) {
-      Bus.emit('minesStatisticsChange', -1);
-      Bus.emit('setUnsetFlagOnCell', {x : x, y : y, type : 'flag'});
-    }
+    Bus.emit('setUnsetFlagOnCell', {x : x, y : y, type : 'closing'});
     return;
   }
 

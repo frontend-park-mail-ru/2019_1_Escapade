@@ -241,6 +241,7 @@ export default class SinglePlayerView extends BaseView {
     if (!this.start) {
       return;
     }
+    console.log('QQQQQQQQ');
     const x = parseInt(coordinatesStruct.x);
     const y = parseInt(coordinatesStruct.y);
     const typeOfCell = this.mineSweeper.putRemoveFlag(x, y); // 0 - закрыта; 1 - открыта; 2 - флаг

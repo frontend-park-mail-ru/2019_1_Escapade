@@ -34,6 +34,12 @@
   background-color: #394653;
 }
 
+.game__players_list_color {
+  height: 57px;
+  width: 11px;
+  border-radius: 16px 0px 0px 16px;
+  margin-top: 1px;
+}
 
 .game__players_list_me_row {
   background-color: #2d3944;
@@ -95,6 +101,30 @@
   margin-top: 7px;
   margin-right: 7px;
   background: url('../../../img/explosePlayer.png') no-repeat;
+}
+
+.game__players_list_win_img {
+  width: 47px;
+  height: 40px;
+  margin-top: 7px;
+  margin-right: 7px;
+  background: url('../../../img/win.png') no-repeat;
+}
+
+.game__players_list_clock_img {
+  width: 47px;
+  height: 40px;
+  margin-top: 7px;
+  margin-right: 7px;
+  background: url('../../../img/clockPlayerList.png') no-repeat;
+}
+
+.game__players_list_flag_img {
+  width: 50px;
+  height: 40px;
+  margin-top: 7px;
+  margin-right: 7px;
+  background: url('../../../img/flag_lose.png') no-repeat;
 }
 
 .game__players_list_title {

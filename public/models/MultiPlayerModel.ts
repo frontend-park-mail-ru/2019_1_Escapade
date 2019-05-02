@@ -42,6 +42,13 @@ export default class MultiplayerModel {
       case 'RoomPlayerPoints' :
         Bus.emit('updatePointsWS', data);
         break;
+      case 'RoomGameOver' :
+        Bus.emit('gameOwerWS', data);
+        break;
+      case 'RoomAction' :
+        Bus.emit('roomActionWS', data);
+        break;
+        
     }
     console.log('_getInfo end') 
   }

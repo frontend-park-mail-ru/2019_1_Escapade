@@ -4,8 +4,6 @@ const lobbyTemplateBusyRoom = require('./LobbyBusyRoom.pug');
 import { User } from '../../utils/user';
 import BaseView from '../BaseView';
 import Bus from '../../utils/bus';
-import { throwStatement } from 'babel-types';
-import { runInThisContext } from 'vm';
 
 /**
  *

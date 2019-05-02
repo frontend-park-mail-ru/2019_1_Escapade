@@ -70,7 +70,7 @@ export default class FieldView {
     this.loadbarDocElement.style.width = '0px';
   }
 
-  _openCell({x = 0, y = 0, type = 0, }){
+  _openCell({x = 0, y = 0, type = 0, color = '#b9c0c9', my = false}){
     const cell = document.
       getElementById(`cell_${x}_${y}`);
     if (!cell) {
@@ -78,7 +78,17 @@ export default class FieldView {
         `cell${x}_${y}`);
       return;
     }
-    cell.className = `cell cell_open cell_open${type}`;
+    console.log('TYPE ' + type);
+    if (type > 13) {
+      if (my) {
+        cell.className = `cell cell_open cell_open10`;
+      } else {
+        cell.className = `cell cell_open cell_open11`;
+      }
+    } else {
+      cell.className = `cell cell_open cell_open${type}`;
+    }
+    cell.style.backgroundColor = color;
   }
 
   _setUnsetFlagOnCell({x = 0, y = 0, type = 'flag' }){
@@ -89,6 +99,7 @@ export default class FieldView {
         `cell${x}_${y}`);
       return;
     }
+    console.log('rightСlickOnCell2')
     const classElems = cell.classList[2].split('_');
     const numClassElem = parseInt(classElems[2]);
     if (type === 'flag') {

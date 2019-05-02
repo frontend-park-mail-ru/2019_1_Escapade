@@ -15,24 +15,24 @@ export default class MessageView {
   _addListeners() {
     this.messageBoxDocElement = document.querySelector('.messagebox__popup');
     this.messageBoxMessageDocElement = document.querySelector('.messagebox__popup_text');
-    Bus.on('messageBoxHide', this._hideMessage.bind(this));
+    Bus.on('messageBoxHide', this._hideTextMessage.bind(this));
     Bus.on('showTextInMessageBox', this._showTextMessage.bind(this));
     document.addEventListener('click', this._clickOnMessageButton.bind(this));
   }
 
   _clickOnMessageButton(e: any) {
     if (e.target.classList.contains('messagebox__popup_ok_button')) {
-      this._hideMessage(true);
+      this._hideTextMessage(true);
     }
   }
 
   /** */
-  _hideMessage(hide : any) {
+  _hideTextMessage(hide : any) {
     this.messageBoxDocElement.hidden = hide;
   }
 
   _showTextMessage(text : string) {
     this.messageBoxMessageDocElement.innerHTML = text;
-    this._hideMessage(false);
+    this._hideTextMessage(false);
   }
 }
