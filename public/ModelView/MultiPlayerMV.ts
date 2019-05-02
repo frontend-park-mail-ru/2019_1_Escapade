@@ -20,10 +20,7 @@ class MultiPlayerMV {
   constructor() {
     this.view = MultiPlayerView;
     this.model = new MultiPlayerModel();
-    this.fieldPanel = new FieldView();
-    this.messageView = new MessageView();
     this.playersListView = new PlayersListView();
-    this.buttonsGameView = new ButtonsGameView();
     
   }
 }

@@ -15,7 +15,7 @@ export default class LobbyModel {
    *
    */
   constructor() {
-    this.wsAdress = 'ws://localhost:3001/ws';
+    this.wsAdress = 'ws://localhost:3002/ws';
     
     this.currentRoomInfo = [];
     
@@ -100,7 +100,7 @@ export default class LobbyModel {
   _startGame() {
     router.open('/multi_player');
     Bus.emit('getWS', this.ws);
-    Bus.emit('sendPlayersToRoom', this.currentRoomInfo)
+    Bus.emit('sendRoom', this.currentRoomInfo)
   }
 
 }

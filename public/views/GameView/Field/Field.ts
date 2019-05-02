@@ -14,17 +14,25 @@ export default class FieldView {
     this.width = 0;
     this.height = 0;
     Bus.on('addListenersField', this._addListeners.bind(this));
+    Bus.on('removeListenersField', this._removeListeners.bind(this));
   }
 
   _addListeners() {
+    console.log('addListenersField ', Bus.listeners);
+    this._removeListeners();
     Bus.on('renderField', this._render.bind(this));
     Bus.on('openCell', this._openCell.bind(this));
     Bus.on('setUnsetFlagOnCell', this._setUnsetFlagOnCell.bind(this));
     Bus.on('setUnsetFlagMultiOnCell', this._setUnsetFlagMultiOnCell.bind(this));
     Bus.on('progressGameChange', this._progressGameChange.bind(this));
-    
     document.addEventListener('click', this._leftClickOnBody.bind(this));
     document.addEventListener('contextmenu', this._rightСlickOnCell.bind(this));
+  }
+
+
+  _removeListeners() {
+    document.removeEventListener('click', this._leftClickOnBody.bind(this));
+    document.removeEventListener('contextmenu', this._rightСlickOnCell.bind(this));
   }
 
   _leftClickOnBody(e: any) {
@@ -40,6 +48,7 @@ export default class FieldView {
         console.log('error e.target.classList.length < 3');
         return;
       }
+      console.log('_rightСlickOnCell emit')
       let [, x, y] = e.target.id.split('_');
       Bus.emit('rightClickOnCell', {x : x, y : y});
     }

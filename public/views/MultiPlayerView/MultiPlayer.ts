@@ -32,6 +32,7 @@ export default class MultiPlayerView extends BaseView {
   playersListContainer: any;
   myID: number;
   colorArr: string[];
+  fieldMatrix: any[];
   /**
    *
    * @param {*} parent
@@ -47,6 +48,7 @@ export default class MultiPlayerView extends BaseView {
     this.flagPlacing = true;
     this.startGame = false;
     this.players = [];
+    
     this.myID = 0;
     this.colorArr = ['#b6b4ca', '#cab4be', '#b4cabd', '#cac7b4', '#cab4b4', '#dedede', '#94c9b4', '#b9bfc9'];
     Bus.on('leftClickOnCell', this._clickOnCell.bind(this));
@@ -75,37 +77,37 @@ export default class MultiPlayerView extends BaseView {
     Bus.emit('addListenersMessage');
     Bus.emit('addListenersPlayersList');
     Bus.emit('changeTitleRestartButton', 'Start');
-    Bus.on('sendPlayersToRoom', this._getPlayers.bind(this));
+    Bus.on('sendRoom', this._getRoom.bind(this));
     
     this.timer = new Timer('multi_player__timer', this._timeIsOver.bind(this));
-    
-    this._showMap();
     
     console.log('render');
   }
 
   /** */
   _showMap() {
+    this.fieldMatrix = [];
+    this.fieldMatrix = new Array(this.cellNumbersY);
+    for (let i = 0; i < this.cellNumbersY; i++) {
+      this.fieldMatrix[i] = new Array(this.cellNumbersX).fill(0);
+    }
     this.flagPlacing = true;
     this.startGame = false;
     console.log('_showMap');
     this.openCellsCount = 0;
     this.pointsCount = 0;
-    this.leftClicksCount = 0;
-    this.rightClicksCount = 0;
-    this.myID = 0;
-    this.players = [];
+    
+    
 
     Bus.emit('messageBoxHide', true)
     Bus.emit('renderField',{width : this.cellNumbersX, height : this.cellNumbersY, cellSize : this.cellsize})
-
     this.timer.start(this.startTimeFlag);
     return;
   }
 
   _currentPathSignalFunc(path: string) {
     if (path === '/multi_player') {
-      this._showMap();
+      //this._showMap();
       console.log('_currentPathSignalFunc multi_player ');
     } else {
       console.log('_currentPathSignalFunc else ');
@@ -140,11 +142,23 @@ export default class MultiPlayerView extends BaseView {
     return this.colorArr[i];
   }
 
+  _getRoom(data : any) {
+    this._getPlayers(data.value.players);
+    this._getField(data.value.field);
+  }  
+
+  _getField(data : any) {
+    this.cellNumbersX = data.width;
+    this.cellNumbersY = data.height;
+    this._showMap();
+  }
+
   _getPlayers(data : any) {
-    Bus.emit('clearParametersPlayerList');
-    const dataConnections = data.value.players.connections;
-    const dataPlayers = data.value.players.players;
     this.players = [];
+    this.myID = 0;
+    Bus.emit('clearParametersPlayerList');
+    const dataConnections = data.connections;
+    const dataPlayers = data.players;
     const colorRandom = MathGame.randomInteger(0,8);
     dataConnections.forEach((item : any, i : number) => {
       let color = this._createColorForPlayer(i + colorRandom)
@@ -183,9 +197,7 @@ export default class MultiPlayerView extends BaseView {
         break;
       }
     }
-    console.log('this.players ' + this.players[0].id + ' ' + this.players[1].id);
   }
-
 
   _gameOver(data : any) {
     const dataPlayers = data.value;
@@ -206,6 +218,7 @@ export default class MultiPlayerView extends BaseView {
 
   _roomAction(data : any) {
     const action = data.value;
+    console.log(this.players);
     for (let i = 0; i < this.players.length; i++) {
       if (this.players[i].id === action.player) {
         switch(action.action) {
@@ -243,6 +256,10 @@ export default class MultiPlayerView extends BaseView {
     }
     const x = parseInt(coordinatesStruct.x);
     const y = parseInt(coordinatesStruct.y);
+    if (this.fieldMatrix[x][y] == 1) {
+      return;
+    }
+    this.fieldMatrix[x][y] = -1;
     Bus.emit('sendCellWS', {x : x, y : y});
     if (this.flagPlacing) {
       Bus.emit('setUnsetFlagMultiOnCell', {x : x, y : y, type : 'flag'})
@@ -261,21 +278,20 @@ export default class MultiPlayerView extends BaseView {
     if (!this.startGame) {
       return;
     }
-    console.log('rightСlickOnCell')
     const x = parseInt(coordinatesStruct.x);
     const y = parseInt(coordinatesStruct.y);
-    Bus.emit('setUnsetFlagOnCell', {x : x, y : y, type : 'closing'});
+    if (this.fieldMatrix[x][y] === 0) {
+      console.log('flag');
+      Bus.emit('setUnsetFlagOnCell', {x : x, y : y, type : 'flag'});
+      this.fieldMatrix[x][y] = 1;
+    } else if (this.fieldMatrix[x][y] === 1) {
+      console.log('closing');
+      Bus.emit('setUnsetFlagOnCell', {x : x, y : y, type : 'closing'});
+      this.fieldMatrix[x][y] = 0;
+    }    
     return;
   }
 
-  /** */      
-  _openCels(arrCells: any) {
-    for (let i = 0; i < arrCells.length; i++) {
-      const x = arrCells[i][0];
-      const y = arrCells[i][1];
-      Bus.emit('openCell', {x : x, y : y, type : this.mineSweeper.map[x][y]});
-    }
-  }
 
   /** */
   _openAllCels() {

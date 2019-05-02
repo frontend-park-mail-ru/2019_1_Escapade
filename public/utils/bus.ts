@@ -16,6 +16,8 @@ export class Bus {
    * @param {*} callback
    */
   on(event: string, callback: CallableFunction) { // подписываемся на событие
+    this.off(event, callback);
+    
     this.listeners[event] = this.listeners[event] || [];
     this.listeners[event].push(callback);
   }
@@ -26,6 +28,9 @@ export class Bus {
    * @param {*} callback
    */
   off(event: string | number, callback: CallableFunction) { // отписываемся от события
+    if (!this.listeners[event]) {
+      return;
+    }
     this.listeners[event] = this.listeners[event]
       .filter(function (listener: any) {
         return listener !== callback;

@@ -51,6 +51,7 @@ export default class SinglePlayerView extends BaseView {
   render() {
     this.user = User;
     super.render();
+    console.log('render single');
     Bus.emit('addListenersButtonsGame');
     Bus.emit('addListenersField');
     Bus.emit('addListenersSettingsGame');
