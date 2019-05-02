@@ -15,12 +15,36 @@
     justify-content: center;
   }
 
+  &__team {
+    margin: 1vmin;
+    margin-top: 4vmin;
+    display: grid;
+    font-size: 2.5vmin;
+    grid-template-columns: 1.5fr 1.5fr;
+    grid-column-gap: 10px;
+    grid-row-gap: 10px;
+  }
+
+  &__content {
+    font-family: Saira;
+    padding: 1vmin;
+    text-align: center;
+    background: #46535E;
+    margin-top: 3vmin;
+    margin-left: 10vmin;
+    margin-right: 10vmin;
+    margin-bottom: 3vmin;
+    border-radius: 30px;
+    color: white;
+    font-size: calc(0.5rem + 1vw);
+  }
+
   &__header{
     display: flex;
     justify-content: center;
     align-items: center;
   }
-  
+
   &__back{
     width: 108px;
     height: 106px;
@@ -28,7 +52,7 @@
     transform: matrix(-1, 0, 0, 1, 0, 0);
     background-size: contain;
   }
-  
+
   &__escapade{
     background: #FF3D00;
     border-radius: 30px;
@@ -36,36 +60,5 @@
     color: white;
     font-size: calc(1rem + 2vw);
     padding: 10px 10px
-  }
-
-}
-
-.team {
-  margin: 1vmin;
-  margin-top: 4vmin;
-  display: grid;
-  font-size: 2.5vmin;
-  grid-template-columns: 1.5fr 1.5fr;
-  grid-column-gap: 10px;
-  grid-row-gap: 10px;
-
-.team__name,
-  &__role {
-    font-family: Saira;
-    padding: 1vmin;
-    text-align: center;
-    background: #46535E;
-    border-radius: 30px;
-    color: white;
-    font-size: calc(1rem + 2vw)
-  }
-
-  &__a {
-    color: white;
-    text-decoration: none
-  }
-
-  &__a:hover{
-    text-decoration: underline
   }
 }
