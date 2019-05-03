@@ -11,7 +11,7 @@ export class MainMenuView extends BaseView {
    */
   constructor(parent: any) {
     super(parent, menuTemplate, true);
-    Bus.on('userUpdate', this.onUserUpdate.bind(this));
+    Bus.on('userUpdate', this.onUserUpdate.bind(this), 'mainMenuView');
   }
 
   /**

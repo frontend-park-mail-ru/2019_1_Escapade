@@ -20,7 +20,7 @@ export default class LeaderBoardView extends BaseView {
     super(parent, leaderBoardTemplate, false);
     this._currPage = 1;
 
-    Bus.on('respPagesAmount', this._initBoard.bind(this));
+    Bus.on('respPagesAmount', this._initBoard.bind(this), 'leaderBoardView');
   }
 
   /**
@@ -59,7 +59,7 @@ export default class LeaderBoardView extends BaseView {
    *
    */
   render() {
-    Bus.on('respPage', this.renderUsers.bind(this));
+    Bus.on('respPage', this.renderUsers.bind(this), 'leaderBoardView');
     // const leaderboardTableRowDomElement = document.getElementsByClassName('leaderboard__table_row')[0];
 
     this.divisionHeight = this._getPageAmount();

@@ -19,7 +19,7 @@ export default class StatisticsGameView {
     this.rightClicksCount = 0;
     this.minesCount = 0;
     this.minesRemainedCount = 0;   
-    Bus.on('addListenersStatisticsGame', this._addListeners.bind(this));
+    Bus.on('addListenersStatisticsGame', this._addListeners.bind(this), 'statisticsView');
   }
 
   _addListeners() {
@@ -27,11 +27,11 @@ export default class StatisticsGameView {
     this.minesDocElement = document.querySelector('.single_player__statistics_row_mines');
     this.leftClicksDocElement = document.querySelector('.single_player__statistics_row_left_click');
     this.rightClicksDocElement = document.querySelector('.single_player__statistics_row_right_click');
-    Bus.on('leftClicksStatisticsChange', this._leftClickChange.bind(this));
-    Bus.on('rightClicksStatisticsChange', this._rightClickChange.bind(this));
-    Bus.on('pointsStatisticsChange', this._pointsChange.bind(this));
-    Bus.on('minesStatisticsChange', this._minesChange.bind(this));
-    Bus.on('statisticsResetParameters', this.resetParameters.bind(this));
+    Bus.on('leftClicksStatisticsChange', this._leftClickChange.bind(this), 'statisticsView');
+    Bus.on('rightClicksStatisticsChange', this._rightClickChange.bind(this), 'statisticsView');
+    Bus.on('pointsStatisticsChange', this._pointsChange.bind(this), 'statisticsView');
+    Bus.on('minesStatisticsChange', this._minesChange.bind(this), 'statisticsView');
+    Bus.on('statisticsResetParameters', this.resetParameters.bind(this), 'statisticsView');
     this.resetParameters(0);
   }
 

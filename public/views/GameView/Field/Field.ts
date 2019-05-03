@@ -13,18 +13,18 @@ export default class FieldView {
   constructor() {
     this.width = 0;
     this.height = 0;
-    Bus.on('addListenersField', this._addListeners.bind(this));
-    Bus.on('removeListenersField', this._removeListeners.bind(this));
+    Bus.on('addListenersField', this._addListeners.bind(this), 'fieldView');
+    Bus.on('removeListenersField', this._removeListeners.bind(this), 'fieldView');
   }
 
   _addListeners() {
     console.log('addListenersField ', Bus.listeners);
     this._removeListeners();
-    Bus.on('renderField', this._render.bind(this));
-    Bus.on('openCell', this._openCell.bind(this));
-    Bus.on('setUnsetFlagOnCell', this._setUnsetFlagOnCell.bind(this));
-    Bus.on('setUnsetFlagMultiOnCell', this._setUnsetFlagMultiOnCell.bind(this));
-    Bus.on('progressGameChange', this._progressGameChange.bind(this));
+    Bus.on('renderField', this._render.bind(this), 'fieldView');
+    Bus.on('openCell', this._openCell.bind(this), 'fieldView');
+    Bus.on('setUnsetFlagOnCell', this._setUnsetFlagOnCell.bind(this), 'fieldView');
+    Bus.on('setUnsetFlagMultiOnCell', this._setUnsetFlagMultiOnCell.bind(this), 'fieldView');
+    Bus.on('progressGameChange', this._progressGameChange.bind(this), 'fieldView');
     document.addEventListener('click', this._leftClickOnBody.bind(this));
     document.addEventListener('contextmenu', this._rightСlickOnCell.bind(this));
   }
@@ -87,7 +87,6 @@ export default class FieldView {
         `cell${x}_${y}`);
       return;
     }
-    console.log('TYPE ' + type);
     if (type > 13) {
       if (my) {
         cell.className = `cell cell_open cell_open10`;

@@ -18,13 +18,13 @@ export default class ProfileView extends BaseView {
   constructor(parent: any) {
     super(parent, ProfileTemplate, false);
 
-    Bus.on('userUpdate', this.onUserUpdate.bind(this));
-    Bus.on('onSuccessUpload', this._onSuccessUpload.bind(this));
+    Bus.on('userUpdate', this.onUserUpdate.bind(this), 'profileView');
+    Bus.on('onSuccessUpload', this._onSuccessUpload.bind(this), 'profileView');
     Bus.on('onFailedUpload', (error: { message: any; }) => {
       this._showWarning(this._warnings.email, error.message);
-    });
-    Bus.on('onSuccessAvatarGet', this._onSuccessAvatarGet.bind(this));
-    Bus.on('onFailedAvatarGet', this._onFailedAvatarGet.bind(this));
+    }, 'profileView');
+    Bus.on('onSuccessAvatarGet', this._onSuccessAvatarGet.bind(this), 'profileView');
+    Bus.on('onFailedAvatarGet', this._onFailedAvatarGet.bind(this), 'profileView');
   }
 
   /** */

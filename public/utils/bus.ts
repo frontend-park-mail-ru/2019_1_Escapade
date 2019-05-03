@@ -15,11 +15,10 @@ export class Bus {
    * @param {*} event
    * @param {*} callback
    */
-  on(event: string, callback: CallableFunction) { // подписываемся на событие
-    this.off(event, callback);
-    
+  on(event: string, callback: CallableFunction, place : string) { // подписываемся на событие
+    //this.off(event, callback);
     this.listeners[event] = this.listeners[event] || [];
-    this.listeners[event].push(callback);
+    this.listeners[event].push({callback : callback, place : place});
   }
 
   /**
@@ -27,14 +26,16 @@ export class Bus {
    * @param {*} event
    * @param {*} callback
    */
-  off(event: string | number, callback: CallableFunction) { // отписываемся от события
+  off(event: string | number, callback: CallableFunction, place : string) { // отписываемся от события
     if (!this.listeners[event]) {
       return;
     }
+    console.log('OFF ' + event + '    ' + this.listeners[event]);
     this.listeners[event] = this.listeners[event]
       .filter(function (listener: any) {
-        return listener !== callback;
+        return listener.place !== place;
       });
+      console.log('OFF end ' + this.listeners[event]);
   }
   /**
    *
@@ -45,8 +46,8 @@ export class Bus {
     if (!this.listeners[event]) {
       return;
     }
-    this.listeners[event].forEach(function (listener: (arg0: object | string) => void) {
-      listener(data);
+    this.listeners[event].forEach(function (listener: any) {
+      listener.callback(data);
     });
   }
 }

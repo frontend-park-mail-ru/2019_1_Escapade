@@ -21,17 +21,17 @@ export default class ProfileEditView extends BaseView {
   constructor(parent: any) {
     super(parent, ProfileEditTemplate, false);
 
-    Bus.on('onSuccessChange', (usr: { email?: any; played?: any; avatar?: any; name?: any; password?: any; repassword?: any; }) => {
+    Bus.on('onSuccessChange', (usr: any) => {
       usr.password = '';
       usr.repassword = '';
       console.log('Edit ' + usr);
       User.setUser({ ...usr });
       Bus.emit('userUpdate');
       router.open('/profile');
-    });
+    }, 'profileEditView');
     Bus.on('onFailedChange', (error: { message: any; }) => {
       this._showWarning(this._warnings.email, error.message);
-    });
+    }, 'profileEditView');
   }
 
   /** */

@@ -59,10 +59,12 @@ export default class LobbyView extends BaseView {
     this.createRoomButton.addEventListener('click', this._createRoomEvent.bind(this));
     this.leaveRoomButton.addEventListener('click', this._leaveRoom.bind(this));
 
-    Bus.on('updateCurrentRoom', this._updateCurrentRoom.bind(this));
-    Bus.on('updateRooms', this._updateRooms.bind(this));
-    Bus.on('addRoom', this._addRoom.bind(this));
-    Bus.on('updateRoom', this._updateRoom.bind(this));
+    Bus.on('updateCurrentRoom', this._updateCurrentRoom.bind(this), 'lobbyView');
+    Bus.on('updateRooms', this._updateRooms.bind(this), 'lobbyView');
+    Bus.on('addRoom', this._addRoom.bind(this), 'lobbyView');
+    Bus.on('updateRoom', this._updateRoom.bind(this), 'lobbyView');
+    Bus.on('deleteRoom', this._deleteRoom.bind(this), 'lobbyView');
+    document.addEventListener('click', this._clickOnFreeRoom.bind(this));
     
   }
 
@@ -78,10 +80,11 @@ export default class LobbyView extends BaseView {
   }
 
   _leaveRoom() {
+    console.log('_leaveRoom')
     this._hideCurrentRoomPanel();
     this.currentRoomId = -1;
     this.currentRoomName = '';
-    Bus.emit('leaveRoom');
+    Bus.emit('leaveRoom', 14);
   }
 
   _hideCurrentRoomPanel() {
@@ -104,6 +107,7 @@ export default class LobbyView extends BaseView {
 
   _addRoom(data : any) {
     this._notFoundRoomPanelHide();
+    this._showPaginatorPanel();
     const room = {name : data.name, playersCount : data.players.connections.length,
       playersCapacity : data.players.capacity, difficult : this._getModeByMines(data.field.Mines),
       width : data.field.width, height : data.field.height, mines : data.field.Mines, time : '0:00:00',
@@ -116,12 +120,13 @@ export default class LobbyView extends BaseView {
     }
     this.rooms.push(data);
 
-    var elements = [].slice.call(document.querySelectorAll('.lobby__free_room'));
-    this.roomsHTML.push(elements[elements.length - 1]);
-    elements[elements.length - 1].addEventListener('click', this._clickOnFreeRoom.bind(this))
+    const elements = [].slice.call((document.querySelectorAll('.lobby__free_room')));
+    //elements[elements.length - 1].addEventListener('click', this._clickOnFreeRoom.bind(this))
 
+    console.log('currentRoomId ' + this.currentRoomId);
     if (this.currentRoomId === -2) { 
-      this.currentRoomId = this.rooms.length - 1;
+      this.currentRoomId = elements.length - 1;
+      console.log('currentRoomId ' + this.currentRoomId);
       this._changeRoomStringColor(this.currentRoomId, 1);
       const info = {name : this.rooms[this.currentRoomId].name, length : this.rooms[this.currentRoomId].players.connections.length,
         capacity : this.rooms[this.currentRoomId].players.capacity}
@@ -130,23 +135,39 @@ export default class LobbyView extends BaseView {
   }
 
   _updateRoom(data : any) {
+    const elements = [].slice.call((document.querySelectorAll('.lobby__free_room')));
     for (let i = 0; i < this.rooms.length; i++) {
       if (this.rooms[i].id === data.id) {
-        this.roomsHTML[i].querySelector('.lobby__players').innerHTML = `${data.players.connections.length}/${data.players.capacity}`;
-        const observersHTML = this.roomsHTML[i].querySelector('.lobby__observers');
+        elements[i].querySelector('.lobby__players').innerHTML = `${data.players.connections.length}/${data.players.capacity} players`;
+        const observersHTML = elements[i].querySelector('.lobby__observers');
 
         if (observersHTML) {
-          this.roomsHTML[i].querySelector('.lobby__observers').innerHTML = data.observers.get.length;
-          this.roomsHTML[i].querySelector('.lobby__status').innerHTML = this._getStatusByCode(data.status);
+          elements[i].querySelector('.lobby__observers').innerHTML = data.observers.get.length;
+          elements[i].querySelector('.lobby__status').innerHTML = this._getStatusByCode(data.status);
         }
         break;
       }
     }
   }
 
+  _deleteRoom(data : any) {
+    const elements = [].slice.call((document.querySelectorAll('.lobby__free_room')));
+    for (let i = 0; i < this.rooms.length; i++) {
+      if (this.rooms[i].id === data) {
+        elements[i].parentNode.removeChild(elements[i]);
+        this.rooms.splice(i, 1);
+        break;
+      }
+    }
+    if (this.rooms.length === 0) { // not found rooms
+      this._notFoundRoomPanelShow();
+      this._hidePaginatorPanel();
+    }
+  }
+
   _updateRooms(data : any) {
+    console.log('_updateRooms')
     this.currentRoomId = -1;
-    this.roomsHTML = []
     this.rooms = []
     this.freeRoomContainer.innerHTML = ''
     this.busyRoomContainer.innerHTML = '';
@@ -172,11 +193,10 @@ export default class LobbyView extends BaseView {
       }
       this.rooms.push(item);
     });
-    var elements = [].slice.call(document.querySelectorAll('.lobby__free_room'));
+    /*const elements = [].slice.call(document.querySelectorAll('.lobby__free_room'));
     elements.forEach((element : any, i : number) => {
-      this.roomsHTML.push(element);
       element.addEventListener('click', this._clickOnFreeRoom.bind(this))
-    });
+    });*/
   }
 
   _clickOnFreeRoom(e : any) {
@@ -187,10 +207,13 @@ export default class LobbyView extends BaseView {
         return;
       }
     }
+    console.log('clickOnFreeRoom')
     if (this.currentRoomId >= 0) {
       this._changeRoomStringColor(this.currentRoomId, 0);
     }
-    this.currentRoomId = this.roomsHTML.indexOf(target);
+
+    const elements = [].slice.call((document.querySelectorAll('.lobby__free_room')));
+    this.currentRoomId = elements.indexOf(target);
     this._changeRoomStringColor(this.currentRoomId, 1);
     const info = {name : this.rooms[this.currentRoomId].name, length : this.rooms[this.currentRoomId].players.connections.length,
        capacity : this.rooms[this.currentRoomId].players.capacity}
@@ -199,6 +222,7 @@ export default class LobbyView extends BaseView {
   }
 
   _changeRoomStringColor(i : number, typeColor : number) {
+    const elements = [].slice.call((document.querySelectorAll('.lobby__free_room')));
     let colorString = '';
     switch(typeColor) {
       case 0 :
@@ -208,7 +232,7 @@ export default class LobbyView extends BaseView {
         colorString = '#a54f4f';
         break;
     }
-    this.roomsHTML[i].style.backgroundColor = colorString;
+    elements[i].style.backgroundColor = colorString;
   }
 
   _getModeByMines(mines : number) {

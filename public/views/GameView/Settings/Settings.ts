@@ -18,7 +18,7 @@ export default class SettingsGameView {
     this.minesCount = 20;
     this.width = 15;
     this.height = 15;
-    Bus.on('addListenersSettingsGame', this._addListeners.bind(this));
+    Bus.on('addListenersSettingsGame', this._addListeners.bind(this), 'settingsView');
   }
 
   _addListeners() {
@@ -26,10 +26,10 @@ export default class SettingsGameView {
     this.infoWidthDocElement = document.querySelector('.single_player__settings_info_width');
     this.infoHeightDocElement = document.querySelector('.single_player__settings_info_height');
     this.infoMinesDocElement = document.querySelector('.single_player__settings_info_mines');
-    Bus.on('settingsChangeMode', this._modeChange.bind(this));
-    Bus.on('settingsChangeMinesCount', this._minesCountChange.bind(this));
-    Bus.on('settingsChangeSize',this._sizeChange.bind(this));
-    Bus.on('settingsSetParameters', this._setParameters.bind(this));
+    Bus.on('settingsChangeMode', this._modeChange.bind(this), 'settingsView');
+    Bus.on('settingsChangeMinesCount', this._minesCountChange.bind(this), 'settingsView');
+    Bus.on('settingsChangeSize',this._sizeChange.bind(this), 'settingsView');
+    Bus.on('settingsSetParameters', this._setParameters.bind(this), 'settingsView');
     document.addEventListener('click', this._clickOnBody.bind(this));
   }
 

@@ -9,14 +9,14 @@ export default class MessageView {
   messageBoxMessageDocElement: any;
 
   constructor() {
-    Bus.on('addListenersMessage', this._addListeners.bind(this));
+    Bus.on('addListenersMessage', this._addListeners.bind(this), 'messageView');
   }
 
   _addListeners() {
     this.messageBoxDocElement = document.querySelector('.messagebox__popup');
     this.messageBoxMessageDocElement = document.querySelector('.messagebox__popup_text');
-    Bus.on('messageBoxHide', this._hideTextMessage.bind(this));
-    Bus.on('showTextInMessageBox', this._showTextMessage.bind(this));
+    Bus.on('messageBoxHide', this._hideTextMessage.bind(this), 'messageView');
+    Bus.on('showTextInMessageBox', this._showTextMessage.bind(this), 'messageView');
     document.addEventListener('click', this._clickOnMessageButton.bind(this));
   }
 

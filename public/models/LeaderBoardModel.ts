@@ -4,8 +4,8 @@ import { Net } from '../utils/net';
 export default class LeaderBoardModel {
 
   constructor() {
-    Bus.on('reqPagesAmount', this._getPagesAmount.bind(this));
-    Bus.on('reqPage', this._getPage.bind(this));
+    Bus.on('reqPagesAmount', this._getPagesAmount.bind(this), 'leaderboardModel');
+    Bus.on('reqPage', this._getPage.bind(this), 'leaderboardModel');
   }
 
 

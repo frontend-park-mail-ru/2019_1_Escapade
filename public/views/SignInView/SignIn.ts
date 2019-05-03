@@ -24,10 +24,10 @@ export default class SignInView extends BaseView {
       User.setUser({ ...usr });
       Bus.emit('userUpdate');
       router.open('/profile');
-    });
+    }, 'signinView');
     Bus.on('onFailedLogin', (error: { message: any; }) => {
       this._showWarning(this._warnings.email, error.message);
-    });
+    }, 'signinView');
   }
 
   /**

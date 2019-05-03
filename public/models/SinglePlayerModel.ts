@@ -8,7 +8,7 @@ export default class SinglePlayerModel {
    *
    */
   constructor() {
-    Bus.on('sendResultsSingleGame', this._sendResults.bind(this));
+    Bus.on('sendResultsSingleGame', this._sendResults.bind(this), 'singlePlayerModel');
   }
 
   /**

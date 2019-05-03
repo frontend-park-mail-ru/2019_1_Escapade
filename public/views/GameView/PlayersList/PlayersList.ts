@@ -9,22 +9,22 @@ export default class PlayersListView {
   playersHTML: any[];
 
   constructor() {
-    Bus.on('addListenersPlayersList', this._addListeners.bind(this));
+    Bus.on('addListenersPlayersList', this._addListeners.bind(this), 'playerListView');
   }
 
   _addListeners() {
     this.playersListContainer = document.querySelector('.game__players_list_container');
     this.observersListContainer = document.querySelector('.game__observer_list_container');
-    Bus.on('addPlayer', this._addPlayer.bind(this));
-    Bus.on('addObserver', this._addObserver.bind(this));
-    Bus.on('updatePoints', this._updatePoints.bind(this));
-    Bus.on('explosePlayer', this._explosePlayer.bind(this));
-    Bus.on('findFlagPlayer', this._findFlagPlayer.bind(this));
-    Bus.on('winPlayer', this._winPlayer.bind(this));
-    Bus.on('disconnectPlayer', this._disconnectPlayer.bind(this));
-    Bus.on('timeIsOverPlayers', this._timeIsOverPlayers.bind(this));
+    Bus.on('addPlayer', this._addPlayer.bind(this), 'playerListView');
+    Bus.on('addObserver', this._addObserver.bind(this), 'playerListView');
+    Bus.on('updatePoints', this._updatePoints.bind(this), 'playerListView');
+    Bus.on('explosePlayer', this._explosePlayer.bind(this), 'playerListView');
+    Bus.on('findFlagPlayer', this._findFlagPlayer.bind(this), 'playerListView');
+    Bus.on('winPlayer', this._winPlayer.bind(this), 'playerListView');
+    Bus.on('disconnectPlayer', this._disconnectPlayer.bind(this), 'playerListView');
+    Bus.on('timeIsOverPlayers', this._timeIsOverPlayers.bind(this), 'playerListView');
     
-    Bus.on('clearParametersPlayerList', this._clearParameters.bind(this));
+    Bus.on('clearParametersPlayerList', this._clearParameters.bind(this), 'playerListView');
 
     
 

@@ -8,9 +8,9 @@ export default class ProfileModel {
    *
    */
   constructor() {
-    Bus.on('getAvatar', this._getAvatar.bind(this));
-    Bus.on('changeProfile', this._changeProfile.bind(this));
-    Bus.on('uploadAvatar', this._uploadAvatar.bind(this));
+    Bus.on('getAvatar', this._getAvatar.bind(this), 'profileModel');
+    Bus.on('changeProfile', this._changeProfile.bind(this), 'profileModel');
+    Bus.on('uploadAvatar', this._uploadAvatar.bind(this), 'profileModel');
   }
 
   /**

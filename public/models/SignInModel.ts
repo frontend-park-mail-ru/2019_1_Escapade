@@ -8,7 +8,7 @@ export default class SignInModel {
    *
    */
   constructor() {
-    Bus.on('login', this._login.bind(this));
+    Bus.on('login', this._login.bind(this), 'signinModel');
   }
 
   /**

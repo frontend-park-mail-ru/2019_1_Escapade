@@ -11,9 +11,9 @@ export default class MultiplayerModel {
    *
    */
   constructor() {
-    Bus.on('getInfoFromWS', this._getInfo.bind(this));
-    Bus.on('getWS', this._getWS.bind(this));
-    Bus.on('sendCellWS', this._sendCell.bind(this));
+    Bus.on('getInfoFromWS', this._getInfo.bind(this), 'multiPlayerModel');
+    Bus.on('getWS', this._getWS.bind(this), 'multiPlayerModel');
+    Bus.on('sendCellWS', this._sendCell.bind(this), 'multiPlayerModel');
  }
 
   _getWS(data : any) {
@@ -47,6 +47,9 @@ export default class MultiplayerModel {
         break;
       case 'RoomAction' :
         Bus.emit('roomActionWS', data);
+        break;
+      case 'ChangeFlagSet':
+        Bus.emit('changeFlagSetWS', data);
         break;
         
     }

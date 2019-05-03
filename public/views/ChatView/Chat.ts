@@ -41,8 +41,8 @@ export default class ChatView extends BaseView {
     this.counterOnlineField = document.querySelector('.chat__online');
 
     this.sendButton.addEventListener('click', this._sendMessage.bind(this));
-    Bus.on('getInfoFromWS', this._getInfo.bind(this));
-    Bus.on('currentPath', this.currentPathSignalFunc.bind(this))
+    Bus.on('getInfoFromWS', this._getInfo.bind(this), 'chat');
+    Bus.on('currentPath', this.currentPathSignalFunc.bind(this), 'chat')
     this.ws = new WebSocketInterface(this.wsAdress);
     this.inputMessageField.onkeydown = this._onkeydownSignal.bind(this)
     

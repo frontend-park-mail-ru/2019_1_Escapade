@@ -24,6 +24,7 @@ export default class SinglePlayerView extends BaseView {
   mineSweeper: MineSweeper;
   BBBVCount: any;
   difficult: number;
+  curPath: string;
   /**
    *
    * @param {*} parent
@@ -37,12 +38,26 @@ export default class SinglePlayerView extends BaseView {
     this.difficult = 1;
     this.minesCount = 20;
     this.start = false;
-    Bus.on('leftClickOnCell', this._clickOnCell.bind(this));
-    Bus.on('rightClickOnCell', this._rightСlickOnCell.bind(this));
-    Bus.on('updateUserInfo', this._updateUserInfo.bind(this));
+    Bus.on('currentPath', this._currentPathSignalFunc.bind(this), 'singlePlayerView');
     document.body.oncontextmenu = function (e) {
       return false;
     };
+  }
+
+  _busAllOn() {
+    Bus.on('leftClickOnCell', this._clickOnCell.bind(this), 'singlePlayerView');
+    Bus.on('rightClickOnCell', this._rightСlickOnCell.bind(this), 'singlePlayerView');
+    Bus.on('updateUserInfo', this._updateUserInfo.bind(this), 'singlePlayerView');
+    Bus.on('settingsChangeHard', this._changeHard.bind(this), 'singlePlayerView');
+    Bus.on('restartClick', this._restart.bind(this), 'singlePlayerView');
+  }
+
+  _busAllOff() {
+    Bus.off('leftClickOnCell', this._clickOnCell.bind(this), 'singlePlayerView');
+    Bus.off('rightClickOnCell', this._rightСlickOnCell.bind(this), 'singlePlayerView');
+    Bus.off('updateUserInfo', this._updateUserInfo.bind(this), 'singlePlayerView');
+    Bus.off('settingsChangeHard', this._changeHard.bind(this), 'singlePlayerView');
+    Bus.off('restartClick', this._restart.bind(this), 'singlePlayerView');
   }
 
   /**
@@ -51,21 +66,35 @@ export default class SinglePlayerView extends BaseView {
   render() {
     this.user = User;
     super.render();
-    console.log('render single');
     Bus.emit('addListenersButtonsGame');
     Bus.emit('addListenersField');
     Bus.emit('addListenersSettingsGame');
     Bus.emit('addListenersStatisticsGame');
     Bus.emit('addListenersUserinfoGame');
     Bus.emit('addListenersMessage');
-
     Bus.emit('changeTitleRestartButton', 'Start');
-    Bus.on('settingsChangeHard', this._changeHard.bind(this));
-    Bus.on('stop_reset_timer', this._stop_reset_timer.bind(this))
-    Bus.on('restartClick', this._restart.bind(this));
-
+    this._busAllOff();
+    this._busAllOn();
+    console.log('render single');
     this.stopwatch = new Stopwatch('single_player__timer');
     this._showMap();
+    this.curPath = '/single_player';
+  }
+
+  _currentPathSignalFunc(path: string) {
+    if (path === '/single_player') {
+      console.log('_currentPathSignalFunc single_player');
+      this._busAllOn();
+      this._showMap();
+      this.curPath = path;
+    } else {
+      if (this.curPath === '/single_player') {
+        console.log('_currentPathSignalFunc not single_player');
+        this._stop_reset_timer();
+        this.curPath = '';
+        this._busAllOff();
+      }
+    }
   }
 
   /** */

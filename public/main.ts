@@ -54,7 +54,7 @@ router
   .register('/chat', ChatView)
   .register('/profile/edit', ProfileMV.views.ProfileEditView);
 
-bus.on('logout', signOut);
+bus.on('logout', signOut, 'main');
 checkAuth(router.start.bind(router));
 
 export default router;
