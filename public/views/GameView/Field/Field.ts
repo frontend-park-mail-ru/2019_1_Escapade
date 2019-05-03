@@ -10,6 +10,7 @@ export default class FieldView {
   percentOpenDocElement: any;
   loadbarDocElement: any;
   prcentOpen: number;
+  percent: number;
   constructor() {
     this.width = 0;
     this.height = 0;
@@ -27,6 +28,7 @@ export default class FieldView {
     Bus.on('progressGameChange', this._progressGameChange.bind(this), 'fieldView');
     document.addEventListener('click', this._leftClickOnBody.bind(this));
     document.addEventListener('contextmenu', this._rightСlickOnCell.bind(this));
+    this.percent = 0;
   }
 
 
@@ -135,7 +137,10 @@ export default class FieldView {
   }
 
   _progressGameChange(percent : number) {
-    console.log(percent);
+    if (this.percent > percent || percent > 100) {
+      return;
+    }
+    this.percent = percent;
     this.percentOpenDocElement.innerHTML = `${percent}%`;
     this.loadbarDocElement.style.width = `${(percent / 100) * (this.cellSize * this.width - 55)}px`;
   }  

@@ -4,7 +4,8 @@ section(data-section-name='multi_player')
     .multi_player__wrapper
       include ../GameView/Field/Field.pug
     .multi_player_info
-      include ../GameView/Buttons/Buttons.pug
+      .game__multi_right_menu_buttons
+        a.game__multi_quit_button(data-href='Quit', href='lobby') Quit
       .multi_player__timer
         .multi_player__timer_str#multi_player__timer 0:00:00
       include ../GameView/PlayersList/PlayersList.pug

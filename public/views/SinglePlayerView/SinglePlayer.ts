@@ -25,6 +25,10 @@ export default class SinglePlayerView extends BaseView {
   BBBVCount: any;
   difficult: number;
   curPath: string;
+  restartDocElement: any;
+  _restartClick: any;
+  quitDocElement: any;
+  _quitClick: any;
   /**
    *
    * @param {*} parent
@@ -49,7 +53,6 @@ export default class SinglePlayerView extends BaseView {
     Bus.on('rightClickOnCell', this._rightСlickOnCell.bind(this), 'singlePlayerView');
     Bus.on('updateUserInfo', this._updateUserInfo.bind(this), 'singlePlayerView');
     Bus.on('settingsChangeHard', this._changeHard.bind(this), 'singlePlayerView');
-    Bus.on('restartClick', this._restart.bind(this), 'singlePlayerView');
   }
 
   _busAllOff() {
@@ -57,7 +60,6 @@ export default class SinglePlayerView extends BaseView {
     Bus.off('rightClickOnCell', this._rightСlickOnCell.bind(this), 'singlePlayerView');
     Bus.off('updateUserInfo', this._updateUserInfo.bind(this), 'singlePlayerView');
     Bus.off('settingsChangeHard', this._changeHard.bind(this), 'singlePlayerView');
-    Bus.off('restartClick', this._restart.bind(this), 'singlePlayerView');
   }
 
   /**
@@ -72,10 +74,10 @@ export default class SinglePlayerView extends BaseView {
     Bus.emit('addListenersStatisticsGame');
     Bus.emit('addListenersUserinfoGame');
     Bus.emit('addListenersMessage');
-    Bus.emit('changeTitleRestartButton', 'Start');
+    this.restartDocElement = document.querySelector('.game__restart_button');
+    this.restartDocElement.addEventListener('click', this._restart.bind(this).bind(this));
     this._busAllOff();
     this._busAllOn();
-    console.log('render single');
     this.stopwatch = new Stopwatch('single_player__timer');
     this._showMap();
     this.curPath = '/single_player';
@@ -153,7 +155,6 @@ export default class SinglePlayerView extends BaseView {
   /** */
   _restart() {
     if (!this.start) {
-      Bus.emit('changeTitleRestartButton', 'Restart');
       this.start = true;
     } else {
       if (this.stopwatch.running) {
@@ -191,7 +192,6 @@ export default class SinglePlayerView extends BaseView {
       this.stopwatch.stop();
     }
     if (!this.start) {
-      Bus.emit('changeTitleRestartButton', 'Restart');
       this.start = true;
     }
     this._showMap();
@@ -271,7 +271,6 @@ export default class SinglePlayerView extends BaseView {
     if (!this.start) {
       return;
     }
-    console.log('QQQQQQQQ');
     const x = parseInt(coordinatesStruct.x);
     const y = parseInt(coordinatesStruct.y);
     const typeOfCell = this.mineSweeper.putRemoveFlag(x, y); // 0 - закрыта; 1 - открыта; 2 - флаг

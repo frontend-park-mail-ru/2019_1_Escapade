@@ -108,3 +108,31 @@ body {
 @media screen and (min-width: 1201px) {
 
 }
+
+
+.game__multi_right_menu_buttons {
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  text-align: center;
+  height: 44px;
+  width: 500px;
+  margin-top: 15px;
+}
+
+
+.game__multi_quit_button {
+  text-decoration: none;
+  background-color: #828282;
+  position: relative;
+  text-align: center;
+  float: right;
+  height: 48px;
+  width: 500px;
+  color: white;
+  margin-left: 0px;
+  font-size: 20px;
+  line-height: 48px;
+  border: 1px solid #000000;
+  border-radius: 10px;
+}

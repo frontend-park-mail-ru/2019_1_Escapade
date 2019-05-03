@@ -2,7 +2,6 @@ import MultiPlayerView from '../views/MultiPlayerView/MultiPlayer';
 import MultiPlayerModel from '../models/MultiPlayerModel';
 import FieldView from '../views/GameView/Field/Field';
 import MessageView from '../views/MessageView/Message';
-import ButtonsGameView from '../views/GameView/Buttons/Buttons';
 import PlayersListView from '../views/GameView/PlayersList/PlayersList';
 /**
  *
@@ -12,7 +11,6 @@ class MultiPlayerMV {
   model: MultiPlayerModel;
   fieldPanel: FieldView;
   messageView: MessageView;
-  buttonsGameView: ButtonsGameView;
   playersListView: PlayersListView;
   /**
    *

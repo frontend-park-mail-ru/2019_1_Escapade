@@ -40,6 +40,11 @@ export default class MultiPlayerView extends BaseView {
   run: any;
   timerId: NodeJS.Timeout;
   gameTime: { hour: number; minute: number; seconds: number; };
+  quitDocElement: any;
+  countCells: number;
+  countOpenCells: number;
+  countMines: any;
+  flagPlaceManualy: boolean;
   /**
    *
    * @param {*} parent
@@ -75,7 +80,6 @@ export default class MultiPlayerView extends BaseView {
     Bus.on('changeFlagSetWS', this._changeFlagSet.bind(this), 'multiplayerView');
     Bus.on('gameOwerWS', this._gameOver.bind(this), 'multiplayerView');
     Bus.on('sendRoom', this._getRoom.bind(this), 'multiplayerView');
-    Bus.on('quitClick', this._quitClick.bind(this), 'multiplayerView');
   }
 
   _busAllOff() {
@@ -87,7 +91,6 @@ export default class MultiPlayerView extends BaseView {
     Bus.off('changeFlagSetWS', this._changeFlagSet.bind(this), 'multiplayerView');
     Bus.off('gameOwerWS', this._gameOver.bind(this), 'multiplayerView');
     Bus.off('sendRoom', this._getRoom.bind(this), 'multiplayerView');
-    Bus.off('quitClick', this._quitClick.bind(this), 'multiplayerView');
   }
 
   /**
@@ -102,6 +105,8 @@ export default class MultiPlayerView extends BaseView {
     Bus.emit('addListenersPlayersList');
     Bus.emit('changeTitleRestartButton', 'Start');
     Bus.emit('messageBoxHide', true);
+    this.quitDocElement = document.querySelector('.game__multi_quit_button');
+    this.quitDocElement.addEventListener('click', this._quitClick.bind(this));
     this._busAllOff();
     this._busAllOn();
     this.timer = new Timer('multi_player__timer', this._timeIsOver.bind(this));
@@ -130,6 +135,7 @@ export default class MultiPlayerView extends BaseView {
   /** */
   _showMap() {
     this.fieldMatrix = [];
+    this.flagPlaceManualy = false;
     this.fieldMatrix = new Array(this.cellNumbersY);
     for (let i = 0; i < this.cellNumbersY; i++) {
       this.fieldMatrix[i] = new Array(this.cellNumbersX).fill(0);
@@ -162,7 +168,6 @@ export default class MultiPlayerView extends BaseView {
     }
     this.startGame = true;
     this.timer.start(this.gameTime);
-    console.log('time is over');
   }
 
   _fromDecToHex(num : number) {
@@ -184,7 +189,7 @@ export default class MultiPlayerView extends BaseView {
   }
 
   _getRoom(data : any) {
-    const timeInSeconds = 600; // заглушка
+    const timeInSeconds = data.room.settings.play; 
     this.gameTime.hour = Math.floor(timeInSeconds / 3600);
     this.gameTime.minute = Math.floor((timeInSeconds - this.gameTime.hour * 3600)/ 60);
     this.gameTime.seconds = Math.floor(timeInSeconds - this.gameTime.minute * 60 - this.gameTime.hour * 3600);
@@ -195,7 +200,10 @@ export default class MultiPlayerView extends BaseView {
 
   _getField(data : any) {
     this.cellNumbersX = data.width;
-    this.cellNumbersY = data .height;
+    this.cellNumbersY = data.height;
+    this.countCells = this.cellNumbersX * this.cellNumbersY;
+    this.countMines = data.Mines;
+    this.countOpenCells = 0;
     this._showMap();
   }
 
@@ -229,9 +237,13 @@ export default class MultiPlayerView extends BaseView {
         break;
       }
     }
+    this.countOpenCells += cells.length;
     cells.forEach((item : any, i : number) => {
       Bus.emit('openCell', {x: item.x, y: item.y, type: item.value, color : color, my : my})
     });
+
+    const prcentOpen = Math.round((this.countOpenCells / (this.countCells - this.countMines) * 100));
+    Bus.emit('progressGameChange', prcentOpen);
   }
 
   _updatePoints(data : any) {
@@ -246,7 +258,7 @@ export default class MultiPlayerView extends BaseView {
   }
 
   _gameOver(data : any) {
-    this._stop_reset_timer();
+    this.timer.stop();
     const dataPlayers = data.value.players;
     this._openAllCells(data.value.cells);
     for (let i = 0; i < dataPlayers.length; i++) {
@@ -290,12 +302,8 @@ export default class MultiPlayerView extends BaseView {
 
   _stop_reset_timer() {
     this.timer.stop();
-    const timeStr = this.startTimeFlag.hour + ':' + this.startTimeFlag.minute + ':' + this.startTimeFlag.seconds;
-    console.log('timeStr ' + timeStr);
-    this.timer.reset(this.startTimeFlag);
+    this.timer.reset({});
   }
-
-  
 
   /** */
   _clickOnCell(coordinatesStruct : any) {
@@ -310,15 +318,13 @@ export default class MultiPlayerView extends BaseView {
     this.fieldMatrix[x][y] = -1;
     Bus.emit('sendCellWS', {x : x, y : y});
     if (this.flagPlacing) {
+      if (this.flagPlaceManualy) {{
+        Bus.emit('setUnsetFlagMultiOnCell', {x : this.flagCoords.x, y : this.flagCoords.y, type : 'closing'});
+      }}
       this.flagCoords = {x : x, y : y};
       Bus.emit('setUnsetFlagMultiOnCell', {x : x, y : y, type : 'flag'})
-      this.flagPlacing = false;
+      this.flagPlaceManualy = true;
     }
-    
-    //const prcentOpen = Math.round((this.openCellsCount / (this.cellNumbersX * this.cellNumbersY - this.minesCount)) * 100);
-    //Bus.emit('progressGameChange', prcentOpen);
-    //Bus.emit('pointsStatisticsChange', this.pointsCount);
-    //this._checkOnWinning();
     return;
   }
 
@@ -349,11 +355,16 @@ export default class MultiPlayerView extends BaseView {
 
   /** */
   _openAllCells(cells : []) {
+    cells.forEach((item : any, i : number) => {
+      Bus.emit('openCell', {x: item.x, y: item.y, type: item.value})
+    });
+    Bus.emit('progressGameChange', 100);
+    /*
+    Bus.on('stopOpenAllCells', this._stopOpenAllCells.bind(this), 'multiPlayerView');
     this.cells = cells;
     this.cellNum = 0;
-    Bus.on('stopOpenAllCells', this._stopOpenAllCells.bind(this), 'multiPlayerView');
     this.timerId = setInterval(this._openOneCell.bind(this), 150);
-    //Bus.emit('progressGameChange', 100);
+    */
     return;
   }
 
@@ -363,6 +374,7 @@ export default class MultiPlayerView extends BaseView {
   }
 
   _openOneCell() {
+
     Bus.emit('openCell', {x: this.cells[this.cellNum].x, y: this.cells[this.cellNum].y, type: this.cells[this.cellNum].value});
     if (++this.cellNum >= this.cells.length) {
       console.log('Bus.emit(stopOpenAllCells);');
