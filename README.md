@@ -1,5 +1,5 @@
 # 2019_1_Escapade
-:heart_eyes: ## Топ frontend :heart_eyes:
+:heart_eyes: Топ frontend :heart_eyes:
 
 - [Играть](https://escapade-frontend.herokuapp.com)
 - [Рисовать](https://www.figma.com/file/WcFryEu51iySsuBd8F0CLi0S/explose)
