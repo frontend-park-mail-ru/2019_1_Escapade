@@ -1,16 +1,57 @@
 import Bus from '../utils/bus';
 import { Net } from '../utils/net';
+import { WebSocketInterface } from '../utils/webSocket';
 /**
  *
  */
 export default class ProfileModel {
+  wsAdress: string;
+  ws: any;
+  curPath: string;
   /**
    *
    */
   constructor() {
+    this.wsAdress = 'ws://localhost:3004/ws';
+    Bus.on('currentPath', this._currentPathSignalFunc.bind(this), 'profileModel');
+  }
+
+  _busAllOn() {
     Bus.on('getAvatar', this._getAvatar.bind(this), 'profileModel');
     Bus.on('changeProfile', this._changeProfile.bind(this), 'profileModel');
     Bus.on('uploadAvatar', this._uploadAvatar.bind(this), 'profileModel');
+    Bus.on('getInfoFromWS', this._getInfo.bind(this), 'profileModel');
+    
+  }
+
+  _busAllOff() {
+    Bus.off('getAvatar', this._getAvatar.bind(this), 'profileModel');
+    Bus.off('changeProfile', this._changeProfile.bind(this), 'profileModel');
+    Bus.off('uploadAvatar', this._uploadAvatar.bind(this), 'profileModel');
+    Bus.off('getInfoFromWS', this._getInfo.bind(this), 'profileModel');
+  }
+
+  _currentPathSignalFunc(path: string) {
+    if (path === '/profile') {
+      this.curPath = path;
+      this._busAllOn();
+      this.ws = new WebSocketInterface(this.wsAdress);
+    } else {
+      if (this.curPath === '/profile') {
+        this.ws.closeConnection();
+        this._busAllOff();
+        this.curPath = '';
+      }
+    }
+  }
+
+  _getInfo(data : any) {
+    console.log('_getInfo begin ', data) 
+    switch(data.type) {
+      case 'Lobby' :
+        Bus.emit('updateProfileGames', data.value);
+        break;
+    }
   }
 
   /**
