@@ -4,7 +4,7 @@ import MathGame from '../../utils/math';
 import BaseView from '../BaseView';
 import { User } from '../../utils/user';
 import { MineSweeper } from '../../game/minesweeper';
-import { Timer } from '../../game/timer';
+import { Timer } from '../../utils/timer';
 import { checkAuth } from '../../utils/user';
 import Bus from '../../utils/bus';
 /** */
@@ -233,7 +233,7 @@ export default class MultiPlayerView extends BaseView {
     this.cellNumbersX = data.width;
     this.cellNumbersY = data.height;
     this.countCells = this.cellNumbersX * this.cellNumbersY;
-    this.countMines = data.Mines;
+    this.countMines = data.mines; // обнова
     this.countOpenCells = 0;
     this._showMap();
   }
@@ -273,7 +273,6 @@ export default class MultiPlayerView extends BaseView {
     Bus.emit('delObserver',{player : data.value.user});
   }
 
-
   _updateField(data : any) {
     const cells = data.value;
     let color = '#b9c0c9';
@@ -292,8 +291,7 @@ export default class MultiPlayerView extends BaseView {
     const prcentOpen = Math.round((this.countOpenCells / (this.countCells - this.countMines) * 100));
     Bus.emit('progressGameChange', prcentOpen);
   }
-
-  _updatePoints(data : any) {
+  _updatePoints(data: any) {
     const points = data.value;
     for (let i = 0; i < this.players.length; i++) {
       if (this.players[i].id === points.ID) {

@@ -3,7 +3,7 @@ const singlePlayerTemplate = require('./SinglePlayer.pug');
 import BaseView from '../BaseView';
 import { User } from '../../utils/user';
 import { MineSweeper } from '../../game/minesweeper';
-import { Stopwatch } from '../../game/stopwatch';
+import { Stopwatch } from '../../utils/stopwatch';
 import { checkAuth } from '../../utils/user';
 import Bus from '../../utils/bus';
 /** */

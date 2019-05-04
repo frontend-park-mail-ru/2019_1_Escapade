@@ -11,7 +11,7 @@ export default class UserDataComponent extends BaseComponent {
   constructor(parent: HTMLElement, template: any) {
     super(parent, template)
     this.user = User
-    Bus.on('userUpdate', this.onUserUpdate.bind(this));
+    Bus.on('userUpdate', this.onUserUpdate.bind(this), 'userData');
   }
 
   render() {

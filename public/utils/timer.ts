@@ -1,4 +1,4 @@
-import Bus from "../utils/bus";
+import Bus from "./bus";
 
 /** */
 export class Timer {
