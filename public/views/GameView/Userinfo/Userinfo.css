@@ -1,13 +1,10 @@
 .single_player__player {
   background-color: #4B5E70;
-  position: relative;
   display:flex;
   justify-content: space-between;
-  text-align: center;
   height: 75px;
   width: 830px;
   flex-direction: row;
-  /*margin-left: 27px;*/
   border-radius: 50px 15px 15px 50px;
 }
 
@@ -17,7 +14,6 @@
   border-radius: 50%;
   background: url('../../../img/flag.png') no-repeat;
   background-size: 100%;
-  float: left;
 }
 
 .single_player__player_str {

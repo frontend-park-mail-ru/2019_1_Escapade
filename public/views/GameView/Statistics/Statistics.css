@@ -1,54 +1,41 @@
 .single_player__statistics {
   background-color: #4B5E70;
-  position: relative;
-  display:block;
+  display:flex;
   flex-direction: column;
   margin-top: 15px;
   text-align: center;
-  height: 500px;
-  width: 500px;
   border-radius: 23px;
 }
 .single_player__statistics_row {
-  position: relative;
   display:flex;
-  flex-direction: row;
-  text-align: center;
-  height: 75px;
-  width: 500px;
+  justify-content: space-around;
+  align-items: center;
+  padding: 5px;
 }
 
 .single_player__statistics_points_img{
-  width: 70px;
-  height: 70px;
-  background: url('../../../img/star.png') no-repeat;
-  margin-top: 50px;
-  margin-left: 60px;
-  float: left;
+  width: 50px;
+  height: 50px;
+  background: url('../../../img/star.png');
+  background-repeat: no-repeat;
+  background-size: cover;
 }
 
 .single_player__statistics_row_str {
   position: relative;
   text-align: center;
-  height: 50px;
-  width: 300px;
-  margin-top: 56px;
-  margin-left: 5px;
-  line-height	: 50px;
   color: white;
-  border: 1px solid white;
   border-radius: 15px;
   font-size: 20px;
-  float: right;
 }
 
 
-.single_player__statistics_row_points {
+/* .single_player__statistics_row_points {
   margin-top: 56px;
   margin-left: 11px;
-}
+} */
 
-.single_player__statistics_row_mines {
+/* .single_player__statistics_row_mines {
   margin-top: 90px;
   margin-left: 11px;
 }
@@ -61,31 +48,28 @@
 .single_player__statistics_row_right_click {
   margin-top: 150px;
   margin-left: 5px;
-}
+} */
 
 .single_player__statistics_mines_img{
-  width: 77px;
-  height: 77px;
-  background: url('../../../img/bomb_w.png') no-repeat;
-  margin-top: 70px;
-  margin-left: 60px;
-  float: left;
+  width: 50px;
+  height: 50px;
+  background: url('../../../img/bomb_w.png');
+  background-repeat: no-repeat;
+  background-size: cover;
 }
 
 .single_player__statistics_left_click_img{
-  width: 70px;
-  height: 100px;
-  background: url('../../../img/left_click.png') no-repeat;
-  margin-top: 90px;
-  margin-left: 70px;
-  float: left;
+  width: 45px;
+  height: 76px;
+  background: url('../../../img/left_click.png');
+  background-repeat: no-repeat;
+  background-size: cover;
 }
 
 .single_player__statistics_right_click_img{
-  width: 70px;
-  height: 100px;
-  background: url('../../../img/right_click.png') no-repeat;
-  margin-top: 125px;
-  margin-left: 70px;
-  float: left;
+  width: 45px;
+  height: 76px;
+  background: url('../../../img/right_click.png');
+  background-repeat: no-repeat;
+  background-size: cover;
 }

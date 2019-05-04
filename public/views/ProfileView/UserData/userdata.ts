@@ -17,7 +17,7 @@ export default class UserDataComponent extends BaseComponent {
   render() {
     if (!this._user.bestScore) {
       User.bestScore = '0'
-      User.bestTime = '0:00:00:00'
+      User.bestTime = '0:00:00'
     }
     super.render()
   }

@@ -29,11 +29,14 @@ export default class SinglePlayerView extends BaseView {
   _restartClick: any;
   quitDocElement: any;
   _quitClick: any;
+  playerInfo: HTMLElement;
+  settings: HTMLElement;
+  progressBar: HTMLElement;
   /**
    *
    * @param {*} parent
    */
-  constructor(parent: any) {
+  constructor(parent: HTMLElement) {
     super(parent, singlePlayerTemplate, true, 'updateUserInfo');
     this.cellNumbersX = 15;
     this.cellNumbersY = 15;
@@ -74,6 +77,12 @@ export default class SinglePlayerView extends BaseView {
     Bus.emit('addListenersStatisticsGame');
     Bus.emit('addListenersUserinfoGame');
     Bus.emit('addListenersMessage');
+
+    this.playerInfo = this.parent.querySelector('.single_player__player')
+    this.settings = this.parent.querySelector('.single_player__settings')
+    this.progressBar = this.parent.querySelector('.game__field__under_map')
+
+    this.progressBar.style.display = 'none'
     this.restartDocElement = document.querySelector('.game__restart_button');
     this.restartDocElement.addEventListener('click', this._restart.bind(this).bind(this));
     this._busAllOff();
@@ -134,16 +143,16 @@ export default class SinglePlayerView extends BaseView {
     this.rightClicksCount = 0;
 
     Bus.emit('messageBoxHide', true)
-    Bus.emit('renderField',{width : this.cellNumbersX, height : this.cellNumbersY, cellSize : this.cellsize})
+    Bus.emit('renderField', { width: this.cellNumbersX, height: this.cellNumbersY, cellSize: this.cellsize })
     Bus.emit('statisticsResetParameters', this.minesCount)
-    Bus.emit('settingsSetParameters', {difficult : this.difficult,  width : this.cellNumbersX, height : this.cellNumbersY, mines : this.minesCount})
-    
+    Bus.emit('settingsSetParameters', { difficult: this.difficult, width: this.cellNumbersX, height: this.cellNumbersY, mines: this.minesCount })
+
     this.mineSweeper = new MineSweeper(this.cellNumbersX, this.cellNumbersY, this.minesCount);
     this.BBBVCount = this.mineSweeper.count3BV();
 
     if (this.start) {
       this.stopwatch.router();
-    }   
+    }
     return;
   }
 
@@ -161,31 +170,34 @@ export default class SinglePlayerView extends BaseView {
         this.stopwatch.stop();
       }
     }
+    this.settings.style.display = 'none';
+    this.playerInfo.style.display = 'none';
+    this.progressBar.style.display = 'flex';
     this._showMap();
   }
 
   /** */
-  _changeHard(hardStruct : any) {
+  _changeHard(hardStruct: any) {
     this.difficult = hardStruct.difficult;
-    
 
-    switch(this.difficult) {
-      case 0 :
+
+    switch (this.difficult) {
+      case 0:
         this.minesCount = 10;
         break;
-      case 1 :
+      case 1:
         this.minesCount = 20;
         break;
-      case 2 :
+      case 2:
         this.minesCount = 30;
         break;
-      case 3 :
+      case 3:
         this.minesCount = 40;
         break;
     }
     this.cellNumbersX = 15;
     this.cellNumbersY = 15;
-    Bus.emit('settingsChangeSize', {width: this.cellNumbersX, height: this.cellNumbersY});
+    Bus.emit('settingsChangeSize', { width: this.cellNumbersX, height: this.cellNumbersY });
     Bus.emit('settingsChangeMinesCount', this.minesCount);
     checkAuth(this._updateUserInfoCalback.bind(this), this.difficult)
     if (this.stopwatch.running) {
@@ -198,7 +210,7 @@ export default class SinglePlayerView extends BaseView {
   }
 
   /** */
-  _clickOnCell(coordinatesStruct : any) {
+  _clickOnCell(coordinatesStruct: any) {
     if (!this.start) {
       return;
     }
@@ -208,7 +220,7 @@ export default class SinglePlayerView extends BaseView {
       return;
     }
     Bus.emit('leftClicksStatisticsChange', 1);
-    
+
     if (this._checkOnLosing(x, y)) {
       return;
     }
@@ -225,7 +237,7 @@ export default class SinglePlayerView extends BaseView {
     return;
   }
 
-  _checkOnLosing(x : number, y : number) {
+  _checkOnLosing(x: number, y: number) {
     let loser = false;
     if (this.mineSweeper.map[x][y] === 9) { // losing
       this._openAllCels();
@@ -235,6 +247,11 @@ export default class SinglePlayerView extends BaseView {
       this.start = false;
       Bus.emit('sendResultsSingleGame', JSON.stringify({ difficult: this.difficult, singleTotal: 1, singleWin: 0 }));
       Bus.emit('showTextInMessageBox', 'You lose!');
+
+      this.settings.style.display = 'flex';
+      this.playerInfo.style.display = 'flex';
+      this.progressBar.style.display = 'none';
+
       loser = true;
     }
     return loser;
@@ -261,13 +278,17 @@ export default class SinglePlayerView extends BaseView {
         Bus.emit('userTimeInGameChange', this.minTimeCount.toString());
       }
       Bus.emit('showTextInMessageBox', 'You win!');
+
+      this.settings.style.display = 'flex';
+      this.playerInfo.style.display = 'flex';
+      this.progressBar.style.display = 'none';
       winner = true;
     }
     return winner;
   }
 
   /** */
-  _rightСlickOnCell(coordinatesStruct : any) {
+  _rightСlickOnCell(coordinatesStruct: any) {
     if (!this.start) {
       return;
     }
@@ -280,23 +301,23 @@ export default class SinglePlayerView extends BaseView {
     Bus.emit('rightClicksStatisticsChange', 1);
     if (typeOfCell == 0) {
       Bus.emit('minesStatisticsChange', 1);
-      Bus.emit('setUnsetFlagOnCell', {x : x, y : y, type : 'closing'});
+      Bus.emit('setUnsetFlagOnCell', { x: x, y: y, type: 'closing' });
       return;
     }
 
     if (typeOfCell == 2) {
       Bus.emit('minesStatisticsChange', -1);
-      Bus.emit('setUnsetFlagOnCell', {x : x, y : y, type : 'flag'});
+      Bus.emit('setUnsetFlagOnCell', { x: x, y: y, type: 'flag' });
     }
     return;
   }
 
-  /** */      
+  /** */
   _openCels(arrCells: any) {
     for (let i = 0; i < arrCells.length; i++) {
       const x = arrCells[i][0];
       const y = arrCells[i][1];
-      Bus.emit('openCell', {x : x, y : y, type : this.mineSweeper.map[x][y]});
+      Bus.emit('openCell', { x: x, y: y, type: this.mineSweeper.map[x][y] });
     }
   }
 
@@ -304,10 +325,16 @@ export default class SinglePlayerView extends BaseView {
   _openAllCels() {
     for (let y = 0; y < this.cellNumbersY; y++) {
       for (let x = 0; x < this.cellNumbersX; x++) {
-        Bus.emit('openCell', {x : x, y : y, type : this.mineSweeper.map[x][y]});
+        Bus.emit('openCell', { x: x, y: y, type: this.mineSweeper.map[x][y] });
       }
     }
     Bus.emit('progressGameChange', 100);
     return;
   }
+
+  // _setCellSize(){
+  //   const width = screen.width;
+
+  //   if width
+  // }
 }

@@ -10,9 +10,9 @@
 @import './views/SignInView/SignIn.scss';
 @import './views/ProfileView/profile.scss';
 @import url('views/LobbyView/lobby.css');
-@import url('views/SinglePlayerView/SinglePlayer.css');
-@import url('views/GameView/Field/Field.css');
-@import url('views/GameView/Settings/Settings.css');
+@import './views/SinglePlayerView/SinglePlayer.scss';
+@import './views/GameView/Field/Field.scss';
+@import './views/GameView/Settings/Settings.scss';
 @import url('views/GameView/Statistics/Statistics.css');
 @import url('views/GameView/Userinfo/Userinfo.css');
 @import url('views/MessageView/Message.css');

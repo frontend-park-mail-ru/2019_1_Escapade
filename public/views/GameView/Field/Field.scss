@@ -1,0 +1,145 @@
+.game__field__map {
+  background-color: #92a0ad;
+  text-align: center;
+  position: relative;
+  border-width: 3px 3px 3px 3px; /* top right bottom left */
+  border-style: solid;
+  border-color: #46535E;
+  margin-top: 15px;
+  transition: all 0.5s ease-in-out;
+  cursor: default;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.game__field__under_map {
+  margin-top: 10px;
+  display: flex;
+  align-self: flex-start;
+  margin-right: 15px;
+}
+
+.game__field__percent {
+  position: relative;
+  color: white;
+  height: 25px;
+  line-height	: 25px;
+  margin-left: 5px;
+  width: 50px;
+  float: left;
+}
+
+.game__field__loadbar {
+  position: relative;
+  background: red;
+  height: 25px;
+  width: 100px;
+  margin-left: 5px;
+  border-radius: 8px;
+  transition: width 0.6s;
+}
+
+
+.cell {
+  position: absolute;
+  color: transparent;
+  line-height: 24px;
+  font-size: 21px;
+  padding: 0;
+  font-weight: bold;
+  text-align: center;
+  background-color: #92a0ad;
+}
+
+
+.cell_close_1 {
+  background: url('/img/cell1.png') no-repeat;
+}
+
+.cell_close_2 {
+  background:#d3d5d7 url('/img/cell2.png') no-repeat;
+}
+
+.cell_close_3 {
+  background:#d3d5d7 url('/img/cell3.png') no-repeat;
+}
+
+
+.cell_flag_1 {
+  background: url('/img/flag_empty.png') no-repeat ,
+              url('/img/cell1.png') no-repeat;
+}
+
+.cell_flag_2 {
+  background: url('/img/flag_empty.png') no-repeat,
+              url('/img/cell2.png') no-repeat;
+}
+
+.cell_flag_3 {
+  background: url('/img/flag_empty.png') no-repeat,
+              url('/img/cell3.png') no-repeat;
+}
+
+
+.cell_flagmulti_1 {
+  background: url('/img/flag_empty_multi.png') no-repeat,
+              url('/img/cell1.png') no-repeat;
+}
+
+.cell_flagmulti_2 {
+  background: url('/img/flag_empty_multi.png') no-repeat,
+              url('/img/cell2.png') no-repeat;
+}
+
+.cell_flagmulti_3 {
+  background: url('/img/flag_empty_multi.png') no-repeat,
+              url('/img/cell3.png') no-repeat;
+}
+
+.cell_open0 {
+  background-color: #b9c0c9;
+}
+
+.cell_open1 {
+  background: url('/img/cell_open_1.png') no-repeat;
+}
+
+.cell_open2 {
+  background: url('/img/cell_open_2.png') no-repeat;
+}
+
+.cell_open3 {
+  background: url('/img/cell_open_3.png') no-repeat;
+}
+
+.cell_open4 {
+  background: url('/img/cell_open_4.png') no-repeat;
+}
+
+.cell_open5 {
+  background: url('/img/cell_open_5.png') no-repeat;
+}
+
+.cell_open6 {
+  background: url('/img/cell_open_6.png') no-repeat;
+}
+
+.cell_open7 {
+  background: url('/img/cell_open_7.png') no-repeat;
+}
+
+.cell_open8 {
+  background: url('/img/cell_open_8.png') no-repeat;
+}
+
+.cell_open9 {
+  background: url('/img/bomb.png') no-repeat;
+}
+
+.cell_open10 {
+  background: url('/img/flag_enemy.png') no-repeat;
+}
+
+.cell_open11 {
+  background: url('/img/flag_my.png') no-repeat;
+}
+
