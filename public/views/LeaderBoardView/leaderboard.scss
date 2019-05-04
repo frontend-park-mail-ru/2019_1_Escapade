@@ -1,560 +1,217 @@
-.leaderboard__header {
-  text-align: center;
-  padding-top: 1.5rem;
-}
-
 .leaderboard {
   display: flex;
-  justify-content: center;
-  background: radial-gradient(512.00px at 50% 50%, rgba(255, 255, 255, 0.34) 0%, rgba(255, 255, 255, 0) 100%), #667787;
-}
-
-.leaderboard__wrapper {
-  margin-top: 10px;
-  display:flex;
-  justify-content: center;
-  flex-direction: row;
-}
-
-.leaderboard__table {
-  margin-top: 10px;
-  display:flex;
-  flex-direction: column;
-}
-
-/*
-min-width  40% from media avg
-min-height 50% from media avg
-*/
-.leaderboard__board {
-  display:flex;
-  flex-direction: column;
-  /*justify-content: center;*/
+  height: 100vh;
+  justify-content: flex-start;
   align-items: center;
-  background-image: url('/img/field.jpg');
-  background-repeat: no-repeat;
-  background-size: cover;
-  border-color: #46535E; 
-  border-style: solid; 
-  float: left;
-} 
+  font-family: Saira;
+  background: $escapade-gradient;
 
-/*
-min-width  15% from media avg
-min-height 15% from media avg
-*/
-.flag_button_back {
-  background-image: url('/img/flag_back.png');
-  background-repeat: no-repeat;
-  background-size: cover;
-  float: left;
-} 
-
-.leaderboard__table_row {
-  display:flex;
-  flex-direction: row;
-  border-radius: 5px;
-  color: white;
-  margin-bottom: 5px;
-}
-
-.leaderboard__table_header {
-  text-align: center;
-  background-color:rgba(75, 94, 112, 0.71);
-  display:flex;
-  flex-direction: row;
-  border-radius: 5px;
-  color: white;
-  margin-bottom: 5px;
-}
-
-.leaderboard__table_best {
-  background-color:rgba(255, 61, 0, 0.5);
-}
-
-.leaderboard__table_usual {
-  background-color:rgba(0, 0, 0, 0.4);
-}
-
-.leaderboard__Label {
-  border-radius: 0 0 5px 5px;;
-  background-color:#46535E;
-  color: white;
-  content: "leaderboard";
-  text-align: center;
-  margin-bottom: 5px;
-  font-size: calc(1.2rem + 5vw);
-  padding: 4px;
-}
-
-.leaderboard__ava {
-  /* background-image: url('../../img/qrosh.png'); */
-  background-repeat: no-repeat;
-  background-size: contain;
-  background-position: center;
-  width: 40px;
-  height: 40px;
-}
-
-.leaderboard__number {
-  text-align: center;
-}
-
-.leaderboard__panel {
-  text-align: center;
-  display:flex;
-  flex-direction: row;
-  border-radius: 5px;
-  color: white;
-  background-color:rgba(0, 0, 0, 0.55);
-}
-
-.leaderboard__left {
-  background-image: url('/img/flag_back.png');
-  background-repeat: no-repeat;
-  background-size: contain;
-  background-position: center;
-  cursor: pointer;
-}
-
-.leaderboard__right {
-  background-image: url('/img/flag_ahead.png');
-  background-repeat: no-repeat;
-  background-size: contain;
-  background-position: center;
-  cursor: pointer;
-}
-
-.leaderboard__page {
-  color: white;
-  font-weight: 600;
-}
-
-/*avg 320*/
-@media screen and (max-width: 320px) {
-
-  .leaderboard__block {
-    margin: 1px;
+  &__back{
+    background: url('/img/flag-right.png');
+    background-repeat: no-repeat;
+    background-size: cover;
+    height: 160px;
+    width: 160px;
+    transform: scale(-1, 1);
+    cursor: pointer;
   }
 
-  .leaderboard__Label {
-    font-size: 30px;
+  &__back:hover{
+    animation: go-left 0.4s linear 0.2s 1 normal forwards;
   }
 
-  .leaderboard__board {
-    border-radius: 20px;
-    border-width: 3px;
-  } 
-
-  /*table header*/
-  .leaderboard__table_header {
-    font-size: 14px;
-    min-height: 14px;
-    padding: 2px;
+  &__board {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background: url('/img/field.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    border: 11px solid #46535E;
+    border-radius: 30px;
+    min-width: 45vw;
+    margin-left: 16vw;
   }
 
-  /*bottom panel*/
-  .leaderboard__panel {
-    margin-top: 100px;
-    min-height: 20px;
+  @media screen and (min-width: $tablet) and (max-width: $normal) {
+    &__board{
+      min-width: 62vw;
+      margin-left: 5vw;
+      font-size: 1.5rem;
+    }
+  }
+
+  @media screen and (min-width: $mobile) and (max-width: $tablet) {
+    &__board{
+      width: 100vw;
+      margin-left: 0;
+    }
+  }
+
+  &__label{
+    background: #46535E;
     padding: 10px;
-    margin: 20px;
+    border-radius: 0px 0px 18px 18px;
+    color: white;
+    margin-bottom: 1vh;
+    font-family: Saira;
+    font-size: 2.2rem;
   }
 
-  .leaderboard__left {
-    min-height: 20px;
-    min-width: 20px;
-  }
+  &__header{
+    display: flex;
+    background-color:rgba(75, 94, 112, 0.71);
+    border-radius: 10px;
+    padding: 8px;
+    width: 85%;
+    font-size: 1.1rem;
+    color: white;
 
-  .leaderboard__page {
-    font-size: 24px;
-    min-height: 20px;
-    min-width: 200px;
-  }
+    &_number{
+      flex:1.6
+    }
   
-  .leaderboard__right {
-    min-height: 20px;
-    min-width: 20px;
-  }
-
-  /*table row*/
-  .leaderboard__table_row {
-    margin-left: 5px;
-    margin-right: 5px;
-    font-size: 12px;
-    min-height: 12px;
-    padding: 1px;
-  }
-
-  .leaderboard__number {
-    min-width: 20px;
-  }
+    &_name{
+      flex:2
+    }
   
-  .leaderboard__ava {
-    min-width: 16px;
-    min-height: 16px;
-  }
+    &_points{
+      flex:1.3
+    }
   
-  .leaderboard__name {
-    min-width: 140px;
-  }
-  
-  .leaderboard__points {
-    min-width: 60px;
-  }
-  
-  .leaderboard__time {
-    min-width: 60px;
-  }
-}
+    &_time{
+      flex:1
+    }
 
-/*avg 400*/
-@media screen and (min-width: 321px)  and (max-width: 480px) {
+    @media screen and (min-width: $mobile) and (max-width: $tablet) {
+      &_time{
+       display: none;
+      }
+    }
 
-  .leaderboard__block {
-    margin: 1px;
   }
 
-  .leaderboard__board {
-    border-radius: 20px;
-    border-width: 4px;
-  } 
+  &__table{
+    padding: 8px;
+    width: 85%;
+    color: white;
 
-  /*table elements*/
-  .leaderboard__table_header {
-    font-size: 20px;
-    min-height: 16px;
-    padding: 2px;
+    &_row{
+      display: flex;
+      align-items: center;
+      margin-bottom: 16px;
+    }
+
+    &_number{
+      flex:0.8;
+      font-size: 1.2rem;
+
+      &_wrapper{
+        border-radius: 50%;
+        width: 1.4rem;
+        height: 1.4rem;
+        text-align: center;
+      }
+    }
+
+    &_row_wrapper{
+      flex:4;
+      background-color: rgba(0, 0, 0, 0.4);
+      border-radius: 15px;
+      display: flex;
+      align-items: center;
+      padding: 10px;
+      padding-left: 30px;
+      position: relative;
+    }
+
+    &_avatar{
+      height: 5vh;
+      width: 5vh;
+
+      &_back {
+        border-radius: 50%;
+        background-color: lavender;
+        position: absolute;
+        height: 6vh;
+        width: 6vh;
+        left:-22px;
+        display: flex;
+        justify-content: center;
+        align-items: baseline;
+      }
+
+      @media screen and (max-width: $normal) {
+        &_back{
+          display: none;
+        }
+      }
+    }
+
+    &_name{
+      text-align: center;
+      flex:1.5;
+      overflow: hidden;
+      flex-grow: 1.5
+    }
+
+    &_points{
+      text-align: center;
+      flex:1;
+      overflow: hidden;
+    }
+
+    &_time{
+      text-align: center;
+      flex:1;
+      overflow: hidden;
+    }
+
+    @media screen and (min-width: $mobile) and (max-width: $tablet) {
+      &_time{
+       display: none;
+      }
+    }
   }
 
-  /*bottom panel*/
-  .leaderboard__panel {
-    margin-top: 100px;
-    min-height: 20px;
+  &__footer{
+    display: flex;
+    justify-content: space-between;
+    width: 85%;
+    align-items: center;
+    color: white;
     padding: 10px;
-    margin: 20px;
-  }
+    font-size: 2rem;
+    background-color: #46535E;
+    border-radius: 15px;
+    margin-bottom: 10px;
+    font-weight: bold;
 
-  .leaderboard__left {
-    min-height: 30px;
-    min-width: 30px;
-  }
+    &_left{
+      background: url('/img/flag-right.png');
+      background-repeat: no-repeat;
+      background-size: cover;
+      height: 60px;
+      width: 60px;
+      transform: scale(-1, 1);
+      cursor: pointer;
+    }
 
-  .leaderboard__page {
-    font-size: 25px;
-    min-height: 30px;
-    min-width: 200px;
-  }
-  
-  .leaderboard__right {
-    min-height: 30px;
-    min-width: 30px;
-  }
-
-  .leaderboard__Label {
-    font-size: 36px;
-  }
-
-  /*table row*/
-  .leaderboard__table_row {
-    margin-left: 2px;
-    margin-right: 2px;
-    font-size: 14px;
-    min-height: 14px;
-    padding: 1px;
-  }
-
-  .leaderboard__table_row_element {
-    padding: 1px;
-    margin: 2px;
-  }
-
-  .leaderboard__number {
-    min-width: 22px;
-  }
-  
-  .leaderboard__ava {
-    min-width: 28px;
-    min-height: 28px;
-  }
-  
-  .leaderboard__name {
-    min-width: 150px;
-  }
-  
-  .leaderboard__points {
-    min-width: 50px;
-  }
-  
-  .leaderboard__time {
-    min-width: 50px;
+    &_right{
+      background: url('/img/flag-right.png');
+      background-repeat: no-repeat;
+      background-size: cover;
+      height: 60px;
+      width: 60px;
+      cursor: pointer;
+    }
   }
 }
 
-/*avg 600*/
-@media screen and (min-width: 481px) and (max-width: 768px) {
-
-  .leaderboard__board {
-    border-radius: 16px;
-    border-width: 5px;
-  } 
-
-  .leaderboard__Label {
-    font-size: 45px;
-  }
-
-  /*table elements*/
-  .leaderboard__table_header {
-    font-size: 22px;
-    min-height: 16px;
-    line-height: 16px;
-    padding: 2px;
-    margin: 5px;
-  }
-
-  /*bottom panel*/
-  .leaderboard__panel {
-    margin-top: 100px;
-    min-height: 20px;
-    padding: 10px;
-    margin: 20px;
-  }
-
-  .leaderboard__left {
-    min-height: 100px;
-    min-width: 100px;
-  }
-
-  .leaderboard__page {
-    font-size: 100px;
-    min-height: 100px;
-    min-width: 200px;
-  }
-
-  .leaderboard__right {
-    min-height: 100px;
-    min-width: 100px;
-  }
-
-  .leaderboard__table_row {
-    margin-left: 15px;
-    margin-right: 15px;
-  }
-
-  .leaderboard__table_row_element {
-    font-size: 20px;
-    /*min-height: 12px;*/
-    min-height: 10px;
-    padding: 1px;
-    margin: 5px;
-  }
-
-  .leaderboard__number {
-    min-width: 25px;
-  }
-  
-  .leaderboard__ava {
-    border-radius: 8px;
-    min-width: 16px;
-    min-height: 16px;
-  }
-  
-  .leaderboard__name {
-    min-width: 220px;
-  }
-  
-  .leaderboard__points {
-    min-width: 80px;
-  }
-  
-  .leaderboard__time {
-    min-width: 80px;
+@media screen and (min-width: $mobile) and (max-width: $tablet) {
+  .leaderboard{
+    flex-direction: column-reverse;
   }
 }
 
-/*avg 1000*/
-@media screen and (min-width: 769px)  and (max-width: 1200px) {
-
-  .leaderboard__board {
-    border-radius: 16px;
-    border-width: 5px;
-  } 
-
-  .leaderboard__Label {
-    font-size: 80px;
-  }
-
-  /*table elements*/
-  .leaderboard__table_header {
-    font-size: 28px;
-    min-height: 18px;
-    line-height: 20px;
-    padding: 2px;
-    margin: 5px;
-  }
-
-  /*bottom panel*/
-  .leaderboard__panel {
-    margin-top: 100px;
-    min-height: 50px;
-    padding: 10px;
-    margin: 20px;
-  }
-
-  .leaderboard__left {
-    min-height: 100px;
-    min-width: 100px;
-  }
-
-  .leaderboard__page {
-    font-size: 100px;
-    min-height: 100px;
-    min-width: 200px;
-  }
-
-  .leaderboard__right {
-    min-height: 100px;
-    min-width: 100px;
-  }
-
-  .leaderboard__table_row {
-    margin-left: 15px;
-    margin-right: 15px;
-  }
-
-  .leaderboard__table_row_element {
-    font-size: 25px;
-    min-height: 10px;
-    padding: 1px;
-    margin: 5px;
-  }
-
-  .leaderboard__number {
-    min-width: 50px;
-  }
-  
-  .leaderboard__ava {
-    border-radius: 20px;
-    min-width: 40px;
-    min-height: 40px;
-  }
-  
-  .leaderboard__name {
-    min-width: 320px;
-  }
-  
-  .leaderboard__points {
-    min-width: 130px;
-  }
-  
-  .leaderboard__time {
-    min-width: 130px;
-  }
-}
-
-/*avg 1200*/
-@media screen and (min-width: 1201px) {
-
-  .leaderboard__board {
-    border-radius: 16px;
-    border-width: 5px;
-  } 
-
-  /*table elements*/
-  .leaderboard__table_header {
-    font-size: 28px;
-    min-height: 18px;
-    line-height: 20px;
-    padding: 2px;
-    margin: 5px;
-  }
-
-  /*bottom panel*/
-  .leaderboard__panel {
-    margin-top: 100px;
-    min-height: 20px;
-  }
-
-  .leaderboard__left {
-    min-height: 30px;
-    min-width: 30px;
-  }
-
-  .leaderboard__page {
-    font-size: 25px;
-    min-height: 30px;
-    min-width: 200px;
-  }
-  
-  .leaderboard__right {
-    min-height: 30px;
-    min-width: 30px;
-  }
-
-  .leaderboard__table_row {
-    margin-left: 15px;
-    margin-right: 15px;
-  }
-
-  .leaderboard__table_row_element {
-    font-size: 25px;
-    min-height: 10px;
-    padding: 1px;
-    margin: 10px;
-  }
-
-  .leaderboard__number {
-    min-width: 50px;
-  }
-  
-  .leaderboard__ava {
-    border-radius: 20px;
-    min-width: 40px;
-    min-height: 40px;
-  }
-  
-  .leaderboard__name {
-    min-width: 320px;
-  }
-  
-  .leaderboard__points {
-    min-width: 130px;
-  }
-  
-  .leaderboard__time {
-    min-width: 130px;
-  }
-}
-
-.leaderboard__controls{
-  margin-top: 15px;
-  display: flex;
-  justify-content: space-between;
-  min-width: 6rem;
-}
-.leaderboard__arrow{
-  cursor: pointer;
-}
-.leaderboard__arrow__inactive{
-  opacity: 0.2;
-}
-
-.leaderboard th{
-  font-weight: bold
-}
-
-.leaderboard td,
-th {
-  font-size: calc(1.5vh + .5rem);
-  text-align: center;
-  padding: 0.5rem;
-}
-
-.leaderboard__back{
-  width: 108px;
-  height: 106px;
-  background: url(/img/flag-right.png) no-repeat;
-  transform: matrix(-1, 0, 0, 1, 0, 0);
-  background-size: contain;
-  align-self: flex-start;
-}

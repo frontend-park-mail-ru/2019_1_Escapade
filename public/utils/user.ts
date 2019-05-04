@@ -1,6 +1,6 @@
 import { Net } from './net';
 /** */
-class UserSingleton {
+export class UserSingleton {
   name: string;
   email: string;
   played: number;

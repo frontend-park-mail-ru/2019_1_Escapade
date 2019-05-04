@@ -104,7 +104,7 @@ input[type="file"] {
   border-radius: 50%;
 }
 
-@media screen and (max-width: 975px) {
+@media screen and (max-width: $tablet) {
 
   .profile__info{
     flex-direction: column;
@@ -116,6 +116,10 @@ input[type="file"] {
   }
 
   .profile__games{
+    display: none;
+  }
+
+  .games{
     display: none;
   }
 }

@@ -53,7 +53,6 @@ export default class BaseView {
     if (!this.rendered) {
       this.render();
     }
-    console.log('UUUUhuuu ', this._emitFuncStr);
     Bus.emit(this._emitFuncStr);
     this.parent.hidden = false;
   }
