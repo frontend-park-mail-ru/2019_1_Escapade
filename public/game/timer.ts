@@ -70,7 +70,7 @@ export class Timer {
         this.startTime.hour -= 1;
       }
     }
-    
+     
 
     const time = this._parseTime();
     this.timeStr = time[0] + ':' + time[1] + ':' + time[2];
@@ -79,7 +79,8 @@ export class Timer {
     if ((this.startTime.seconds === 0) && (this.startTime.minute === 0) && (this.startTime.hour === 0)) {
       this.stop();
       this.funcCallback();
-    }
+      return;
+    }  
   };
 
   /**

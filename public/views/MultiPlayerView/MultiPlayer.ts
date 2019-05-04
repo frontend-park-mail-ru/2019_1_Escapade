@@ -45,6 +45,7 @@ export default class MultiPlayerView extends BaseView {
   countOpenCells: number;
   countMines: any;
   flagPlaceManualy: boolean;
+  observerMode: boolean;
   /**
    *
    * @param {*} parent
@@ -62,6 +63,7 @@ export default class MultiPlayerView extends BaseView {
     this.players = [];
     this.flagCoords = {x : 0, y : 0};
     this.myID = 0;
+    this.observerMode = false;
     this.colorArr = ['#b6b4ca', '#cab4be', '#b4cabd', '#cac7b4', '#cab4b4', '#dedede', '#94c9b4', '#b9bfc9'];
     document.body.oncontextmenu = function (e) {
       return false;
@@ -78,8 +80,11 @@ export default class MultiPlayerView extends BaseView {
     Bus.on('updatePointsWS', this._updatePoints.bind(this), 'multiplayerView');
     Bus.on('roomActionWS', this._roomAction.bind(this), 'multiplayerView');
     Bus.on('changeFlagSetWS', this._changeFlagSet.bind(this), 'multiplayerView');
+    Bus.on('roomObserverEnterWS', this._getObservers.bind(this), 'multiplayerView');
+    Bus.on('roomObserverExitWS', this._exitObserver.bind(this), 'multiplayerView');
+    
     Bus.on('gameOwerWS', this._gameOver.bind(this), 'multiplayerView');
-    Bus.on('sendRoom', this._getRoom.bind(this), 'multiplayerView');
+    Bus.on('sendRoom', this._getRoom.bind(this), 'multiplayerView');   
   }
 
   _busAllOff() {
@@ -89,6 +94,9 @@ export default class MultiPlayerView extends BaseView {
     Bus.off('updatePointsWS', this._updatePoints.bind(this), 'multiplayerView');
     Bus.off('roomActionWS', this._roomAction.bind(this), 'multiplayerView');
     Bus.off('changeFlagSetWS', this._changeFlagSet.bind(this), 'multiplayerView');
+    Bus.off('roomObserverEnterWS', this._getObservers.bind(this), 'multiplayerView');
+    Bus.off('roomObserverExitWS', this._exitObserver.bind(this), 'multiplayerView');
+
     Bus.off('gameOwerWS', this._gameOver.bind(this), 'multiplayerView');
     Bus.off('sendRoom', this._getRoom.bind(this), 'multiplayerView');
   }
@@ -123,9 +131,11 @@ export default class MultiPlayerView extends BaseView {
       console.log('_currentPathSignalFunc multi_player ');
     } else {
       if (this.curPath === '/multi_player') {
+        if (path !== '/lobby') {
+          Bus.emit('leaveRoom', 4);
+        }
         console.log('_currentPathSignalFunc else ');
         this._stop_reset_timer();
-        Bus.emit('leaveRoom', 4);
         this.curPath = '';
         this._busAllOff();
       }
@@ -149,9 +159,49 @@ export default class MultiPlayerView extends BaseView {
     Bus.emit('messageBoxHide', true)
     Bus.emit('renderField',{width : this.cellNumbersX, height : this.cellNumbersY, cellSize : this.cellsize})
     
-    this.timer.start(this.startTimeFlag);
     return;
   }
+
+  _getRoom(data : any) {
+    let dataRoomCreate = data.room.date;
+    let dataNow = new Date(Date.now());
+    let secondsLatency = 0;
+    let timeInSeconds = data.room.settings.play - data.room.settings.prepare; 
+    console.log('AAAaa ', parseInt(dataRoomCreate.substring(14,16)));
+    secondsLatency += (dataNow.getHours() - parseInt(dataRoomCreate.substring(11,13))) * 3600;
+    secondsLatency += (dataNow.getMinutes() - parseInt(dataRoomCreate.substring(14,16))) * 60;
+    secondsLatency += dataNow.getSeconds() - parseInt(dataRoomCreate.substring(17,19));
+    if (secondsLatency < data.room.settings.prepare) {
+      this.timer.start(this.startTimeFlag);
+      this.startTimeFlag.seconds = data.room.settings.prepare - secondsLatency;
+      this.gameTime.hour = Math.floor(timeInSeconds / 3600);
+      this.gameTime.minute = Math.floor((timeInSeconds - this.gameTime.hour * 3600)/ 60);
+      this.gameTime.seconds = Math.floor(timeInSeconds - this.gameTime.minute * 60 - this.gameTime.hour * 3600);
+      this.timer.start(this.startTimeFlag);
+    } else {
+      this.startTimeFlag.seconds = 0;
+      secondsLatency -= data.room.settings.prepare;
+      timeInSeconds -= secondsLatency;
+      this.gameTime.hour = Math.floor(timeInSeconds / 3600);
+      this.gameTime.minute = Math.floor((timeInSeconds - this.gameTime.hour * 3600)/ 60);
+      this.gameTime.seconds = Math.floor(timeInSeconds - this.gameTime.minute * 60 - this.gameTime.hour * 3600) + 1;
+      this.timer.start(this.gameTime);
+    }
+    
+
+    if (data.room.status === 3) {
+      this.observerMode = true;
+    } else {
+      this.observerMode = false;
+      this.flagCoords = {x : data.flag.x, y : data.flag.y};
+    }
+    
+    this._getPlayers(data.room.players);
+    this._getObservers(data.room.observers);
+    this._getField(data.room.field);
+
+    
+  }  
 
   _quitClick() {
     this._stop_reset_timer();
@@ -162,23 +212,14 @@ export default class MultiPlayerView extends BaseView {
     if(this.startGame) {
       return;
     }
-    if (this.flagPlacing) {
-      this.flagPlacing = false;
-      Bus.emit('setUnsetFlagMultiOnCell', {x : this.flagCoords.x, y : this.flagCoords.y, type : 'flag'})
+    if (!this.observerMode) {
+      if (this.flagPlacing) {
+        this.flagPlacing = false;
+        Bus.emit('setUnsetFlagMultiOnCell', {x : this.flagCoords.x, y : this.flagCoords.y, type : 'flag'})
+      }
+      this.startGame = true;
     }
-    this.startGame = true;
     this.timer.start(this.gameTime);
-  }
-
-  _fromDecToHex(num : number) {
-    if (num < 0 || num > 15) {
-      return '0';
-    }
-    if (num < 10) {
-      return num.toString();
-    } else {
-      return String.fromCharCode('a'.charCodeAt(0) + (num - 10)); 
-    }
   }
 
   _createColorForPlayer(i : number) {
@@ -187,16 +228,6 @@ export default class MultiPlayerView extends BaseView {
     }
     return this.colorArr[i];
   }
-
-  _getRoom(data : any) {
-    const timeInSeconds = data.room.settings.play - data.room.settings.prepare; 
-    this.gameTime.hour = Math.floor(timeInSeconds / 3600);
-    this.gameTime.minute = Math.floor((timeInSeconds - this.gameTime.hour * 3600)/ 60);
-    this.gameTime.seconds = Math.floor(timeInSeconds - this.gameTime.minute * 60 - this.gameTime.hour * 3600);
-    this.flagCoords = {x : data.flag.x, y : data.flag.y};
-    this._getPlayers(data.room.players);
-    this._getField(data.room.field);
-  }  
 
   _getField(data : any) {
     this.cellNumbersX = data.width;
@@ -214,6 +245,7 @@ export default class MultiPlayerView extends BaseView {
     const dataConnections = data.connections;
     const dataPlayers = data.players;
     const colorRandom = MathGame.randomInteger(0,8);
+    console.log('dataConnections ', dataConnections.length);
     dataConnections.forEach((item : any, i : number) => {
       let color = this._createColorForPlayer(i + colorRandom)
       let me = false;
@@ -224,8 +256,23 @@ export default class MultiPlayerView extends BaseView {
       Bus.emit('addPlayer',{player : item.user, color : color, me : me});
       this.players.push({user : item.user, id : dataPlayers[item.index].ID, points : dataPlayers[item.index].Points, me : me, color : color});
     });
-    
   }
+
+  _getObservers(data : any) {
+    if (data.value) {
+      Bus.emit('addObserver',{player : data.value.user});
+    } else {
+      const observerArray = data.get;
+      observerArray.forEach((item : any, i : number) => {
+        Bus.emit('addObserver',{player : item.user});
+      });
+    }
+  }
+
+  _exitObserver(data : any) {
+    Bus.emit('delObserver',{player : data.value.user});
+  }
+
 
   _updateField(data : any) {
     const cells = data.value;
@@ -307,7 +354,7 @@ export default class MultiPlayerView extends BaseView {
 
   /** */
   _clickOnCell(coordinatesStruct : any) {
-    if (!this.flagPlacing && !this.startGame) {
+    if (!this.flagPlacing && !this.startGame || this.observerMode) {
       return;
     }
     const x = parseInt(coordinatesStruct.x);
@@ -330,7 +377,7 @@ export default class MultiPlayerView extends BaseView {
 
   /** */
   _rightСlickOnCell(coordinatesStruct : any) {
-    if (!this.startGame) {
+    if (!this.startGame || this.observerMode) {
       return;
     }
     const x = parseInt(coordinatesStruct.x);
@@ -359,28 +406,6 @@ export default class MultiPlayerView extends BaseView {
       Bus.emit('openCell', {x: item.x, y: item.y, type: item.value})
     });
     Bus.emit('progressGameChange', 100);
-    /*
-    Bus.on('stopOpenAllCells', this._stopOpenAllCells.bind(this), 'multiPlayerView');
-    this.cells = cells;
-    this.cellNum = 0;
-    this.timerId = setInterval(this._openOneCell.bind(this), 150);
-    */
     return;
   }
-
-  _stopOpenAllCells() {
-    console.log('stop')
-    clearInterval(this.timerId);
-  }
-
-  _openOneCell() {
-
-    Bus.emit('openCell', {x: this.cells[this.cellNum].x, y: this.cells[this.cellNum].y, type: this.cells[this.cellNum].value});
-    if (++this.cellNum >= this.cells.length) {
-      console.log('Bus.emit(stopOpenAllCells);');
-      Bus.emit('stopOpenAllCells');
-      this.cells = [];
-    }
-  }
-
 }

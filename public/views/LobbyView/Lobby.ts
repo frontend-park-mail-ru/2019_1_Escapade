@@ -208,7 +208,7 @@ export default class LobbyView extends BaseView {
         width : item.field.width, height : item.field.height, mines : item.field.Mines, time : '0:00:00',
         observersCount : item.observers.get.length, status : this._getStatusByCode(item.status)}
       
-      if (item.status === 3) {   // busy room
+      if (item.status === 3 || item.status === 2) {   // busy room
         this.busyRooms.push(item);
         this._addBusyRoom(room);
       } else {

@@ -51,6 +51,12 @@ export default class MultiplayerModel {
       case 'ChangeFlagSet':
         Bus.emit('changeFlagSetWS', data);
         break;
+      case 'RoomObserverEnter':
+        Bus.emit('roomObserverEnterWS', data);
+        break;
+      case 'RoomObserverExit':
+        Bus.emit('roomObserverExitWS', data);
+        break;
         
     }
     console.log('_getInfo end') 

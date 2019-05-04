@@ -17,6 +17,7 @@ export default class PlayersListView {
     this.observersListContainer = document.querySelector('.game__observer_list_container');
     Bus.on('addPlayer', this._addPlayer.bind(this), 'playerListView');
     Bus.on('addObserver', this._addObserver.bind(this), 'playerListView');
+    Bus.on('delObserver', this._delObserver.bind(this), 'playerListView');
     Bus.on('updatePoints', this._updatePoints.bind(this), 'playerListView');
     Bus.on('explosePlayer', this._explosePlayer.bind(this), 'playerListView');
     Bus.on('findFlagPlayer', this._findFlagPlayer.bind(this), 'playerListView');
@@ -91,14 +92,19 @@ export default class PlayersListView {
   }
 
   _addObserver(data : any) {
-    const observers = data.value.observers.get;
-    
-    observers.forEach((item : any, i : number) => {
-      const dataJSON = {name : item.user.name};
-      this.observersListContainer.innerHTML += ObserverRowTemplate({data : dataJSON});
-    });
+    const observer = data.player;
+    const dataJSON = {name : observer.name};
+    this.observersListContainer.innerHTML += ObserverRowTemplate({data : dataJSON});
   }
 
-
-
+  _delObserver(data : any) {
+    const elements = [].slice.call(document.querySelectorAll('.game__players_list_observer_row'));
+    const observer = data.player;
+    for(let i = 0; i < elements.length; i++) {
+      if (elements[i].querySelector('.game__players_list_player_name').innerHTML === observer.name) {
+        elements[i].parentNode.removeChild(elements[i]);
+        break;
+      }
+    }
+  }
 }
