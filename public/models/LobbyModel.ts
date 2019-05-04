@@ -70,7 +70,7 @@ export default class LobbyModel {
           const info = {name : roomValue.room.name, length : roomValue.room.players.connections.length, capacity : roomValue.room.players.capacity}
           this._updateCurrentRoom(info);
           this.currentRoomInfo = roomValue;
-          if (roomValue.room.status === 2) {
+          if (roomValue.room.status === 2 || roomValue.room.status === 3) {
             this._startGame();
           }
         }
@@ -89,8 +89,8 @@ export default class LobbyModel {
     players : players, observers : observers, prepare:10, play:100, mines : mines}}});
   }
 
-  _connectToRoom(name : any) {
-    this.ws.sendInfoJSON({send : { RoomSettings : {name : name}}});
+  _connectToRoom(id : any) {
+    this.ws.sendInfoJSON({send : { RoomSettings : {id : id}}});
   }
 
   _leaveRoom(signal : number) {

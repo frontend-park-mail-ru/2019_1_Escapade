@@ -26,6 +26,7 @@ export default class LobbyView extends BaseView {
   currentRoomName: string;
   paginatorPanel: any;
   roomNotFoundPanel: any;
+  busyRooms: any[];
   /**
    *
    * @param {*} parent
@@ -42,6 +43,7 @@ export default class LobbyView extends BaseView {
     this.currentRoomName = '';
     this.roomsHTML = [];
     this.rooms = [];
+    this.busyRooms = [];
 
     this.freeRoomContainer = this.parent.querySelector('.lobby__free_room_container');
     this.busyRoomContainer = this.parent.querySelector('.lobby__busy_room_container');
@@ -115,19 +117,17 @@ export default class LobbyView extends BaseView {
     
     if (data.status === 3) {   // busy room
       this._addBusyRoom(room);
+      this.busyRooms.push(data);
     } else {
+      this.rooms.push(data);
       this._addFreeRoom(room);
     }
-    this.rooms.push(data);
 
-    const elements = [].slice.call((document.querySelectorAll('.lobby__free_room')));
-    //elements[elements.length - 1].addEventListener('click', this._clickOnFreeRoom.bind(this))
-
-    console.log('currentRoomId ' + this.currentRoomId);
     if (this.currentRoomId === -2) { 
+      const elements = [].slice.call((document.querySelectorAll('.lobby__free_room')));
       this.currentRoomId = elements.length - 1;
       console.log('currentRoomId ' + this.currentRoomId);
-      this._changeRoomStringColor(this.currentRoomId, 1);
+      this._changeRoomStringColor('free', this.currentRoomId, 1);
       const info = {name : this.rooms[this.currentRoomId].name, length : this.rooms[this.currentRoomId].players.connections.length,
         capacity : this.rooms[this.currentRoomId].players.capacity}
      this._updateCurrentRoom(info);
@@ -135,31 +135,52 @@ export default class LobbyView extends BaseView {
   }
 
   _updateRoom(data : any) {
-    const elements = [].slice.call((document.querySelectorAll('.lobby__free_room')));
-    for (let i = 0; i < this.rooms.length; i++) {
-      if (this.rooms[i].id === data.id) {
-        elements[i].querySelector('.lobby__players').innerHTML = `${data.players.connections.length}/${data.players.capacity} players`;
-        const observersHTML = elements[i].querySelector('.lobby__observers');
-
-        if (observersHTML) {
-          elements[i].querySelector('.lobby__observers').innerHTML = data.observers.get.length;
-          elements[i].querySelector('.lobby__status').innerHTML = this._getStatusByCode(data.status);
+    if (data.status === 3) {
+      const elements = [].slice.call((document.querySelectorAll('.lobby__busy_room')));
+      for (let i = 0; i < this.busyRooms.length; i++) {
+        if (this.busyRooms[i].id === data.id) {
+          elements[i].querySelector('.lobby__players').innerHTML = `${data.players.connections.length}/${data.players.capacity} players`;
+          const observersHTML = elements[i].querySelector('.lobby__observers');
+          if (observersHTML) {
+            elements[i].querySelector('.lobby__observers').innerHTML = data.observers.get.length;
+            elements[i].querySelector('.lobby__status').innerHTML = this._getStatusByCode(data.status);
+          }
+          break;
         }
-        break;
+      }
+    } else {
+      const elements = [].slice.call((document.querySelectorAll('.lobby__free_room')));
+      for (let i = 0; i < this.rooms.length; i++) {
+        if (this.rooms[i].id === data.id) {
+          elements[i].querySelector('.lobby__players').innerHTML = `${data.players.connections.length}/${data.players.capacity} players`;
+          break;
+        }
       }
     }
   }
 
   _deleteRoom(data : any) {
-    const elements = [].slice.call((document.querySelectorAll('.lobby__free_room')));
-    for (let i = 0; i < this.rooms.length; i++) {
-      if (this.rooms[i].id === data) {
-        elements[i].parentNode.removeChild(elements[i]);
-        this.rooms.splice(i, 1);
-        break;
+    if (data.status === 3) {
+      let elements = [].slice.call((document.querySelectorAll('.lobby__busy_room')));
+      for (let i = 0; i < this.busyRooms.length; i++) {
+        if (this.busyRooms[i].id === data) {
+          elements[i].parentNode.removeChild(elements[i]);
+          this.busyRooms.splice(i, 1);
+          break;
+        }
+      } 
+    } else {
+      let elements = [].slice.call((document.querySelectorAll('.lobby__free_room')));
+      for (let i = 0; i < this.rooms.length; i++) {
+        if (this.rooms[i].id === data) {
+          elements[i].parentNode.removeChild(elements[i]);
+          this.rooms.splice(i, 1);
+          break;
+        }
       }
     }
-    if (this.rooms.length === 0) { // not found rooms
+    
+    if (this.rooms.length === 0 && this.busyRooms.length === 0) { // not found rooms
       this._notFoundRoomPanelShow();
       this._hidePaginatorPanel();
     }
@@ -169,6 +190,7 @@ export default class LobbyView extends BaseView {
     console.log('_updateRooms')
     this.currentRoomId = -1;
     this.rooms = []
+    this.busyRooms = []
     this.freeRoomContainer.innerHTML = ''
     this.busyRoomContainer.innerHTML = '';
     this._showPaginatorPanel();
@@ -187,42 +209,54 @@ export default class LobbyView extends BaseView {
         observersCount : item.observers.get.length, status : this._getStatusByCode(item.status)}
       
       if (item.status === 3) {   // busy room
+        this.busyRooms.push(item);
         this._addBusyRoom(room);
       } else {
+        this.rooms.push(item);
         this._addFreeRoom(room);
       }
-      this.rooms.push(item);
+      
     });
-    /*const elements = [].slice.call(document.querySelectorAll('.lobby__free_room'));
-    elements.forEach((element : any, i : number) => {
-      element.addEventListener('click', this._clickOnFreeRoom.bind(this))
-    });*/
   }
 
   _clickOnFreeRoom(e : any) {
     let target = e.target;
-    while (!target.classList.contains('lobby__free_room')) {
+    while (!target.classList.contains('lobby__free_room') && !target.classList.contains('lobby__busy_room')) {
       target = target.parentNode;
       if (!target.classList) {
         return;
       }
     }
-    console.log('clickOnFreeRoom')
+
     if (this.currentRoomId >= 0) {
-      this._changeRoomStringColor(this.currentRoomId, 0);
+      this._changeRoomStringColor('free', this.currentRoomId, 0);
     }
 
-    const elements = [].slice.call((document.querySelectorAll('.lobby__free_room')));
-    this.currentRoomId = elements.indexOf(target);
-    this._changeRoomStringColor(this.currentRoomId, 1);
-    const info = {name : this.rooms[this.currentRoomId].name, length : this.rooms[this.currentRoomId].players.connections.length,
-       capacity : this.rooms[this.currentRoomId].players.capacity}
-    this._updateCurrentRoom(info);
-    Bus.emit('connectToRoom', this.rooms[this.currentRoomId].name)
+    if (target.classList.contains('lobby__busy_room')) { 
+      const elements = [].slice.call((document.querySelectorAll('.lobby__busy_room')));
+      const id = elements.indexOf(target);
+      this._changeRoomStringColor('busy', id, 2);
+      console.log('AAAa' + this.busyRooms[id].id + ' ' + id);
+      Bus.emit('connectToRoom', this.busyRooms[id].id)
+    } else {
+      const elements = [].slice.call((document.querySelectorAll('.lobby__free_room')));
+      this.currentRoomId = elements.indexOf(target);
+      this._changeRoomStringColor('free', this.currentRoomId, 1);
+      const info = {name : this.rooms[this.currentRoomId].name, length : this.rooms[this.currentRoomId].players.connections.length,
+        capacity : this.rooms[this.currentRoomId].players.capacity}
+      this._updateCurrentRoom(info);
+      Bus.emit('connectToRoom', this.rooms[this.currentRoomId].id)
+    }
+    
   }
 
-  _changeRoomStringColor(i : number, typeColor : number) {
-    const elements = [].slice.call((document.querySelectorAll('.lobby__free_room')));
+  _changeRoomStringColor(typeRoom : string, i : number, typeColor : number) {
+    let elements = [];
+    if (typeRoom === 'free') {
+      elements = [].slice.call((document.querySelectorAll('.lobby__free_room')));
+    } else if (typeRoom === 'busy') {
+      elements = [].slice.call((document.querySelectorAll('.lobby__busy_room')));
+    }
     let colorString = '';
     switch(typeColor) {
       case 0 :
@@ -230,6 +264,9 @@ export default class LobbyView extends BaseView {
         break;
       case 1 :
         colorString = '#a54f4f';
+        break;
+      case 2 :
+        colorString = '#4f9fa5';
         break;
     }
     elements[i].style.backgroundColor = colorString;

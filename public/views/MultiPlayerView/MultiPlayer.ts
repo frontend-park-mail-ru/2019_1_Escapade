@@ -189,7 +189,7 @@ export default class MultiPlayerView extends BaseView {
   }
 
   _getRoom(data : any) {
-    const timeInSeconds = data.room.settings.play; 
+    const timeInSeconds = data.room.settings.play - data.room.settings.prepare; 
     this.gameTime.hour = Math.floor(timeInSeconds / 3600);
     this.gameTime.minute = Math.floor((timeInSeconds - this.gameTime.hour * 3600)/ 60);
     this.gameTime.seconds = Math.floor(timeInSeconds - this.gameTime.minute * 60 - this.gameTime.hour * 3600);
