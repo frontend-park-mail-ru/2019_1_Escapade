@@ -1,41 +1,52 @@
-.game__field__map {
-  background-color: #92a0ad;
-  text-align: center;
-  position: relative;
-  border-width: 3px 3px 3px 3px; /* top right bottom left */
-  border-style: solid;
-  border-color: #46535E;
-  margin-top: 15px;
-  transition: all 0.5s ease-in-out;
-  cursor: default;
-  -webkit-tap-highlight-color: transparent;
-}
+.game__field{
+  &__map {
+    background-color: #92a0ad;
+    text-align: center;
+    position: relative;
+    border-width: 3px 3px 3px 3px; /* top right bottom left */
+    border-style: solid;
+    border-color: #46535E;
+    margin-top: 15px;
+    transition: all 0.5s ease-in-out;
+    cursor: default;
+    -webkit-tap-highlight-color: transparent;
+  }
 
-.game__field__under_map {
-  margin-top: 10px;
-  display: flex;
-  align-self: flex-start;
-  margin-right: 15px;
-}
+  @media screen and (max-width: $tablet) {
+    &__map {
+      width:300px !important;
+      height: 300px !important;
+      overflow: scroll;
+    }
 
-.game__field__percent {
-  position: relative;
-  color: white;
-  height: 25px;
-  line-height	: 25px;
-  margin-left: 5px;
-  width: 50px;
-  float: left;
-}
+  }
 
-.game__field__loadbar {
-  position: relative;
-  background: red;
-  height: 25px;
-  width: 100px;
-  margin-left: 5px;
-  border-radius: 8px;
-  transition: width 0.6s;
+  &__under_map {
+    margin-top: 10px;
+    display: flex;
+    align-self: flex-start;
+    margin-right: 15px;
+  }
+
+  &__percent {
+    position: relative;
+    color: white;
+    height: 25px;
+    line-height	: 25px;
+    margin-left: 5px;
+    width: 50px;
+    float: left;
+  }
+
+  &__loadbar {
+    position: relative;
+    background: red;
+    height: 25px;
+    width: 100px;
+    margin-left: 5px;
+    border-radius: 8px;
+    transition: width 0.6s;
+  }
 }
 
 

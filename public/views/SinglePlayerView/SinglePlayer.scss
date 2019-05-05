@@ -16,6 +16,7 @@
     display:flex;
     flex-direction: column;
     align-items: center;
+    transition: all 0.5s ease-in-out;
   }
 
   &_info {
@@ -36,6 +37,7 @@
     margin-top: 15px;
     padding: 12px;
     border-radius: 23px;
+    transition: all 0.5s ease-in-out;
   }
 
   &__timer_str {
@@ -51,29 +53,20 @@
     display: flex;
     align-items: center;
     flex-direction: column;
+
+    &__timer_str {
+      font-size: 2.2rem;
+      font-weight: 500;
+      width: 200px
+    }
   }
-  
 }
 
-@media screen and (min-width: 481px) and (max-width: 768px) {
+@media screen and (min-width: 481px) and (max-width: $tablet) {
   .single_player {
     display: flex;
     align-items: center;
     flex-direction: column;
-  }
-  .single_player__player {
-    width: 760px;
-    margin-left: 70px;
-  }
-  .single_player__settings {
-    width: 760px;
-    margin-left: 65px;
-  }
-  .single_player_info{
-    margin-left: 30px;
-  }
-  .single_player__under_map {
-    margin-left: 75px;
   }
 
 }
@@ -88,13 +81,8 @@
 
 .game__right_menu_buttons {
   display:flex;
-  text-align: center;
-}
-
-
-.game__right_menu_buttons {
-  display:flex;
   justify-content: space-evenly;
+  transition: all 0.5s ease-in-out;
 }
 
 .game__restart_button {
@@ -119,4 +107,10 @@
   border: 1px solid #000000;
   border-radius: 10px;
   padding: 20px 40px;
+}
+
+@media screen and (min-width: $mobile)  and (max-width: $tablet) {
+  .game__quit_button, .game__restart_button {
+    padding: 10px 20px;
+  }
 }

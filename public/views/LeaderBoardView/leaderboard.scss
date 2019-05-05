@@ -36,8 +36,8 @@
 
   @media screen and (min-width: $tablet) and (max-width: $normal) {
     &__board{
-      min-width: 62vw;
-      margin-left: 5vw;
+      min-width: 80vw;
+      margin-left: 0;
       font-size: 1.5rem;
     }
   }
@@ -209,7 +209,7 @@
   }
 }
 
-@media screen and (min-width: $mobile) and (max-width: $tablet) {
+@media screen and (min-width: $mobile) and (max-width: $normal) {
   .leaderboard{
     flex-direction: column-reverse;
   }

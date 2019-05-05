@@ -32,14 +32,18 @@ export default class SinglePlayerView extends BaseView {
   playerInfo: HTMLElement;
   settings: HTMLElement;
   progressBar: HTMLElement;
+  controlButtons: HTMLElement;
+  timerContainer: HTMLElement;
+  fieldContainer: HTMLElement;
+
   /**
    *
    * @param {*} parent
    */
   constructor(parent: HTMLElement) {
     super(parent, singlePlayerTemplate, true, 'updateUserInfo');
-    this.cellNumbersX = 15;
-    this.cellNumbersY = 15;
+    this.cellNumbersX = 14;
+    this.cellNumbersY = 14;
     this.minesCount = 20;
     this.cellsize = 50;
     this.difficult = 1;
@@ -78,9 +82,7 @@ export default class SinglePlayerView extends BaseView {
     Bus.emit('addListenersUserinfoGame');
     Bus.emit('addListenersMessage');
 
-    this.playerInfo = this.parent.querySelector('.single_player__player')
-    this.settings = this.parent.querySelector('.single_player__settings')
-    this.progressBar = this.parent.querySelector('.game__field__under_map')
+    this._getElementsForStyles()
 
     this.progressBar.style.display = 'none'
     this.restartDocElement = document.querySelector('.game__restart_button');
@@ -170,9 +172,7 @@ export default class SinglePlayerView extends BaseView {
         this.stopwatch.stop();
       }
     }
-    this.settings.style.display = 'none';
-    this.playerInfo.style.display = 'none';
-    this.progressBar.style.display = 'flex';
+    this._setStylesOnStart()
     this._showMap();
   }
 
@@ -248,10 +248,7 @@ export default class SinglePlayerView extends BaseView {
       Bus.emit('sendResultsSingleGame', JSON.stringify({ difficult: this.difficult, singleTotal: 1, singleWin: 0 }));
       Bus.emit('showTextInMessageBox', 'You lose!');
 
-      this.settings.style.display = 'flex';
-      this.playerInfo.style.display = 'flex';
-      this.progressBar.style.display = 'none';
-
+      this._rollbackStylesOnEnd()
       loser = true;
     }
     return loser;
@@ -279,9 +276,7 @@ export default class SinglePlayerView extends BaseView {
       }
       Bus.emit('showTextInMessageBox', 'You win!');
 
-      this.settings.style.display = 'flex';
-      this.playerInfo.style.display = 'flex';
-      this.progressBar.style.display = 'none';
+      this._rollbackStylesOnEnd()
       winner = true;
     }
     return winner;
@@ -332,9 +327,41 @@ export default class SinglePlayerView extends BaseView {
     return;
   }
 
-  // _setCellSize(){
-  //   const width = screen.width;
+  _setStylesOnStart() {
+    const width = screen.width;
 
-  //   if width
-  // }
+    this.settings.style.display = 'none';
+    this.playerInfo.style.display = 'none';
+    this.progressBar.style.display = 'flex';
+
+    if (width <= 440) {
+      this.controlButtons.style.transform = "translateY(-350px)"
+      this.timerContainer.style.transform = "translateY(-350px)"
+      this.fieldContainer.style.transform = "translateY(150px)"
+    }
+  }
+
+  _rollbackStylesOnEnd() {
+    const width = screen.width;
+
+    this.settings.style.display = 'flex';
+    this.playerInfo.style.display = 'flex';
+    this.progressBar.style.display = 'none';
+
+    if (width <= 440) {
+      this.controlButtons.style.transform = "translateY(0)"
+      this.timerContainer.style.transform = "translateY(0)"
+      this.fieldContainer.style.transform = "translateY(0)"
+    }
+  }
+
+
+  _getElementsForStyles() {
+    this.playerInfo = this.parent.querySelector('.single_player__player')
+    this.settings = this.parent.querySelector('.single_player__settings')
+    this.progressBar = this.parent.querySelector('.game__field__under_map')
+    this.controlButtons = this.parent.querySelector('.game__right_menu_buttons')
+    this.timerContainer = this.parent.querySelector('.single_player__timer')
+    this.fieldContainer = this.parent.querySelector('.single_player__wrapper')
+  }
 }

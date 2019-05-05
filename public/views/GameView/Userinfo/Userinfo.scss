@@ -1,0 +1,48 @@
+
+.single_player{
+  &__player {
+    background-color: #4B5E70;
+    display:flex;
+    justify-content: space-between;
+    align-items: center;
+    border-radius: 50px 15px 15px 50px;
+    width:500px
+  }
+  &__player_photo {
+    width: 75px;
+    height: 75px;
+    border-radius: 50%;
+    background: url('/img/flag.png') no-repeat;
+    background-size: cover;
+  }
+
+  &__player_str {
+    color: white;
+    font-size: 20px;
+  }
+
+  &__player_score {
+    border-left: 1px solid white; 
+    border-right: 1px solid white;
+    padding: 0 20px;
+  }
+
+  &__player_dop{
+    width: 20px;
+  }
+
+  @media screen and (max-width: $tablet){
+    &__player {
+      width: 300px;
+    }
+
+    &__player_score {
+      display: none;
+    }
+
+    &__player_time {
+      display: none;
+    }
+
+  }
+}
