@@ -16,6 +16,13 @@
     cursor: pointer;
   }
 
+  @media screen and (max-width: $tablet) {
+    &__back{
+      height: 120px;
+      width: 120px;
+    }
+  }
+
   &__back:hover{
     animation: go-left 0.4s linear 0.2s 1 normal forwards;
   }
@@ -212,6 +219,7 @@
 @media screen and (min-width: $mobile) and (max-width: $normal) {
   .leaderboard{
     flex-direction: column-reverse;
+    justify-content: center;
   }
 }
 

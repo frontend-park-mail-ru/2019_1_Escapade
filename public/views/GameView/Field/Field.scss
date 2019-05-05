@@ -18,6 +18,9 @@
       height: 300px !important;
       overflow: scroll;
     }
+    &__map::-webkit-scrollbar{
+      display: none
+    }
 
   }
 

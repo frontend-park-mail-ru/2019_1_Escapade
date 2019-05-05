@@ -21,11 +21,10 @@
 
   }
 
-  @media screen and (min-width: 720px) {
+  @media screen and (min-width: $tablet) {
     &__form{
       min-width: 35vh;
     }
-
   }
 
   &__submit{
