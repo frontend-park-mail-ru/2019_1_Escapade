@@ -1,4 +1,5 @@
-import SinglePlayerView from '../views/SinglePlayerView/SinglePlayer';
+import SinglePlayer from '../views/SinglePlayerView/SinglePlayer';
+import SinglePlayerView from '../views/SinglePlayerView/SinglePlayerView';
 import SinglePlayerModel from '../models/SinglePlayerModel';
 import StatisticsGameView from '../views/GameView/Statistics/Statistics';
 import SettingsGameView from '../views/GameView/Settings/Settings';
@@ -17,11 +18,13 @@ class SinglePlayerMV {
   fieldPanel: FieldView;
   userGameView: UserinfoGameView;
   messageView: MessageView;
+  singlePlayer: SinglePlayer;
   /**
    *
    */
   constructor() {
     this.view = SinglePlayerView;
+    this.singlePlayer = new SinglePlayer();
     this.model = new SinglePlayerModel();
     this.statisticsPanel = new StatisticsGameView();
     this.settingsPanel = new SettingsGameView();

@@ -7,7 +7,7 @@ import { Stopwatch } from '../../utils/stopwatch';
 import { checkAuth } from '../../utils/user';
 import Bus from '../../utils/bus';
 /** */
-export default class SinglePlayerView extends BaseView {
+export default class SinglePlayer {
   cellsize: number;
   cellNumbersX: number;
   cellNumbersY: number;
@@ -40,8 +40,7 @@ export default class SinglePlayerView extends BaseView {
    *
    * @param {*} parent
    */
-  constructor(parent: HTMLElement) {
-    super(parent, singlePlayerTemplate, true, 'updateUserInfo');
+  constructor() {
     this.cellNumbersX = 14;
     this.cellNumbersY = 14;
     this.minesCount = 20;
@@ -49,7 +48,8 @@ export default class SinglePlayerView extends BaseView {
     this.difficult = 1;
     this.minesCount = 20;
     this.start = false;
-    Bus.on('currentPath', this._currentPathSignalFunc.bind(this), 'singlePlayerView');
+    Bus.on('busAllOnSinglePlayer', this._busAllOn.bind(this), 'singlePlayerView');
+    Bus.on('busAllOffSinglePlayer', this._busAllOff.bind(this), 'singlePlayerView');
     document.body.oncontextmenu = function (e) {
       return false;
     };
@@ -59,63 +59,29 @@ export default class SinglePlayerView extends BaseView {
     Bus.on('leftClickOnCell', this._clickOnCell.bind(this), 'singlePlayerView');
     Bus.on('rightClickOnCell', this._rightСlickOnCell.bind(this), 'singlePlayerView');
     Bus.on('settingsChangeHard', this._changeHard.bind(this), 'singlePlayerView');
+    Bus.on('showMapSinglePlayer', this._showMap.bind(this), 'singlePlayerView');
+    Bus.on('newStopwatchSinglePlayer', this._newStopWatch.bind(this), 'singlePlayerView');
+    Bus.on('stopResetTimer', this._stopResetTimer.bind(this), 'singlePlayerView');
+    Bus.on('restartSinglePlayer', this._restart.bind(this), 'singlePlayerView');
   }
 
   _busAllOff() {
     Bus.off('leftClickOnCell', this._clickOnCell.bind(this), 'singlePlayerView');
     Bus.off('rightClickOnCell', this._rightСlickOnCell.bind(this), 'singlePlayerView');
     Bus.off('settingsChangeHard', this._changeHard.bind(this), 'singlePlayerView');
+    Bus.off('showMapSinglePlayer', this._showMap.bind(this), 'singlePlayerView');
+    Bus.off('newStopwatchSinglePlayer', this._newStopWatch.bind(this), 'singlePlayerView');
+    Bus.off('stopResetTimer', this._stopResetTimer.bind(this), 'singlePlayerView');
+    Bus.off('restartSinglePlayer', this._restart.bind(this), 'singlePlayerView');
   }
 
-  /**
-   *
-  */
-  render() {
-    this.user = User;
-    super.render();
-    Bus.emit('addListenersButtonsGame');
-    Bus.emit('addListenersField');
-    Bus.emit('addListenersSettingsGame');
-    Bus.emit('addListenersStatisticsGame');
-    Bus.emit('addListenersUserinfoGame');
-    Bus.emit('addListenersMessage');
-
-    this._getElementsForStyles()
-
-    this.progressBar.style.display = 'none'
-    this.restartDocElement = document.querySelector('.game__restart_button');
-    this.restartDocElement.addEventListener('click', this._restart.bind(this).bind(this));
-    this._busAllOff();
-    this._busAllOn();
+  _newStopWatch() {
     this.stopwatch = new Stopwatch('single_player__timer');
-    this._showMap();
-    checkAuth(this._updateUserInfoCalback.bind(this), this.difficult)
-    this.curPath = '/single_player';
-  }
-
-  _currentPathSignalFunc(path: string) {
-    if (path === '/single_player') {
-      console.log('_currentPathSignalFunc single_player');
-      this._busAllOn();
-      this._showMap();
-      checkAuth(this._updateUserInfoCalback.bind(this), this.difficult)
-      this.curPath = path;
-    } else {
-      if (this.curPath === '/single_player') {
-        console.log('_currentPathSignalFunc not single_player');
-        this._stop_reset_timer();
-        this.curPath = '';
-        this._busAllOff();
-      }
-    }
   }
 
   /** */
   _updateUserInfoCalback() {
-    console.log("_updateUserInfo here");
-    console.log('QQQQQQQQQQq ', User);
     if (User.name) {
-      console.log('EEEEE ', User.name);
       console.log(Bus.listeners)
       Bus.emit('userNameInGameChange', User.name);
       if (User.bestScore.String) {
@@ -134,7 +100,6 @@ export default class SinglePlayerView extends BaseView {
       this.maxPointsCount = 0;
       this.minTimeCount = '1:24:60:60';
     }
-    this._showMap();
   }
 
   /** */
@@ -143,6 +108,7 @@ export default class SinglePlayerView extends BaseView {
     this.pointsCount = 0;
     this.leftClicksCount = 0;
     this.rightClicksCount = 0;
+    checkAuth(this._updateUserInfoCalback.bind(this), this.difficult)
 
     Bus.emit('messageBoxHide', true)
     Bus.emit('renderField', { width: this.cellNumbersX, height: this.cellNumbersY, cellSize: this.cellsize })
@@ -158,7 +124,7 @@ export default class SinglePlayerView extends BaseView {
     return;
   }
 
-  _stop_reset_timer() {
+  _stopResetTimer() {
     this.stopwatch.stop();
     this.stopwatch.reset();
   }
@@ -172,13 +138,13 @@ export default class SinglePlayerView extends BaseView {
         this.stopwatch.stop();
       }
     }
-    this._setStylesOnStart()
+    Bus.emit('setStylesOnStartSingle');
     this._showMap();
   }
 
   /** */
   _changeHard(hardStruct: any) {
-    this._setStylesOnStart();
+    Bus.emit('setStylesOnStartSingle');
     this.difficult = hardStruct.difficult;
 
 
@@ -249,7 +215,7 @@ export default class SinglePlayerView extends BaseView {
       Bus.emit('sendResultsSingleGame', JSON.stringify({ difficult: this.difficult, singleTotal: 1, singleWin: 0 }));
       Bus.emit('showTextInMessageBox', 'You lose!');
 
-      this._rollbackStylesOnEnd()
+      Bus.emit('rollbackStylesOnEndSingle');
       loser = true;
     }
     return loser;
@@ -276,8 +242,7 @@ export default class SinglePlayerView extends BaseView {
         Bus.emit('userTimeInGameChange', this.minTimeCount.toString());
       }
       Bus.emit('showTextInMessageBox', 'You win!');
-
-      this._rollbackStylesOnEnd()
+      Bus.emit('rollbackStylesOnEndSingle');
       winner = true;
     }
     return winner;
@@ -326,43 +291,5 @@ export default class SinglePlayerView extends BaseView {
     }
     Bus.emit('progressGameChange', 100);
     return;
-  }
-
-  _setStylesOnStart() {
-    const width = screen.width;
-
-    this.settings.style.display = 'none';
-    this.playerInfo.style.display = 'none';
-    this.progressBar.style.display = 'flex';
-
-    if (width <= 440) {
-      this.controlButtons.style.transform = "translateY(-350px)"
-      this.timerContainer.style.transform = "translateY(-350px)"
-      this.fieldContainer.style.transform = "translateY(150px)"
-    }
-  }
-
-  _rollbackStylesOnEnd() {
-    const width = screen.width;
-
-    this.settings.style.display = 'flex';
-    this.playerInfo.style.display = 'flex';
-    this.progressBar.style.display = 'none';
-
-    if (width <= 440) {
-      this.controlButtons.style.transform = "translateY(0)"
-      this.timerContainer.style.transform = "translateY(0)"
-      this.fieldContainer.style.transform = "translateY(0)"
-    }
-  }
-
-
-  _getElementsForStyles() {
-    this.playerInfo = this.parent.querySelector('.single_player__player')
-    this.settings = this.parent.querySelector('.single_player__settings')
-    this.progressBar = this.parent.querySelector('.game__field__under_map')
-    this.controlButtons = this.parent.querySelector('.game__right_menu_buttons')
-    this.timerContainer = this.parent.querySelector('.single_player__timer')
-    this.fieldContainer = this.parent.querySelector('.single_player__wrapper')
   }
 }
