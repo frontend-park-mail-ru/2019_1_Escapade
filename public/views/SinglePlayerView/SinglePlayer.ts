@@ -63,6 +63,7 @@ export default class SinglePlayer {
     Bus.on('newStopwatchSinglePlayer', this._newStopWatch.bind(this), 'singlePlayerView');
     Bus.on('stopResetTimer', this._stopResetTimer.bind(this), 'singlePlayerView');
     Bus.on('restartSinglePlayer', this._restart.bind(this), 'singlePlayerView');
+    Bus.on('updateUserInfo', this._updateUserInfoCalback.bind(this), 'singlePlayerView');
   }
 
   _busAllOff() {
@@ -73,6 +74,7 @@ export default class SinglePlayer {
     Bus.off('newStopwatchSinglePlayer', this._newStopWatch.bind(this), 'singlePlayerView');
     Bus.off('stopResetTimer', this._stopResetTimer.bind(this), 'singlePlayerView');
     Bus.off('restartSinglePlayer', this._restart.bind(this), 'singlePlayerView');
+    Bus.off('updateUserInfo', this._updateUserInfoCalback.bind(this), 'singlePlayerView');
   }
 
   _newStopWatch() {
@@ -110,8 +112,6 @@ export default class SinglePlayer {
     this.pointsCount = 0;
     this.leftClicksCount = 0;
     this.rightClicksCount = 0;
-    checkAuth(this._updateUserInfoCalback.bind(this), this.difficult)
-
     Bus.emit('messageBoxHide', true)
     Bus.emit('renderField', { width: this.cellNumbersX, height: this.cellNumbersY, cellSize: this.cellsize })
     Bus.emit('statisticsResetParameters', this.minesCount)
