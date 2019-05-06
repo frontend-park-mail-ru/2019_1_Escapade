@@ -8,13 +8,15 @@ export class MineSweeper {
   mapLabel: any[];
   cellNumbers: any;
   mapLabel3BV: any[];
+  startCell: { x: number; y: number; };
   /**
    *
    */
-  constructor(NumbersX = 20, NumbersY = 20, bombsCount = 10) {
+  constructor(NumbersX = 20, NumbersY = 20, bombsCount = 10, {startX = 0, startY = 0}) {
     this.cellNumbersX = NumbersX;
     this.cellNumbersY = NumbersY;
     this.bombsCount = bombsCount;
+    this.startCell = {x : startX, y : startY};
     this.map = this.
         _createMap(this.cellNumbersX, this.cellNumbersY, this.bombsCount);
     this.mapLabel = new Array(this.cellNumbersY);
@@ -137,7 +139,7 @@ export class MineSweeper {
       do {
         xBomb = MathGame.randomInteger(0, xLen - 1);
         yBomb = MathGame.randomInteger(0, yLen - 1);
-      } while (map[xBomb][yBomb] === 9);
+      } while (map[xBomb][yBomb] === 9 || (this.startCell.x === xBomb && this.startCell.y === yBomb));
       map[xBomb][yBomb] = 9;
       this._fillCellsAroundBomb(map, xBomb, yBomb, xLen, yLen);
     }

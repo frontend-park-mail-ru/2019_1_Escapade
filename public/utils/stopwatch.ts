@@ -22,6 +22,9 @@ export class Stopwatch {
    *
    */
   start() {
+    if (this.running) {
+      return;
+    }
     this.delay = 0;
     this.running = true;
     this.then = Date.now();
@@ -60,6 +63,9 @@ export class Stopwatch {
    *
    */
   stop() {
+    if (!this.running) {
+      return;
+    }
     this.running = false;
     this.delayThen = Date.now();
     clearInterval(this.timer);

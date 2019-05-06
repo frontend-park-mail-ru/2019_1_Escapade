@@ -70,11 +70,11 @@ export default class SinglePlayerView extends BaseView {
       this.curPath = path;
     } else {
       if (this.curPath === '/single_player') {
-        console.log('_currentPathSignalFunc not single_player');
+        this._rollbackStylesOnEnd();
         Bus.emit('stopResetTimer');
-
         this.curPath = '';
         Bus.emit('busAllOffSinglePlayer');
+        
       }
     }
   }
