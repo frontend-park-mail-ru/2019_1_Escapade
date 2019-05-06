@@ -1,5 +1,5 @@
 import Bus from '../utils/bus';
-import {Net} from '../utils/net';
+import { Net } from '../utils/net';
 /**
  *
  */
@@ -8,7 +8,7 @@ export default class SinglePlayerModel {
    *
    */
   constructor() {
-    Bus.on('sendResultsSingleGame', this._sendResults.bind(this));
+    Bus.on('sendResultsSingleGame', this._sendResults.bind(this), 'singlePlayerModel');
   }
 
   /**
@@ -17,16 +17,16 @@ export default class SinglePlayerModel {
    */
   _sendResults(data: any) {
     console.log(data);
-    Net.post({url: '/game', body: data})
-        .then((resp) => {
-          if (resp.status === 200) {
-            console.log('Ok SendResults : ', resp.status);
-          } else {
-            console.log('SendResults resp.status: ', resp.status);
-          }
-        })
-        .catch((error) => {
-          console.log('Faild SendResults : ', error);
-        });
+    Net.post(data, '/game')
+      .then((resp) => {
+        if (resp.status === 200) {
+          console.log('Ok SendResults : ', resp.status);
+        } else {
+          console.log('SendResults resp.status: ', resp.status);
+        }
+      })
+      .catch((error) => {
+        console.log('Faild SendResults : ', error);
+      });
   }
 }

@@ -1,7 +1,7 @@
-import ProfileEditTemplate from './ProfileEdit.pug';
-import {validateEmail, validatePass, validateLogin, makeSafe}
+const ProfileEditTemplate = require('./ProfileEdit.pug');
+import { validateEmail, validatePass, validateLogin, makeSafe }
   from '../../utils/validation';
-import {User} from '../../utils/user';
+import { User } from '../../utils/user';
 import BaseView from '../BaseView';
 import Bus from '../../utils/bus';
 import router from '../../main';
@@ -21,16 +21,17 @@ export default class ProfileEditView extends BaseView {
   constructor(parent: any) {
     super(parent, ProfileEditTemplate, false);
 
-    Bus.on('onSuccessChange', (usr: { email?: any; played?: any; avatar?: any; name?: any; password?: any; repassword?: any; }) => {
+    Bus.on('onSuccessChange', (usr: any) => {
       usr.password = '';
       usr.repassword = '';
-      User.setUser({...usr});
+      console.log('Edit ' + usr);
+      User.setUser({ ...usr });
       Bus.emit('userUpdate');
       router.open('/profile');
-    });
+    }, 'profileEditView');
     Bus.on('onFailedChange', (error: { message: any; }) => {
       this._showWarning(this._warnings.email, error.message);
-    });
+    }, 'profileEditView');
   }
 
   /** */
@@ -46,7 +47,7 @@ export default class ProfileEditView extends BaseView {
     this._warnings.repass = this.parent.querySelector('.js-warning-repassword');
     this._changeButton = this.parent.querySelector('.profile_edit__confirm');
     this._changeButton
-        .addEventListener('click', this._onSubmitDataProfile.bind(this));
+      .addEventListener('click', this._onSubmitDataProfile.bind(this));
   }
 
 
@@ -57,14 +58,14 @@ export default class ProfileEditView extends BaseView {
   _onSubmitDataProfile(event: { preventDefault: () => void; }) {
     event.preventDefault();
     console.log('event _onSubmitDataProfile');
-    const data : any = {};
+    const data: any = {};
     data.email = this._form.elements['email'].value;
     data.name = this._form.elements['login'].value;
     data.password = this._form.elements['password'].value;
     data.repass = this._form.elements['password-repeat'].value;
     if (this._validateInput(data)) {
       console.log(' Data : ' + data.email, ' ',
-          data.name, ' ', data.password, ' ', data.repass);
+        data.name, ' ', data.password, ' ', data.repass);
       Bus.emit('changeProfile', data);
     }
   }

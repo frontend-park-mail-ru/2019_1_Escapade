@@ -1,0 +1,8 @@
+.leaderboard__table_row
+  .leaderboard__table_number #{(i + 1)  +  (data.page - 1) * data.per_page}
+  .leaderboard__table_row_wrapper
+    .leaderboard__table_avatar_back
+      img.leaderboard__table_avatar(src=data.users[i].photo)
+    .leaderboard__table_name #{data.users[i].name}
+    .leaderboard__table_points #{data.users[i].bestScore.String || 0}
+    .leaderboard__table_time #{data.users[i].bestTime.String || 0}

@@ -1,0 +1,140 @@
+.game__players_list {
+  background-color: #4B5E70;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  margin-top: 11px;
+  text-align: center;
+  height: 507px;
+  width: 500px;
+  border-radius: 23px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  overflow-y: scroll;
+}
+
+::-webkit-scrollbar{ width: 10px; /* 1 - вертикальный скроллбар */}
+::-webkit-scrollbar:horizontal{ height: 10px; /* 1 - горизонтальный скроллбар */}
+::-webkit-scrollbar-button {background: #394653; /* 2 - кнопка */}
+::-webkit-scrollbar-track {background: #4b5d70;/* 3 - трек */}
+::-webkit-scrollbar-track-piece { background: #4b5d70; /* 4 – видимая часть трека */ }
+::-webkit-scrollbar-thumb {background: #394653; border-radius: 10px; -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3); /* 5 - ползунок */}
+
+
+.game__players_list_row {
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  text-align: center;
+  border-radius: 15px;
+  height: 60px;
+  width: 460px;
+  margin-left: 20px;
+  margin-top: 6px;
+  background-color: #394653;
+}
+
+.game__players_list_color {
+  height: 57px;
+  width: 11px;
+  border-radius: 16px 0px 0px 16px;
+  margin-top: 1px;
+}
+
+.game__players_list_me_row {
+  background-color: #2d3944;
+}
+
+.game__players_list_observer_row {
+  background-color: #61413e;
+}
+
+.game__players_list_img {
+  float: right;
+  border-radius: 50%;
+  width: 50px;
+  margin-top: 7px;
+  margin-left: 9px;
+  height: 50px;
+}
+
+.game__players_list_str {
+  position: relative;
+  text-align: left;
+  height: 50px;
+  width: 150px;
+  line-height: 60px;
+  color: white;
+  font-size: 20px;
+  float: right;
+}
+
+.game__players_list_player_name {
+  margin-left: 5px;
+}
+
+.game__players_list_player_points {
+  margin-left: 21px;
+}
+
+.game__players_list_disconnect {
+  margin-top: 3px;
+  margin-left: 20px;
+}
+
+.game__players_list_explose {
+  margin-top: 3px;
+  margin-left: 9px;
+}
+
+.game__players_list_disconnect_img {
+  width: 40px;
+  height: 40px;
+  margin-top: 7px;
+  
+  background: url('../../../img/disconnect.png') no-repeat;
+}
+
+.game__players_list_explose_img {
+  width: 40px;
+  height: 40px;
+  margin-top: 7px;
+  margin-right: 7px;
+  background: url('../../../img/explosePlayer.png') no-repeat;
+}
+
+.game__players_list_win_img {
+  width: 47px;
+  height: 40px;
+  margin-top: 7px;
+  margin-right: 7px;
+  background: url('../../../img/win.png') no-repeat;
+}
+
+.game__players_list_clock_img {
+  width: 47px;
+  height: 40px;
+  margin-top: 7px;
+  margin-right: 7px;
+  background: url('../../../img/clockPlayerList.png') no-repeat;
+}
+
+.game__players_list_flag_img {
+  width: 50px;
+  height: 40px;
+  margin-top: 7px;
+  margin-right: 7px;
+  background: url('../../../img/flag_lose.png') no-repeat;
+}
+
+.game__players_list_title {
+  position: relative;
+  text-align: left;
+  height: 50px;
+  width: 150px;
+  line-height: 60px;
+  color: white;
+  font-size: 20px;
+  float: right;
+  margin-left: 20px;
+}

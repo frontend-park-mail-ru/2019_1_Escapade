@@ -1,21 +1,23 @@
 section(data-section-name='menu')
   .menu
-    .menu__labels
+    .menu__nav
       a.menu__label(href='leaders', data-href='leaders') Leaderboard
+      a.menu__label(href='chat', data-href='chat') Chat
       a.menu__label(href='rules', data-href='rules') Rules
-    .menu__wrapper
-      a.menu__logo(href='single_player', data-href='single_player')
+    .menu__body.mt-2
       - if (user.name !== null){
-      a.menu__name(href='profile', data-href='profile') #{user.name}
-      a.menu__enter(href='sign_out', data-href='sign_out') logout
+      .menu__labels.mb-2
+        a.menu__logo(href='single_player', data-href='single_player')
+        a.menu__multi_logo(href='single_player', data-href='single_player')
+      a.menu__button.brd-color-esc(href='profile', data-href='profile') #{user.name}
+      a.menu__button.mt-2(href='sign_out', data-href='sign_out') Logout
       - }
       - else {
-      a.menu__name(href='sign_in', data-href='sign_in') Anonymus
+      a.menu__logo.mb-2(href='single_player', data-href='single_player')
+      a.menu__button(href='sign_in', data-href='sign_in') Anonymus
       .menu__or.mt-1 or
       .menu__row.mt-1
-        a.menu__enter(href='sign_in', data-href='sign_in') sign in
-        .menu__enter.ml-1.mr-1 |
-        a.menu__enter(href='sign_up', data-href='sign_up') sign up
+        a.menu__button.mr-2(href='sign_in', data-href='sign_in') Sign in
+        a.menu__button.ml-2(href='sign_up', data-href='sign_up') Sign up
       - }
       a.menu__escapade.mt-2(href='about', data-href='about') Escapade
-include ../../components/OfflinePoppup/Offline.pug

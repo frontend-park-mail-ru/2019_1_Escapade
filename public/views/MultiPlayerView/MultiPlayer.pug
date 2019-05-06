@@ -1,50 +1,12 @@
 section(data-section-name='multi_player')
   .multi_player
-    .multi_player__popup
-      .multi_player__popup_content
-        .multi_player__popup_text
-        .multi_player__popup_ok_button Ok
+    include ../MessageView/Message.pug
     .multi_player__wrapper
-      .multi_player__player
-        .multi_player__player_photo
-        .multi_player__player_name.multi_player__player_str Jack Sparrow
-        .multi_player__player_score.multi_player__player_str 200
-        .multi_player__player_time.multi_player__player_str 125
-        .multi_player__player_dop
-      .multi_player__map
-      .multi_player__under_map
-        .multi_player__percent 15%
-        .multi_player__loadbar
-      .multi_player__settings  
-        ul.multi_player__topmenu
-          li.multi_player__settings_list
-            .multi_player__settings_img 
-            ul.multi_player__submenu
-              li.multi_player__submenu_item.multi_player__submenu_baby Baby
-              li.multi_player__submenu_item.multi_player__submenu_normal Normal
-              li.multi_player__submenu_item.multi_player__submenu_hard Hard
-              li.multi_player__submenu_item.multi_player__submenu_god God
-        .multi_player__settings_info.multi_player__settings_info_mode Master mode
-        .multi_player__settings_info.multi_player__settings_info_width 200 width
-        .multi_player__settings_info.multi_player__settings_info_height 200 height
-        .multi_player__settings_info.multi_player__settings_info_mines 50 mines
+      include ../GameView/Field/Field.pug
     .multi_player_info
-      .multi_player__right_menu_buttons
-        .multi_player__restart_button Restart
-        a.multi_player__quite_button(data-href='Quite', href='menu') Quite
+      .game__multi_right_menu_buttons
+        a.game__multi_quit_button(data-href='Quit', href='lobby') Quit
       .multi_player__timer
-        .multi_player__timer_str#multi_player__timer 0:00:00.00
-      .multi_player__statistics
-        .multi_player__statistics_row
-          .multi_player__statistics_points_img
-          .multi_player__statistics_row_str.multi_player__statistics_row_points 0 Points
-        .multi_player__statistics_row
-          .multi_player__statistics_mines_img
-          .multi_player__statistics_row_str.multi_player__statistics_row_mines 50 mins left
-        .multi_player__statistics_row
-          .multi_player__statistics_left_click_img
-          .multi_player__statistics_row_str.multi_player__statistics_row_left_click left click
-        .multi_player__statistics_row
-          .multi_player__statistics_right_click_img
-          .multi_player__statistics_row_str.multi_player__statistics_row_right_click 45 right click
-    .multi_player_logo
+        .multi_player__timer_str#multi_player__timer 0:00:00
+      include ../GameView/PlayersList/PlayersList.pug
+    .logo

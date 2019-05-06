@@ -21,7 +21,7 @@ export default class BaseView {
    * @param {*} isOffline
    * @param {*} emitFuncStr
    */
-  constructor(parent = '', template = '', isOffline = false, emitFuncStr = '') {
+  constructor(parent: HTMLElement, template = '', isOffline = false, emitFuncStr = '') {
     this.parent = parent;
     this.parent.hidden = true;
     this.template = template;
@@ -53,7 +53,6 @@ export default class BaseView {
     if (!this.rendered) {
       this.render();
     }
-    console.log('UUUUhuuu ', this._emitFuncStr);
     Bus.emit(this._emitFuncStr);
     this.parent.hidden = false;
   }
@@ -61,14 +60,14 @@ export default class BaseView {
   /**
    * @param {Object} data
   */
-  set data(data: object = []) {
+  set data(data: object) {
     this._data = data;
   }
 
   /**
    * @param {Object} user
   */
-  set user(user: object = []) {
+  set user(user: object) {
     this._user = user;
   }
 
@@ -84,7 +83,7 @@ export default class BaseView {
    */
   render() {
     this.parent.innerHTML = '';
-    this.parent.innerHTML = this.template({data: this._data, user: this._user});
+    this.parent.innerHTML = this.template({ data: this._data, user: this._user });
     this._initOfflinePopup();
   }
 
@@ -100,7 +99,7 @@ export default class BaseView {
     this.hideButton =
       this.overlayOffline.querySelector('.modal__button');
     this.hideButton.addEventListener('click',
-        this._hideOfflineOverlay.bind(this));
+      this._hideOfflineOverlay.bind(this));
   }
 
   /**

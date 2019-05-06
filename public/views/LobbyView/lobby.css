@@ -1,0 +1,217 @@
+
+.lobby {
+  display: flex;
+  justify-content: center;
+  height: 100vh;
+  background: radial-gradient(512.00px at 50% 50%, rgba(255, 255, 255, 0.34) 0%, rgba(255, 255, 255, 0) 100%), #667787;
+}
+
+.lobby__main{
+  display: flex;
+  flex-direction: column
+}
+
+.back {
+  width: 10vw;
+  height: 10vw;
+  background: url('../../img/flag-right.png') no-repeat;
+  transform: matrix(-1, 0, 0, 1, 0, 0);
+  background-size: contain;
+  align-self: flex-start
+}
+
+.lobby__current_room_panel{
+  border-radius: 30px;
+  border: 0.2vw solid rgb(150, 159, 167);
+  background-color: rgba(75, 94, 112, 1);
+  color: white;
+  cursor: pointer;
+  font-family: Saira;
+  font-size: 1.95vw;
+  margin-top: 15px;
+  margin-left: 1vw;
+  padding: 2vw;
+  min-width: 60vw;
+  min-height: 5vw;
+  max-height: 5vw;
+  text-indent: 2.45vw;
+}
+
+.room__exit {
+  width: 5vw;
+  height: 5vw;
+  background: url(/img/cancel.png) #CED6DD no-repeat;
+  background-size: contain;
+  /* align-self: center; */
+  border-radius: 50%;
+  margin-left: 30vw;
+}
+
+.lobby__row {
+  display: flex;
+  flex-direction: row;
+}
+
+.lobby__center {
+  justify-content: center;
+}
+
+.lobby__column {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.lobby__label {
+  border-radius: 10px;
+  margin-bottom: 2px;
+  font-family: Saira;
+  font-size: calc(1.2rem + 5vw);
+  color: white;
+  padding: 3px 17px;
+}
+
+.lobby__back {
+  margin-bottom: 1vw;
+}
+.lobby__label {
+  margin-right: 30vw;
+}
+
+.lobby__button {
+  border-radius: 30px;
+  border: 0.2vw solid rgb(150, 159, 167);
+  background-color: rgba(75, 94, 112, 1);
+  color: white;
+  cursor: pointer;
+  font-family: Saira;
+  font-size: 1.95vw;
+  margin-top: 15px;
+  margin-left: 22vw;
+  padding: 2vw;
+  min-width: 12vw;
+  min-height: 2vw;
+  max-height: 2vw;
+  background-repeat: no-repeat;
+  background-size: 2.5vw;
+  background-position: left;
+  text-indent: 2.45vw;
+  right: 1vw;
+}
+
+.lobby__find_game{
+  background-image: url('../../img/magnifier.png');
+}
+
+.lobby__create_game{
+  background-image: url('../../img/create.png');
+}
+
+.lobby__room {
+  display: flex;
+  flex-direction: row;
+  border-radius: 5px;
+  color: white;
+  font-size: 1.5vw;
+  margin-bottom: 5px;
+  text-align: center;
+  align-items: center;
+  min-height: 5vw;
+}
+
+.lobby__free_room {
+  background-color:rgba(70, 83, 94, 1);
+}
+
+.lobby__busy_room {
+  background-color:rgba(130, 130, 130, 1);
+}
+
+.lobby__element {
+  margin: 3px;
+  padding: 4px;
+}
+
+.lobby__with_image {
+  background-repeat: no-repeat;
+  background-size: 1.5vw;
+  background-position: left;
+  text-indent: 1vw;
+}
+
+.lobby__name {
+  background-image: url('../../img/room.png');
+  width: 18vw;
+}
+.lobby__players {
+  background-image: url('../../img/player.png');
+  width: 10vw;
+}
+.lobby__difficult {
+  background-image: url('../../img/difficult.png');
+  width: 10vw;
+}
+.lobby__size {
+  background-image: url('../../img/size.png');
+  width: 8vw;
+}
+.lobby__mines {
+  background-image: url('../../img/mine_icon.png');
+  width: 5vw;
+}
+.lobby__time {
+  background-image: url('../../img/clock.png');
+  width: 32vw;
+}
+.lobby__time_have {
+  background-image: url('../../img/clock.png');
+  width: 10vw;
+}
+.lobby__observers {
+  background-image: url('../../img/observer.png');
+  width: 10vw;
+}
+.lobby__status {
+  background-image: url('../../img/status.png');
+  width: 10vw;
+}
+
+
+.lobby__paginator {
+  text-align: center;
+  display:flex;
+  flex-direction: row;
+  justify-content: center;
+  width: 20vw;
+  height: 5vw;
+  border-radius: 5px;
+  color: white;
+  background-color:rgba(0, 0, 0, 0.55);
+  
+}
+
+.lobby__paginator_left {
+  background-image: url(/img/flag_back.png);
+  background-repeat: no-repeat;
+  background-size: 3vw;
+  background-position: center;
+  cursor: pointer;
+  min-width: 4vw;
+}
+
+.lobby__paginator_right {
+  background-image: url('../../img/flag_ahead.png');
+  background-repeat: no-repeat;
+  background-size: 3vw;
+  background-position: center;
+  cursor: pointer;
+  min-width: 4vw;
+}
+
+.lobby__paginator_page {
+  color: white;
+  font-size: 3vw;
+  font-weight: 600;
+  align-self: center;
+}

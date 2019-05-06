@@ -1,379 +1,286 @@
 /* eslint-disable require-jsdoc */
-import singlePlayerTemplate from './SinglePlayer.pug';
+const singlePlayerTemplate = require('./SinglePlayer.pug');
 import BaseView from '../BaseView';
-import {User} from '../../utils/user';
-import {MineSweeper} from '../../game/minesweeper';
-import {Timer} from '../../game/timer';
+import { User } from '../../utils/user';
+import { MineSweeper } from '../../game/minesweeper';
+import { Stopwatch } from '../../utils/stopwatch';
 import { checkAuth } from '../../utils/user';
 import Bus from '../../utils/bus';
-import { ConfigSinglePlayerView } from './ConfigSinglePlayer';
 /** */
-export default class SinglePlayerView extends BaseView {
+export default class SinglePlayer {
   cellsize: number;
   cellNumbersX: number;
   cellNumbersY: number;
   minesCount: number;
   start: boolean;
-  pointsDocElement: Element;
-  minesDocElement: Element;
-  leftClicksDocElement: Element;
-  rightClicksDocElement: Element;
-  restartDocElement: Element;
-  percentOpenDocElement: Element;
-  loadbarDocElement: Element;
-  infoModeDocElement: Element;
-  infoWidthDocElement: Element;
-  infoHeightDocElement: Element;
-  infoMinesDocElement: Element;
-  playerNameDocElement: Element;
-  playerScoreDocElement: Element;
-  playerTimeDocElement: Element;
-  messageBoxDocElement: Element;
-  messageBoxMessageDocElement: Element;
-  timer: Timer;
+  stopwatch: Stopwatch;
   maxPointsCount: number;
   minTimeCount: string;
   openCellsCount: number;
   pointsCount: number;
   leftClicksCount: number;
   rightClicksCount: number;
-  prcentOpen: number;
   minesRemainedCount: any;
   mineSweeper: MineSweeper;
   BBBVCount: any;
-  config: ConfigSinglePlayerView;
   difficult: number;
+  curPath: string;
+  restartDocElement: any;
+  _restartClick: any;
+  quitDocElement: any;
+  _quitClick: any;
+  playerInfo: HTMLElement;
+  settings: HTMLElement;
+  progressBar: HTMLElement;
+  controlButtons: HTMLElement;
+  timerContainer: HTMLElement;
+  fieldContainer: HTMLElement;
+
   /**
    *
    * @param {*} parent
    */
-  constructor(parent: any) {
-    super(parent, singlePlayerTemplate, true, 'updateUserInfo');
-    this.config = new ConfigSinglePlayerView()
-    this.cellNumbersX = 15;
-    this.cellNumbersY = 15;
-    this.minesCount = 1;
+  constructor() {
+    this.cellNumbersX = 14;
+    this.cellNumbersY = 14;
+    this.minesCount = 20;
+    this.cellsize = 50;
+    this.difficult = 1;
+    this.minesCount = 20;
     this.start = false;
-    
-    document.addEventListener('click', this._clickOnBody.bind(this));
-
-
-    document.addEventListener('contextmenu', this._rightСlickOnCell.bind(this));
-    document.body.oncontextmenu = function(e) {
+    Bus.on('busAllOnSinglePlayer', this._busAllOn.bind(this), 'singlePlayerView');
+    Bus.on('busAllOffSinglePlayer', this._busAllOff.bind(this), 'singlePlayerView');
+    document.body.oncontextmenu = function (e) {
       return false;
     };
-    Bus.on('updateUserInfo', this._updateUserInfo.bind(this));
   }
 
-  /**
-   *
-  */
-  render() {
-    this.user = User;
-    super.render();
-    this.pointsDocElement = document.getElementsByClassName(this.config.pointsFieldStringName)[0];
-    this.minesDocElement = document.getElementsByClassName(this.config.minesFieldStringName)[0];
-    this.leftClicksDocElement = document.getElementsByClassName(this.config.leftClicksFieldStringName)[0];
-    this.rightClicksDocElement = document.getElementsByClassName(this.config.rightClicksFieldStringName)[0];
-    this.restartDocElement = document.getElementsByClassName(this.config.restartFieldStringName)[0];
-    this.percentOpenDocElement = document.getElementsByClassName(this.config.percentOpenFieldStringName)[0];
-    this.loadbarDocElement = document.getElementsByClassName(this.config.loadbarFieldStringName)[0];
+  _busAllOn() {
+    Bus.on('leftClickOnCell', this._clickOnCell.bind(this), 'singlePlayerView');
+    Bus.on('rightClickOnCell', this._rightСlickOnCell.bind(this), 'singlePlayerView');
+    Bus.on('settingsChangeHard', this._changeHard.bind(this), 'singlePlayerView');
+    Bus.on('showMapSinglePlayer', this._showMap.bind(this), 'singlePlayerView');
+    Bus.on('newStopwatchSinglePlayer', this._newStopWatch.bind(this), 'singlePlayerView');
+    Bus.on('stopResetTimer', this._stopResetTimer.bind(this), 'singlePlayerView');
+    Bus.on('restartSinglePlayer', this._restart.bind(this), 'singlePlayerView');
+    Bus.on('updateUserInfo', this._updateUserInfoCalback.bind(this), 'singlePlayerView');
+  }
 
-    this.infoModeDocElement = document.getElementsByClassName(this.config.infoModeFieldStringName)[0];
-    this.infoWidthDocElement = document.getElementsByClassName(this.config.infoWidthFieldStringName)[0];
-    this.infoHeightDocElement = document.getElementsByClassName(this.config.infoHeightFieldStringName)[0];
-    this.infoMinesDocElement = document.getElementsByClassName(this.config.infoMinesFieldStringName)[0];
+  _busAllOff() {
+    Bus.off('leftClickOnCell', this._clickOnCell.bind(this), 'singlePlayerView');
+    Bus.off('rightClickOnCell', this._rightСlickOnCell.bind(this), 'singlePlayerView');
+    Bus.off('settingsChangeHard', this._changeHard.bind(this), 'singlePlayerView');
+    Bus.off('showMapSinglePlayer', this._showMap.bind(this), 'singlePlayerView');
+    Bus.off('newStopwatchSinglePlayer', this._newStopWatch.bind(this), 'singlePlayerView');
+    Bus.off('stopResetTimer', this._stopResetTimer.bind(this), 'singlePlayerView');
+    Bus.off('restartSinglePlayer', this._restart.bind(this), 'singlePlayerView');
+    Bus.off('updateUserInfo', this._updateUserInfoCalback.bind(this), 'singlePlayerView');
+  }
 
-    this.playerNameDocElement = document.getElementsByClassName(this.config.playerNameFieldStringName)[0];
-    this.playerScoreDocElement = document.getElementsByClassName(this.config.playerScoreFieldStringName)[0];
-    this.playerTimeDocElement = document.getElementsByClassName(this.config.playerTimeFieldStringName)[0];
-
-    this.messageBoxDocElement = document.getElementsByClassName(this.config.messageBoxFieldStringName)[0];
-    this.messageBoxMessageDocElement = document.getElementsByClassName(this.config.messageBoxMessageFieldStringName)[0];
-    
-
-    this.timer = new Timer(document.getElementById(this.config.timerFieldStringName));
-
-    this.restartDocElement.addEventListener('click', this._restart.bind(this));
-    this.restartDocElement.innerHTML = 'Start';
-    this.infoModeDocElement.innerHTML = 'Normal mode';
-    this.difficult = 1;
-    this.minesCount = 20;   
-    this.infoMinesDocElement.innerHTML = `${this.minesCount} mines`;
-    this.infoWidthDocElement.innerHTML = `${this.cellNumbersX} width`;
-    this.infoHeightDocElement.innerHTML = `${this.cellNumbersY} height`;
-    this._showMap();
-    Bus.on('stop_reset_timer', this._stop_reset_timer.bind(this))
+  _newStopWatch() {
+    this.stopwatch = new Stopwatch('single_player__timer');
   }
 
   /** */
-  _clickOnBody(e : any) {
-    if (e.target.classList.contains(this.config.itemListFieldStringName)) {
-      this._changeHard(e);
-    } else if (e.target.classList.contains(this.config.cellStringName)) {
-      this._clickOnCell(e);
-    } else if (e.target.classList.contains(this.config.messageBoxOkButtonFieldStringName)) {
-      this._closeMessage();
-    }
-  }
-  _updateUserInfo() {
-    checkAuth(this._updateUserInfoCalback.bind(this), this.difficult)
-  }
   _updateUserInfoCalback() {
-    console.log("_updateUserInfo here");
     if (User.name) {
-      this.playerNameDocElement.innerHTML = User.name;
+      Bus.emit('userNameInGameChange', User.name);
+      Bus.emit('userPhotoInGameChange', User.avatar);
+      
       if (User.bestScore.String) {
-        this.playerScoreDocElement.innerHTML = User.bestScore.String; // получать из user
-        this.playerTimeDocElement.innerHTML = User.bestTime.String;
+        Bus.emit('userScoreInGameChange', User.bestScore.String) // получать из user
+        Bus.emit('userTimeInGameChange', User.bestScore.String);
       } else {
-        this.playerScoreDocElement.innerHTML = '-'; // получать из user
-        this.playerTimeDocElement.innerHTML = '-';
+        Bus.emit('userScoreInGameChange', 0)
+        Bus.emit('userTimeInGameChange', '0:00:00');
       }
-
       this.maxPointsCount = 0;
-      this.minTimeCount = '1:24:60:60';
+      this.minTimeCount = '1:24:60';
     } else {
-      this.playerNameDocElement.innerHTML = 'Guest';
-      this.playerScoreDocElement.innerHTML = '0';
-      this.playerTimeDocElement.innerHTML = '0:00:00:00';
+      Bus.emit('userPhotoInGameChange', '/img/flag.png');
+      Bus.emit('userNameInGameChange', 'Guest');
+      Bus.emit('userScoreInGameChange', 0)
+      Bus.emit('userTimeInGameChange', '0:00:00');
       this.maxPointsCount = 0;
-      this.minTimeCount = '1:24:60:60';
+      this.minTimeCount = '1:24:60';
     }
-    this._showMap();
   }
 
   /** */
   _showMap() {
-    this.messageBoxDocElement.hidden = true;
     this.openCellsCount = 0;
     this.pointsCount = 0;
     this.leftClicksCount = 0;
     this.rightClicksCount = 0;
-    this.prcentOpen = 0;
-    this.minesRemainedCount = this.minesCount;
+    Bus.emit('messageBoxHide', true)
+    Bus.emit('renderField', { width: this.cellNumbersX, height: this.cellNumbersY, cellSize: this.cellsize })
+    Bus.emit('statisticsResetParameters', this.minesCount)
+    Bus.emit('settingsSetParameters', { difficult: this.difficult, width: this.cellNumbersX, height: this.cellNumbersY, mines: this.minesCount })
 
     this.mineSweeper = new MineSweeper(this.cellNumbersX, this.cellNumbersY, this.minesCount);
     this.BBBVCount = this.mineSweeper.count3BV();
-    console.log('3BV = ' + this.BBBVCount);
-    this.pointsDocElement.innerHTML = `${this.pointsCount} points`;
-    this.minesDocElement.innerHTML = `${this.minesRemainedCount} mines left`;
-    this.leftClicksDocElement.innerHTML = `${this.leftClicksCount} left clicks`;
-    this.rightClicksDocElement.innerHTML = `${this.rightClicksCount} right clicks`;
-    this.percentOpenDocElement.innerHTML = `${this.prcentOpen}%`;
-    this.loadbarDocElement.style.width = '0px';
 
     if (this.start) {
-      this.timer.router();
-    }
-
-    const field = document.getElementsByClassName(this.config.mapStringName)[0];
-    if (!field) {
-      console.log('error field cannot find ' + this.config.mapStringName);
-    }
-    field.innerHTML = '';
-    field.setAttribute('class', this.config.mapStringName);
-    field.setAttribute('style', `width: ${this.cellNumbersX * this.config.cellsize}px; height: ${this.cellNumbersY * this.config.cellsize}px;`);
-    for (let y = 0; y < this.cellNumbersY; y++) {
-      for (let x = 0; x < this.cellNumbersX; x++) {
-        const cell = document.createElement('div');
-        const strClassClose = `${this.config.cellCloseStringName}_${this.mineSweeper.randomInteger(1, 3)}`;
-        cell.setAttribute('class', `${this.config.cellStringName} ${this.config.cellCloseStringName} ${strClassClose}`);
-
-        cell.setAttribute('id', `${this.config.cellStringName}_${x}_${y}`);
-        cell.setAttribute('style', `top: ${y * this.config.cellsize}px; left: ${x * this.config.cellsize}px;
-          width: ${this.config.cellsize}px; height: ${this.config.cellsize}px;`);
-        field.appendChild(cell);
-      }
+      this.stopwatch.router();
     }
     return;
   }
 
-  _stop_reset_timer(){
-    this.timer.stop();
-    this.timer.reset();
+  _stopResetTimer() {
+    this.stopwatch.stop();
+    this.stopwatch.reset();
   }
 
   /** */
   _restart() {
     if (!this.start) {
-      this.restartDocElement.innerHTML = 'Restart';
       this.start = true;
     } else {
-      if (this.timer.running) {
-        this.timer.stop();
+      if (this.stopwatch.running) {
+        this.stopwatch.stop();
       }
     }
-
+    Bus.emit('setStylesOnStartSingle');
     this._showMap();
   }
 
-
   /** */
-  _changeHard(e : any) {
-    if (e.target.classList.contains(this.config.babyFieldStringName)) {
-      this.infoModeDocElement.innerHTML = 'Baby mode';
-      this.difficult = 0;
-      this.minesCount = 10;
-      this.infoMinesDocElement.innerHTML = this.minesCount + ' mines';
-    } else if (e.target.classList.contains(this.config.normalFieldStringName)) {
-      this.infoModeDocElement.innerHTML = 'Normal mode';
-      this.difficult = 1;
-      this.minesCount = 20;
-      this.infoMinesDocElement.innerHTML = this.minesCount + ' mines';
-    } else if (e.target.classList.contains(this.config.hardFieldStringName)) {
-      this.infoModeDocElement.innerHTML = 'Hard mode';
-      this.difficult = 2;
-      this.minesCount = 30;
-      this.infoMinesDocElement.innerHTML = this.minesCount + ' mines';
-    } else if (e.target.classList.contains(this.config.godFieldStringName)) {
-      this.infoModeDocElement.innerHTML = 'God mode';
-      this.difficult = 3;
-      this.minesCount = 40;
-      this.infoMinesDocElement.innerHTML = this.minesCount + ' mines';
-    }
-    checkAuth(this._updateUserInfoCalback.bind(this), this.difficult)
-    if (this.timer.running) {
-      this.timer.stop();
-    }
+  _changeHard(hardStruct: any) {
+    Bus.emit('setStylesOnStartSingle');
+    this.difficult = hardStruct.difficult;
 
+
+    switch (this.difficult) {
+      case 0:
+        this.minesCount = 10;
+        break;
+      case 1:
+        this.minesCount = 20;
+        break;
+      case 2:
+        this.minesCount = 30;
+        break;
+      case 3:
+        this.minesCount = 40;
+        break;
+    }
+    this.cellNumbersX = 15;
+    this.cellNumbersY = 15;
+    Bus.emit('settingsChangeSize', { width: this.cellNumbersX, height: this.cellNumbersY });
+    Bus.emit('settingsChangeMinesCount', this.minesCount);
+    checkAuth(this._updateUserInfoCalback.bind(this), this.difficult)
+    if (this.stopwatch.running) {
+      this.stopwatch.stop();
+    }
     if (!this.start) {
-      this.restartDocElement.innerHTML = 'Restart';
       this.start = true;
     }
     this._showMap();
   }
 
   /** */
-  _clickOnCell(e : any) {
-    
-    if (!e.target.classList.contains(this.config.cellStringName) || !this.start) {
+  _clickOnCell(coordinatesStruct: any) {
+    if (!this.start) {
       return;
     }
-    let [,x, y] = e.target.id.split('_');
-    x = parseInt(x);
-    y = parseInt(y);
+    const x = parseInt(coordinatesStruct.x);
+    const y = parseInt(coordinatesStruct.y);
     if (this.mineSweeper.mapLabel[x][y] != 0) { // если не закрыта
       return;
     }
-    this.leftClicksDocElement.innerHTML = `${++this.leftClicksCount} left clicks`;
-    if (this.mineSweeper.map[x][y] === 9) {
-      this._openAllCels();
-      if (this.timer.running) {
-        this.timer.stop();
-      }
-      this.start = false;
-      const data = JSON.stringify({difficult: this.difficult, singleTotal: 1, singleWin: 0});
-      Bus.emit('sendResultsSingleGame', data);
-      this._showMessage('You lose!');
+    Bus.emit('leftClicksStatisticsChange', 1);
+
+    if (this._checkOnLosing(x, y)) {
       return;
     }
+
     const res = this.mineSweeper.
-        openCels(x, y, this.cellNumbersX, this.cellNumbersY);
-    console.log(res);
+      openCels(x, y, this.cellNumbersX, this.cellNumbersY);
     this._openCels(res.cellArr);
     this.openCellsCount += res.openCells;
-    this.prcentOpen = Math.round((this.openCellsCount / (this.cellNumbersX * this.cellNumbersY - this.minesCount)) * 100);
-    this.percentOpenDocElement.innerHTML = `${this.prcentOpen}%`;
-    this.loadbarDocElement.style.width = `${(this.prcentOpen / 100) * (this.config.cellsize * this.cellNumbersX - 55)}px`;
-    console.log(this.openCellsCount, ' ', this.cellNumbersX * this.cellNumbersY - this.minesCount);
-    this.pointsDocElement.innerHTML = `${this.pointsCount += res.points} points`;
+    this.pointsCount += res.points;
+    const prcentOpen = Math.round((this.openCellsCount / (this.cellNumbersX * this.cellNumbersY - this.minesCount)) * 100);
+    Bus.emit('progressGameChange', prcentOpen);
+    Bus.emit('pointsStatisticsChange', this.pointsCount);
+    this._checkOnWinning();
+    return;
+  }
 
-    if (this.openCellsCount === this.cellNumbersX * this.cellNumbersY - this.minesCount) {
+  _checkOnLosing(x: number, y: number) {
+    let loser = false;
+    if (this.mineSweeper.map[x][y] === 9) { // losing
       this._openAllCels();
-      console.log(this.timer.timeStr);
-      const timeArr = this.timer.timeStr.split(':');
+      if (this.stopwatch.running) {
+        this.stopwatch.stop();
+      }
+      this.start = false;
+      Bus.emit('sendResultsSingleGame', JSON.stringify({ difficult: this.difficult, singleTotal: 1, singleWin: 0 }));
+      Bus.emit('showTextInMessageBox', 'You lose!');
+
+      Bus.emit('rollbackStylesOnEndSingle');
+      loser = true;
+    }
+    return loser;
+  }
+
+  _checkOnWinning() {
+    let winner = false;
+    if (this.openCellsCount === this.cellNumbersX * this.cellNumbersY - this.minesCount) { // winning
+      this._openAllCels();
+      const timeArr = this.stopwatch.timeStr.split(':');
       const timeSec = parseInt(timeArr[0]) * 3600 + parseInt(timeArr[1]) * 60 + parseInt(timeArr[2]) + parseInt(timeArr[3]) / 100
-      const data = {score: this.pointsCount, time: timeSec, difficult: this.difficult, singleTotal: 1, singleWin: 1};
+      const data = { score: this.pointsCount, time: timeSec, difficult: this.difficult, singleTotal: 1, singleWin: 1 };
       Bus.emit('sendResultsSingleGame', data);
-      if (this.timer.running) {
-        this.timer.stop();
+      if (this.stopwatch.running) {
+        this.stopwatch.stop();
       }
       this.start = false;
       if (this.maxPointsCount < this.pointsCount) {
         this.maxPointsCount = this.pointsCount;
-        this.playerScoreDocElement.innerHTML = this.pointsCount.toString();
+        Bus.emit('userScoreInGameChange', this.pointsCount)
       }
-      if (this.minTimeCount > this.timer.timeStr) {
-        this.minTimeCount = this.timer.timeStr;
-        this.playerTimeDocElement.innerHTML = this.minTimeCount;
+      if (this.minTimeCount > this.stopwatch.timeStr) {
+        this.minTimeCount = this.stopwatch.timeStr;
+        Bus.emit('userTimeInGameChange', this.minTimeCount.toString());
       }
-      this._showMessage('You win!');
+      Bus.emit('showTextInMessageBox', 'You win!');
+      Bus.emit('rollbackStylesOnEndSingle');
+      winner = true;
     }
-    return;
+    return winner;
   }
 
   /** */
-  _rightСlickOnCell(e : any) {
-    if (!e.target.classList.contains(this.config.cellStringName) || !this.start) {
+  _rightСlickOnCell(coordinatesStruct: any) {
+    if (!this.start) {
       return;
     }
-    const [,x, y] = e.target.id.split('_');
-    const typeOfCell = this.mineSweeper.putRemoveFlag(x, y);
+    const x = parseInt(coordinatesStruct.x);
+    const y = parseInt(coordinatesStruct.y);
+    const typeOfCell = this.mineSweeper.putRemoveFlag(x, y); // 0 - закрыта; 1 - открыта; 2 - флаг
     if (typeOfCell == 1) {
       return;
     }
-
-    this.rightClicksDocElement.innerHTML = `${++this.rightClicksCount} right clicks`;
+    Bus.emit('rightClicksStatisticsChange', 1);
     if (typeOfCell == 0) {
-      if (this.minesRemainedCount < this.minesCount) {
-        ++this.minesRemainedCount;
-        if (this.minesRemainedCount < 0) {
-          this.minesDocElement.innerHTML = '0 mines left';
-        } else {
-          this.minesDocElement.innerHTML = `${this.minesRemainedCount} mines left`;
-        }
-      }
-      if (e.target.classList.length < 3) {
-        console.log('error e.target.classList.length < 3');
-        return;
-      }
-      const classElems = e.target.classList[2].split('_');
-      const numClassElem = parseInt(classElems[2]);
-      e.target.className = `${this.config.cellStringName} ${this.config.cellCloseStringName} ${this.config.cellCloseStringName}_${numClassElem}`;
+      Bus.emit('minesStatisticsChange', 1);
+      Bus.emit('setUnsetFlagOnCell', { x: x, y: y, type: 'closing' });
       return;
     }
 
     if (typeOfCell == 2) {
-      --this.minesRemainedCount;
-      if (this.minesRemainedCount < 0) {
-        this.minesDocElement.innerHTML = '0 mines left';
-      } else {
-        this.minesDocElement.innerHTML = `${this.minesRemainedCount} mines left`;
-      }
-      if (e.target.classList.length < 3) {
-        console.log('error e.target.classList.length < 3');
-        return;
-      }
-      const classElems = e.target.classList[2].split('_');
-      const numClassElem = parseInt(classElems[2]);
-      e.target.className = `${this.config.cellStringName} ${this.config.cellFlagStringName} ${this.config.cellFlagStringName}_${numClassElem}`;
+      Bus.emit('minesStatisticsChange', -1);
+      Bus.emit('setUnsetFlagOnCell', { x: x, y: y, type: 'flag' });
     }
     return;
   }
 
   /** */
-  _showMessage(mess : string) {
-    this.messageBoxDocElement.hidden = false;
-    this.messageBoxMessageDocElement.innerHTML = mess;
-  }
-
-  _closeMessage() {
-    this.messageBoxDocElement.hidden = true;
-  }
-
-  /** */
-  _openCels(arrCells : any) {
+  _openCels(arrCells: any) {
     for (let i = 0; i < arrCells.length; i++) {
       const x = arrCells[i][0];
       const y = arrCells[i][1];
-      const cell = document.
-          getElementById(`${this.config.cellStringName}_${x}_${y}`);
-      if (!cell) {
-        console.log('error _openCels cannot find ' +
-        `${this.config.cellStringName}_${x}_${y}`);
-      }
-      cell.className = `${this.config.cellStringName} ${this.config.cellOpenStringName} ${this.config.cellOpenStringName}` + this.mineSweeper.map[x][y].toString();
+      Bus.emit('openCell', { x: x, y: y, type: this.mineSweeper.map[x][y] });
     }
   }
 
@@ -381,16 +288,10 @@ export default class SinglePlayerView extends BaseView {
   _openAllCels() {
     for (let y = 0; y < this.cellNumbersY; y++) {
       for (let x = 0; x < this.cellNumbersX; x++) {
-        const cell = document.getElementById(`${this.config.cellStringName}_${x}_${y}`);
-        if (!cell) {
-          console.log('error _openAllCels cannot find ' + `${this.config.cellStringName}_${x}_${y}`);
-        }
-        cell.className = `${this.config.cellStringName} ${this.config.cellOpenStringName} ${this.config.cellOpenStringName}` + this.mineSweeper.map[x][y].toString();
+        Bus.emit('openCell', { x: x, y: y, type: this.mineSweeper.map[x][y] });
       }
     }
-    this.prcentOpen = 100;
-    this.percentOpenDocElement.innerHTML = `${this.prcentOpen}%`;
-    this.loadbarDocElement.style.width = `${(this.prcentOpen / 100) * (this.config.cellsize * this.cellNumbersX - 55)}px`;
+    Bus.emit('progressGameChange', 100);
     return;
   }
 }

@@ -1,27 +1,19 @@
 import bus from './bus';
 
-/**
- *
- */
+
 export default class Router {
   routes: any;
   currentView: any;
   root: any;
-  /**
-   * @param {*} root
-   */
+
   constructor(root: any) {
     this.routes = {};
     this.currentView = null;
     this.root = root;
   }
 
-  /**
-   * @param {string} path
-   * @param {BaseView} View
-   * @return {*} this
-   */
-  register(path: string, View: typeof import("../views/MainMenuView/MainMenu").MainMenuView) {
+
+  register(path: string, View: typeof import("../views/BaseView").default) {
     this.routes[path] = {
       View: View,
       view: null,
@@ -35,14 +27,14 @@ export default class Router {
    * @param {string} path
    */
   open(path: string) {
-    bus.emit('stop_reset_timer', '')
+    bus.emit('currentPath', path);
     const route = this.routes[path];
     if (!route) {
       this.open('/');
       return;
     }
 
-    let {View, view, el} = route;
+    let { View, view, el } = route;
 
     if (!el) {
       el = document.createElement('section');
@@ -67,7 +59,7 @@ export default class Router {
     this.currentView = view;
 
     if (!view.active) {
-      Object.values(this.routes).forEach(function({view}) {
+      Object.values(this.routes).forEach(function ({ view }) {
         if (view && view.active) {
           view.hide();
         }
@@ -78,20 +70,17 @@ export default class Router {
 
     if (window.location.pathname !== path) {
       window.history.pushState(
-          null,
-          '',
-          path
+        null,
+        '',
+        path
       );
     }
 
-    this.routes[path] = {View, view, el};
+    this.routes[path] = { View, view, el };
   }
 
-  /**
-   *
-   */
   start() {
-    this.root.addEventListener('click', function(event: { target: { classList: { contains: (arg0: string) => void; }; }; preventDefault: () => void; }) {
+    this.root.addEventListener('click', function (event: { target: { classList: { contains: (arg0: string) => void; }; }; preventDefault: () => void; }) {
       if (!(event.target instanceof HTMLAnchorElement) ||
         event.target.classList.contains('team__a')) {
         return;
@@ -110,9 +99,9 @@ export default class Router {
       this.open(link.pathname);
     }.bind(this));
 
-    window.addEventListener('popstate', function() {
+    window.addEventListener('popstate', function () {
       const currentPath = window.location.pathname;
-
+      
       this.open(currentPath);
     }.bind(this));
 

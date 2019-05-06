@@ -1,0 +1,230 @@
+const lobbyTemplate = require('./Lobby.pug');
+const lobbyTemplateFreeRoom = require('./LobbyFreeRoom.pug');
+const lobbyTemplateBusyRoom = require('./LobbyBusyRoom.pug');
+import { User } from '../../utils/user';
+import BaseView from '../BaseView';
+import Bus from '../../utils/bus';
+
+/**
+ *
+ */
+export default class Lobby {
+  currentRoomId: number;
+  currentRoomName: string;
+  roomsHTML: any[];
+  rooms: any[];
+  busyRooms: any[];
+  createRoomButton: any;
+  leaveRoomButton: any;
+  roomStatusField: any;
+  roomImagesField: any;
+  currentRoomPanel: any;
+  paginatorPanel: any;
+  freeRoomContainer: any;
+  busyRoomContainer: any;
+  roomNotFoundPanel: any;
+  /**
+   *
+   * @param {*} parent
+   */
+  constructor() {
+    this._addListeners();
+  }
+
+  /** */
+  _addListeners() {
+    this.currentRoomId = -1;
+    this.currentRoomName = '';
+    this.roomsHTML = [];
+    this.rooms = [];
+    this.busyRooms = [];
+  
+    Bus.on('updateCurrentRoom', this._updateCurrentRoom.bind(this), 'lobbyView');
+    Bus.on('createRoomEvent', this._createRoomEvent.bind(this), 'lobbyView');
+    Bus.on('leaveRoomEvent', this._leaveRoom.bind(this), 'lobbyView');
+    Bus.on('clickOnFreeRoom', this._clickOnFreeRoom.bind(this), 'lobbyView');
+    
+    Bus.on('updateRooms', this._updateRooms.bind(this), 'lobbyView');
+    Bus.on('addRoom', this._addRoom.bind(this), 'lobbyView');
+    Bus.on('updateRoom', this._updateRoom.bind(this), 'lobbyView');
+    Bus.on('deleteRoom', this._deleteRoom.bind(this), 'lobbyView');
+
+  }
+
+  _updateCurrentRoom(data : any) {
+    this.currentRoomName = data.name;
+    Bus.emit('showCurrentRoomPanel', data);
+  }
+
+  _createRoomEvent() {
+    this.currentRoomId = -2;
+    Bus.emit('createRoom');
+  }
+
+  _leaveRoom() {
+    console.log('_leaveRoom')
+    Bus.emit('hideCurrentRoomPanel');
+    this.currentRoomId = -1;
+    this.currentRoomName = '';
+    Bus.emit('leaveRoom', 14);
+  }
+
+
+  _addRoom(data : any) {
+    Bus.emit('hideNotFoundRoomPanel');
+    Bus.emit('showPaginatorPanel');
+    const room = {name : data.name, playersCount : data.players.connections.length,
+      playersCapacity : data.players.capacity, difficult : this._getModeByMines(data.field.Mines),
+      width : data.field.width, height : data.field.height, mines : data.field.Mines, time : '0:00:00',
+      observersCount : data.observers.get.length, status : this._getStatusByCode(data.status)}
+    
+    if (data.status === 3) {   // busy room
+      this.busyRooms.push(data);
+      Bus.emit('addBusyRoomView', room);
+    } else {
+      this.rooms.push(data);
+      Bus.emit('addFreeRoomView', room);
+    }
+
+    if (this.currentRoomId === -2) { 
+      this.currentRoomId = this.rooms.length - 1;
+      Bus.emit('changeRoomStringColor',{type : 'free', id : this.currentRoomId, typeColor : 1})
+      const info = {name : this.rooms[this.currentRoomId].name, length : this.rooms[this.currentRoomId].players.connections.length,
+        capacity : this.rooms[this.currentRoomId].players.capacity}
+      this._updateCurrentRoom(info);
+    }
+  }
+
+  _updateRoom(data : any) {
+    if (data.status === 3) {
+      for (let i = 0; i < this.busyRooms.length; i++) {
+        if (this.busyRooms[i].id === data.id) {
+          Bus.emit('updateRoomRow', {type : 'busy', data : data, num : i});
+          break;
+        }
+      }
+    } else {
+      for (let i = 0; i < this.rooms.length; i++) {
+        if (this.rooms[i].id === data.id) {
+          Bus.emit('updateRoomRow', {type : 'free', data : data, num : i});
+          break;
+        }
+      }
+    }
+  }
+
+  _deleteRoom(data : any) {
+    if (data.status === 3) {
+      for (let i = 0; i < this.busyRooms.length; i++) {
+        if (this.busyRooms[i].id === data) {
+          Bus.emit('deleteRoomRow', {type : 'busy', num : i});
+          this.busyRooms.splice(i, 1);
+          break;
+        }
+      } 
+    } else {
+      for (let i = 0; i < this.rooms.length; i++) {
+        if (this.rooms[i].id === data) {
+          Bus.emit('deleteRoomRow', {type : 'free', num : i});
+          this.rooms.splice(i, 1);
+          break;
+        }
+      }
+    }
+    if (this.rooms.length === 0 && this.busyRooms.length === 0) { // not found rooms
+      Bus.emit('showNotFoundRoomPanel');
+      Bus.emit('hidePaginatorPanel');
+    }
+  }
+
+  _updateRooms(data : any) {
+    console.log('_updateRooms')
+    this.currentRoomId = -1;
+    this.rooms = []
+    this.busyRooms = []
+  
+    Bus.emit('clearAllRoomsPanels');
+    Bus.emit('showPaginatorPanel');
+    Bus.emit('hideCurrentRoomPanel');
+    Bus.emit('hideNotFoundRoomPanel');
+    
+    if (data.allRooms.get.length === 0) { // not found rooms
+      Bus.emit('showNotFoundRoomPanel');
+      Bus.emit('hidePaginatorPanel');
+    }
+
+    data.allRooms.get.forEach((item : any, i : number) => {
+      const room = {name : item.name, playersCount : item.players.connections.length,
+        playersCapacity : item.players.capacity, difficult : this._getModeByMines(item.field.Mines),
+        width : item.field.width, height : item.field.height, mines : item.field.Mines, time : '0:00:00',
+        observersCount : item.observers.get.length, status : this._getStatusByCode(item.status)}
+      
+      if (item.status === 3 || item.status === 2) {   // busy room
+        this.busyRooms.push(item);
+        Bus.emit('addBusyRoomView', room);
+      } else {
+        this.rooms.push(item);
+        Bus.emit('addFreeRoomView', room);
+      }
+      
+    });
+  }
+
+  _clickOnFreeRoom({type = 'free', num = 0}) {
+    if (this.currentRoomId >= 0) {
+      Bus.emit('changeRoomStringColor',{type : 'free', id : this.currentRoomId, typeColor : 0})
+    }
+
+    if (type === 'busy') { 
+      Bus.emit('changeRoomStringColor',{type : 'busy', id : num, typeColor : 2})
+      Bus.emit('connectToRoom', this.busyRooms[num].id)
+    } else if (type === 'free'){
+      this.currentRoomId = num;
+      Bus.emit('changeRoomStringColor',{type : 'free', id : this.currentRoomId, typeColor : 1})
+      const info = {name : this.rooms[this.currentRoomId].name, length : this.rooms[this.currentRoomId].players.connections.length,
+        capacity : this.rooms[this.currentRoomId].players.capacity}
+      this._updateCurrentRoom(info);
+      Bus.emit('connectToRoom', this.rooms[this.currentRoomId].id)
+    }
+    
+  }
+
+  _getModeByMines(mines : number) {
+    let mode : string;
+    switch(mines) {
+      case 20 :
+        mode = 'Baby';
+        break;
+      case 30 :
+        mode = 'Normal';
+        break;
+      case 45 :
+        mode = 'Hard';
+        break;
+      case 60 :
+        mode = 'God';
+        break;
+    }
+    return mode;
+  }
+
+  _getStatusByCode(code : number) {
+    let status : string;
+    switch(code) {
+      case 0 :
+        status = 'free';
+        break;
+      case 2 :
+        status = 'flag placing';
+        break;
+      case 3 :
+        status = 'running';
+        break;
+      case 4 :
+        status = 'finished';
+        break;
+    }
+    return status;
+  }
+
+}

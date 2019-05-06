@@ -1,0 +1,205 @@
+.profile {
+  display: flex;
+  justify-content: center;
+  height: 100vh;
+  background: $escapade-gradient;
+
+
+  &__main{
+    justify-content: center;
+    display: flex;
+    align-items: center;
+    flex-direction: column
+  }
+
+  &__info{
+    display: flex;
+    justify-content: space-around;
+    align-items: flex-end;
+  }
+
+  &__row_score{
+    display: flex;
+    justify-content: space-evenly
+  }
+
+  &__games{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between
+  }
+
+  &__game{
+    background: #46535E;
+    border-radius: 15px;
+    display: flex;
+    padding: 6px 15px;
+    align-items: center
+  }
+
+  &__avatar{
+    display: flex;
+    flex-direction: column;
+    justify-content:space-between ;
+    align-items: center;
+    position: relative;
+  }
+
+  &__data{
+    display: flex;
+    flex-direction: column;
+  }
+
+  &__default_avatar{
+    width: 290px;
+    height: 290px;
+    background: url('./img/user.png') no-repeat;
+    background-size: contain;
+    background-position: center;
+  }
+
+  &__hrefBackToMenu {
+    width: 108px;
+    height: 106px;
+    background: url('./img/flag-right.png') no-repeat;
+    transform: matrix(-1, 0, 0, 1, 0, 0);
+    background-size: contain;
+    align-self: flex-start
+  }
+  
+  &__hrefToChange {
+    width: 90px;
+    height: 90px;
+    background: url('./img/edit-profile.png') #46535E no-repeat;
+    background-size: contain;
+    align-self: center;
+    border-radius: 50%;
+  }
+  
+  @media screen and (max-width: $tablet) {
+  
+    &__info{
+      flex-direction: column;
+      align-items: center
+    }
+  
+    &__main{
+      justify-content: space-evenly;
+    }
+  
+    &__games{
+      display: none;
+    }
+  
+    &__input{
+      font-size: calc(1rem + 1.5vw);
+    }
+  
+    .games{
+      display: none;
+    }
+  }
+  
+  @media screen and (min-width: $tablet) and (max-width: $small) {
+  
+    &__info{
+      flex-direction: column;
+      align-items: center
+    }
+  
+    &__main{
+      justify-content: space-evenly;
+    }
+  
+    &__games{
+      display: none;
+    }
+  
+    &__input{
+      font-size: calc(1rem + 1.5vw);
+    }
+  
+    .games{
+      display: none;
+    }
+  }
+  
+  
+  /* Statistics Footer */
+  
+  
+  &__flag_left{
+    width: 40px;
+    height: 36px;
+    background: url('./img/flag-right.png') no-repeat;
+    transform: matrix(-1, 0, 0, 1, 0, 0);
+    background-size: contain;
+  }
+  
+  &__star{
+    width: 40px;
+    height: 36px;
+    background: url('./img/star-q.png') no-repeat;
+    background-size: contain;
+  }
+  
+  &__bomb{
+    width: 40px;
+    height: 36px;
+    background: url('./img/bomb1.png') no-repeat;
+    background-size: contain;
+    background-position: center;
+  }
+  
+  &__clock{
+    width: 40px;
+    height: 36px;
+    background: url('./img/clock.png') no-repeat;
+    background-size: contain;
+    background-position: center;
+  }
+  
+  &__click_left{
+    width: 40px;
+    height: 36px;
+    background: url('./img/left-click.png') no-repeat;
+    background-size: contain;
+    background-position: center;
+  }
+  
+  &__click_right{
+    width: 35px;
+    height: 36px;
+    background: url('./img/right-click.png') no-repeat;
+    background-size: contain;
+    background-position: center;
+  }
+}
+
+.thumb {
+  display: inline-block;
+  width:290px;
+  height:290px;
+  padding: 5px 10px;
+  text-align: center;
+  border-radius: 50%
+}
+
+input[type="file"] {
+  display: none;
+}
+
+.custom-file-upload {
+  display: inline-block;
+  cursor: pointer;
+  position: absolute;
+  width: 40px;
+  height: 50px;
+  top: 15px;
+  left: 220px;
+  z-index: 50;
+  border-radius: 50%;
+  background: url('./img/upload-avatar.png') #46535E no-repeat;
+  background-size: contain;
+  background-position: center;
+}

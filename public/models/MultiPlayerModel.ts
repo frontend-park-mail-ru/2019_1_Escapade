@@ -6,68 +6,59 @@ import {WebSocketInterface} from '../utils/webSocket';
 export default class MultiplayerModel {
   ws: WebSocketInterface;
   rooms: any;
+  wsAdress: string;
   /**
    *
    */
   constructor() {
-    Bus.on('connect', this._connect.bind(this));
-    Bus.on('get_rooms', this._getRooms.bind(this));
-    Bus.on('send_info', this._sendInfo.bind(this));
-    Bus.on('send_cell_coord', this._sendCell.bind(this));
-  }
+    Bus.on('getInfoFromWS', this._getInfo.bind(this), 'multiPlayerModel');
+    Bus.on('getWS', this._getWS.bind(this), 'multiPlayerModel');
+    Bus.on('sendCellWS', this._sendCell.bind(this), 'multiPlayerModel');
+ }
 
-  /**
-   * _connect
-   */
-  _connect() {
-    this.ws = new WebSocketInterface('ws://localhost:3001/ws');
-  }
-
-  /**
-   * _get_rooms
-   */
-  _getRooms() {
-    this.ws.setCallback(this._getRoomsCallBack.bind(this));
-  }
-
-  /**
-   * _getRoomsCallBack
-   */
-  _getRoomsCallBack(data: string) {
-    this.rooms = JSON.parse(data);
-    console.log(this.rooms);
+  _getWS(data : any) {
+    this.ws = data;
   }
 
   /**
    * _sendInfo
    */
-  _sendInfo() { // Вступить в комнату
-    const roomSettingsData = {name: 'Hey', width: 20, height: 20, players: 2, mines: 50};
-    const roomSettings = {roomSettings: roomSettingsData};
-    const data = JSON.stringify({send: roomSettings});
-
-    console.log(data);
-    
-    this.ws.sendMessage(data);
-  }
-
-  /**
-   * _sendInfo
-   */
-  _sendCell(cellCoord: { xCell: any; yCell: any; }) {
-    const cellCoordData = {x: cellCoord.xCell, y: cellCoord.yCell};
-    const data = JSON.stringify({cell: cellCoordData});
-
-    console.log(data);
-    
-    this.ws.sendMessage(data);
+  _sendCell(data : any) {
+    const sendInfo = {send : { cell : { x : data.x, y : data.y}}};
+    console.log(sendInfo);
+    this.ws.sendInfoJSON(sendInfo);
   }
 
 
   /**
    * _getInfo
    */
-  _getInfo() {
-    // JSON.stringify({"email": "hey@mail.com", "password": "101010"});
+  _getInfo(data : any) {
+    console.log('_getInfo begin ', data) 
+    switch(data.type) {
+      case 'RoomNewCells' :
+        Bus.emit('updateFieldWS', data);
+        break;
+      case 'RoomPlayerPoints' :
+        Bus.emit('updatePointsWS', data);
+        break;
+      case 'RoomGameOver' :
+        Bus.emit('gameOwerWS', data);
+        break;
+      case 'RoomAction' :
+        Bus.emit('roomActionWS', data);
+        break;
+      case 'ChangeFlagSet':
+        Bus.emit('changeFlagSetWS', data);
+        break;
+      case 'RoomObserverEnter':
+        Bus.emit('roomObserverEnterWS', data);
+        break;
+      case 'RoomObserverExit':
+        Bus.emit('roomObserverExitWS', data);
+        break;
+        
+    }
+    console.log('_getInfo end') 
   }
 }

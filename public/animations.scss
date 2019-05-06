@@ -1,0 +1,23 @@
+@keyframes fade-out {
+  from {opacity: 0;}
+  to {opacity: 100;}
+}
+
+@keyframes from-left {
+  from {
+    transform: translate(-100vw, 0)
+  }
+  to {transform: translate(0, 0)}
+}
+
+@keyframes go-left {
+  from {
+    transform: scale(-1, 1) translate(0, 0)
+  }
+
+  50% {
+    transform: scale(-1, 1) translate(20px, 0)
+  }
+  to {transform:scale(-1, 1) translate(0, 0)}
+}
+
