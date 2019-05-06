@@ -64,7 +64,7 @@ export default class LobbyModel {
     console.log('_getInfo begin ', data) 
     switch(data.type) {
       case 'Lobby' :
-        Bus.emit('updateRooms', data.value);
+        Bus.emit('updateRooms', data.value.lobby);
         break;
       case 'LobbyRoomCreate' :
         Bus.emit('addRoom', data.value);

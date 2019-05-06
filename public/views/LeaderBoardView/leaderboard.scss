@@ -7,7 +7,7 @@
   background: $escapade-gradient;
 
   &__back{
-    background: url('/img/flag-right.png');
+    background: url('./img/flag-right.png');
     background-repeat: no-repeat;
     background-size: cover;
     height: 160px;
@@ -16,7 +16,7 @@
     cursor: pointer;
   }
 
-  @media screen and (max-width: $tablet) {
+  @media screen and (max-width: $small) {
     &__back{
       height: 120px;
       width: 120px;
@@ -32,7 +32,7 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    background: url('/img/field.jpg');
+    background: url('./img/field.jpg');
     background-repeat: no-repeat;
     background-size: cover;
     border: 11px solid #46535E;
@@ -196,7 +196,7 @@
     font-weight: bold;
 
     &_left{
-      background: url('/img/flag-right.png');
+      background: url('./img/flag-right.png');
       background-repeat: no-repeat;
       background-size: cover;
       height: 60px;
@@ -206,7 +206,7 @@
     }
 
     &_right{
-      background: url('/img/flag-right.png');
+      background: url('./img/flag-right.png');
       background-repeat: no-repeat;
       background-size: cover;
       height: 60px;

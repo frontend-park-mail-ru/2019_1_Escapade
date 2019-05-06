@@ -18,6 +18,7 @@ export default class SinglePlayerView extends BaseView {
   controlButtons: any;
   timerContainer: any;
   fieldContainer: any;
+  statisticsPanel: any;
   /**
    *
    * @param {*} parent
@@ -53,7 +54,9 @@ export default class SinglePlayerView extends BaseView {
     Bus.emit('busAllOffSinglePlayer');
     Bus.emit('busAllOnSinglePlayer');
     Bus.emit('newStopwatchSinglePlayer');
-    Bus.emit('showMapSinglePlayer');;
+    Bus.emit('showMapSinglePlayer');
+    Bus.emit('updateUserInfo');
+
     this.curPath = '/single_player';
   }
 
@@ -63,11 +66,13 @@ export default class SinglePlayerView extends BaseView {
       console.log('_currentPathSignalFunc single_player');
       Bus.emit('busAllOnSinglePlayer');
       Bus.emit('showMapSinglePlayer');
+      Bus.emit('updateUserInfo');
       this.curPath = path;
     } else {
       if (this.curPath === '/single_player') {
         console.log('_currentPathSignalFunc not single_player');
         Bus.emit('stopResetTimer');
+
         this.curPath = '';
         Bus.emit('busAllOffSinglePlayer');
       }
@@ -81,10 +86,10 @@ export default class SinglePlayerView extends BaseView {
   _setStylesOnStart() {
     const width = screen.width;
     this.settings.style.display = 'none';
-    //this.playerInfo.style.display = 'none';
     this.progressBar.style.display = 'flex';
 
     if (width <= 440) {
+      this.playerInfo.style.display = 'none';
       this.controlButtons.style.transform = "translateY(-350px)"
       this.timerContainer.style.transform = "translateY(-350px)"
       this.fieldContainer.style.transform = "translateY(150px)"
@@ -94,10 +99,10 @@ export default class SinglePlayerView extends BaseView {
   _rollbackStylesOnEnd() {
     const width = screen.width;
     this.settings.style.display = 'flex';
-    //this.playerInfo.style.display = 'flex';
     this.progressBar.style.display = 'none';
 
     if (width <= 440) {
+      this.playerInfo.style.display = 'flex';
       this.controlButtons.style.transform = "translateY(0)"
       this.timerContainer.style.transform = "translateY(0)"
       this.fieldContainer.style.transform = "translateY(0)"
@@ -112,5 +117,7 @@ export default class SinglePlayerView extends BaseView {
     this.controlButtons = this.parent.querySelector('.game__right_menu_buttons')
     this.timerContainer = this.parent.querySelector('.single_player__timer')
     this.fieldContainer = this.parent.querySelector('.single_player__wrapper')
+    this.statisticsPanel = document.querySelector('.single_player__statistics')
+    
   }
 }
