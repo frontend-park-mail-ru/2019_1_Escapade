@@ -92,17 +92,17 @@ export default class SinglePlayer {
         Bus.emit('userTimeInGameChange', User.bestScore.String);
       } else {
         Bus.emit('userScoreInGameChange', 0)
-        Bus.emit('userTimeInGameChange', '0:00:00:00');
+        Bus.emit('userTimeInGameChange', '0:00:00');
       }
       this.maxPointsCount = 0;
-      this.minTimeCount = '1:24:60:60';
+      this.minTimeCount = '1:24:60';
     } else {
       Bus.emit('userPhotoInGameChange', '/img/flag.png');
       Bus.emit('userNameInGameChange', 'Guest');
       Bus.emit('userScoreInGameChange', 0)
-      Bus.emit('userTimeInGameChange', '0:00:00:00');
+      Bus.emit('userTimeInGameChange', '0:00:00');
       this.maxPointsCount = 0;
-      this.minTimeCount = '1:24:60:60';
+      this.minTimeCount = '1:24:60';
     }
   }
 
