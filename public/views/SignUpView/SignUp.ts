@@ -1,4 +1,4 @@
-import signUpTemplate from './SignUp.pug';
+const signUpTemplate = require('./SignUp.pug');
 import { validateEmail, validatePass, validateLogin, makeSafe }
   from '../../utils/validation';
 import { User } from '../../utils/user';
@@ -18,14 +18,15 @@ export default class SignUpView extends BaseView {
   constructor(parent: HTMLElement) {
     super(parent, signUpTemplate, false);
 
-    Bus.on('onSuccessAuth', (usr : any) => {
+    Bus.on('onSuccessAuth', (usr: any) => {
+      console.log('signUp ' + usr);
       User.setUser({ ...usr });
       Bus.emit('userUpdate');
       router.open('/profile');
-    });
-    Bus.on('onFailedAuth', (error : any) => {
+    }, 'signupView');
+    Bus.on('onFailedAuth', (error: any) => {
       this._showWarning(this._warnings.email, error.message);
-    });
+    }, 'signupView');
   }
 
   /**
@@ -38,9 +39,9 @@ export default class SignUpView extends BaseView {
     this._warnings.login = this.parent.querySelector('.js-warning-login');
     this._warnings.pass = this.parent.querySelector('.js-warning-password');
     this._warnings.repass = this.parent.querySelector('.js-warning-repassword');
-    this._form = this.parent.querySelector('.profile_edit__form');
+    this._form = this.parent.querySelector('.signup__form');
 
-    this._submitButton = this.parent.querySelector('.signup_edit__confirm');
+    this._submitButton = this.parent.querySelector('.signup__confirm');
 
     this._submitButton.addEventListener('click', this._onSubmit.bind(this));
   }
@@ -49,10 +50,10 @@ export default class SignUpView extends BaseView {
    * Действие при сабмите формы логина
    * @param {Event} event
    */
-  _onSubmit(event : any) {
+  _onSubmit(event: any) {
     console.log('event');
     event.preventDefault();
-    const data = {};
+    const data: any = {};
     data.email = this._form.elements['email'].value;
     data.name = this._form.elements['login'].value;
     data.password = this._form.elements['password'].value;
@@ -110,7 +111,7 @@ export default class SignUpView extends BaseView {
    * @param {HTMLElement} warning
    * @param {String} message
    */
-  _showWarning(warning : any, message : string) {
+  _showWarning(warning: any, message: string) {
     warning.classList.remove('hidden');
     warning.innerHTML = '';
     warning.innerHTML += message;
@@ -120,7 +121,7 @@ export default class SignUpView extends BaseView {
    * Скрыть предупреждение валидации
    * @param {*} warning
    */
-  _hideWarning(warning : any) {
+  _hideWarning(warning: any) {
     warning.classList.add('hidden');
     warning.innerHTML = '';
   }

@@ -1,5 +1,7 @@
 //const backHost = 'https://escapade-backend.herokuapp.com';
 const backHost = 'http://localhost:3001';
+//const backHost = 'http://3.120.191.110';
+
 
 /** */
 export class Net {
@@ -9,7 +11,7 @@ export class Net {
    * @param {object} body
    * @return {Promise<Response>}
    */
-  static post({host = backHost, url = '/', body = {}} = {}) {
+  static post(body: object, url = '/', host = backHost) {
     return fetch(host + url, {
       method: 'POST',
       body: JSON.stringify(body),
@@ -27,7 +29,7 @@ export class Net {
     * @param {object} body
     * @return {Promise<Response>}
     */
-  static put({host = backHost, url = '/', body = {}} = {}) {
+  static put(body: object, url = '/', host = backHost) {
     return fetch(host + url, {
       method: 'PUT',
       body: JSON.stringify(body),
@@ -45,7 +47,7 @@ export class Net {
    * @param {object} body
    * @return {Promise<Response>}
    */
-  static postPhoto({host = backHost, url = '/', body = {}} = {}) {
+  static postPhoto(body: FormData, url = '/avatar', host = backHost) {
     return fetch(host + url, {
       method: 'POST',
       body: body,
@@ -59,7 +61,7 @@ export class Net {
    * @param {string} url
    * @return {Promise<Response>}
    */
-  static get({host = backHost, url = '/'} = {}) {
+  static get(url = '/', host = backHost) {
     return fetch(host + url, {
       method: 'GET',
       mode: 'cors',
@@ -72,7 +74,7 @@ export class Net {
    * @param {string} url
    * @return {Promise<Response>}
    */
-  static delete({host = backHost, url = '/'} = {}) {
+  static delete(url = '/', host = backHost) {
     return fetch(host + url, {
       method: 'DELETE',
       mode: 'cors',

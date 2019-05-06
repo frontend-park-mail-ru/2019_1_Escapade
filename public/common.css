@@ -14,9 +14,20 @@
 .text-red{
   color: #FF0C0C;
 }
+.bc_winner_num{
+  background-color: #FF3D00;
+}
+
+.bc_winner_row{
+  background-color: rgba(255, 61, 0, 0.5);
+}
 
 .bg-white{
   background: white
+}
+
+.brd-color-esc{
+  border-color: #46535E
 }
 
 

@@ -1,0 +1,107 @@
+
+.single_player{
+
+  &__settings {
+    display:flex;
+    margin-top: 15px;
+    align-items: center;
+    justify-content: center;
+  } 
+
+  &__settings_img{
+    width: 70px;
+    height: 70px;
+    background: url('/img/settings2.png') no-repeat;
+    background-size: cover;
+    float: left;
+    -webkit-transition: -webkit-transform .8s ease-in-out;
+    transition:         transform .8s ease-in-out;
+  }
+
+  &__settings_img:hover {
+    -webkit-transform: rotate(180deg);
+            transform: rotate(180deg);
+  }
+
+
+  ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  &__topmenu:after {
+    content: "";
+    display: table;
+    clear: both;
+  }
+  &__topmenu > li {
+    width: 25%;
+    float: left;
+    position: relative;
+  }
+
+  &__submenu {
+    background: #4B5E70;
+    position: absolute;
+    left: 0;
+    top: 100%;
+    border-radius: 15px;
+    z-index: 5;
+    width: 100px;
+    opacity: 0;
+    transform: scaleY(0);
+    transform-origin: 0 0;
+    transition: .5s ease-in-out;
+  }
+  &__submenu {
+    
+    text-align: left;
+    font-size: 20px;
+    border-bottom: 1px solid rgba(255,255,255,.1);
+    text-decoration: none;
+    outline: none;
+    display: block;
+  }
+
+  &__settings_list:hover &__submenu {
+    opacity: 1;
+    transform: scaleY(1) translateY(-150%);
+  }
+
+  &__submenu_item {
+    color: white;
+    margin: 10px;
+  }
+
+  &__submenu_item:hover {
+    color: #D5B45B;
+  }
+
+
+  &__settings_info{
+    margin-left: 10px;
+    color:black;
+    background: white;
+    font-size: 20px;
+    border: 1px solid #000000;
+    border-radius: 15px;
+    padding: 8px 20px;
+  }
+
+  @media screen and (max-width:$tablet){
+
+    &__settings_info{
+      padding: 6px 12px;
+    }
+    &__settings_img{
+      width:50px;
+      height: 50px;
+    }
+    &__settings_info_width{
+      display: none;
+    }
+    &__settings_info_height{
+      display: none;
+    }
+  }
+}

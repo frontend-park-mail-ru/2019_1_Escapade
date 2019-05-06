@@ -1,4 +1,4 @@
-import leaderBoardTemplate from './LeaderBoard.pug';
+const leaderBoardTemplate = require('./LeaderBoard.pug');
 import BaseView from '../BaseView';
 import Bus from '../../utils/bus';
 
@@ -20,26 +20,19 @@ export default class LeaderBoardView extends BaseView {
     super(parent, leaderBoardTemplate, false);
     this._currPage = 1;
 
-    Bus.on('respPagesAmount', this._initBoard.bind(this));
+    Bus.on('respPagesAmount', this._initBoard.bind(this), 'leaderBoardView');
   }
 
   /**
    * Отрисовка лидербода и получение необходимой информации с бэкэнда
   */
   _getPageAmount() {
-    let devWidth = screen.width;
-    let devHeight = screen.height * 0.9;
-    //   if (window.matchMedia("(orientation: portrait)").matches) {
-    //     // you're in PORTRAIT mode
-    //  }
-
-    if (window.matchMedia('(orientation: landscape)').matches) {
-      [devWidth, devHeight] = [devHeight, devWidth];
-    }
+    let devWidth = screen.width * 0.7;
+    let devHeight = screen.height * 0.7;
 
     let fieldHeight = 1;
     if (devWidth < 320) {
-      fieldHeight = 50;
+      fieldHeight = 80;
     } else if (devWidth < 480) {
       fieldHeight = 60;
     } else if (devWidth < 768) {
@@ -49,9 +42,7 @@ export default class LeaderBoardView extends BaseView {
     } else {
       fieldHeight = 90;
     }
-
-    console.log(devWidth, ' wow ', devHeight, fieldHeight, Math.round(devHeight / fieldHeight));
-
+    console.log(devHeight, fieldHeight)
     return Math.round(devHeight / fieldHeight);
   }
 
@@ -59,11 +50,12 @@ export default class LeaderBoardView extends BaseView {
    *
    */
   render() {
-    Bus.on('respPage', this.renderUsers.bind(this));
+    Bus.on('respPage', this.renderUsers.bind(this), 'leaderBoardView');
     // const leaderboardTableRowDomElement = document.getElementsByClassName('leaderboard__table_row')[0];
 
     this.divisionHeight = this._getPageAmount();
-    this.pageStruct = {page: 1, per_page: this.divisionHeight};
+    console.log(this.divisionHeight)
+    this.pageStruct = { page: 1, per_page: this.divisionHeight };
     Bus.emit('reqPagesAmount', this.pageStruct.per_page);
     Bus.emit('reqPage', this.pageStruct);
   }
@@ -73,10 +65,10 @@ export default class LeaderBoardView extends BaseView {
    * @param {*} users
    */
   renderUsers(users: any) {
-    const usersStruct = {users: users, page: this._currPage, per_page: this.pageStruct.per_page};
+    const usersStruct = { users: users, page: this._currPage, per_page: this.pageStruct.per_page };
     this.data = usersStruct;
     super.render();
-    this.leaderBoardPageDomElement = this.parent.querySelector('.leaderboard__page');
+    this.leaderBoardPageDomElement = this.parent.querySelector('.leaderboard__footer_page');
     this.leaderBoardPageDomElement.innerHTML = this._currPage;
     this._initButtons();
   }
@@ -107,6 +99,11 @@ export default class LeaderBoardView extends BaseView {
     } else {
       this._rightArrow.classList.remove('leaderboard__arrow__inactive');
     }
+    if (this._currPage === 1) {
+      this.parent.querySelector('.leaderboard__table_number_wrapper').classList.add('bc_winner_num')
+      this.parent.querySelector('.leaderboard__table_row_wrapper').classList.add('bc_winner_row')
+    }
+
   }
 
   /**
@@ -118,7 +115,7 @@ export default class LeaderBoardView extends BaseView {
     }
 
     this.divisionHeight = this._getPageAmount();
-    this.pageStruct = {page: ++this._currPage, per_page: this.divisionHeight};
+    this.pageStruct = { page: ++this._currPage, per_page: this.divisionHeight };
     Bus.emit('reqPage', this.pageStruct);
   }
 
@@ -131,7 +128,7 @@ export default class LeaderBoardView extends BaseView {
     }
 
     this.divisionHeight = this._getPageAmount();
-    this.pageStruct = {page: --this._currPage, per_page: this.divisionHeight};
+    this.pageStruct = { page: --this._currPage, per_page: this.divisionHeight };
     Bus.emit('reqPage', this.pageStruct);
   }
 }

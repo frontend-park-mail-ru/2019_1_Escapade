@@ -1,149 +1,105 @@
-import multiPlayerTemplate from './MultiPlayer.pug';
+/* eslint-disable require-jsdoc */
+const singlePlayerTemplate = require('./MultiPlayer.pug');
+import MathGame from '../../utils/math';
 import BaseView from '../BaseView';
-import {User} from '../../utils/user';
-import {MineSweeper} from '../../game/minesweeper';
-import {Timer} from '../../game/timer';
+import { User } from '../../utils/user';
+import { MineSweeper } from '../../game/minesweeper';
+import { Timer } from '../../utils/timer';
+import { checkAuth } from '../../utils/user';
 import Bus from '../../utils/bus';
-
 /** */
-export default class MultiPlayer extends BaseView {
+export default class MultiPlayerView extends BaseView {
   cellsize: number;
   cellNumbersX: number;
   cellNumbersY: number;
-  bombsCount: number;
-  openCellsCount: number;
-  cellCloseStringName: string;
-  cellOpenStringName: string;
-  cellStringName: string;
-  cellFlagStringName: string;
-  mapStringName: string;
-  pointsFieldStringName: string;
-  mineSweeper: MineSweeper;
-  BBBVCount: any;
-  timerFieldStringName: string;
-  minesFieldStringName: string;
-  leftClicksFieldStringName: string;
-  rightClicksFieldStringName: string;
-  restartFieldStringName: string;
-  percentOpenFieldStringName: string;
-  loadbarFieldStringName: string;
-  babyFieldStringName: string;
-  normalFieldStringName: string;
-  hardFieldStringName: string;
-  godFieldStringName: string;
-  itemListFieldStringName: string;
-  infoModeFieldStringName: string;
-  infoWidthFieldStringName: string;
-  infoHeightFieldStringName: string;
-  infoMinesFieldStringName: string;
-  playerNameFieldStringName: string;
-  playerScoreFieldStringName: string;
-  playerTimeFieldStringName: string;
-  messageBoxFieldStringName: string;
-  messageBoxMessageFieldStringName: string;
-  messageBoxOkButtonFieldStringName: string;
   minesCount: number;
   start: boolean;
-  pointsDocElement: Element;
-  minesDocElement: Element;
-  leftClicksDocElement: Element;
-  rightClicksDocElement: Element;
-  restartDocElement: Element;
-  percentOpenDocElement: Element;
-  loadbarDocElement: Element;
-  infoModeDocElement: Element;
-  infoWidthDocElement: Element;
-  infoHeightDocElement: Element;
-  infoMinesDocElement: Element;
-  playerNameDocElement: Element;
-  playerScoreDocElement: Element;
-  playerTimeDocElement: Element;
-  messageBoxDocElement: Element;
-  messageBoxMessageDocElement: Element;
-  timer: any;
+  timer: Timer;
   maxPointsCount: number;
   minTimeCount: string;
+  openCellsCount: number;
   pointsCount: number;
   leftClicksCount: number;
   rightClicksCount: number;
-  prcentOpen: number;
   minesRemainedCount: any;
+  mineSweeper: MineSweeper;
+  BBBVCount: any;
+  difficult: number;
+  startTimeFlag: { hour: number; minute: number; seconds: number; };
+  flagPlacing: boolean;
+  startGame: boolean;
+  players: any[];
+  playersListContainer: any;
+  myID: number;
+  colorArr: string[];
+  fieldMatrix: any[];
+  flagCoords: { x: number; y: number; };
+  curPath: string;
+  cells: any;
+  cellNum: number;
+  run: any;
+  timerId: NodeJS.Timeout;
+  gameTime: { hour: number; minute: number; seconds: number; };
+  quitDocElement: any;
+  countCells: number;
+  countOpenCells: number;
+  countMines: any;
+  flagPlaceManualy: boolean;
+  observerMode: boolean;
   /**
    *
    * @param {*} parent
    */
   constructor(parent: any) {
-    super(parent, multiPlayerTemplate, true, 'updateUserInfoMult');
-    this.cellCloseStringName = 'multi_player_cell_close';
-    this.cellOpenStringName = 'multi_player_cell_open';
-    this.cellStringName = 'multi_player_cell';
-    this.cellFlagStringName = 'multi_player_cell_flag';
-    this.mapStringName = 'multi_player__map';
-    this.timerFieldStringName = 'multi_player__timer';
-
-    this.pointsFieldStringName = 'multi_player__statistics_row_points';
-    this.minesFieldStringName = 'multi_player__statistics_row_mines';
-    this.leftClicksFieldStringName = 'multi_player__statistics_row_left_click';
-    this.rightClicksFieldStringName = 'multi_player__statistics_row_right_click';
-    this.restartFieldStringName = 'multi_player__restart_button';
-    this.percentOpenFieldStringName = 'multi_player__percent';
-    this.loadbarFieldStringName = 'multi_player__loadbar';
-    this.babyFieldStringName = 'multi_player__submenu_baby';
-    this.normalFieldStringName = 'multi_player__submenu_normal';
-    this.hardFieldStringName = 'multi_player__submenu_hard';
-    this.godFieldStringName = 'multi_player__submenu_god';
-    this.itemListFieldStringName = 'multi_player__submenu_item';
-    this.infoModeFieldStringName = 'multi_player__settings_info_mode';
-    this.infoWidthFieldStringName = 'multi_player__settings_info_width';
-    this.infoHeightFieldStringName = 'multi_player__settings_info_height';
-    this.infoMinesFieldStringName = 'multi_player__settings_info_mines';
-
-    this.playerNameFieldStringName = 'multi_player__player_name';
-    this.playerScoreFieldStringName = 'multi_player__player_score';
-    this.playerTimeFieldStringName = 'multi_player__player_time';
-
-    this.messageBoxFieldStringName = 'multi_player__popup';
-    this.messageBoxMessageFieldStringName = 'multi_player__popup_text';
-    this.messageBoxOkButtonFieldStringName = 'multi_player__popup_ok_button';
-
-
-    this.cellsize = 50;
+    super(parent, singlePlayerTemplate, true, 'updateUserInfo');
     this.cellNumbersX = 15;
     this.cellNumbersY = 15;
-    this.minesCount = 1;
-    this.start = false;
-
-    document.addEventListener('click', this._clickOnBody.bind(this));
-
-
-    document.addEventListener('contextmenu', this._rightСlickOnCell.bind(this));
-    document.body.oncontextmenu = function(e) {
+    this.minesCount = 20;
+    this.cellsize = 50;
+    this.difficult = 1;
+    this.minesCount = 20;
+    this.flagPlacing = true;
+    this.startGame = false;
+    this.players = [];
+    this.flagCoords = {x : 0, y : 0};
+    this.myID = 0;
+    this.observerMode = false;
+    this.colorArr = ['#b6b4ca', '#cab4be', '#b4cabd', '#cac7b4', '#cab4b4', '#dedede', '#94c9b4', '#b9bfc9'];
+    document.body.oncontextmenu = function (e) {
       return false;
     };
-    Bus.on('updateUserInfoMult', this._updateUserInfo.bind(this));
-    Bus.emit('connect');
-
-    Bus.emit('get_rooms');
-
-    Bus.emit('send_info');
-
-
-    Bus.on('show_rooms', this._updateRooms.bind(this));
+    this.startTimeFlag = {hour : 0, minute : 0, seconds : 10};
+    this.gameTime = {hour : 0, minute : 10, seconds : 0};
+    Bus.on('currentPath', this._currentPathSignalFunc.bind(this), 'multiplayerView');
   }
 
-  /** */
-  _findRooms(e) {
-    console.log('FFFFF');
-    Bus.emit('get_rooms');
-    return;
+  _busAllOn() {
+    Bus.on('leftClickOnCell', this._clickOnCell.bind(this), 'multiplayerView');
+    Bus.on('rightClickOnCell', this._rightСlickOnCell.bind(this), 'multiplayerView');
+    Bus.on('updateFieldWS', this._updateField.bind(this), 'multiplayerView');
+    Bus.on('updatePointsWS', this._updatePoints.bind(this), 'multiplayerView');
+    Bus.on('roomActionWS', this._roomAction.bind(this), 'multiplayerView');
+    Bus.on('changeFlagSetWS', this._changeFlagSet.bind(this), 'multiplayerView');
+    Bus.on('roomObserverEnterWS', this._getObservers.bind(this), 'multiplayerView');
+    Bus.on('roomObserverExitWS', this._exitObserver.bind(this), 'multiplayerView');
+    
+    Bus.on('gameOwerWS', this._gameOver.bind(this), 'multiplayerView');
+    Bus.on('sendRoom', this._getRoom.bind(this), 'multiplayerView');   
   }
 
-  /** */
-  _updateRooms(rooms) {
-    const infoRooms = document.getElementsByClassName('multi_player__room_list')[0];
-    infoRooms.textContent += rooms.Rooms;
-  }
+  _busAllOff() {
+    Bus.off('leftClickOnCell', this._clickOnCell.bind(this), 'multiplayerView');
+    Bus.off('rightClickOnCell', this._rightСlickOnCell.bind(this), 'multiplayerView');
+    Bus.off('updateFieldWS', this._updateField.bind(this), 'multiplayerView');
+    Bus.off('updatePointsWS', this._updatePoints.bind(this), 'multiplayerView');
+    Bus.off('roomActionWS', this._roomAction.bind(this), 'multiplayerView');
+    Bus.off('changeFlagSetWS', this._changeFlagSet.bind(this), 'multiplayerView');
+    Bus.off('roomObserverEnterWS', this._getObservers.bind(this), 'multiplayerView');
+    Bus.off('roomObserverExitWS', this._exitObserver.bind(this), 'multiplayerView');
 
+    Bus.off('gameOwerWS', this._gameOver.bind(this), 'multiplayerView');
+    Bus.off('sendRoom', this._getRoom.bind(this), 'multiplayerView');
+  }
 
   /**
    *
@@ -151,316 +107,303 @@ export default class MultiPlayer extends BaseView {
   render() {
     this.user = User;
     super.render();
-    this.pointsDocElement = document.getElementsByClassName(this.pointsFieldStringName)[0];
-    this.minesDocElement = document.getElementsByClassName(this.minesFieldStringName)[0];
-    this.leftClicksDocElement = document.getElementsByClassName(this.leftClicksFieldStringName)[0];
-    this.rightClicksDocElement = document.getElementsByClassName(this.rightClicksFieldStringName)[0];
-    this.restartDocElement = document.getElementsByClassName(this.restartFieldStringName)[0];
-    this.percentOpenDocElement = document.getElementsByClassName(this.percentOpenFieldStringName)[0];
-    this.loadbarDocElement = document.getElementsByClassName(this.loadbarFieldStringName)[0];
-
-    this.infoModeDocElement = document.getElementsByClassName(this.infoModeFieldStringName)[0];
-    this.infoWidthDocElement = document.getElementsByClassName(this.infoWidthFieldStringName)[0];
-    this.infoHeightDocElement = document.getElementsByClassName(this.infoHeightFieldStringName)[0];
-    this.infoMinesDocElement = document.getElementsByClassName(this.infoMinesFieldStringName)[0];
-
-    this.playerNameDocElement = document.getElementsByClassName(this.playerNameFieldStringName)[0];
-    this.playerScoreDocElement = document.getElementsByClassName(this.playerScoreFieldStringName)[0];
-    this.playerTimeDocElement = document.getElementsByClassName(this.playerTimeFieldStringName)[0];
-
-    this.messageBoxDocElement = document.getElementsByClassName(this.messageBoxFieldStringName)[0];
-    this.messageBoxMessageDocElement = document.getElementsByClassName(this.messageBoxMessageFieldStringName)[0];
-    
-
-    this.timer = new Timer(document.getElementById(this.timerFieldStringName));
-
-    this.restartDocElement.addEventListener('click', this._restart.bind(this));
-    this.restartDocElement.innerHTML = 'Start';
-    this.infoModeDocElement.innerHTML = 'Normal mode';
-    this.minesCount = 20;
-    this.infoMinesDocElement.innerHTML = this.minesCount + ' mines';
-    this.infoWidthDocElement.innerHTML = this.cellNumbersX + ' width';
-    this.infoHeightDocElement.innerHTML = this.cellNumbersY + ' height';
+    Bus.emit('addListenersButtonsGame');
+    Bus.emit('addListenersField');
+    Bus.emit('addListenersMessage');
+    Bus.emit('addListenersPlayersList');
+    Bus.emit('changeTitleRestartButton', 'Start');
+    Bus.emit('messageBoxHide', true);
+    this.quitDocElement = document.querySelector('.game__multi_quit_button');
+    this.quitDocElement.addEventListener('click', this._quitClick.bind(this));
+    this._busAllOff();
+    this._busAllOn();
+    this.timer = new Timer('multi_player__timer', this._timeIsOver.bind(this));
     this._showMap();
-    Bus.on('stop_reset_timer', this._stop_reset_timer.bind(this))
+    console.log('render');
   }
 
-  /** */
-  _clickOnBody(e : any) {
-    if (e.target.classList.contains(this.itemListFieldStringName)) {
-      this._changeHard(e);
-    } else if (e.target.classList.contains(this.cellStringName)) {
-      this._clickOnCell(e);
-    } else if (e.target.classList.contains(this.messageBoxOkButtonFieldStringName)) {
-      this._closeMessage();
-    }
-  }
 
-  _updateUserInfo() {
-    console.log("_updateUserInfo here");
-    if (User.name) {
-      this.playerNameDocElement.innerHTML = User.name;
-      this.playerScoreDocElement.innerHTML = '0'; // получать из user
-      this.playerTimeDocElement.innerHTML = '0:00:00:00';
-      this.maxPointsCount = 0;
-      this.minTimeCount = '1:24:60:60';
+  _currentPathSignalFunc(path: string) {
+    if (path === '/multi_player') {
+      this._busAllOn();
+      this._showMap();
+      this.curPath = path;
+      console.log('_currentPathSignalFunc multi_player ');
     } else {
-      this.playerNameDocElement.innerHTML = 'Guest';
-      this.playerScoreDocElement.innerHTML = '0';
-      this.playerTimeDocElement.innerHTML = '0:00:00:00';
-      this.maxPointsCount = 0;
-      this.minTimeCount = '1:24:60:60';
+      if (this.curPath === '/multi_player') {
+        if (path !== '/lobby') {
+          Bus.emit('leaveRoom', 4);
+        }
+        console.log('_currentPathSignalFunc else ');
+        this._stop_reset_timer();
+        this.curPath = '';
+        this._busAllOff();
+      }
     }
-    this._showMap();
   }
 
   /** */
   _showMap() {
-    console.log('ahaha');
-    this.messageBoxDocElement.hidden = true;
+    this.fieldMatrix = [];
+    this.flagPlaceManualy = false;
+    this.fieldMatrix = new Array(this.cellNumbersY);
+    for (let i = 0; i < this.cellNumbersY; i++) {
+      this.fieldMatrix[i] = new Array(this.cellNumbersX).fill(0);
+    }
+    this.flagPlacing = true;
+    this.startGame = false;
+    console.log('_showMap');
     this.openCellsCount = 0;
     this.pointsCount = 0;
-    this.leftClicksCount = 0;
-    this.rightClicksCount = 0;
-    this.prcentOpen = 0;
-    this.minesRemainedCount = this.minesCount;
 
-    this.mineSweeper = new MineSweeper(this.cellNumbersX, this.cellNumbersY, this.minesCount);
-    this.BBBVCount = this.mineSweeper.count3BV();
-    console.log('3BV = ' + this.BBBVCount);
-    this.pointsDocElement.innerHTML = this.pointsCount + ' points';
-    this.minesDocElement.innerHTML = this.minesRemainedCount + ' mines left';
-    this.leftClicksDocElement.innerHTML = this.leftClicksCount + ' left clicks';
-    this.rightClicksDocElement.innerHTML = this.rightClicksCount + ' right clicks';
-    this.percentOpenDocElement.innerHTML = this.prcentOpen + ' %';
-    this.loadbarDocElement.style.width = 0 + 'px';
-
-    if (this.start) {
-      this.timer.router();
-    }
-
-    const field = document.getElementsByClassName(this.mapStringName)[0];
-    if (!field) {
-      console.log('error field cannot find ' + this.mapStringName);
-    }
-    field.innerHTML = '';
-    field.setAttribute('class', this.mapStringName);
-    field.setAttribute('style', 'width: ' + this.cellNumbersX * this.cellsize + 'px; ' + 'height: ' + this.cellNumbersY * this.cellsize + 'px;');
-    for (let y = 0; y < this.cellNumbersY; y++) {
-      for (let x = 0; x < this.cellNumbersX; x++) {
-        const cell = document.createElement('div');
-        const strClassClose = this.cellCloseStringName + '_' + this.mineSweeper.randomInteger(1, 3);
-        cell.setAttribute('class', this.cellStringName + ' ' + this.cellCloseStringName + ' ' + strClassClose);
-
-        cell.setAttribute('id', this.cellStringName + '_' + x + '_' + y);
-        cell.setAttribute('style', 'top: ' + y * this.cellsize + 'px;' + 'left: ' + x * this.cellsize + 'px;'
-          + 'width: ' + this.cellsize + 'px;' + 'height: ' + this.cellsize + 'px;');
-        field.appendChild(cell);
-      }
-    }
+    Bus.emit('messageBoxHide', true)
+    Bus.emit('renderField',{width : this.cellNumbersX, height : this.cellNumbersY, cellSize : this.cellsize})
+    
     return;
   }
 
-  _stop_reset_timer(){
-    this.timer.stop();
-    this.timer.reset();
-  }
-
-  /** */
-  _restart() {
-    if (!this.start) {
-      this.restartDocElement.innerHTML = 'Restart';
-      this.start = true;
+  _getRoom(data : any) {
+    let dataRoomCreate = data.room.date;
+    let dataNow = new Date(Date.now());
+    let secondsLatency = 0;
+    let timeInSeconds = data.room.settings.play - data.room.settings.prepare; 
+    console.log('AAAaa ', parseInt(dataRoomCreate.substring(14,16)));
+    secondsLatency += (dataNow.getHours() - parseInt(dataRoomCreate.substring(11,13))) * 3600;
+    secondsLatency += (dataNow.getMinutes() - parseInt(dataRoomCreate.substring(14,16))) * 60;
+    secondsLatency += dataNow.getSeconds() - parseInt(dataRoomCreate.substring(17,19));
+    if (secondsLatency < data.room.settings.prepare) {
+      this.timer.start(this.startTimeFlag);
+      this.startTimeFlag.seconds = data.room.settings.prepare - secondsLatency;
+      this.gameTime.hour = Math.floor(timeInSeconds / 3600);
+      this.gameTime.minute = Math.floor((timeInSeconds - this.gameTime.hour * 3600)/ 60);
+      this.gameTime.seconds = Math.floor(timeInSeconds - this.gameTime.minute * 60 - this.gameTime.hour * 3600);
+      this.timer.start(this.startTimeFlag);
     } else {
-      if (this.timer.running) {
-        this.timer.stop();
-      }
+      this.startTimeFlag.seconds = 0;
+      secondsLatency -= data.room.settings.prepare;
+      timeInSeconds -= secondsLatency;
+      this.gameTime.hour = Math.floor(timeInSeconds / 3600);
+      this.gameTime.minute = Math.floor((timeInSeconds - this.gameTime.hour * 3600)/ 60);
+      this.gameTime.seconds = Math.floor(timeInSeconds - this.gameTime.minute * 60 - this.gameTime.hour * 3600) + 1;
+      this.timer.start(this.gameTime);
     }
+    
 
+    if (data.room.status === 3) {
+      this.observerMode = true;
+    } else {
+      this.observerMode = false;
+      this.flagCoords = {x : data.flag.x, y : data.flag.y};
+    }
+    
+    this._getPlayers(data.room.players);
+    this._getObservers(data.room.observers);
+    this._getField(data.room.field);
+
+    
+  }  
+
+  _quitClick() {
+    this._stop_reset_timer();
+    Bus.emit('leaveRoom', 14);
+  }
+
+  _timeIsOver() {
+    if(this.startGame) {
+      return;
+    }
+    if (!this.observerMode) {
+      if (this.flagPlacing) {
+        this.flagPlacing = false;
+        Bus.emit('setUnsetFlagMultiOnCell', {x : this.flagCoords.x, y : this.flagCoords.y, type : 'flag'})
+      }
+      this.startGame = true;
+    }
+    this.timer.start(this.gameTime);
+  }
+
+  _createColorForPlayer(i : number) {
+    while (i >= this.colorArr.length) {
+      i = i - this.colorArr.length;
+    }
+    return this.colorArr[i];
+  }
+
+  _getField(data : any) {
+    this.cellNumbersX = data.width;
+    this.cellNumbersY = data.height;
+    this.countCells = this.cellNumbersX * this.cellNumbersY;
+    this.countMines = data.mines; // обнова
+    this.countOpenCells = 0;
     this._showMap();
   }
 
-
-  /** */
-  _changeHard(e : any) {
-    if (e.target.classList.contains(this.babyFieldStringName)) {
-      this.infoModeDocElement.innerHTML = 'Baby mode';
-      this.minesCount = 10;
-      this.infoMinesDocElement.innerHTML = this.minesCount + ' mines';
-    } else if (e.target.classList.contains(this.normalFieldStringName)) {
-      this.infoModeDocElement.innerHTML = 'Normal mode';
-      this.minesCount = 20;
-      this.infoMinesDocElement.innerHTML = this.minesCount + ' mines';
-    } else if (e.target.classList.contains(this.hardFieldStringName)) {
-      this.infoModeDocElement.innerHTML = 'Hard mode';
-      this.minesCount = 30;
-      this.infoMinesDocElement.innerHTML = this.minesCount + ' mines';
-    } else if (e.target.classList.contains(this.godFieldStringName)) {
-      this.infoModeDocElement.innerHTML = 'God mode';
-      this.minesCount = 40;
-      this.infoMinesDocElement.innerHTML = this.minesCount + ' mines';
-    }
-    if (this.timer.running) {
-      this.timer.stop();
-    }
-
-    if (!this.start) {
-      this.restartDocElement.innerHTML = 'Restart';
-      this.start = true;
-    }
-    this._showMap();
+  _getPlayers(data : any) {
+    this.players = [];
+    this.myID = 0;
+    Bus.emit('clearParametersPlayerList');
+    const dataConnections = data.connections;
+    const dataPlayers = data.players;
+    const colorRandom = MathGame.randomInteger(0,8);
+    console.log('dataConnections ', dataConnections.length);
+    dataConnections.forEach((item : any, i : number) => {
+      let color = this._createColorForPlayer(i + colorRandom)
+      let me = false;
+      if (User.name === item.user.name) {
+        this.myID = dataPlayers[item.index].ID;
+        me = true;
+      }
+      Bus.emit('addPlayer',{player : item.user, color : color, me : me});
+      this.players.push({user : item.user, id : dataPlayers[item.index].ID, points : dataPlayers[item.index].Points, me : me, color : color});
+    });
   }
 
-  /** */
-  _clickOnCell(e : any) {
-    console.log('prev check _click')
-    if (!e.target.classList.contains(this.cellStringName) || !this.start) {
-      return;
+  _getObservers(data : any) {
+    if (data.value) {
+      Bus.emit('addObserver',{player : data.value.user});
+    } else {
+      const observerArray = data.get;
+      observerArray.forEach((item : any, i : number) => {
+        Bus.emit('addObserver',{player : item.user});
+      });
     }
-    console.log('after check _click')
-    const idArr = e.target.id.split('_');
-    const x = parseInt(idArr[3]);
-    const y = parseInt(idArr[4]);
-    if (this.mineSweeper.mapLabel[x][y] != 0) { // если не закрыта
-      return;
-    }
-    this.leftClicksDocElement.innerHTML = (++this.leftClicksCount) + ' left clicks';
-    if (this.mineSweeper.map[x][y] === 9) {
-      this._openAllCels();
-      if (this.timer.running) {
-        this.timer.stop();
-      }
-      this.start = false;
-      this._showMessage('You lose!');
-      return;
-    }
-    const res = this.mineSweeper.
-        openCels(x, y, this.cellNumbersX, this.cellNumbersY);
-    this._openCels(res.cellArr);
-    this.openCellsCount += res.openCells;
-    this.prcentOpen = Math.round((this.openCellsCount / (this.cellNumbersX * this.cellNumbersY - this.minesCount)) * 100);
-    this.percentOpenDocElement.innerHTML = this.prcentOpen + ' %';
-    this.loadbarDocElement.style.width = (this.prcentOpen / 100) * (this.cellsize * this.cellNumbersX - 55) + 'px';
-    console.log(this.openCellsCount, ' ', this.cellNumbersX * this.cellNumbersY - this.minesCount);
-    this.pointsDocElement.innerHTML = (this.pointsCount += res.points) + ' points';
-
-    if (this.openCellsCount === this.cellNumbersX * this.cellNumbersY - this.minesCount) {
-      this._openAllCels();
-      if (this.timer.running) {
-        this.timer.stop();
-      }
-      this.start = false;
-      if (this.maxPointsCount < this.pointsCount) {
-        this.maxPointsCount = this.pointsCount;
-        this.playerScoreDocElement.innerHTML = this.pointsCount.toString();
-      }
-      if (this.minTimeCount > this.timer.timeStr) {
-        this.minTimeCount = this.timer.timeStr;
-        this.playerTimeDocElement.innerHTML = this.minTimeCount;
-      }
-      this._showMessage('You win!');
-    }
-    return;
   }
 
-  /** */
-  _rightСlickOnCell(e : any) {
-    if (!e.target.classList.contains(this.cellStringName) || !this.start) {
-      return;
-    }
-    const idArr = e.target.id.split('_');
-    const x = parseInt(idArr[3]);
-    const y = parseInt(idArr[4]);
-    const typeOfCell = this.mineSweeper.putRemoveFlag(x, y);
-    if (typeOfCell == 1) {
-      return;
-    }
+  _exitObserver(data : any) {
+    Bus.emit('delObserver',{player : data.value.user});
+  }
 
-    this.rightClicksDocElement.innerHTML = (++this.rightClicksCount) + ' right clicks';
-    if (typeOfCell == 0) {
-      if (this.minesRemainedCount < this.minesCount) {
-        ++this.minesRemainedCount;
-        if (this.minesRemainedCount < 0) {
-          this.minesDocElement.innerHTML = 0 + ' mines left';
+  _updateField(data : any) {
+    const cells = data.value;
+    let color = '#b9c0c9';
+    const my = cells[0].playerID === this.myID;
+    for (let i = 0; i < this.players.length; i++) {
+      if (this.players[i].id === cells[0].playerID) {
+        color = this.players[i].color;
+        break;
+      }
+    }
+    this.countOpenCells += cells.length;
+    cells.forEach((item : any, i : number) => {
+      Bus.emit('openCell', {x: item.x, y: item.y, type: item.value, color : color, my : my})
+    });
+
+    const prcentOpen = Math.round((this.countOpenCells / (this.countCells - this.countMines) * 100));
+    Bus.emit('progressGameChange', prcentOpen);
+  }
+  _updatePoints(data: any) {
+    const points = data.value;
+    for (let i = 0; i < this.players.length; i++) {
+      if (this.players[i].id === points.ID) {
+        Bus.emit('updatePoints', {number : i, points : points.Points});
+        this.players[i].points = points.Points;
+        break;
+      }
+    }
+  }
+
+  _gameOver(data : any) {
+    this.timer.stop();
+    const dataPlayers = data.value.players;
+    this._openAllCells(data.value.cells);
+    for (let i = 0; i < dataPlayers.length; i++) {
+      if (!dataPlayers[i].Finished) {
+        console.log('!dataPlayers[i].Finished');
+        Bus.emit('winPlayer', i);
+      }
+      if (dataPlayers[i].ID === this.myID) {
+        if (dataPlayers[i].Finished) {
+          Bus.emit('showTextInMessageBox', 'You lose!');
         } else {
-          this.minesDocElement.innerHTML = this.minesRemainedCount + ' mines left';
+          Bus.emit('showTextInMessageBox', 'You win!');
         }
       }
-      if (e.target.classList.length < 3) {
-        console.log('error e.target.classList.length < 3');
-        return;
+    }
+  }
+
+  _roomAction(data : any) {
+    const action = data.value;
+    console.log(this.players);
+    for (let i = 0; i < this.players.length; i++) {
+      if (this.players[i].id === action.player) {
+        switch(action.action) {
+          case 7 :
+            Bus.emit('explosePlayer', i);
+            break;
+          case 10 :
+            Bus.emit('findFlagPlayer', i);
+            break;
+          case 4 :
+            Bus.emit('disconnectPlayer', i);
+            break;
+          case 15 : 
+            Bus.emit('timeIsOverPlayer', i);
+            break;
+        }
+        break;
       }
-      const classElems = e.target.classList[2].split('_');
-      const numClassElem = parseInt(classElems[4]);
-      e.target.className = this.cellStringName + ' ' +
-        this.cellCloseStringName + ' ' +
-        this.cellCloseStringName + '_' + numClassElem;
+    }
+  }
+
+  _stop_reset_timer() {
+    this.timer.stop();
+    this.timer.reset({});
+  }
+
+  /** */
+  _clickOnCell(coordinatesStruct : any) {
+    if (!this.flagPlacing && !this.startGame || this.observerMode) {
       return;
     }
-
-    if (typeOfCell == 2) {
-      --this.minesRemainedCount;
-      if (this.minesRemainedCount < 0) {
-        this.minesDocElement.innerHTML = 0 + ' mines left';
-      } else {
-        this.minesDocElement.innerHTML = this.minesRemainedCount + ' mines left';
-      }
-      if (e.target.classList.length < 3) {
-        console.log('error e.target.classList.length < 3');
-        return;
-      }
-      const classElems = e.target.classList[2].split('_');
-      const numClassElem = parseInt(classElems[4]);
-      e.target.className = this.cellStringName + ' ' +
-        this.cellFlagStringName + ' ' +
-        this.cellFlagStringName + '_' + numClassElem;
+    const x = parseInt(coordinatesStruct.x);
+    const y = parseInt(coordinatesStruct.y);
+    if (this.fieldMatrix[x][y] == 1) {
+      return;
+    }
+    this.fieldMatrix[x][y] = -1;
+    Bus.emit('sendCellWS', {x : x, y : y});
+    if (this.flagPlacing) {
+      if (this.flagPlaceManualy) {{
+        Bus.emit('setUnsetFlagMultiOnCell', {x : this.flagCoords.x, y : this.flagCoords.y, type : 'closing'});
+      }}
+      this.flagCoords = {x : x, y : y};
+      Bus.emit('setUnsetFlagMultiOnCell', {x : x, y : y, type : 'flag'})
+      this.flagPlaceManualy = true;
     }
     return;
   }
 
   /** */
-  _showMessage(mess : string) {
-    this.messageBoxDocElement.hidden = false;
-    this.messageBoxMessageDocElement.innerHTML = mess;
+  _rightСlickOnCell(coordinatesStruct : any) {
+    if (!this.startGame || this.observerMode) {
+      return;
+    }
+    const x = parseInt(coordinatesStruct.x);
+    const y = parseInt(coordinatesStruct.y);
+    if (this.fieldMatrix[x][y] === 0) {
+      console.log('flag');
+      Bus.emit('setUnsetFlagOnCell', {x : x, y : y, type : 'flag'});
+      this.fieldMatrix[x][y] = 1;
+    } else if (this.fieldMatrix[x][y] === 1) {
+      console.log('closing');
+      Bus.emit('setUnsetFlagOnCell', {x : x, y : y, type : 'closing'});
+      this.fieldMatrix[x][y] = 0;
+    }    
+    return;
   }
 
-  _closeMessage() {
-    this.messageBoxDocElement.hidden = true;
+  _changeFlagSet(data : any) {
+    const coords = data.value;
+    Bus.emit('setUnsetFlagMultiOnCell', {x : this.flagCoords.x, y : this.flagCoords.y, type : 'closing'})
+    Bus.emit('setUnsetFlagMultiOnCell', {x : coords.x, y : coords.y, type : 'flag'})
   }
 
   /** */
-  _openCels(arrCells : any) {
-    for (let i = 0; i < arrCells.length; i++) {
-      const x = arrCells[i][0];
-      const y = arrCells[i][1];
-      const cell = document.
-          getElementById(this.cellStringName + '_' + x + '_' + y);
-      if (!cell) {
-        console.log('error _openCels cannot find ' +
-          this.cellStringName + '_' + x + '_' + y);
-      }
-      cell.className = this.cellStringName + ' ' +
-        this.cellOpenStringName + ' ' +
-        this.cellOpenStringName + this.mineSweeper.map[x][y].toString();
-    }
-  }
-
-  /** */
-  _openAllCels() {
-    for (let y = 0; y < this.cellNumbersY; y++) {
-      for (let x = 0; x < this.cellNumbersX; x++) {
-        const cell = document.getElementById(this.cellStringName + '_' + x + '_' + y);
-        if (!cell) {
-          console.log('error _openAllCels cannot find ' + this.cellStringName + '_' + x + '_' + y);
-        }
-        cell.className = this.cellStringName + ' ' +
-          this.cellOpenStringName + ' ' +
-          this.cellOpenStringName + this.mineSweeper.map[x][y].toString();
-      }
-    }
-    this.prcentOpen = 100;
-    this.percentOpenDocElement.innerHTML = this.prcentOpen + ' %';
-    this.loadbarDocElement.style.width = (this.prcentOpen / 100) * (this.cellsize * this.cellNumbersX - 55) + 'px';
+  _openAllCells(cells : []) {
+    cells.forEach((item : any, i : number) => {
+      Bus.emit('openCell', {x: item.x, y: item.y, type: item.value})
+    });
+    Bus.emit('progressGameChange', 100);
     return;
   }
 }

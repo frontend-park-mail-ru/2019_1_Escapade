@@ -1,50 +1,14 @@
 section(data-section-name='single_player')
   .single_player
-    .single_player__popup
-      .single_player__popup_content
-        .single_player__popup_text
-        .single_player__popup_ok_button Ok
+    include ../MessageView/Message.pug
     .single_player__wrapper
-      .single_player__player
-        .single_player__player_photo
-        .single_player__player_name.single_player__player_str Jack Sparrow
-        .single_player__player_score.single_player__player_str 200
-        .single_player__player_time.single_player__player_str 125
-        .single_player__player_dop
-      .single_player__map
-      .single_player__under_map
-        .single_player__percent 15%
-        .single_player__loadbar
-      .single_player__settings  
-        ul.single_player__topmenu
-          li.single_player__settings_list
-            .single_player__settings_img 
-            ul.single_player__submenu
-              li.single_player__submenu_item.single_player__submenu_baby Baby
-              li.single_player__submenu_item.single_player__submenu_normal Normal
-              li.single_player__submenu_item.single_player__submenu_hard Hard
-              li.single_player__submenu_item.single_player__submenu_god God
-        .single_player__settings_info.single_player__settings_info_mode Master mode
-        .single_player__settings_info.single_player__settings_info_width 200 width
-        .single_player__settings_info.single_player__settings_info_height 200 height
-        .single_player__settings_info.single_player__settings_info_mines 50 mines
+      include ../GameView/Userinfo/Userinfo.pug
+      include ../GameView/Field/Field.pug
+      include ../GameView/Settings/Settings.pug
     .single_player_info
-      .single_player__right_menu_buttons
-        .single_player__restart_button Restart
-        a.single_player__quite_button(data-href='Quite', href='menu') Quite
+      .game__right_menu_buttons
+        .game__restart_button Start
+        a.game__quit_button(data-href='Quit', href='menu') Quit
       .single_player__timer
         .single_player__timer_str#single_player__timer 0:00:00.00
-      .single_player__statistics
-        .single_player__statistics_row
-          .single_player__statistics_points_img
-          .single_player__statistics_row_str.single_player__statistics_row_points 0 Points
-        .single_player__statistics_row
-          .single_player__statistics_mines_img
-          .single_player__statistics_row_str.single_player__statistics_row_mines 50 mins left
-        .single_player__statistics_row
-          .single_player__statistics_left_click_img
-          .single_player__statistics_row_str.single_player__statistics_row_left_click left click
-        .single_player__statistics_row
-          .single_player__statistics_right_click_img
-          .single_player__statistics_row_str.single_player__statistics_row_right_click 45 right click
-    .single_player_logo
+      include ../GameView/Statistics/Statistics.pug

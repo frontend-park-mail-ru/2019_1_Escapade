@@ -1,4 +1,4 @@
-import signInTemplate from './SignIn.pug';
+const signInTemplate = require('./SignIn.pug');
 import { validateEmail, validatePass, makeSafe } from '../../utils/validation';
 import { User } from '../../utils/user';
 import BaseView from '../BaseView';
@@ -20,13 +20,14 @@ export default class SignInView extends BaseView {
     super(parent, signInTemplate, false);
 
     Bus.on('onSuccessLogin', (usr: { email: any; played: any; avatar: any; name: any; }) => {
+      console.log('signIn ' + usr);
       User.setUser({ ...usr });
       Bus.emit('userUpdate');
       router.open('/profile');
-    });
+    }, 'signinView');
     Bus.on('onFailedLogin', (error: { message: any; }) => {
       this._showWarning(this._warnings.email, error.message);
-    });
+    }, 'signinView');
   }
 
   /**
@@ -38,9 +39,9 @@ export default class SignInView extends BaseView {
     this._warnings = {};
     this._warnings.email = this.parent.querySelector('.js-warning-email');
     this._warnings.pass = this.parent.querySelector('.js-warning-password');
-    this._form = this.parent.querySelector('.profile_edit__form');
+    this._form = this.parent.querySelector('.signin__form');
 
-    this._submitButton = this.parent.querySelector('.signin_edit__confirm');
+    this._submitButton = this.parent.querySelector('.signin__confirm');
 
     this._submitButton.addEventListener('click', this._onSubmit.bind(this));
   }
@@ -49,9 +50,9 @@ export default class SignInView extends BaseView {
    * Действие при сабмите формы регистрации
    * @param {Event} event
    */
-  _onSubmit(event : any) {
+  _onSubmit(event: any) {
     event.preventDefault();
-    const data = {};
+    const data: any = {};
     data.email = this._form.elements['email'].value;
     data.password = this._form.elements['password'].value;
     if (this._validateInput(data)) {
@@ -64,7 +65,7 @@ export default class SignInView extends BaseView {
    * @param  {...any} data
    * @return {boolean}
    */
-  _validateInput({ email = '', password = ''}) {
+  _validateInput({ email = '', password = '' }) {
     let isValid = true;
     let message = '';
 

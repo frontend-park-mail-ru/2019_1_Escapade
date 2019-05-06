@@ -1,6 +1,6 @@
-import rulesTemplate from './Rules.pug';
+const rulesTemplate = require('./Rules.pug');
 import BaseView from '../BaseView';
-import {User} from '../../utils/user';
+import { User } from '../../utils/user';
 
 /** */
 export class RulesView extends BaseView {
