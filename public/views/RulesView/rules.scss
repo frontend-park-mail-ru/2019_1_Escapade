@@ -48,7 +48,7 @@
   &__back{
     width: 108px;
     height: 106px;
-    background: url(/img/flag-right.png) no-repeat;
+    background: url('./img/flag-right.png') no-repeat;
     transform: matrix(-1, 0, 0, 1, 0, 0);
     background-size: contain;
   }

@@ -53,7 +53,7 @@
   &__default_avatar{
     width: 290px;
     height: 290px;
-    background: url('/img/user.png') no-repeat;
+    background: url('./img/user.png') no-repeat;
     background-size: contain;
     background-position: center;
   }
@@ -61,7 +61,7 @@
   &__hrefBackToMenu {
     width: 108px;
     height: 106px;
-    background: url('/img/flag-right.png') no-repeat;
+    background: url('./img/flag-right.png') no-repeat;
     transform: matrix(-1, 0, 0, 1, 0, 0);
     background-size: contain;
     align-self: flex-start
@@ -70,7 +70,7 @@
   &__hrefToChange {
     width: 90px;
     height: 90px;
-    background: url('/img/edit-profile.png') #46535E no-repeat;
+    background: url('./img/edit-profile.png') #46535E no-repeat;
     background-size: contain;
     align-self: center;
     border-radius: 50%;
@@ -131,7 +131,7 @@
   &__flag_left{
     width: 40px;
     height: 36px;
-    background: url('/img/flag-right.png') no-repeat;
+    background: url('./img/flag-right.png') no-repeat;
     transform: matrix(-1, 0, 0, 1, 0, 0);
     background-size: contain;
   }
@@ -139,14 +139,14 @@
   &__star{
     width: 40px;
     height: 36px;
-    background: url('/img/star-q.png') no-repeat;
+    background: url('./img/star-q.png') no-repeat;
     background-size: contain;
   }
   
   &__bomb{
     width: 40px;
     height: 36px;
-    background: url('/img/bomb1.png') no-repeat;
+    background: url('./img/bomb1.png') no-repeat;
     background-size: contain;
     background-position: center;
   }
@@ -154,7 +154,7 @@
   &__clock{
     width: 40px;
     height: 36px;
-    background: url('/img/clock.png') no-repeat;
+    background: url('./img/clock.png') no-repeat;
     background-size: contain;
     background-position: center;
   }
@@ -162,7 +162,7 @@
   &__click_left{
     width: 40px;
     height: 36px;
-    background: url('/img/left-click.png') no-repeat;
+    background: url('./img/left-click.png') no-repeat;
     background-size: contain;
     background-position: center;
   }
@@ -170,7 +170,7 @@
   &__click_right{
     width: 35px;
     height: 36px;
-    background: url('/img/right-click.png') no-repeat;
+    background: url('./img/right-click.png') no-repeat;
     background-size: contain;
     background-position: center;
   }
@@ -199,7 +199,7 @@ input[type="file"] {
   left: 220px;
   z-index: 50;
   border-radius: 50%;
-  background: url('/img/upload-avatar.png') #46535E no-repeat;
+  background: url('./img/upload-avatar.png') #46535E no-repeat;
   background-size: contain;
   background-position: center;
 }

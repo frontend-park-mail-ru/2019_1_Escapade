@@ -12,7 +12,7 @@
   }
 
   &__logo {
-    background-image: url('/img/logo_single.png');
+    background-image: url('./img/logo_single.png');
     background-repeat: no-repeat;
     background-size: cover;
     height: 32vw;
@@ -52,7 +52,7 @@
   }
 
   &__multi_logo {
-    background-image: url(/img/logo_multi.png);
+    background-image: url('./img/logo_multi.png');
     background-repeat: no-repeat;
     background-size: cover;
     height: 32vw;
