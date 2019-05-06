@@ -62,6 +62,13 @@
   }
 }
 
+@media screen and (min-width: $large) {
+  .single_player {
+    justify-content: center;
+    align-items: center;
+  }
+}
+
 @media screen and (min-width: $tablet)  and (max-width: $normal) {
   .single_player {
     display: flex;
