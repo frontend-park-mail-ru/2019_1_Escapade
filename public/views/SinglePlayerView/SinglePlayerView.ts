@@ -18,6 +18,7 @@ export default class SinglePlayerView extends BaseView {
   controlButtons: any;
   timerContainer: any;
   fieldContainer: any;
+  statisticsPanel: any;
   /**
    *
    * @param {*} parent
@@ -53,7 +54,9 @@ export default class SinglePlayerView extends BaseView {
     Bus.emit('busAllOffSinglePlayer');
     Bus.emit('busAllOnSinglePlayer');
     Bus.emit('newStopwatchSinglePlayer');
-    Bus.emit('showMapSinglePlayer');;
+    Bus.emit('showMapSinglePlayer');
+    Bus.emit('updateUserInfo');
+
     this.curPath = '/single_player';
   }
 
@@ -63,11 +66,13 @@ export default class SinglePlayerView extends BaseView {
       console.log('_currentPathSignalFunc single_player');
       Bus.emit('busAllOnSinglePlayer');
       Bus.emit('showMapSinglePlayer');
+      Bus.emit('updateUserInfo');
       this.curPath = path;
     } else {
       if (this.curPath === '/single_player') {
         console.log('_currentPathSignalFunc not single_player');
         Bus.emit('stopResetTimer');
+
         this.curPath = '';
         Bus.emit('busAllOffSinglePlayer');
       }
@@ -112,5 +117,7 @@ export default class SinglePlayerView extends BaseView {
     this.controlButtons = this.parent.querySelector('.game__right_menu_buttons')
     this.timerContainer = this.parent.querySelector('.single_player__timer')
     this.fieldContainer = this.parent.querySelector('.single_player__wrapper')
+    this.statisticsPanel = document.querySelector('.single_player__statistics')
+    
   }
 }
