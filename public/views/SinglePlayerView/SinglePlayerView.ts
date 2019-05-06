@@ -81,10 +81,10 @@ export default class SinglePlayerView extends BaseView {
   _setStylesOnStart() {
     const width = screen.width;
     this.settings.style.display = 'none';
-    //this.playerInfo.style.display = 'none';
     this.progressBar.style.display = 'flex';
 
     if (width <= 440) {
+      this.playerInfo.style.display = 'none';
       this.controlButtons.style.transform = "translateY(-350px)"
       this.timerContainer.style.transform = "translateY(-350px)"
       this.fieldContainer.style.transform = "translateY(150px)"
@@ -94,10 +94,10 @@ export default class SinglePlayerView extends BaseView {
   _rollbackStylesOnEnd() {
     const width = screen.width;
     this.settings.style.display = 'flex';
-    //this.playerInfo.style.display = 'flex';
     this.progressBar.style.display = 'none';
 
     if (width <= 440) {
+      this.playerInfo.style.display = 'flex';
       this.controlButtons.style.transform = "translateY(0)"
       this.timerContainer.style.transform = "translateY(0)"
       this.fieldContainer.style.transform = "translateY(0)"
