@@ -66,6 +66,11 @@
   .single_player {
     justify-content: center;
     align-items: center;
+
+    &__info{
+      align-self: flex-start;
+      margin-left: 1.5vw;
+    }
   }
 }
 
