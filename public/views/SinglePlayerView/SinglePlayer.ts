@@ -82,8 +82,9 @@ export default class SinglePlayer {
   /** */
   _updateUserInfoCalback() {
     if (User.name) {
-      console.log(Bus.listeners)
       Bus.emit('userNameInGameChange', User.name);
+      Bus.emit('userPhotoInGameChange', User.avatar);
+      
       if (User.bestScore.String) {
         Bus.emit('userScoreInGameChange', User.bestScore.String) // получать из user
         Bus.emit('userTimeInGameChange', User.bestScore.String);
@@ -94,6 +95,7 @@ export default class SinglePlayer {
       this.maxPointsCount = 0;
       this.minTimeCount = '1:24:60:60';
     } else {
+      Bus.emit('userPhotoInGameChange', '/img/flag.png');
       Bus.emit('userNameInGameChange', 'Guest');
       Bus.emit('userScoreInGameChange', 0)
       Bus.emit('userTimeInGameChange', '0:00:00:00');

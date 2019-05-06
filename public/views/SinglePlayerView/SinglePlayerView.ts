@@ -81,7 +81,7 @@ export default class SinglePlayerView extends BaseView {
   _setStylesOnStart() {
     const width = screen.width;
     this.settings.style.display = 'none';
-    this.playerInfo.style.display = 'none';
+    //this.playerInfo.style.display = 'none';
     this.progressBar.style.display = 'flex';
 
     if (width <= 440) {
@@ -94,7 +94,7 @@ export default class SinglePlayerView extends BaseView {
   _rollbackStylesOnEnd() {
     const width = screen.width;
     this.settings.style.display = 'flex';
-    this.playerInfo.style.display = 'flex';
+    //this.playerInfo.style.display = 'flex';
     this.progressBar.style.display = 'none';
 
     if (width <= 440) {
