@@ -19,13 +19,25 @@ export default class LobbyModel {
     
     this.currentRoomInfo = [];
     
-    Bus.on('getInfoFromWS', this._getInfo.bind(this), 'lobbyModel');
+
     Bus.on('currentPath', this._currentPathSignalFunc.bind(this), 'lobbyModel');
+
+    
+    this.curPath = '';
+  }
+
+  _busAllOn() {
+    Bus.on('getInfoFromWS', this._getInfo.bind(this), 'lobbyModel');
     Bus.on('createRoom', this._createRoom.bind(this), 'lobbyModel');
     Bus.on('connectToRoom', this._connectToRoom.bind(this), 'lobbyModel');
     Bus.on('leaveRoom', this._leaveRoom.bind(this), 'lobbyModel');
-    this.curPath = '';
-    this.ws = new WebSocketInterface(this.wsAdress);
+  }
+
+  _busAllOff() {
+    Bus.off('getInfoFromWS', this._getInfo.bind(this), 'lobbyModel');
+    Bus.off('createRoom', this._createRoom.bind(this), 'lobbyModel');
+    Bus.off('connectToRoom', this._connectToRoom.bind(this), 'lobbyModel');
+    Bus.off('leaveRoom', this._leaveRoom.bind(this), 'lobbyModel');
   }
 
   _currentPathSignalFunc(path: string) {
@@ -35,11 +47,12 @@ export default class LobbyModel {
     }
     if (path === '/lobby') {
       this.curPath = path;
-      this.ws.closeConnection();
-      this.ws.connectWS(this.wsAdress);
+      this._busAllOn();
+      this.ws = new WebSocketInterface(this.wsAdress);
     } else {
       if (this.curPath === '/lobby') {
         this._leaveRoom(14);
+        this._busAllOff()
         this.ws.closeConnection();
         this.curPath = '';
       }

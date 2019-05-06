@@ -25,7 +25,7 @@ export class UserSingleton {
    * @param {string} name
    */
   setUser({ email = '', played = 0, photo = '', name = '', bestTime = '', bestScore = '' } = {}) {
-    console.log('HERERERE ', photo);
+    console.log('HERERERE1 ', email, ' 2 ', played, ' 3 ', photo, ' 4 ', name, ' ', bestTime, ' ', bestScore);
     this.email = email || null;
     this.played = played || 0;
     this.avatar = photo || './img/qrosh.png';

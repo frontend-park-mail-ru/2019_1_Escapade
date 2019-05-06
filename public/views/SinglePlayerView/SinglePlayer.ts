@@ -58,14 +58,12 @@ export default class SinglePlayerView extends BaseView {
   _busAllOn() {
     Bus.on('leftClickOnCell', this._clickOnCell.bind(this), 'singlePlayerView');
     Bus.on('rightClickOnCell', this._rightСlickOnCell.bind(this), 'singlePlayerView');
-    Bus.on('updateUserInfo', this._updateUserInfo.bind(this), 'singlePlayerView');
     Bus.on('settingsChangeHard', this._changeHard.bind(this), 'singlePlayerView');
   }
 
   _busAllOff() {
     Bus.off('leftClickOnCell', this._clickOnCell.bind(this), 'singlePlayerView');
     Bus.off('rightClickOnCell', this._rightСlickOnCell.bind(this), 'singlePlayerView');
-    Bus.off('updateUserInfo', this._updateUserInfo.bind(this), 'singlePlayerView');
     Bus.off('settingsChangeHard', this._changeHard.bind(this), 'singlePlayerView');
   }
 
@@ -91,6 +89,7 @@ export default class SinglePlayerView extends BaseView {
     this._busAllOn();
     this.stopwatch = new Stopwatch('single_player__timer');
     this._showMap();
+    checkAuth(this._updateUserInfoCalback.bind(this), this.difficult)
     this.curPath = '/single_player';
   }
 
@@ -99,6 +98,7 @@ export default class SinglePlayerView extends BaseView {
       console.log('_currentPathSignalFunc single_player');
       this._busAllOn();
       this._showMap();
+      checkAuth(this._updateUserInfoCalback.bind(this), this.difficult)
       this.curPath = path;
     } else {
       if (this.curPath === '/single_player') {
@@ -111,15 +111,15 @@ export default class SinglePlayerView extends BaseView {
   }
 
   /** */
-  _updateUserInfo() {
-    checkAuth(this._updateUserInfoCalback.bind(this), this.difficult)
-  }
   _updateUserInfoCalback() {
     console.log("_updateUserInfo here");
+    console.log('QQQQQQQQQQq ', User);
     if (User.name) {
-      Bus.emit('UserNameInGameChange', User.name);
+      console.log('EEEEE ', User.name);
+      console.log(Bus.listeners)
+      Bus.emit('userNameInGameChange', User.name);
       if (User.bestScore.String) {
-        Bus.emit('userScoreInGameChange', User.bestScore) // получать из user
+        Bus.emit('userScoreInGameChange', User.bestScore.String) // получать из user
         Bus.emit('userTimeInGameChange', User.bestScore.String);
       } else {
         Bus.emit('userScoreInGameChange', 0)
@@ -178,6 +178,7 @@ export default class SinglePlayerView extends BaseView {
 
   /** */
   _changeHard(hardStruct: any) {
+    this._setStylesOnStart();
     this.difficult = hardStruct.difficult;
 
 

@@ -11,6 +11,7 @@ export default class UserinfoGameView {
   }
 
   _addListeners() {
+    console.log('addListenersUserinfoGame');
     this.playerNameDocElement = document.querySelector('.single_player__player_name');
     this.playerScoreDocElement = document.querySelector('.single_player__player_score');
     this.playerTimeDocElement = document.querySelector('.single_player__player_time');
@@ -21,6 +22,7 @@ export default class UserinfoGameView {
 
   /** */
   _userNameInGameChange(name : string) {
+    console.log('_userNameInGameChange')
     this.playerNameDocElement.innerHTML = name;
   }
   _userScoreInGameChange(score : number) {

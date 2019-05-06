@@ -11,6 +11,7 @@ export default class FieldView {
   loadbarDocElement: any;
   prcentOpen: number;
   percent: number;
+  mapElement: any;
   constructor() {
     this.width = 0;
     this.height = 0;
@@ -50,12 +51,12 @@ export default class FieldView {
         console.log('error e.target.classList.length < 3');
         return;
       }
-      console.log('_rightСlickOnCell emit')
       let [, x, y] = e.target.id.split('_');
       Bus.emit('rightClickOnCell', {x : x, y : y});
     }
   }
   _render(fieldSize : any) {
+    this.percent = 0;
     this.width = fieldSize.width;
     this.height = fieldSize.height;
     this.cellSize = fieldSize.cellSize;
@@ -142,6 +143,7 @@ export default class FieldView {
     }
     this.percent = percent;
     this.percentOpenDocElement.innerHTML = `${percent}%`;
-    this.loadbarDocElement.style.width = `${(percent / 100) * (this.cellSize * this.width - 55)}px`;
+    this.mapElement = document.querySelector('.game__field__map');
+    this.loadbarDocElement.style.width = `${(percent / 100) * (this.mapElement.offsetWidth - 51)}px`;
   }  
 }
