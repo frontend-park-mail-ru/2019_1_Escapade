@@ -94,7 +94,6 @@ export default class SinglePlayerView extends BaseView {
 
     if (width <= 440) {
       this.playerInfo.style.display = 'none';
-      this.controlButtons.style.transform = "translateY(-350px)"
       this.timerContainer.style.transform = "translateY(-350px)"
       this.fieldContainer.style.transform = "translateY(150px)"
     }
@@ -107,7 +106,6 @@ export default class SinglePlayerView extends BaseView {
 
     if (width <= 440) {
       this.playerInfo.style.display = 'flex';
-      this.controlButtons.style.transform = "translateY(0)"
       this.timerContainer.style.transform = "translateY(0)"
       this.fieldContainer.style.transform = "translateY(0)"
     }
@@ -115,10 +113,9 @@ export default class SinglePlayerView extends BaseView {
 
 
   _getElementsForStyles() {
-    this.playerInfo = this.parent.querySelector('.single_player__player')
+    this.playerInfo = this.parent.querySelector('.user_info__player')
     this.settings = this.parent.querySelector('.single_player__settings')
     this.progressBar = this.parent.querySelector('.game__field__under_map')
-    this.controlButtons = this.parent.querySelector('.game__right_menu_buttons')
     this.timerContainer = this.parent.querySelector('.single_player__timer')
     this.fieldContainer = this.parent.querySelector('.single_player__wrapper')
     this.statisticsPanel = document.querySelector('.single_player__statistics')
