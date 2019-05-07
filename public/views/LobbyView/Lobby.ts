@@ -1,8 +1,4 @@
-const lobbyTemplate = require('./Lobby.pug');
-const lobbyTemplateFreeRoom = require('./LobbyFreeRoom.pug');
-const lobbyTemplateBusyRoom = require('./LobbyBusyRoom.pug');
-import { User } from '../../utils/user';
-import BaseView from '../BaseView';
+
 import Bus from '../../utils/bus';
 
 /**

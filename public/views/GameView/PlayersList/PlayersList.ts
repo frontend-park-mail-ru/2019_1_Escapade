@@ -2,17 +2,21 @@
 import Bus from '../../../utils/bus';
 const PlayerRowTemplate = require('./Player.pug');
 const ObserverRowTemplate = require('./Observer.pug');
+const Template = require('./PlayersList.pug');
 /** */
 export default class PlayersListView {
   playersListContainer: any;
   observersListContainer: any;
   playersHTML: any[];
+  timerHTMLElement: any;
 
   constructor() {
-    Bus.on('addListenersPlayersList', this._addListeners.bind(this), 'playerListView');
+    Bus.on('addPlayersList', this._addListeners.bind(this), 'playerListView');
   }
 
-  _addListeners() {
+  _addListeners(htmlElementTitle : string) {
+    this.timerHTMLElement = document.querySelector(htmlElementTitle);
+    this.timerHTMLElement.innerHTML = Template();
     this.playersListContainer = document.querySelector('.game__players_list_container');
     this.observersListContainer = document.querySelector('.game__observer_list_container');
     Bus.on('addPlayer', this._addPlayer.bind(this), 'playerListView');

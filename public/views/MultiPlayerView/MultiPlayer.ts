@@ -65,9 +65,6 @@ export default class MultiPlayerView extends BaseView {
     this.myID = 0;
     this.observerMode = false;
     this.colorArr = ['#b6b4ca', '#cab4be', '#b4cabd', '#cac7b4', '#cab4b4', '#dedede', '#94c9b4', '#b9bfc9'];
-    document.body.oncontextmenu = function (e) {
-      return false;
-    };
     this.startTimeFlag = {hour : 0, minute : 0, seconds : 10};
     this.gameTime = {hour : 0, minute : 10, seconds : 0};
     Bus.on('currentPath', this._currentPathSignalFunc.bind(this), 'multiplayerView');
@@ -107,10 +104,9 @@ export default class MultiPlayerView extends BaseView {
   render() {
     this.user = User;
     super.render();
-    Bus.emit('addListenersButtonsGame');
-    Bus.emit('addListenersField');
-    Bus.emit('addListenersMessage');
-    Bus.emit('addListenersPlayersList');
+    Bus.emit('addField', '.multi_player__field_container');
+    Bus.emit('addMessage', '.multi_player__message_container');
+    Bus.emit('addPlayersList', '.multi_player__playerlist_container');
     Bus.emit('changeTitleRestartButton', 'Start');
     Bus.emit('messageBoxHide', true);
     this.quitDocElement = document.querySelector('.game__multi_quit_button');
@@ -396,6 +392,9 @@ export default class MultiPlayerView extends BaseView {
     const coords = data.value;
     Bus.emit('setUnsetFlagMultiOnCell', {x : this.flagCoords.x, y : this.flagCoords.y, type : 'closing'})
     Bus.emit('setUnsetFlagMultiOnCell', {x : coords.x, y : coords.y, type : 'flag'})
+    this.flagCoords.x = coords.x;
+    this.flagCoords.y = coords.y;
+
   }
 
   /** */

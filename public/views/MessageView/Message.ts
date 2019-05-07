@@ -1,6 +1,8 @@
 import Bus from '../../utils/bus';
+const Template = require('./Message.pug');
 /** */
 export default class MessageView {
+  timerHTMLElement: any;
   resetParameters(arg0: number) {
     throw new Error("Method not implemented.");
   }
@@ -9,10 +11,12 @@ export default class MessageView {
   messageBoxMessageDocElement: any;
 
   constructor() {
-    Bus.on('addListenersMessage', this._addListeners.bind(this), 'messageView');
+    Bus.on('addMessage', this._addListeners.bind(this), 'messageView');
   }
 
-  _addListeners() {
+  _addListeners(htmlElementTitle : string) {
+    this.timerHTMLElement = document.querySelector(htmlElementTitle);
+    this.timerHTMLElement.innerHTML = Template();
     this.messageBoxDocElement = document.querySelector('.messagebox__popup');
     this.messageBoxMessageDocElement = document.querySelector('.messagebox__popup_text');
     Bus.on('messageBoxHide', this._hideTextMessage.bind(this), 'messageView');

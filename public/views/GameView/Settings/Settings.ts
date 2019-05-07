@@ -1,4 +1,5 @@
 import Bus from '../../../utils/bus';
+const Template = require('./Settings.pug');
 /** */
 export default class SettingsGameView {
   infoModeDocElement: any;
@@ -13,21 +14,21 @@ export default class SettingsGameView {
   difficult: number;
   width: number;
   height: number;
+  timerHTMLElement: any;
   constructor() {
     this.difficult = 1;
     this.minesCount = 20;
     this.width = 15;
     this.height = 15;
-    Bus.on('addListenersSettingsGame', this._addListeners.bind(this), 'settingsView');
+    Bus.on('addSettingsGame', this._addListeners.bind(this), 'settingsView');
   }
 
-  _addListeners() {
+  _addListeners(htmlElementTitle : string) {
+    this.timerHTMLElement = document.querySelector(htmlElementTitle);
+    this.timerHTMLElement.innerHTML = Template();
     this.infoModeDocElement = document.querySelector('.single_player__settings_info_mode');
     this.infoWidthDocElement = document.querySelector('.single_player__settings_info_width');
-    this.infoHeightDocElement = document.querySelector('.single_player__settings_info_height');
-    this.infoMinesDocElement = document.querySelector('.single_player__settings_info_mines');
     Bus.on('settingsChangeMode', this._modeChange.bind(this), 'settingsView');
-    Bus.on('settingsChangeMinesCount', this._minesCountChange.bind(this), 'settingsView');
     Bus.on('settingsChangeSize',this._sizeChange.bind(this), 'settingsView');
     Bus.on('settingsSetParameters', this._setParameters.bind(this), 'settingsView');
     document.addEventListener('click', this._clickOnBody.bind(this));
@@ -36,10 +37,8 @@ export default class SettingsGameView {
   /** */
   _setParameters({difficult = 1, width = 15, height = 15, mines = 20}) {
     const mode = this._getModeByDifficult(difficult);
-    this.infoModeDocElement.innerHTML = `${mode} mode`;
-    this.infoMinesDocElement.innerHTML = `${mines} mines`;
-    this.infoWidthDocElement.innerHTML = `${width} width`;
-    this.infoHeightDocElement.innerHTML = `${height} height`;
+    this.infoModeDocElement.innerHTML = `${mode}`;
+    this.infoWidthDocElement.innerHTML = `${width}x${height}`;
   };
 
   _getModeByDifficult(difficult : number) {
@@ -83,16 +82,11 @@ export default class SettingsGameView {
   }
   /** */
   _sizeChange({width = 15, height = 15}) {
-    this.infoWidthDocElement.innerHTML = `${width} width`;
-    this.infoHeightDocElement.innerHTML = `${height} height`;
+    this.infoWidthDocElement.innerHTML = `${width}x${height}`;
   }
   /** */
   _modeChange(mode : string) {
     console.log("_modeChange");
-    this.infoModeDocElement.innerHTML = `${mode} mode`;
-  }
-  /** */
-  _minesCountChange(number : number) {
-    this.infoMinesDocElement.innerHTML = `${number} mines`;
+    this.infoModeDocElement.innerHTML = `${mode}`;
   }
 }

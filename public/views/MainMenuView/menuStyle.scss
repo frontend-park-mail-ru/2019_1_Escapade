@@ -3,13 +3,15 @@
 @import '../../styles/MainMenu/middle.scss';
 @import '../../styles/MainMenu/bottom.scss';
 
+
 body {
   background-color: #667787;
-  font-family: 'system-ui';
   -webkit-user-select: none;
   -moz-user-select: none;
   -ms-user-select: none;
-  margin: 0;
+  font-family: 'SairaRegular'; 
+  font-weight: normal; 
+  font-style: normal; 
 }
 
 

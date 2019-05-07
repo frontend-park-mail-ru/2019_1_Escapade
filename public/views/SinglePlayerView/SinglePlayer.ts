@@ -3,7 +3,7 @@ const singlePlayerTemplate = require('./SinglePlayer.pug');
 import BaseView from '../BaseView';
 import { User } from '../../utils/user';
 import { MineSweeper } from '../../game/minesweeper';
-import { Stopwatch } from '../../utils/stopwatch';
+import { Stopwatch } from '../../utils/stopwatch/stopwatch';
 import { checkAuth } from '../../utils/user';
 import Bus from '../../utils/bus';
 /** */
@@ -53,9 +53,6 @@ export default class SinglePlayer {
     this.firstClick = true;
     Bus.on('busAllOnSinglePlayer', this._busAllOn.bind(this), 'singlePlayerView');
     Bus.on('busAllOffSinglePlayer', this._busAllOff.bind(this), 'singlePlayerView');
-    document.body.oncontextmenu = function (e) {
-      return false;
-    };
   }
 
   _busAllOn() {
@@ -82,7 +79,7 @@ export default class SinglePlayer {
   }
 
   _newStopWatch() {
-    this.stopwatch = new Stopwatch('single_player__timer');
+    this.stopwatch = new Stopwatch('.single_player__timer');
   }
 
   /** */

@@ -1,14 +1,15 @@
 section(data-section-name='single_player')
   .single_player
-    include ../MessageView/Message.pug
+    .single_player__message_container
     .single_player__wrapper
-      include ../GameView/Userinfo/Userinfo.pug
-      include ../GameView/Field/Field.pug
-      include ../GameView/Settings/Settings.pug
+      .single_player__field_container
     .single_player_info
-      .game__right_menu_buttons
-        .game__restart_button Restart
-        a.game__quit_button(data-href='Quit', href='menu') Quit
-      .single_player__timer
-        .single_player__timer_str#single_player__timer 0:00:00
-      include ../GameView/Statistics/Statistics.pug
+      .row
+        .single_player__userinfo_container
+        a.game__quit_button(data-href='Quit', href='menu')
+      .row
+        .single_player__timer
+        .game__restart_button 
+      .single_player__statistics_container
+      .single_player__statistics_container
+      .single_player__settings_container

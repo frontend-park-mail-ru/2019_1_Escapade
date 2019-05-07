@@ -1,0 +1,32 @@
+.countdown__label {
+  margin-right: 27px;
+  margin-left: 10px;
+  color: #C4C4C4;
+  font-size: 18px;
+  width: 300px;
+}
+
+.countdown__column {
+  display:flex;
+  flex-direction: column;
+}
+
+.countdown__row {
+  display: flex;
+  flex-direction: row;
+  width: 268px;
+  height: 12px;
+}
+
+.countdown__clock{
+  color: white;
+  font-size: 59px;
+  letter-spacing: 2px;
+}
+
+.countdown {
+  width: 250px;
+  text-align: left;
+  display: flex;
+  justify-content: space-around;
+}

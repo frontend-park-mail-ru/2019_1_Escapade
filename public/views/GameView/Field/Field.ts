@@ -1,6 +1,7 @@
 /* eslint-disable require-jsdoc */
 import Bus from '../../../utils/bus';
 import MathGame from '../../../utils/math';
+const Template = require('./Field.pug');
 /** */
 export default class FieldView {
   field: any;
@@ -12,14 +13,17 @@ export default class FieldView {
   prcentOpen: number;
   percent: number;
   mapElement: any;
+  timerHTMLElement: any;
   constructor() {
     this.width = 0;
     this.height = 0;
-    Bus.on('addListenersField', this._addListeners.bind(this), 'fieldView');
-    Bus.on('removeListenersField', this._removeListeners.bind(this), 'fieldView');
+    Bus.on('addField', this._addListeners.bind(this), 'fieldView');
+    Bus.on('removeField', this._removeListeners.bind(this), 'fieldView');
   }
 
-  _addListeners() {
+  _addListeners(htmlElementTitle : string) {
+    this.timerHTMLElement = document.querySelector(htmlElementTitle);
+    this.timerHTMLElement.innerHTML = Template();
     console.log('addListenersField ', Bus.listeners);
     this._removeListeners();
     Bus.on('renderField', this._render.bind(this), 'fieldView');
@@ -144,6 +148,6 @@ export default class FieldView {
     this.percent = percent;
     this.percentOpenDocElement.innerHTML = `${percent}%`;
     this.mapElement = document.querySelector('.game__field__map');
-    this.loadbarDocElement.style.width = `${(percent / 100) * (this.mapElement.offsetWidth - 51)}px`;
+    this.loadbarDocElement.style.width = `${(percent / 100) * (this.mapElement.offsetWidth - 58)}px`;
   }  
 }

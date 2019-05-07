@@ -5,7 +5,8 @@
     display:flex;
     margin-top: 15px;
     align-items: center;
-    justify-content: center;
+    width: 306px;
+    justify-content: space-around;
   } 
 
   &__settings_img{
@@ -80,12 +81,9 @@
 
   &__settings_info{
     margin-left: 10px;
-    color:black;
-    background: white;
+    color: white;
     font-size: 20px;
-    border: 1px solid #000000;
     border-radius: 15px;
-    padding: 8px 20px;
   }
 
   @media screen and (max-width:$tablet){
@@ -104,4 +102,22 @@
       display: none;
     }
   }
+}
+
+.single_player__statistics_lvl_img{
+  width: 40px;
+  height: 28px;
+  background: url('./img/lvl.png');
+  background-repeat: no-repeat;
+  background-size: contain;
+  margin-left: 25px;
+}
+
+.single_player__statistics_size_img{
+  width: 40px;
+  height: 28px;
+  background: url('./img/size.png');
+  background-repeat: no-repeat;
+  background-size: contain;
+  margin-left: 25px;
 }
