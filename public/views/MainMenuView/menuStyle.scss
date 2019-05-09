@@ -1,4 +1,3 @@
-@import url(https://fonts.googleapis.com/css?family=Lato:400,700italic);
 @import '../../styles/MainMenu/nav.scss';
 @import '../../styles/MainMenu/middle.scss';
 @import '../../styles/MainMenu/bottom.scss';
@@ -9,9 +8,10 @@ body {
   -webkit-user-select: none;
   -moz-user-select: none;
   -ms-user-select: none;
-  font-family: 'SairaRegular'; 
+ 
   font-weight: normal; 
   font-style: normal; 
+  font-family: 'Saira', sans-serif;
 }
 
 

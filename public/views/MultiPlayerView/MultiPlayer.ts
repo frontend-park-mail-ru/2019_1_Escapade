@@ -52,6 +52,8 @@ export default class MultiPlayerView extends BaseView {
    */
   constructor(parent: any) {
     super(parent, singlePlayerTemplate, true, 'updateUserInfo');
+    this.parent = parent;
+    console.log('this.parent ', this.parent)
     this.cellNumbersX = 15;
     this.cellNumbersY = 15;
     this.minesCount = 20;
@@ -68,6 +70,7 @@ export default class MultiPlayerView extends BaseView {
     this.startTimeFlag = {hour : 0, minute : 0, seconds : 10};
     this.gameTime = {hour : 0, minute : 10, seconds : 0};
     Bus.on('currentPath', this._currentPathSignalFunc.bind(this), 'multiplayerView');
+    Bus.on('busAllOffMultiplayer', this._busAllOff.bind(this), 'multiplayerView');
   }
 
   _busAllOn() {
@@ -85,6 +88,7 @@ export default class MultiPlayerView extends BaseView {
   }
 
   _busAllOff() {
+    console.log('multiplayer off')
     Bus.off('leftClickOnCell', this._clickOnCell.bind(this), 'multiplayerView');
     Bus.off('rightClickOnCell', this._rightСlickOnCell.bind(this), 'multiplayerView');
     Bus.off('updateFieldWS', this._updateField.bind(this), 'multiplayerView');
@@ -97,15 +101,15 @@ export default class MultiPlayerView extends BaseView {
     Bus.off('gameOwerWS', this._gameOver.bind(this), 'multiplayerView');
     Bus.off('sendRoom', this._getRoom.bind(this), 'multiplayerView');
   }
-
   /**
    *
   */
   render() {
     this.user = User;
     super.render();
-    Bus.emit('addField', '.multi_player__field_container');
-    Bus.emit('addMessage', '.multi_player__message_container');
+    Bus.emit('busAllOffSinglePlayer');
+    Bus.emit('addField', {container : '.multi_player__field_container', parent : this.parent});
+    Bus.emit('addMessage', {container : '.multi_player__message_container', parent : this.parent});
     Bus.emit('addPlayersList', '.multi_player__playerlist_container');
     Bus.emit('changeTitleRestartButton', 'Start');
     Bus.emit('messageBoxHide', true);
@@ -122,14 +126,22 @@ export default class MultiPlayerView extends BaseView {
   _currentPathSignalFunc(path: string) {
     if (path === '/multi_player') {
       this._busAllOn();
+      Bus.emit('busAllOffSinglePlayer');
+      Bus.emit('addField', {container : '.multi_player__field_container', parent : this.parent});
+      Bus.emit('addMessage', {container : '.multi_player__message_container', parent : this.parent});
+      Bus.emit('addPlayersList', '.multi_player__playerlist_container');
+      Bus.emit('changeTitleRestartButton', 'Start');
+      Bus.emit('messageBoxHide', true);
       this._showMap();
       this.curPath = path;
       console.log('_currentPathSignalFunc multi_player ');
     } else {
       if (this.curPath === '/multi_player') {
+        
         if (path !== '/lobby') {
           Bus.emit('leaveRoom', 4);
         }
+        console.log('Ohohohohohoho');
         console.log('_currentPathSignalFunc else ');
         this._stop_reset_timer();
         this.curPath = '';
@@ -164,7 +176,7 @@ export default class MultiPlayerView extends BaseView {
     let secondsLatency = 0;
     let timeInSeconds = data.room.settings.play - data.room.settings.prepare; 
     console.log('AAAaa ', parseInt(dataRoomCreate.substring(14,16)));
-    secondsLatency += (dataNow.getHours() - parseInt(dataRoomCreate.substring(11,13))) * 3600;
+    /*secondsLatency += (dataNow.getHours() - parseInt(dataRoomCreate.substring(11,13))) * 3600;
     secondsLatency += (dataNow.getMinutes() - parseInt(dataRoomCreate.substring(14,16))) * 60;
     secondsLatency += dataNow.getSeconds() - parseInt(dataRoomCreate.substring(17,19));
     if (secondsLatency < data.room.settings.prepare) {
@@ -182,8 +194,12 @@ export default class MultiPlayerView extends BaseView {
       this.gameTime.minute = Math.floor((timeInSeconds - this.gameTime.hour * 3600)/ 60);
       this.gameTime.seconds = Math.floor(timeInSeconds - this.gameTime.minute * 60 - this.gameTime.hour * 3600) + 1;
       this.timer.start(this.gameTime);
-    }
-    
+    }*/
+    this.gameTime.hour = Math.floor(timeInSeconds / 3600);
+    this.gameTime.minute = Math.floor((timeInSeconds - this.gameTime.hour * 3600)/ 60);
+    this.gameTime.seconds = Math.floor(timeInSeconds - this.gameTime.minute * 60 - this.gameTime.hour * 3600);
+    this.startTimeFlag.seconds = data.room.settings.prepare
+    this.timer.start(this.startTimeFlag);
 
     if (data.room.status === 3) {
       this.observerMode = true;
@@ -208,6 +224,7 @@ export default class MultiPlayerView extends BaseView {
     if(this.startGame) {
       return;
     }
+
     if (!this.observerMode) {
       if (this.flagPlacing) {
         this.flagPlacing = false;

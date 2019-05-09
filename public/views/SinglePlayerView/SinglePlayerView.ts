@@ -23,9 +23,11 @@ export default class SinglePlayerView extends BaseView {
    * @param {*} parent
    */
   constructor(parent: HTMLElement) {
-    super(parent, singlePlayerTemplate, true, 'updateUserInfo');
 
+    super(parent, singlePlayerTemplate, true, 'updateUserInfo');
+    this.parent = parent;
     Bus.on('currentPath', this._currentPathSignalFunc.bind(this), 'singlePlayerView');
+    this.curPath = '/single_player';
     
   }
 
@@ -35,11 +37,13 @@ export default class SinglePlayerView extends BaseView {
   render() {
     this.user = User;
     super.render();
-    Bus.emit('addField', '.single_player__field_container');
+    console.log("render singleplayer ");
+    Bus.emit('busAllOffMultiplayer');
+    Bus.emit('addField', {container : '.single_player__field_container', parent : this.parent});
     Bus.emit('addSettingsGame', '.single_player__settings_container');
     Bus.emit('addStatisticsGame', '.single_player__statistics_container');
     Bus.emit('addUserinfoGame', '.single_player__userinfo_container');
-    Bus.emit('addMessage', '.single_player__message_container');
+    Bus.emit('addMessage', {container : '.single_player__message_container', parent : this.parent});
 
     this._getElementsForStyles()
     Bus.on('setStylesOnStartSingle', this._setStylesOnStart.bind(this), 'singlePlayerView');
@@ -47,32 +51,35 @@ export default class SinglePlayerView extends BaseView {
     //this.progressBar.style.display = 'none'
     this.restartDocElement = document.querySelector('.game__restart_button');
     this.restartDocElement.addEventListener('click', this._restart.bind(this).bind(this));
-    Bus.emit('busAllOffSinglePlayer');
+    //Bus.emit('busAllOffSinglePlayer');
     Bus.emit('busAllOnSinglePlayer');
     Bus.emit('newStopwatchSinglePlayer');
     Bus.emit('showMapSinglePlayer');
     Bus.emit('updateUserInfo');
+
     this.oncontextmenu = document.body.oncontextmenu
     document.body.oncontextmenu = function (e) {
       return false;
     };
-
-    this.curPath = '/single_player';
   }
 
 
   _currentPathSignalFunc(path: string) {
     if (path === '/single_player') {
       console.log('_currentPathSignalFunc single_player');
-      Bus.emit('busAllOnSinglePlayer');
-      Bus.emit('showMapSinglePlayer');
-      Bus.emit('updateUserInfo');
+      Bus.emit('busAllOffMultiplayer');
+      Bus.emit('addField', {container : '.single_player__field_container', parent : this.parent});
+      Bus.emit('addSettingsGame', '.single_player__settings_container');
+      Bus.emit('addStatisticsGame', '.single_player__statistics_container');
+      Bus.emit('addUserinfoGame', '.single_player__userinfo_container');
+      Bus.emit('addMessage', {container : '.single_player__message_container', parent : this.parent});
       this.curPath = path;
       document.body.oncontextmenu = function (e) {
         return false;
       };
     } else {
       if (this.curPath === '/single_player') {
+        console.log('Hahaha');
         this._rollbackStylesOnEnd();
         Bus.emit('stopResetTimer');
         this.curPath = '';
