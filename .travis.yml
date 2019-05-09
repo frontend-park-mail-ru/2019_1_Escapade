@@ -2,9 +2,11 @@ language: node_js
 node_js:
 - 10
 script:
+- npm install
+- npm run build
 - chmod 600 ./id_rsa
-- ssh-keyscan -H 178.128.201.109 >> ~/.ssh/known_hosts
-- scp -i ./id_rsa -r ./public/dist root@178.128.201.109:/home/ubuntu/
+- ssh-keyscan -H $front_host >> ~/.ssh/known_hosts
+- scp -i ./id_rsa -r ./public/dist root@$front_host:/home/ubuntu/
 branches:
   only:
   - cors
