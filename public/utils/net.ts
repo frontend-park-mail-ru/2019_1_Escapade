@@ -1,6 +1,6 @@
 //const backHost = 'https://escapade-backend.herokuapp.com';
 //const backHost = 'http://localhost:3001';
-const backHost = 'http://back.ser.ru.com';
+const backHost = 'https://back.ser.ru.com';
 
 
 /** */
