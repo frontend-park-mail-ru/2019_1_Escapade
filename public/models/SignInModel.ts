@@ -16,7 +16,7 @@ export default class SignInModel {
    * @param {object} data
    */
   _login(data: {}) {
-    Net.post(data, '/session')
+    Net.post(data, '/api/session')
       .then((resp) => {
         if (resp.status === 200) {
           resp.json()

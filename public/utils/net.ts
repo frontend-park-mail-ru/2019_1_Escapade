@@ -47,7 +47,7 @@ export class Net {
    * @param {object} body
    * @return {Promise<Response>}
    */
-  static postPhoto(body: FormData, url = '/avatar', host = backHost) {
+  static postPhoto(body: FormData, url = '/api/avatar', host = backHost) {
     return fetch(host + url, {
       method: 'POST',
       body: body,

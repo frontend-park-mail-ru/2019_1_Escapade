@@ -21,7 +21,7 @@ export default class ProfileModel {
     Bus.on('changeProfile', this._changeProfile.bind(this), 'profileModel');
     Bus.on('uploadAvatar', this._uploadAvatar.bind(this), 'profileModel');
     Bus.on('getInfoFromWS', this._getInfo.bind(this), 'profileModel');
-    
+
   }
 
   _busAllOff() {
@@ -45,10 +45,10 @@ export default class ProfileModel {
     }
   }
 
-  _getInfo(data : any) {
-    console.log('_getInfo begin ', data) 
-    switch(data.type) {
-      case 'Lobby' :
+  _getInfo(data: any) {
+    console.log('_getInfo begin ', data)
+    switch (data.type) {
+      case 'Lobby':
         Bus.emit('updateProfileGames', data.value);
         break;
     }
@@ -60,7 +60,7 @@ export default class ProfileModel {
    */
   _changeProfile(data: object) {
     console.log(data);
-    Net.put(data, '/user')
+    Net.put(data, '/api/user')
       .then((resp) => {
         console.log(resp.status);
         if (resp.status === 200) {
@@ -114,7 +114,7 @@ export default class ProfileModel {
    * @param {*} name
    */
   _getAvatar(name: string) {
-    Net.get(`/avatar/${name}`)
+    Net.get(`/api/avatar/${name}`)
       .then((resp) => {
         console.log(resp.status);
         if (resp.status === 200) {

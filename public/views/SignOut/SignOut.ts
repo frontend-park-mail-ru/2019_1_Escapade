@@ -8,7 +8,7 @@ import Bus from '../../utils/bus';
  * Выход и возвращение в главное меню
 */
 export default function signOut() {
-  Net.delete('/session')
+  Net.delete('/api/session')
     .then((resp) => {
       if (resp.status === 200) {
         User.removeUser();
