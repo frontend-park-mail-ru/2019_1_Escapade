@@ -68,18 +68,22 @@ export default class SinglePlayerView extends BaseView {
     if (path === '/single_player') {
       console.log('_currentPathSignalFunc single_player');
       Bus.emit('busAllOffMultiplayer');
+      Bus.emit('busAllOnSinglePlayer');
+      
       Bus.emit('addField', {container : '.single_player__field_container', parent : this.parent});
-      Bus.emit('addSettingsGame', '.single_player__settings_container');
-      Bus.emit('addStatisticsGame', '.single_player__statistics_container');
-      Bus.emit('addUserinfoGame', '.single_player__userinfo_container');
       Bus.emit('addMessage', {container : '.single_player__message_container', parent : this.parent});
+
+      Bus.emit('busAllOnSinglePlayer');
+      Bus.emit('newStopwatchSinglePlayer');
+      Bus.emit('showMapSinglePlayer');
+      Bus.emit('updateUserInfo');
+
       this.curPath = path;
       document.body.oncontextmenu = function (e) {
         return false;
       };
     } else {
       if (this.curPath === '/single_player') {
-        console.log('Hahaha');
         this._rollbackStylesOnEnd();
         Bus.emit('stopResetTimer');
         this.curPath = '';

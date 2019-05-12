@@ -74,6 +74,7 @@ export default class LobbyVew extends BaseView {
     Bus.on('changeRoomStringColor', this._changeRoomStringColor.bind(this), 'lobbyView');
     Bus.on('updateRoomRow', this._updateRoomRow.bind(this), 'lobbyView');
     Bus.on('deleteRoomRow', this._deleteRoomRow.bind(this), 'lobbyView');
+    Bus.emit('addRoomSettings', '.lobby_room_settings_container');
   }
 
   _createRoomEvent() {

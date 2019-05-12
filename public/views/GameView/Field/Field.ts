@@ -13,7 +13,7 @@ export default class FieldView {
   prcentOpen: number;
   percent: number;
   mapElement: any;
-  timerHTMLElement: any;
+  HTMLElement: any;
   container: any;
   parent: any;
 
@@ -28,8 +28,8 @@ export default class FieldView {
     this.container = data.container;
     this.parent = data.parent;
     console.log('addListenersField ', this.container)
-    this.timerHTMLElement = this.parent.querySelector(this.container);
-    this.timerHTMLElement.innerHTML = Template();
+    this.HTMLElement = this.parent.querySelector(this.container);
+    this.HTMLElement.innerHTML = Template();
     console.log('addListenersField ', Bus.listeners);
     this._removeListeners();
     Bus.on('renderField', this._render.bind(this), 'fieldView');

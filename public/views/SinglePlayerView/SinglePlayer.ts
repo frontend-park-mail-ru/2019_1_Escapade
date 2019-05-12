@@ -110,7 +110,6 @@ export default class SinglePlayer {
 
   /** */
   _showMap() {
-    console.log('EEEEEEEEEEEEEEE')
     this.openCellsCount = 0;
     this.pointsCount = 0;
     this.leftClicksCount = 0;
