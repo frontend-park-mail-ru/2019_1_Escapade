@@ -1,9 +1,10 @@
-.game__field{
+.game__field {
   &__map {
     background-color: #92a0ad;
     text-align: center;
     position: relative;
-    border-width: 3px 3px 3px 3px; /* top right bottom left */
+    border-width: 3px 3px 3px 3px;
+    /* top right bottom left */
     border-style: solid;
     border-color: #46535E;
     margin-top: 15px;
@@ -14,18 +15,19 @@
 
   @media screen and (max-width: $tablet) {
     &__map {
-      width:300px !important;
+      width: 300px !important;
       height: 300px !important;
       overflow: scroll;
     }
-    &__map::-webkit-scrollbar{
+
+    &__map::-webkit-scrollbar {
       display: none
     }
 
   }
 
   &__under_map {
-    margin-top: 0px;
+    margin-top: 14px;
     display: flex;
     align-self: flex-start;
   }
@@ -69,43 +71,43 @@
 }
 
 .cell_close_2 {
-  background:#d3d5d7 url('./img/cell2.png') no-repeat;
+  background: #d3d5d7 url('./img/cell2.png') no-repeat;
 }
 
 .cell_close_3 {
-  background:#d3d5d7 url('./img/cell3.png') no-repeat;
+  background: #d3d5d7 url('./img/cell3.png') no-repeat;
 }
 
 
 .cell_flag_1 {
-  background: url('./img/flag_empty.png') no-repeat ,
-              url('./img/cell1.png') no-repeat;
+  background: url('./img/flag_empty.png') no-repeat,
+    url('./img/cell1.png') no-repeat;
 }
 
 .cell_flag_2 {
   background: url('./img/flag_empty.png') no-repeat,
-              url('./img/cell2.png') no-repeat;
+    url('./img/cell2.png') no-repeat;
 }
 
 .cell_flag_3 {
   background: url('./img/flag_empty.png') no-repeat,
-              url('./img/cell3.png') no-repeat;
+    url('./img/cell3.png') no-repeat;
 }
 
 
 .cell_flagmulti_1 {
   background: url('./img/flag_empty_multi.png') no-repeat,
-              url('./img/cell1.png') no-repeat;
+    url('./img/cell1.png') no-repeat;
 }
 
 .cell_flagmulti_2 {
   background: url('./img/flag_empty_multi.png') no-repeat,
-              url('./img/cell2.png') no-repeat;
+    url('./img/cell2.png') no-repeat;
 }
 
 .cell_flagmulti_3 {
   background: url('./img/flag_empty_multi.png') no-repeat,
-              url('./img/cell3.png') no-repeat;
+    url('./img/cell3.png') no-repeat;
 }
 
 .cell_open0 {
@@ -155,4 +157,3 @@
 .cell_open11 {
   background: url('./img/flag_my.png') no-repeat;
 }
-

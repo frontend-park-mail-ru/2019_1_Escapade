@@ -1,27 +1,25 @@
-
-.single_player{
+.single_player {
 
   &__settings {
-    display:flex;
+    display: flex;
     margin-top: 15px;
     align-items: center;
-    width: 306px;
     justify-content: space-around;
-  } 
+  }
 
-  &__settings_img{
+  &__settings_img {
     width: 70px;
     height: 70px;
     background: url('./img/settings2.png') no-repeat;
     background-size: cover;
     float: left;
     -webkit-transition: -webkit-transform .8s ease-in-out;
-    transition:         transform .8s ease-in-out;
+    transition: transform .8s ease-in-out;
   }
 
   &__settings_img:hover {
     -webkit-transform: rotate(180deg);
-            transform: rotate(180deg);
+    transform: rotate(180deg);
   }
 
 
@@ -30,12 +28,14 @@
     margin: 0;
     padding: 0;
   }
+
   &__topmenu:after {
     content: "";
     display: table;
     clear: both;
   }
-  &__topmenu > li {
+
+  &__topmenu>li {
     width: 25%;
     float: left;
     position: relative;
@@ -54,11 +54,12 @@
     transform-origin: 0 0;
     transition: .5s ease-in-out;
   }
+
   &__submenu {
-    
+
     text-align: left;
     font-size: 20px;
-    border-bottom: 1px solid rgba(255,255,255,.1);
+    border-bottom: 1px solid rgba(255, 255, 255, .1);
     text-decoration: none;
     outline: none;
     display: block;
@@ -79,32 +80,35 @@
   }
 
 
-  &__settings_info{
+  &__settings_info {
     margin-left: 10px;
     color: white;
     font-size: 20px;
     border-radius: 15px;
   }
 
-  @media screen and (max-width:$tablet){
+  @media screen and (max-width:$tablet) {
 
-    &__settings_info{
+    &__settings_info {
       padding: 6px 12px;
     }
-    &__settings_img{
-      width:50px;
+
+    &__settings_img {
+      width: 50px;
       height: 50px;
     }
-    &__settings_info_width{
+
+    &__settings_info_width {
       display: none;
     }
-    &__settings_info_height{
+
+    &__settings_info_height {
       display: none;
     }
   }
 }
 
-.single_player__statistics_lvl_img{
+.single_player__statistics_lvl_img {
   width: 40px;
   height: 28px;
   background: url('./img/lvl.png');
@@ -113,7 +117,7 @@
   margin-left: 25px;
 }
 
-.single_player__statistics_size_img{
+.single_player__statistics_size_img {
   width: 40px;
   height: 28px;
   background: url('./img/size.png');

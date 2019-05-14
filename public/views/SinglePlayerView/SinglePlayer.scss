@@ -1,22 +1,22 @@
 .single_player {
-  display:flex;
-  justify-content: flex-end;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  height: 100vh;
 
 
   &__wrapper {
     margin-top: 10px;
-    display:flex;
+    display: flex;
     flex-direction: column;
     align-items: center;
     transition: all 0.5s ease-in-out;
   }
 
   &_info {
-    display:flex;
+    display: flex;
     flex-direction: column;
-    margin-top: 30px;
     margin-left: 2vw;
-    margin-right: 2vw;
     border-radius: 23px;
     text-align: center;
   }
@@ -25,9 +25,8 @@
     padding: 12px;
     transition: all 0.5s ease-in-out;
     display: flex;
-    width: 269px;
+    // width: 269px;
     margin-top: 10px;
-    text-align: left;
   }
 
   &__timer_str {
@@ -35,6 +34,13 @@
     font-size: 3rem;
     font-weight: 700;
     width: 300px
+  }
+
+  &__row {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center
   }
 }
 
@@ -57,14 +63,14 @@
     justify-content: center;
     align-items: center;
 
-    &__info{
+    &__info {
       align-self: flex-start;
       margin-left: 1.5vw;
     }
   }
 }
 
-@media screen and (min-width: $tablet)  and (max-width: $normal) {
+@media screen and (min-width: $tablet) and (max-width: $normal) {
   .single_player {
     display: flex;
     align-items: center;
@@ -73,7 +79,7 @@
 }
 
 .game__right_menu_buttons {
-  display:flex;
+  display: flex;
   justify-content: space-evenly;
   transition: all 0.5s ease-in-out;
 }
@@ -84,7 +90,6 @@
   background: url('./img/restart.png');
   background-repeat: no-repeat;
   background-size: contain;
-  margin-top: 56px;
 }
 
 .game__quit_button {
@@ -94,14 +99,11 @@
   background-repeat: no-repeat;
   background-size: contain;
 }
-.row {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-}
 
-@media screen and (min-width: $mobile)  and (max-width: $tablet) {
-  .game__quit_button, .game__restart_button {
+@media screen and (min-width: $mobile) and (max-width: $tablet) {
+
+  .game__quit_button,
+  .game__restart_button {
     padding: 10px 30px;
   }
 }
