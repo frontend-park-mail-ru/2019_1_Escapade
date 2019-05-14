@@ -28,7 +28,7 @@ export default class SinglePlayerView extends BaseView {
     this.parent = parent;
     Bus.on('currentPath', this._currentPathSignalFunc.bind(this), 'singlePlayerView');
     this.curPath = '/single_player';
-    
+
   }
 
   /**
@@ -39,11 +39,11 @@ export default class SinglePlayerView extends BaseView {
     super.render();
     console.log("render singleplayer ");
     Bus.emit('busAllOffMultiplayer');
-    Bus.emit('addField', {container : '.single_player__field_container', parent : this.parent});
+    Bus.emit('addField', { container: '.single_player__field_container', parent: this.parent });
     Bus.emit('addSettingsGame', '.single_player__settings_container');
     Bus.emit('addStatisticsGame', '.single_player__statistics_container');
     Bus.emit('addUserinfoGame', '.single_player__userinfo_container');
-    Bus.emit('addMessage', {container : '.single_player__message_container', parent : this.parent});
+    Bus.emit('addMessage', { container: '.single_player__message_container', parent: this.parent });
 
     this._getElementsForStyles()
     Bus.on('setStylesOnStartSingle', this._setStylesOnStart.bind(this), 'singlePlayerView');
@@ -69,9 +69,9 @@ export default class SinglePlayerView extends BaseView {
       console.log('_currentPathSignalFunc single_player');
       Bus.emit('busAllOffMultiplayer');
       Bus.emit('busAllOnSinglePlayer');
-      
-      Bus.emit('addField', {container : '.single_player__field_container', parent : this.parent});
-      Bus.emit('addMessage', {container : '.single_player__message_container', parent : this.parent});
+
+      Bus.emit('addField', { container: '.single_player__field_container', parent: this.parent });
+      Bus.emit('addMessage', { container: '.single_player__message_container', parent: this.parent });
 
       Bus.emit('busAllOnSinglePlayer');
       Bus.emit('newStopwatchSinglePlayer');
@@ -89,7 +89,7 @@ export default class SinglePlayerView extends BaseView {
         this.curPath = '';
         Bus.emit('busAllOffSinglePlayer');
         document.body.oncontextmenu = this.oncontextmenu;
-        
+
       }
     }
   }
@@ -104,9 +104,9 @@ export default class SinglePlayerView extends BaseView {
     //this.progressBar.style.display = 'flex';
 
     if (width <= 440) {
-      this.playerInfo.style.display = 'none';
-      this.timerContainer.style.transform = "translateY(-350px)"
-      this.fieldContainer.style.transform = "translateY(150px)"
+      this.playerInfo.style.transform = "translateY(-390px)";
+      //this.timerContainer.style.transform = "translateY(-100px)"
+      this.fieldContainer.style.transform = "translateY(110px)"
     }
   }
 
@@ -116,20 +116,20 @@ export default class SinglePlayerView extends BaseView {
     //this.progressBar.style.display = 'none';
 
     if (width <= 440) {
-      this.playerInfo.style.display = 'flex';
-      this.timerContainer.style.transform = "translateY(0)"
+      this.playerInfo.style.transform = "translateY(0)";
+      //this.timerContainer.style.transform = "translateY(0)"
       this.fieldContainer.style.transform = "translateY(0)"
     }
   }
 
 
   _getElementsForStyles() {
-    this.playerInfo = this.parent.querySelector('.user_info__player')
-    this.settings = this.parent.querySelector('.single_player__settings')
+    let rest
+    [this.playerInfo, this.timerContainer, ...rest] = this.parent.querySelectorAll('.single_player__row')
+    this.settings = this.parent.querySelector('.single_player__settings_container')
     this.progressBar = this.parent.querySelector('.game__field__under_map')
-    this.timerContainer = this.parent.querySelector('.single_player__timer')
     this.fieldContainer = this.parent.querySelector('.single_player__wrapper')
     this.statisticsPanel = document.querySelector('.single_player__statistics')
-    
+
   }
 }
