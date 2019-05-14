@@ -18,13 +18,6 @@ import MultiPlayerMV from './ModelView/MultiPlayerMV'
 import SinglePlayerMV from './ModelView/SinglePlayerMV';
 import ProfileMV from './ModelView/ProfileMV';
 
-import './img/arrow-left.png';
-import './img/arrow-right.png';
-import './img/ava_guest.png';
-import './img/roomNotFound.png';
-import './img/logo_multi.png';
-import './img/logo_single.png';
-
 import './main.scss';
 
 const root = document.getElementById('application');

@@ -10,7 +10,7 @@ export default class LeaderBoardModel {
 
 
   _getPagesAmount(perPage: any) {
-    Net.get(`/users/pages_amount?per_page=${perPage}`)
+    Net.get(`/api/users/pages_amount?per_page=${perPage}`)
       .then((resp) => {
         return resp.json();
       })
@@ -25,7 +25,7 @@ export default class LeaderBoardModel {
 
 
   _getPage(pageStruct: { page: any; per_page: any; }) {
-    Net.get(`/users/pages?page=${pageStruct.page}&per_page=${pageStruct.per_page}`)
+    Net.get(`/api/users/pages?page=${pageStruct.page}&per_page=${pageStruct.per_page}`)
       .then((resp) => {
         return resp.json();
       })

@@ -55,7 +55,7 @@ export const User = new UserSingleton();
  * @param {function} callback
  */
 export function checkAuth(callback: CallableFunction, difficult = 1) {
-  Net.get(`/user?difficult=${difficult}`)
+  Net.get(`/api/user?difficult=${difficult}`)
     .then((resp) => {
       if (resp.status === 200) {
         resp.json()

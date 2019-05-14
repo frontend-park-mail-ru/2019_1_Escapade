@@ -15,14 +15,14 @@ export default class LobbyModel {
    *
    */
   constructor() {
-    this.wsAdress = 'ws://localhost:3002/ws';
-    
+    this.wsAdress = 'wss://back.ser.ru.com/game/ws';
+
     this.currentRoomInfo = [];
-    
+
 
     Bus.on('currentPath', this._currentPathSignalFunc.bind(this), 'lobbyModel');
 
-    
+
     this.curPath = '';
   }
 
@@ -60,27 +60,27 @@ export default class LobbyModel {
   }
 
 
-  _getInfo(data : any) {
-    console.log('_getInfo begin ', data) 
-    switch(data.type) {
-      case 'Lobby' :
+  _getInfo(data: any) {
+    console.log('_getInfo begin ', data)
+    switch (data.type) {
+      case 'Lobby':
         Bus.emit('updateRooms', data.value.lobby);
         break;
-      case 'LobbyRoomCreate' :
+      case 'LobbyRoomCreate':
         Bus.emit('addRoom', data.value);
         break;
-      case 'LobbyRoomUpdate' :
+      case 'LobbyRoomUpdate':
         Bus.emit('updateRoom', data.value);
         break;
-      case 'LobbyRoomDelete' : 
+      case 'LobbyRoomDelete':
         Bus.emit('deleteRoom', data.value);
         break;
-      case 'Room' :
-        const roomValue  = data.value;
+      case 'Room':
+        const roomValue = data.value;
         if (!roomValue.room.players) {
           return;
         } else {
-          const info = {name : roomValue.room.name, length : roomValue.room.players.connections.length, capacity : roomValue.room.players.capacity}
+          const info = { name: roomValue.room.name, length: roomValue.room.players.connections.length, capacity: roomValue.room.players.capacity }
           this._updateCurrentRoom(info);
           this.currentRoomInfo = roomValue;
           if (roomValue.room.status === 2 || roomValue.room.status === 3) {
@@ -89,7 +89,7 @@ export default class LobbyModel {
         }
         break;
     }
-    console.log('_getInfo end') 
+    console.log('_getInfo end')
   }
 
   _createRoom() {
@@ -98,19 +98,25 @@ export default class LobbyModel {
     const players = 2;
     const observers = 10;
     const mines = 20;
-    this.ws.sendInfoJSON({send : { RoomSettings : {name : 'my room', id : 'create', width : width, height : height, 
-    players : players, observers : observers, prepare:10, play:100, mines : mines}}});
+    this.ws.sendInfoJSON({
+      send: {
+        RoomSettings: {
+          name: 'my room', id: 'create', width: width, height: height,
+          players: players, observers: observers, prepare: 10, play: 100, mines: mines
+        }
+      }
+    });
   }
 
-  _connectToRoom(id : any) {
-    this.ws.sendInfoJSON({send : { RoomSettings : {id : id}}});
+  _connectToRoom(id: any) {
+    this.ws.sendInfoJSON({ send: { RoomSettings: { id: id } } });
   }
 
-  _leaveRoom(signal : number) {
-    this.ws.sendInfoJSON({send:{action:signal}});
+  _leaveRoom(signal: number) {
+    this.ws.sendInfoJSON({ send: { action: signal } });
   }
 
-  _updateCurrentRoom(data : any) {
+  _updateCurrentRoom(data: any) {
     Bus.emit('updateCurrentRoom', data);
   }
 

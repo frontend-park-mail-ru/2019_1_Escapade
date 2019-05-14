@@ -18,7 +18,7 @@ export default class SignUpModel {
   _auth(data: object) {
     console.log(data);
 
-    Net.post(data, '/user')
+    Net.post(data, '/api/user')
       .then((resp) => {
         if (resp.status === 201) {
           Bus.emit('onSuccessAuth', data);
