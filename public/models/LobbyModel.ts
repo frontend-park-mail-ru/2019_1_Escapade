@@ -92,16 +92,17 @@ export default class LobbyModel {
     console.log('_getInfo end')
   }
 
-  _createRoom() {
-    const width = 15;
-    const height = 15;
-    const players = 2;
+  _createRoom(data : any) {
+    const width = data.width;
+    const height = data.height;;
+    const players = data.players;;
     const observers = 10;
-    const mines = 20;
+    const mines = data.mines;
+    const title = data.title;
     this.ws.sendInfoJSON({
       send: {
         RoomSettings: {
-          name: 'my room', id: 'create', width: width, height: height,
+          name: title, id: 'create', width: width, height: height,
           players: players, observers: observers, prepare: 10, play: 100, mines: mines
         }
       }
