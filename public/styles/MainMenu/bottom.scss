@@ -34,6 +34,12 @@
     }
   }
 
+  @media screen and (min-width: $large) and (max-width: $mega) {
+    &__button {
+      font-size: 2.2vw;
+    }
+  }
+
   &__name {
     color: white;
     font-family: Saira;

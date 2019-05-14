@@ -41,4 +41,11 @@
       padding: 5px;
     }
   }
+
+  @media screen and (min-width: $large) and (max-width: $mega) {
+    &__label {
+      width: calc(17vw + 3rem);
+      font-size: calc(2vw + 0.2rem);
+    }
+  }
 }
