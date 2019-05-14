@@ -1,4 +1,5 @@
 @import './thresholds.scss';
+@import url('common.css');
 @import './animations.scss';
 @import './colors.scss';
 @import './styles/Form/form.scss';
@@ -23,5 +24,3 @@
 @import url('components/OfflinePoppup/offline.css');
 @import './views/ProfileEditView/ProfileEdit.scss';
 @import './utils/stopwatch/stopwatch.css';
-
-@import url('common.css');
