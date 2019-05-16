@@ -54,7 +54,7 @@ export default class Lobby {
 
   _createRoomEvent() {
     this.currentRoomId = -2;
-    Bus.emit('createRoom');
+    Bus.emit('showRoomSettingsPanel',this.rooms.length);
   }
 
   _leaveRoom() {
@@ -70,8 +70,8 @@ export default class Lobby {
     Bus.emit('hideNotFoundRoomPanel');
     Bus.emit('showPaginatorPanel');
     const room = {name : data.name, playersCount : data.players.connections.length,
-      playersCapacity : data.players.capacity, difficult : this._getModeByMines(data.field.Mines),
-      width : data.field.width, height : data.field.height, mines : data.field.Mines, time : '0:00:00',
+      playersCapacity : data.players.capacity, difficult : this._getModeByMines(data.field.mines),
+      width : data.field.width, height : data.field.height, mines : data.field.mines, time : '0:00:00',
       observersCount : data.observers.get.length, status : this._getStatusByCode(data.status)}
     
     if (data.status === 3) {   // busy room
@@ -151,8 +151,8 @@ export default class Lobby {
 
     data.allRooms.get.forEach((item : any, i : number) => {
       const room = {name : item.name, playersCount : item.players.connections.length,
-        playersCapacity : item.players.capacity, difficult : this._getModeByMines(item.field.Mines),
-        width : item.field.width, height : item.field.height, mines : item.field.Mines, time : '0:00:00',
+        playersCapacity : item.players.capacity, difficult : this._getModeByMines(item.field.mines),
+        width : item.field.width, height : item.field.height, mines : item.field.mines, time : '0:00:00',
         observersCount : item.observers.get.length, status : this._getStatusByCode(item.status)}
       
       if (item.status === 3 || item.status === 2) {   // busy room
@@ -201,6 +201,7 @@ export default class Lobby {
         mode = 'God';
         break;
     }
+    mode = 'Normal'; //!!!!!!!!!!!! Убрать, заглушка
     return mode;
   }
 
