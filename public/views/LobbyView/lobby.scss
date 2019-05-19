@@ -78,6 +78,7 @@
     background-repeat: no-repeat;
     padding: 12px;
     padding-left: 41px;
+    font-size: 2.5vw;
   }
 
   @media screen and (max-width: $tablet) {
@@ -160,6 +161,20 @@
     text-indent: 1vw;
   }
 
+  @media screen and (max-width: $normal) {
+    &__with_image {
+      padding-left: 14px;
+      background-size: 2.2vw;
+    }
+  }
+
+  @media screen and (max-width: $tablet) {
+    &__with_image {
+      padding-left: 17px;
+      background-size: 4.5vw;
+    }
+  }
+
   &__name {
     background-image: url('./img/room.png');
     width: 18vw;
@@ -227,6 +242,18 @@
     }
 
     &__time {
+      display: none;
+    }
+
+    &__time_have {
+      display: none;
+    }
+
+    &__status {
+      display: none;
+    }
+
+    &__observers {
       display: none;
     }
   }

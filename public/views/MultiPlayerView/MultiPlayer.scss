@@ -1,0 +1,120 @@
+.multi_player {
+  display: flex;
+  justify-content: center;
+  display: flex;
+  flex-direction: row;
+
+  &__wrapper {
+    margin-top: 10px;
+    display: flex;
+    flex-direction: column;
+  }
+
+  &_info {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 10px;
+    margin-left: 15px;
+    text-align: center;
+    height: 700px;
+    // width: 500px;
+    border-radius: 23px;
+  }
+
+  &__timer {
+    background-color: #4B5E70;
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    margin-top: 15px;
+    border-radius: 23px;
+  }
+
+  &__timer_str {
+    // width: 310px;
+    text-align: center;
+    color: white;
+    font-size: 4rem;
+    font-weight: 700;
+    padding: 8px;
+  }
+
+  @media screen and (max-width: $tablet) {
+    &__timer_str {
+      font-size: 2rem;
+      font-weight: 600;
+    }
+  }
+
+  &__playerlist_container {
+    display: flex;
+  }
+
+  @media screen and (max-width: 320px) {
+    & {
+      display: flex;
+      align-items: center;
+      flex-direction: column;
+    }
+  }
+
+  @media screen and (min-width: 321px) and (max-width: 480px) {
+    & {
+      display: flex;
+      align-items: center;
+      flex-direction: column;
+    }
+
+  }
+
+  @media screen and (min-width: 481px) and (max-width: 768px) {
+    & {
+      display: flex;
+      align-items: center;
+      flex-direction: column;
+    }
+
+    &__player {
+      // width: 760px;
+      margin-left: 70px;
+    }
+
+    &__settings {
+      // width: 760px;
+      margin-left: 65px;
+    }
+
+    &_info {
+      margin-left: 30px;
+    }
+
+    &__under_map {
+      margin-left: 75px;
+    }
+
+  }
+
+  @media screen and (min-width: 769px) and (max-width: 1200px) {
+    & {
+      display: flex;
+      align-items: center;
+      flex-direction: column;
+    }
+  }
+}
+
+.game__multi_right_menu_buttons {
+  display: flex;
+  margin-top: 15px;
+}
+
+
+.game__multi_quit_button {
+  text-decoration: none;
+  background-color: #828282;
+  padding: 15px 35px;
+  color: white;
+  border: 1px solid #000000;
+  border-radius: 10px;
+}
