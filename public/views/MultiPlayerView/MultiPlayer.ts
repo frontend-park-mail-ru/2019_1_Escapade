@@ -4,7 +4,7 @@ import MathGame from '../../utils/math';
 import BaseView from '../BaseView';
 import { User } from '../../utils/user';
 import { MineSweeper } from '../../game/minesweeper';
-import { Timer } from '../../utils/timer';
+import { Timer } from '../../utils/timer/timer';
 import { checkAuth } from '../../utils/user';
 import Bus from '../../utils/bus';
 /** */
@@ -117,7 +117,7 @@ export default class MultiPlayerView extends BaseView {
     this.quitDocElement.addEventListener('click', this._quitClick.bind(this));
     this._busAllOff();
     this._busAllOn();
-    this.timer = new Timer('multi_player__timer', this._timeIsOver.bind(this));
+    this.timer = new Timer('.multi_player__timer', this._timeIsOver.bind(this));
     this._showMap();
     console.log('render');
   }

@@ -1,4 +1,4 @@
-import Bus from "./bus";
+const timerTemplate = require('./timer.pug');
 
 /** */
 export class Timer {
@@ -10,17 +10,21 @@ export class Timer {
   timer: NodeJS.Timeout;
   startTime: any;
   funcCallback: any;
+  countdownElement: any;
   /**
    *
    */
+
   constructor(htmlElementTitle : string, callback : any) {
-    
-    this.timerHTMLElement = document.getElementById(htmlElementTitle);
+    this.timerHTMLElement = document.querySelector(htmlElementTitle);
+    this.timerHTMLElement.innerHTML = timerTemplate();
+    this.countdownElement = document.querySelector(".timer__clock");
     this.running = false;
     this.paused = false;
     this.timeStr = '';
     this.funcCallback = callback;
   }
+
 
   /**
    *
@@ -33,8 +37,8 @@ export class Timer {
     console.log('start timer');
     this.startTime = {hour : hour, minute : minute, seconds : seconds};
     const time = this._parseTime();
-    this.timeStr = time[0] + ':' + time[1] + ':' + time[2];
-    this.timerHTMLElement.innerHTML = this.timeStr;
+    this.timeStr = `${time[0]}:${time[1]}:${time[2]}`;
+    this.countdownElement.innerHTML = this.timeStr;
     this.running = true;
     this.timer = setInterval(this.run.bind(this), 1000);
   };
@@ -49,7 +53,7 @@ export class Timer {
 
     while (i < d.length) {
       let t = d[i];
-      let strT = ((i > 0 && t < 10) ? '0' + t : t).toString();
+      let strT = ((i >= 0 && t < 10) ? '0' + t : t).toString();
       time.push(strT);
       i++;
     }
@@ -73,8 +77,8 @@ export class Timer {
      
 
     const time = this._parseTime();
-    this.timeStr = time[0] + ':' + time[1] + ':' + time[2];
-    this.timerHTMLElement.innerHTML = this.timeStr;
+    this.timeStr = `${time[0]}:${time[1]}:${time[2]}`;;
+    this.countdownElement.innerHTML = this.timeStr;
     console.log('run timer');
     if ((this.startTime.seconds === 0) && (this.startTime.minute === 0) && (this.startTime.hour === 0)) {
       this.stop();
@@ -104,7 +108,7 @@ export class Timer {
     
     this.timeStr = this.startTime.hour + ':' + this.startTime.minute + ':' + this.startTime.seconds;
     
-    this.timerHTMLElement.innerHTML = this.timeStr;
+    this.countdownElement.innerHTML = this.timeStr;
   };
 
   /**

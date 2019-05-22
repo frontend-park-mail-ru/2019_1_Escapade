@@ -90,11 +90,11 @@ export default class LobbyVew extends BaseView {
   _hideCurrentRoomPanel() {
     this.roomStatusField.innerHTML = '';
     this.roomImagesField.innerHTML = '';
-    this.currentRoomPanel.hidden = true;
+    this.currentRoomPanel.style.display = 'none';;
   }
 
   _showCurrentRoomPanel({name = '', length = 0, capacity = 0}) {
-    this.currentRoomPanel.hidden = false;
+    this.currentRoomPanel.style.display = 'flex';;
     this.roomStatusField.innerHTML = `Room ${name} waiting... ${length}/${capacity}`;
   }
 
