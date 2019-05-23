@@ -31,6 +31,15 @@
     background-size: contain;
   }
 
+  &__button {
+    border-radius: 30px;
+    border: 0.2vw solid rgb(150, 159, 167);
+    background-color: rgba(75, 94, 112, 1);
+    color: white;
+    cursor: pointer;
+    font-family: Saira;
+  }
+
   &__current_room_panel {
     display: flex;
     padding: 15px;
@@ -79,6 +88,7 @@
     padding: 12px;
     padding-left: 41px;
     font-size: 2.5vw;
+    margin-right: 7vw;
   }
 
   @media screen and (max-width: $tablet) {
@@ -87,7 +97,7 @@
     }
 
     &__create_game {
-      font-size: 3vw;
+      font-size: 3.5vw;
       padding: 3.2vw;
       padding-left: 42px;
     }
@@ -109,15 +119,6 @@
 
   &__back {
     margin-bottom: 1vw;
-  }
-
-  &__button {
-    border-radius: 30px;
-    border: 0.2vw solid rgb(150, 159, 167);
-    background-color: rgba(75, 94, 112, 1);
-    color: white;
-    cursor: pointer;
-    font-family: Saira;
   }
 
   &__find_game {

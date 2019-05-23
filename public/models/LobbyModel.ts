@@ -15,7 +15,7 @@ export default class LobbyModel {
    *
    */
   constructor() {
-    this.wsAdress = 'ws://localhost:3002/ws';
+    this.wsAdress = 'wss://back.ser.ru.com/game/ws';
 
     this.currentRoomInfo = [];
 
@@ -92,7 +92,7 @@ export default class LobbyModel {
     console.log('_getInfo end')
   }
 
-  _createRoom(data : any) {
+  _createRoom(data: any) {
     const width = data.width;
     const height = data.height;;
     const players = data.players;;
