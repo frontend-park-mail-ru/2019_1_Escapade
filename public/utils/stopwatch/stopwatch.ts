@@ -48,7 +48,7 @@ export class Stopwatch {
     while (i < d.length) {
       let t = Math.floor(elapsed / d[i]);
       elapsed -= t * d[i];
-      let strT = ((i >= 0 && t < 10) ? '0' + t : t).toString();
+      let strT = ((t >= 0 && t < 10) ? '0' + t : t).toString();
       time.push(strT);
       i++;
     }

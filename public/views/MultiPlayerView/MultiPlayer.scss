@@ -16,8 +16,16 @@
     align-items: center;
     margin-left: 15px;
     text-align: center;
-    height: 700px;
+    height: 707px;
     border-radius: 23px;
+  }
+
+  &__row {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    transition: all 0.5s ease-in-out;
   }
 
   &__timer {
@@ -106,10 +114,9 @@
 
 
 .game__multi_quit_button {
-  text-decoration: none;
-  background-color: #828282;
-  padding: 15px 35px;
-  color: white;
-  border: 1px solid #000000;
-  border-radius: 10px;
+width: 45px;
+  height: 45px;
+  background: url('./img/quit.png');
+  background-repeat: no-repeat;
+  background-size: contain;
 }

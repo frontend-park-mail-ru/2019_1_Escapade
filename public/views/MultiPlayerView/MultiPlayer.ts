@@ -111,6 +111,7 @@ export default class MultiPlayerView extends BaseView {
     Bus.emit('addField', { container: '.multi_player__field_container', parent: this.parent });
     Bus.emit('addMessage', { container: '.multi_player__message_container', parent: this.parent });
     Bus.emit('addPlayersList', '.multi_player__playerlist_container');
+    Bus.emit('addGameActions', '.multi_player_actions_container');
     Bus.emit('changeTitleRestartButton', 'Start');
     Bus.emit('messageBoxHide', true);
     this.quitDocElement = document.querySelector('.game__multi_quit_button');
@@ -118,6 +119,7 @@ export default class MultiPlayerView extends BaseView {
     this._busAllOff();
     this._busAllOn();
     this.timer = new Timer('.multi_player__timer', this._timeIsOver.bind(this));
+    Bus.emit("ClearMessagesGameActions")
     this._showMap();
     console.log('render');
   }
@@ -132,6 +134,7 @@ export default class MultiPlayerView extends BaseView {
       Bus.emit('addPlayersList', '.multi_player__playerlist_container');
       Bus.emit('changeTitleRestartButton', 'Start');
       Bus.emit('messageBoxHide', true);
+      Bus.emit("ClearMessagesGameActions")
       this._showMap();
       this.curPath = path;
       console.log('_currentPathSignalFunc multi_player ');
@@ -165,6 +168,7 @@ export default class MultiPlayerView extends BaseView {
     this.pointsCount = 0;
 
     Bus.emit('messageBoxHide', true)
+    
     Bus.emit('renderField', { width: this.cellNumbersX, height: this.cellNumbersY, cellSize: this.cellsize })
 
     return;
@@ -200,6 +204,7 @@ export default class MultiPlayerView extends BaseView {
     this.gameTime.seconds = Math.floor(timeInSeconds - this.gameTime.minute * 60 - this.gameTime.hour * 3600);
     this.startTimeFlag.seconds = data.room.settings.prepare
     this.timer.start(this.startTimeFlag);
+    Bus.emit('addMessageInGameActions', 'Stage of flag placement')
 
     if (data.room.status === 3) {
       this.observerMode = true;
@@ -233,6 +238,7 @@ export default class MultiPlayerView extends BaseView {
       this.startGame = true;
     }
     this.timer.start(this.gameTime);
+    Bus.emit('addMessageInGameActions', 'Game begins!');
   }
 
   _createColorForPlayer(i: number) {
@@ -321,8 +327,8 @@ export default class MultiPlayerView extends BaseView {
     this._openAllCells(data.value.cells);
     for (let i = 0; i < dataPlayers.length; i++) {
       if (!dataPlayers[i].Finished) {
-        console.log('!dataPlayers[i].Finished');
         Bus.emit('winPlayer', i);
+        Bus.emit('addMessageInGameActions', `Player ${this.players[i].user.name} win!`);
       }
       if (dataPlayers[i].ID === this.myID) {
         if (dataPlayers[i].Finished) {
@@ -332,6 +338,12 @@ export default class MultiPlayerView extends BaseView {
         }
       }
     }
+    setTimeout(this._writeGameOver.bind(this), 500);
+    
+  }
+
+  _writeGameOver() {
+    Bus.emit('addMessageInGameActions', `Game over!`);
   }
 
   _roomAction(data: any) {
@@ -342,12 +354,15 @@ export default class MultiPlayerView extends BaseView {
         switch (action.action) {
           case 7:
             Bus.emit('explosePlayer', i);
+            Bus.emit('addMessageInGameActions', `Player ${this.players[i].user.name} explose!`);
             break;
           case 10:
             Bus.emit('findFlagPlayer', i);
+            Bus.emit('addMessageInGameActions', `Player ${this.players[i].user.name} lost his flag!`);
             break;
           case 4:
             Bus.emit('disconnectPlayer', i);
+            Bus.emit('addMessageInGameActions', `Player ${this.players[i].user.name} disconnect`);
             break;
           case 15:
             Bus.emit('timeIsOverPlayer', i);
@@ -409,6 +424,8 @@ export default class MultiPlayerView extends BaseView {
 
   _changeFlagSet(data: any) {
     const coords = data.value;
+    Bus.emit('addMessageInGameActions', `The location of your flag coincided with the opponen`);
+    Bus.emit('addMessageInGameActions', `We chose a new location for your and his flags`);
     Bus.emit('setUnsetFlagMultiOnCell', { x: this.flagCoords.x, y: this.flagCoords.y, type: 'closing' })
     Bus.emit('setUnsetFlagMultiOnCell', { x: coords.x, y: coords.y, type: 'flag' })
     this.flagCoords.x = coords.x;
