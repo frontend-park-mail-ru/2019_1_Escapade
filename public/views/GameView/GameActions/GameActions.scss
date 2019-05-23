@@ -1,7 +1,6 @@
 .game__game_actions {
   width: 530px;
   height: 172px;
-  font-size: 25px;
   padding-top: 10px;
   padding-bottom: 10px;
   overflow-y: scroll;
@@ -10,9 +9,11 @@
 .game__game_actions_message_num {
   color: #c1c1c1;
   margin-left: 8px;
+  font-size: 20px;
 }
 .game__game_actions_message {
   color: white;
+  font-size: 20px;
   margin-right: 10px;
   margin-left: 10px;
 }
@@ -33,7 +34,7 @@
 .game__game_actions_message_time {
   color: #c1c1c1;
   margin-right: 10px;
-  font-size: 20px;
+  font-size: 15px;
 }
 
 .game__game_actions_title {

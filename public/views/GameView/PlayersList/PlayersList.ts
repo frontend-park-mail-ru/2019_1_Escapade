@@ -9,6 +9,7 @@ export default class PlayersListView {
   observersListContainer: any;
   playersHTML: any[];
   timerHTMLElement: any;
+  observersTitle: any;
 
   constructor() {
     Bus.on('addPlayersList', this._addListeners.bind(this), 'playerListView');
@@ -19,6 +20,7 @@ export default class PlayersListView {
     this.timerHTMLElement.innerHTML = Template();
     this.playersListContainer = document.querySelector('.game__players_list_container');
     this.observersListContainer = document.querySelector('.game__observer_list_container');
+    this.observersTitle =  document.querySelector('.game__players_list_observers_title')
     Bus.on('addPlayer', this._addPlayer.bind(this), 'playerListView');
     Bus.on('addObserver', this._addObserver.bind(this), 'playerListView');
     Bus.on('delObserver', this._delObserver.bind(this), 'playerListView');
@@ -40,6 +42,7 @@ export default class PlayersListView {
     this.playersHTML = [];
     this.playersListContainer.innerHTML = '';
     this.observersListContainer.innerHTML = '';
+    this.observersTitle.hidden = true;
   }
   _addPlayer(data : any) {
     const player = data.player;
@@ -96,6 +99,7 @@ export default class PlayersListView {
   }
 
   _addObserver(data : any) {
+    this.observersTitle.hidden = false;
     const observer = data.player;
     const dataJSON = {name : observer.name};
     this.observersListContainer.innerHTML += ObserverRowTemplate({data : dataJSON});
@@ -106,6 +110,9 @@ export default class PlayersListView {
     const observer = data.player;
     for(let i = 0; i < elements.length; i++) {
       if (elements[i].querySelector('.game__players_list_player_name').innerHTML === observer.name) {
+        if (elements.length === 1) {
+          this.observersTitle.hidden = true;
+        }
         elements[i].parentNode.removeChild(elements[i]);
         break;
       }
