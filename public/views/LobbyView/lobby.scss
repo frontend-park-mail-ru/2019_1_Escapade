@@ -8,11 +8,11 @@
     display: flex;
     align-items: center;
     margin-bottom: 3vh;
-  }
 
-  @media screen and (max-width: $tablet) {
-    &__header {
-      margin-bottom: 6vh;
+    @media screen and (max-width: $tablet) {
+      & {
+        margin-bottom: 6vh;
+      }
     }
   }
 

@@ -11,19 +11,18 @@
     transition: all 0.5s ease-in-out;
     cursor: default;
     -webkit-tap-highlight-color: transparent;
-  }
 
-  @media screen and (max-width: $tablet) {
-    &__map {
-      width: 300px !important;
-      height: 300px !important;
-      overflow: scroll;
+    @media screen and (max-width: $tablet) {
+      & {
+        width: 300px !important;
+        height: 300px !important;
+        overflow: scroll;
+      }
+
+      &::-webkit-scrollbar {
+        display: none
+      }
     }
-
-    &__map::-webkit-scrollbar {
-      display: none
-    }
-
   }
 
   &__under_map {
