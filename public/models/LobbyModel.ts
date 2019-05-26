@@ -15,7 +15,7 @@ export default class LobbyModel {
    *
    */
   constructor() {
-    this.wsAdress = 'wss://back.ser.ru.com/game/ws';
+    this.wsAdress = 'ws://localhost:3002/ws';
 
     this.currentRoomInfo = [];
 
@@ -80,7 +80,7 @@ export default class LobbyModel {
         if (!roomValue.room.players) {
           return;
         } else {
-          const info = { name: roomValue.room.name, length: roomValue.room.players.connections.length, capacity: roomValue.room.players.capacity }
+          const info = { name: roomValue.room.name, length: roomValue.room.players.connections.get.length, capacity: roomValue.room.players.capacity }
           this._updateCurrentRoom(info);
           this.currentRoomInfo = roomValue;
           if (roomValue.room.status === 2 || roomValue.room.status === 3) {
@@ -99,6 +99,7 @@ export default class LobbyModel {
     const observers = 10;
     const mines = data.mines;
     const title = data.title;
+    console.log("PIZDA")
     this.ws.sendInfoJSON({
       send: {
         RoomSettings: {

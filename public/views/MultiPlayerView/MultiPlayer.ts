@@ -261,7 +261,7 @@ export default class MultiPlayerView extends BaseView {
     this.players = [];
     this.myID = 0;
     Bus.emit('clearParametersPlayerList');
-    const dataConnections = data.connections;
+    const dataConnections = data.connections.get;
     const dataPlayers = data.players;
     const colorRandom = MathGame.randomInteger(0, 8);
     console.log('dataConnections ', dataConnections.length);
