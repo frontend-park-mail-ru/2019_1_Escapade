@@ -50,6 +50,8 @@ export default class MultiPlayerView extends BaseView {
   infoPanelMode: any;
   infoContainer: any;
   chatContainer: any;
+  oncontextmenu: (this: GlobalEventHandlers, ev: MouseEvent) => any;
+  restartButton: any;
   /**
    *
    * @param {*} parent
@@ -126,6 +128,8 @@ export default class MultiPlayerView extends BaseView {
     this.infoPanelMode = true;
     this.quitDocElement = document.querySelector('.game__multi_quit_button');
     this.chatInfoButton = document.querySelector('.multi_player__button_chat');
+    this.restartButton = document.querySelector('.multi_player__button_restart');
+    this.restartButton.addEventListener('click', this._restartClick.bind(this));
     this.chatInfoButton.addEventListener('click', this._chatInfoClick.bind(this));
     this.quitDocElement.addEventListener('click', this._quitClick.bind(this));
     this._busAllOff();
@@ -133,6 +137,10 @@ export default class MultiPlayerView extends BaseView {
     this.timer = new Timer('.multi_player__timer', this._timeIsOver.bind(this));
     Bus.emit("ClearMessagesGameActions")
     this._showMap();
+    this.oncontextmenu = document.body.oncontextmenu
+    document.body.oncontextmenu = function (e) {
+      return false;
+    };
     console.log('render');
   }
 
@@ -152,6 +160,9 @@ export default class MultiPlayerView extends BaseView {
       Bus.emit("ClearMessagesGameActions")
       this._showMap();
       this.curPath = path;
+      document.body.oncontextmenu = function (e) {
+        return false;
+      };
       console.log('_currentPathSignalFunc multi_player ');
     } else {
       if (this.curPath === '/multi_player') {
@@ -164,6 +175,7 @@ export default class MultiPlayerView extends BaseView {
         this._stop_reset_timer();
         this.curPath = '';
         this._busAllOff();
+        document.body.oncontextmenu = this.oncontextmenu;
       }
     }
   }
@@ -180,6 +192,10 @@ export default class MultiPlayerView extends BaseView {
       this.infoContainer.style.display = 'flex';
       this.chatContainer.style.display = 'none';
     }    
+  }
+
+  _restartClick() {
+    Bus.emit('restartMultiplayer');
   }
 
   /** */
@@ -233,7 +249,7 @@ export default class MultiPlayerView extends BaseView {
     this.startTimeFlag.seconds = data.room.settings.prepare
     this.timer.start(this.startTimeFlag);
     Bus.emit('addMessageInGameActions', 'Stage of flag placement')
-    Bus.emit('addMessageInChatHistory', data.room.messages)
+    
     if (data.room.status === 3) {
       this.observerMode = true;
     } else {

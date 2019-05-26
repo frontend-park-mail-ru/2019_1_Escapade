@@ -52,6 +52,7 @@ export default class LobbyModel {
       this.curPath = path;
       this._busAllOn();
       if (this.wsReconnect) {
+        console.log("CREATE NEW WEBSOCKET");
         this.ws = new WebSocketInterface(this.wsAdress);
       }
     } else {
