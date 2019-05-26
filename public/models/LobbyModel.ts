@@ -11,6 +11,7 @@ export default class LobbyModel {
   wsAdress: string;
   currentRoomInfo: any;
   curPath: string;
+  wsReconnect: boolean;
   /**
    *
    */
@@ -24,6 +25,7 @@ export default class LobbyModel {
 
 
     this.curPath = '';
+    this.wsReconnect = true;
   }
 
   _busAllOn() {
@@ -43,17 +45,21 @@ export default class LobbyModel {
   _currentPathSignalFunc(path: string) {
     if (path === '/multi_player') {
       console.log('pam pam');
+      this.wsReconnect = false;
       return;
     }
     if (path === '/lobby') {
       this.curPath = path;
       this._busAllOn();
-      this.ws = new WebSocketInterface(this.wsAdress);
+      if (this.wsReconnect) {
+        this.ws = new WebSocketInterface(this.wsAdress);
+      }
     } else {
       if (this.curPath === '/lobby') {
         this._leaveRoom(14);
         this._busAllOff()
         this.ws.closeConnection();
+        this.wsReconnect = true;
         this.curPath = '';
       }
     }
