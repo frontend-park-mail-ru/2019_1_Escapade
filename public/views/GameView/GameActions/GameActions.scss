@@ -1,9 +1,12 @@
 .game {
   &__game_actions {
-    width: 530px;
-    height: 172px;
+    width: 517px;
+    height: 155px;
     padding-bottom: 10px;
+    margin-left: 20px;
     overflow-y: scroll;
+    background-color: #566472;
+    border-radius: 8px;
 
     @media screen and (max-width: $tablet) {
       & {
@@ -31,8 +34,6 @@
     justify-content: space-between;
     align-items: center;
     transition: all 0.5s ease-in-out;
-    background-color: #566472;
-    border-radius: 8px;
     margin-right: 5px;
     margin-left: 20px;
     margin-top: 6px;

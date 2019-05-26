@@ -99,7 +99,6 @@ export default class LobbyModel {
     const observers = 10;
     const mines = data.mines;
     const title = data.title;
-    console.log("PIZDA")
     this.ws.sendInfoJSON({
       send: {
         RoomSettings: {
@@ -124,7 +123,7 @@ export default class LobbyModel {
 
   _startGame() {
     router.open('/multi_player');
-    Bus.emit('getWS', this.ws);
+    Bus.emit('getWSMultiplayer', this.ws);
     Bus.emit('sendRoom', this.currentRoomInfo)
   }
 

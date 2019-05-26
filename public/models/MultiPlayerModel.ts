@@ -12,11 +12,11 @@ export default class MultiplayerModel {
    */
   constructor() {
     Bus.on('getInfoFromWS', this._getInfo.bind(this), 'multiPlayerModel');
-    Bus.on('getWS', this._getWS.bind(this), 'multiPlayerModel');
+    Bus.on('getWSMultiplayer', this._setWS.bind(this), 'multiPlayerModel');
     Bus.on('sendCellWS', this._sendCell.bind(this), 'multiPlayerModel');
  }
 
-  _getWS(data : any) {
+  _setWS(data : any) {
     this.ws = data;
   }
 

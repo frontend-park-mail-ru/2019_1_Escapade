@@ -1,0 +1,8 @@
+.chat__message.chat__mymessage
+  .chat_my___row
+    .chat__message_img_container
+        img.chat__message_img.ml-2(src=message.photo)
+    .chat__column_meta
+      .chat__message_name #{message.name}
+      .chat__message_time.mt-2 #{message.time}
+    .chat__text.left_text.mr-2 #{message.text}

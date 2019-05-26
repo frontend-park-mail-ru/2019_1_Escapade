@@ -32,39 +32,7 @@
 
 
 
-  ::-webkit-scrollbar {
-    width: 10px;
-    /* 1 - вертикальный скроллбар */
-  }
-
-  ::-webkit-scrollbar:horizontal {
-    height: 10px;
-    /* 1 - горизонтальный скроллбар */
-  }
-
-  ::-webkit-scrollbar-button {
-    background: #394653;
-    /* 2 - кнопка */
-  }
-
-  ::-webkit-scrollbar-track {
-    background: #4b5d70;
-    /* 3 - трек */
-  }
-
-  ::-webkit-scrollbar-track-piece {
-    background: #4b5d70;
-    /* 4 – видимая часть трека */
-  }
-
-  ::-webkit-scrollbar-thumb {
-    background: #394653;
-    border-radius: 10px;
-    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
-    /* 5 - ползунок */
-  }
-
-
+  
   &__players_list_row {
     display: flex;
     text-align: center;

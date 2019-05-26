@@ -10,13 +10,29 @@
     flex-direction: column;
   }
 
+  &__button_chat {
+    width: 326px;
+    background-color: #394653;
+    height: 33px;
+    color: white;
+    font-size: 21px;
+    border-radius: 10px;
+  }
+
+
+  &__info_container {
+    display: flex;
+    flex-direction: column;
+  }
+
   &_info {
     display: flex;
     flex-direction: column;
     align-items: center;
     margin-left: 15px;
     text-align: center;
-    height: 707px;
+    height: 731px;
+    width: 534px;
     border-radius: 23px;
   }
 

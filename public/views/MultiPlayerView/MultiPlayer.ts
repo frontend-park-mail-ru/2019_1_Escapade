@@ -46,6 +46,10 @@ export default class MultiPlayerView extends BaseView {
   countMines: any;
   flagPlaceManualy: boolean;
   observerMode: boolean;
+  chatInfoButton: any;
+  infoPanelMode: any;
+  infoContainer: any;
+  chatContainer: any;
   /**
    *
    * @param {*} parent
@@ -65,6 +69,7 @@ export default class MultiPlayerView extends BaseView {
     this.players = [];
     this.flagCoords = { x: 0, y: 0 };
     this.myID = 0;
+    this.infoPanelMode = true;
     this.observerMode = false;
     this.colorArr = ['#b6b4ca', '#cab4be', '#b4cabd', '#cac7b4', '#cab4b4', '#dedede', '#94c9b4', '#b9bfc9'];
     this.startTimeFlag = { hour: 0, minute: 0, seconds: 10 };
@@ -88,7 +93,6 @@ export default class MultiPlayerView extends BaseView {
   }
 
   _busAllOff() {
-    console.log('multiplayer off')
     Bus.off('leftClickOnCell', this._clickOnCell.bind(this), 'multiplayerView');
     Bus.off('rightClickOnCell', this._rightСlickOnCell.bind(this), 'multiplayerView');
     Bus.off('updateFieldWS', this._updateField.bind(this), 'multiplayerView');
@@ -112,9 +116,17 @@ export default class MultiPlayerView extends BaseView {
     Bus.emit('addMessage', { container: '.multi_player__message_container', parent: this.parent });
     Bus.emit('addPlayersList', '.multi_player__playerlist_container');
     Bus.emit('addGameActions', '.multi_player_actions_container');
+    Bus.emit('addChat', '.multi_player__chat_container');
     Bus.emit('changeTitleRestartButton', 'Start');
     Bus.emit('messageBoxHide', true);
+    this.infoContainer = document.querySelector('.multi_player__info_container');
+    this.chatContainer = document.querySelector('.multi_player__chat_container');
+    this.chatContainer.style.display = 'none';
+    this.infoContainer.style.display = 'flex';
+    this.infoPanelMode = true;
     this.quitDocElement = document.querySelector('.game__multi_quit_button');
+    this.chatInfoButton = document.querySelector('.multi_player__button_chat');
+    this.chatInfoButton.addEventListener('click', this._chatInfoClick.bind(this));
     this.quitDocElement.addEventListener('click', this._quitClick.bind(this));
     this._busAllOff();
     this._busAllOn();
@@ -128,6 +140,9 @@ export default class MultiPlayerView extends BaseView {
   _currentPathSignalFunc(path: string) {
     if (path === '/multi_player') {
       this._busAllOn();
+      this.chatContainer.style.display = 'none';
+      this.infoContainer.style.display = 'flex';
+      this.infoPanelMode = true;
       Bus.emit('busAllOffSinglePlayer');
       Bus.emit('addField', { container: '.multi_player__field_container', parent: this.parent });
       Bus.emit('addMessage', { container: '.multi_player__message_container', parent: this.parent });
@@ -151,6 +166,20 @@ export default class MultiPlayerView extends BaseView {
         this._busAllOff();
       }
     }
+  }
+
+  /** */
+  _chatInfoClick() {
+    this.infoPanelMode = !this.infoPanelMode
+    if (!this.infoPanelMode) {
+      this.chatInfoButton.innerHTML = 'Game info';
+      this.infoContainer.style.display = 'none';
+      this.chatContainer.style.display = 'flex';
+    } else {
+      this.chatInfoButton.innerHTML = 'Chat';
+      this.infoContainer.style.display = 'flex';
+      this.chatContainer.style.display = 'none';
+    }    
   }
 
   /** */
@@ -179,7 +208,6 @@ export default class MultiPlayerView extends BaseView {
     let dataNow = new Date(Date.now());
     let secondsLatency = 0;
     let timeInSeconds = data.room.settings.play - data.room.settings.prepare;
-    console.log('AAAaa ', parseInt(dataRoomCreate.substring(14, 16)));
     /*secondsLatency += (dataNow.getHours() - parseInt(dataRoomCreate.substring(11,13))) * 3600;
     secondsLatency += (dataNow.getMinutes() - parseInt(dataRoomCreate.substring(14,16))) * 60;
     secondsLatency += dataNow.getSeconds() - parseInt(dataRoomCreate.substring(17,19));
@@ -205,7 +233,7 @@ export default class MultiPlayerView extends BaseView {
     this.startTimeFlag.seconds = data.room.settings.prepare
     this.timer.start(this.startTimeFlag);
     Bus.emit('addMessageInGameActions', 'Stage of flag placement')
-
+    Bus.emit('addMessageInChatHistory', data.room.messages)
     if (data.room.status === 3) {
       this.observerMode = true;
     } else {
