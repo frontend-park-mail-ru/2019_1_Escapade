@@ -23,12 +23,15 @@ export function validateEmail(email: { length: number; }) {
  */
 export function validatePass(password: string) {
   let message = '';
-  if (R_PASSWORD.test(password) !== true) {
-    message = `Password must be at least 3 letters`;
-    if (password.length === 0) {
-      message = 'Fill password field please';
-    }
+  if (password.length === 0) {
+    message = 'Fill password field please';
   }
+  // if (R_PASSWORD.test(password) !== true) {
+  //   message = `Password must be at least 3 letters`;
+  //   if (password.length === 0) {
+  //     message = 'Fill password field please';
+  //   }
+  // }
   return message;
 }
 

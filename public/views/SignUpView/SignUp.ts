@@ -1,5 +1,5 @@
 const signUpTemplate = require('./SignUp.pug');
-import { validateEmail, validatePass, validateLogin, makeSafe }
+import {  validatePass, validateLogin, makeSafe }
   from '../../utils/validation';
 import { User } from '../../utils/user';
 import Bus from '../../utils/bus';
@@ -11,6 +11,9 @@ export default class SignUpView extends BaseView {
   parent: any;
   _form: any;
   _submitButton: any;
+  inputs: any;
+  _exitButton: any;
+  curPath: string;
   /**
    *
    * @param {HTMLElement} parent
@@ -25,8 +28,9 @@ export default class SignUpView extends BaseView {
       router.open('/profile');
     }, 'signupView');
     Bus.on('onFailedAuth', (error: any) => {
-      this._showWarning(this._warnings.email, error.message);
+      this._showWarning(this._warnings.login, error.message);
     }, 'signupView');
+    
   }
 
   /**
@@ -35,15 +39,34 @@ export default class SignUpView extends BaseView {
   render() {
     super.render();
     this._warnings = {};
-    this._warnings.email = this.parent.querySelector('.js-warning-email');
     this._warnings.login = this.parent.querySelector('.js-warning-login');
     this._warnings.pass = this.parent.querySelector('.js-warning-password');
     this._warnings.repass = this.parent.querySelector('.js-warning-repassword');
+    this.inputs = this.parent.querySelectorAll('.signup__input'); 
     this._form = this.parent.querySelector('.signup__form');
 
     this._submitButton = this.parent.querySelector('.signup__confirm');
+    this._exitButton = this.parent.querySelector('.signup__exit');
 
+    this._exitButton.addEventListener('click', this._onExitButton.bind(this));
     this._submitButton.addEventListener('click', this._onSubmit.bind(this));
+    Bus.on('currentPath', this._currentPathSignalFunc.bind(this), 'signUpView');
+  }
+
+  _currentPathSignalFunc(path: string) {
+    if (path === '/sign_up') {
+      this.curPath = path;
+      this.inputs.forEach((element: any) => {
+        element.value = '';
+      });
+      this._hideWarning(this._warnings.login);
+      this._hideWarning(this._warnings.pass);
+      this._hideWarning(this._warnings.repass);
+    } else {
+      if (this.curPath === '/sign_up') {
+        this.curPath = '';
+      }
+    }
   }
 
   /**
@@ -54,7 +77,7 @@ export default class SignUpView extends BaseView {
     console.log('event');
     event.preventDefault();
     const data: any = {};
-    data.email = this._form.elements['email'].value;
+    data.email = 'hey@mail.ru';
     data.name = this._form.elements['login'].value;
     data.password = this._form.elements['password'].value;
     data.repass = this._form.elements['password-repeat'].value;
@@ -62,6 +85,16 @@ export default class SignUpView extends BaseView {
       console.log(data);
       Bus.emit('auth', data);
     }
+    
+  }
+
+  _onExitButton() {
+    this.inputs.forEach((element: any) => {
+      element.value = '';
+    });
+    this._hideWarning(this._warnings.login);
+    this._hideWarning(this._warnings.pass);
+    this._hideWarning(this._warnings.repass);
   }
 
   /**
@@ -69,18 +102,11 @@ export default class SignUpView extends BaseView {
    * @param  {...any} data
    * @return {boolean}
    */
-  _validateInput({ email = '', name = '', password = '', repass = '' }) {
+  _validateInput({ name = '', password = '', repass = '' }) {
     let isValid = true;
     let message = '';
 
-    this._hideWarning(this._warnings.email);
-    email = makeSafe(email);
-    message = validateEmail(email);
-    if (message.length !== 0) {
-      this._showWarning(this._warnings.email, message);
-      isValid = false;
-    }
-
+  
     this._hideWarning(this._warnings.login);
     name = makeSafe(name);
     message = validateLogin(name);
@@ -90,6 +116,7 @@ export default class SignUpView extends BaseView {
     }
 
     password = makeSafe(password);
+    this._hideWarning(this._warnings.pass);
     message = validatePass(password);
     if (message.length !== 0) {
       this._showWarning(this._warnings.pass, message);
