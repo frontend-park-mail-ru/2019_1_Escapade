@@ -13,7 +13,7 @@ export default class ProfileModel {
    */
   constructor() {
     //this.wsAdress = 'ws://localhost:3004/history/ws';
-    this.wsAdress = 'ws://back.ser.ru.com/history/ws';
+    this.wsAdress = 'wss://back.ser.ru.com/history/ws';
     
     Bus.on('currentPath', this._currentPathSignalFunc.bind(this), 'profileModel');
   }
