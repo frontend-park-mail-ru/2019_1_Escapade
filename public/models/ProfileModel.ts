@@ -12,7 +12,7 @@ export default class ProfileModel {
    *
    */
   constructor() {
-    this.wsAdress = 'ws://localhost:3004/ws';
+    this.wsAdress = 'ws://localhost:3004/history/ws';
     Bus.on('currentPath', this._currentPathSignalFunc.bind(this), 'profileModel');
   }
 

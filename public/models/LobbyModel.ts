@@ -16,7 +16,7 @@ export default class LobbyModel {
    *
    */
   constructor() {
-    this.wsAdress = 'ws://localhost:3002/ws';
+    this.wsAdress = 'ws://localhost:3002/game/ws';
 
     this.currentRoomInfo = [];
 
