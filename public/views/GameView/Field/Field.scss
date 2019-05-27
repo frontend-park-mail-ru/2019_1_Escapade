@@ -3,14 +3,14 @@
     background-color: #92a0ad;
     text-align: center;
     position: relative;
-    border-width: 3px 3px 3px 3px;
-    /* top right bottom left */
-    border-style: solid;
-    border-color: #46535E;
+    border: 3px solid #46535e;
     margin-top: 15px;
-    transition: all 0.5s ease-in-out;
+    transition: all .5s ease-in-out;
     cursor: default;
     -webkit-tap-highlight-color: transparent;
+    width: 716px !important;
+    height: 716px !important;
+    overflow: scroll;
 
     @media screen and (max-width: $tablet) {
       & {
@@ -19,9 +19,9 @@
         overflow: scroll;
       }
 
-      &::-webkit-scrollbar {
-        display: none
-      }
+      // &::-webkit-scrollbar {
+      //   display: none
+      // }
     }
   }
 
@@ -33,9 +33,10 @@
 
   &__percent {
     position: relative;
-    color: white;
-    height: 15px;
-    line-height: 17px;
+    color: #fff;
+    /* height: 63px; */
+    font-size: 14px;
+    line-height: 12px;
     margin-left: 5px;
     width: 50px;
     float: left;
@@ -44,11 +45,11 @@
   &__loadbar {
     position: relative;
     background: red;
-    height: 15px;
+    height: 11px;
     width: 100px;
-    margin-left: 0px;
+    margin-left: 0;
     border-radius: 8px;
-    transition: width 0.6s;
+    transition: width .6s;
   }
 }
 
@@ -59,8 +60,9 @@
   line-height: 24px;
   font-size: 21px;
   padding: 0;
-  font-weight: bold;
+  font-weight: 700;
   text-align: center;
+  border: 1px solid #a6afb6;
   background-color: #92a0ad;
 }
 
