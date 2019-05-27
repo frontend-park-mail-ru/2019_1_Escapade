@@ -4,7 +4,7 @@
   flex-direction: column;
   justify-content: space-evenly;
   align-items: center;
-  height: 540px;
+  height: 549px;
   width: 464px;
   /* margin-left: 20px; */
   margin-top: 10px;
@@ -36,9 +36,9 @@
 .chat__message {
   background-color: #f1f1f1;
   border-radius: 5px;
-  padding: 10px;
+  padding: 5px;
   font-size: 18px;
-  margin: 10px 0;
+  margin: 5px 0;
 }
 
 .chat__online{
@@ -87,6 +87,7 @@
   word-break: break-word;
   line-break: auto;
   hyphens: initial;
+  margin-left: 9px;
 }
 
 .chat__controls{
