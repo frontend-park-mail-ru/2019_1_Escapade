@@ -16,6 +16,7 @@ export default class LobbyRoomSettings{
   size: any;
   players: number;
   roomTitleDefault: string;
+  closeButton: any;
   /**
    *
    * @param {*} parent
@@ -34,6 +35,7 @@ export default class LobbyRoomSettings{
     this.rangeTitle = document.querySelector('.lobby_room_range_titleRoom');
     this.minesCounter = document.querySelector('.lobby_room_mines');
     this.okButton = document.querySelector('.lobby_room_settings_ok_button');
+    this.closeButton = document.querySelector('.lobby_room_close_settings');
     this.difficult = 0
     this.size = 0
     this._clickOnRangeDiff()
@@ -44,6 +46,7 @@ export default class LobbyRoomSettings{
     this.rangeDiff.addEventListener('click', this._clickOnRangeDiff.bind(this));
     this.rangeField.addEventListener('click', this._clickOnRangeField.bind(this));
     this.rangePlayers.addEventListener('click', this._clickOnRangePlayers.bind(this));
+    this.closeButton.addEventListener('click', this._clickOnCloseButton.bind(this));
     Bus.on('hideRoomSettingsPanel', this._hideSettingsPanel.bind(this), 'lobbyRoomSettings');
     Bus.on('showRoomSettingsPanel', this._showSettingsPanel.bind(this), 'lobbyRoomSettings');
   }
@@ -112,13 +115,15 @@ export default class LobbyRoomSettings{
   }
 
   _clickOnOkButton() {
-    console.log(this.rangePlayers.value)
     let title = this.rangeTitle.value
     if (title === '') {
       title = this.roomTitleDefault;
     }
-    console.log({title : title, players : this.players, width : this.size, height : this.size, mines : this.minesCount})
     Bus.emit('createRoom', {title : title, players : this.players, width : this.size, height : this.size, mines : this.minesCount})
+    this._hideSettingsPanel();
+  }
+
+  _clickOnCloseButton() {
     this._hideSettingsPanel();
   }
 

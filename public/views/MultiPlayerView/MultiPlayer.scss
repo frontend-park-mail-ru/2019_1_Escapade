@@ -11,21 +11,22 @@
   }
 
   &__button_chat {
-    width: 326px;
+    width: 276px;
     background-color: #394653;
     height: 33px;
-    color: white;
+    color: #fff;
     font-size: 21px;
     border-radius: 10px;
   }
 
   &__button_restart {
-    width: 100px;
-    background-color: #394653;
-    height: 33px;
-    color: white;
-    font-size: 21px;
-    border-radius: 10px;
+    width: 45px;
+    height: 45px;
+    background: url(/img/restart.png);
+    background-repeat: no-repeat;
+    margin-left: 5px;
+    margin-bottom: 8px;
+    background-size: contain;
   }
 
 
@@ -139,9 +140,9 @@
 
 
 .game__multi_quit_button {
-width: 45px;
-  height: 45px;
-  background: url('./img/quit.png');
+  width: 55px;
+  height: 55px;
+  background: url(/img/quit.png);
   background-repeat: no-repeat;
   background-size: contain;
 }

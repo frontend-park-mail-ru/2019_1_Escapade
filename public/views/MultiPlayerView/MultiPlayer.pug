@@ -7,8 +7,9 @@ section(data-section-name='multi_player')
       .multi_player__row
         .multi_player__timer
         a.game__multi_quit_button(data-href='Quit', href='lobby')
-      .multi_player__button_chat Chat
-      .multi_player__button_restart Restart
+      .multi_player__row
+        .multi_player__button_chat Chat
+        a.multi_player__button_restart(data-href='Quit', href='lobby') 
       .multi_player__info_container
         .multi_player__playerlist_container
         .multi_player_actions_container

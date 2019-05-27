@@ -17,6 +17,8 @@
 
   &__row {
     display: flex;
+    height: 11px;
+    width: 284px;
     flex-direction: row;
   }
 
@@ -35,9 +37,11 @@
 }
 
 .timer__clock {
-  color: white;
+  color: #fff;
   font-size: 59px;
   letter-spacing: 2px;
+  width: 275px;
+  height: 78px;
 
   // & {
   //   font-size: 40px;

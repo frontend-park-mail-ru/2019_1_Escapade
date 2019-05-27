@@ -87,7 +87,7 @@ export default class LobbyModel {
         if (!roomValue.room.players) {
           return;
         } else {
-          const info = { name: roomValue.room.name, length: roomValue.room.players.connections.get.length, capacity: roomValue.room.players.capacity }
+          const info = { id : roomValue.room.id, name: roomValue.room.name, length: roomValue.room.players.connections.get.length, capacity: roomValue.room.players.capacity }
           this._updateCurrentRoom(info);
           this.currentRoomInfo = roomValue;
           if (roomValue.room.status === 2 || roomValue.room.status === 3) {

@@ -34,10 +34,10 @@
 }
 
 .chat__message {
-  border: 2px solid #dedede;
   background-color: #f1f1f1;
   border-radius: 5px;
   padding: 10px;
+  font-size: 18px;
   margin: 10px 0;
 }
 
@@ -116,7 +116,8 @@
 }
 
 .chat__mymessage {
-  background: #D3D3D3;
+  background: #323d48;
+  color: white;
 }
 
 

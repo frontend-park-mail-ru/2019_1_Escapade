@@ -29,6 +29,14 @@
     transform: matrix(-1, 0, 0, 1, 0, 0);
     background-size: contain;
   }
+  &__close_settings {
+    width: calc(1rem + 7vw);
+    height: calc(1rem + 7vw);
+    background: url('./img/cancel.png') #CED6DD no-repeat;
+    background-size: contain;
+    align-self: center;
+    border-radius: 50%;
+  }
 
   &__button {
     border-radius: 30px;

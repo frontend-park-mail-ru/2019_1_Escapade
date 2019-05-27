@@ -4,7 +4,7 @@
     display: flex;
     margin-top: 15px;
     align-items: center;
-    justify-content: space-around;
+    /* justify-content: space-around; */
   }
 
   &__settings_img {
@@ -12,12 +12,13 @@
     height: 70px;
     background: url('./img/settings2.png') no-repeat;
     background-size: cover;
+    margin-left: 9px;
     float: left;
     -webkit-transition: -webkit-transform .8s ease-in-out;
     transition: transform .8s ease-in-out;
   }
 
-  &__settings_img:hover {
+  &__settings_img:hover {    margin-left: 9px;
     -webkit-transform: rotate(180deg);
     transform: rotate(180deg);
   }
@@ -114,7 +115,8 @@
   background: url('./img/lvl.png');
   background-repeat: no-repeat;
   background-size: contain;
-  margin-left: 25px;
+  margin-left: 15px;
+  
 }
 
 .single_player__statistics_size_img {

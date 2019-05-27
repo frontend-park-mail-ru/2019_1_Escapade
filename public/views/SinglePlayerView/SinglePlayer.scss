@@ -1,6 +1,6 @@
 .single_player {
   display: flex;
-  justify-content: space-evenly;
+  justify-content: center;
   align-items: center;
   height: 100vh;
 
@@ -16,7 +16,7 @@
   &_info {
     display: flex;
     flex-direction: column;
-    margin-left: 2vw;
+    margin-left: 60px;
     border-radius: 23px;
     text-align: center;
   }
