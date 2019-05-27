@@ -16,7 +16,7 @@ export class Bus {
    * @param {*} callback
    */
   on(event: string, callback: CallableFunction, place : string) { // подписываемся на событие
-    //this.off(event, callback);
+    this.off(event, callback, place);
     this.listeners[event] = this.listeners[event] || [];
     this.listeners[event].push({callback : callback, place : place});
   }

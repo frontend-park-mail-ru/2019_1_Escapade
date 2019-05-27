@@ -6,7 +6,7 @@
     animation: from-left 0.8s cubic-bezier(0.86, 0, 0.07, 1) 0.2s 1 normal both;
   }
 
-  @media screen and (min-width: $mobile) and (max-width: $tablet){
+  @media screen and (min-width: $mobile) and (max-width: $tablet) {
     &__nav {
       display: flex;
       flex-direction: column;
@@ -29,16 +29,23 @@
     transition: all 0.5s ease-in-out;
   }
 
-  &__label:hover{
+  &__label:hover {
     transform: scale(1.2);
-    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
   }
 
   @media screen and (max-width: $normal) {
     &__label {
       width: calc(20vw + 3rem);
-      font-size: calc(3vw + 0.5rem);
+      font-size: calc(2.7vw + 0.5rem);
       padding: 5px;
+    }
+  }
+
+  @media screen and (min-width: $large) and (max-width: $mega) {
+    &__label {
+      width: calc(17vw + 3rem);
+      font-size: calc(2vw + 0.2rem);
     }
   }
 }

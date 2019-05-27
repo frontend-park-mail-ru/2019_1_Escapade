@@ -4,7 +4,6 @@ import { MainMenuView } from './views/MainMenuView/MainMenu';
 import SinglePlayerView from './views/SinglePlayerView/SinglePlayer';
 import { AuthorsView } from './views/AuthorsView/Authors';
 import { RulesView } from './views/RulesView/Rules';
-import ChatView from './views/ChatView/Chat';
 //import ChatView from './views/Chat.ts';
 import signOut from './views/SignOut/SignOut';
 import { checkAuth } from './utils/user';
@@ -17,13 +16,6 @@ import LobbyMV from './ModelView/LobbyMV';
 import MultiPlayerMV from './ModelView/MultiPlayerMV'
 import SinglePlayerMV from './ModelView/SinglePlayerMV';
 import ProfileMV from './ModelView/ProfileMV';
-
-import './img/arrow-left.png';
-import './img/arrow-right.png';
-import './img/ava_guest.png';
-import './img/roomNotFound.png';
-import './img/logo_multi.png';
-import './img/logo_single.png';
 
 import './main.scss';
 
@@ -52,7 +44,6 @@ router
   .register('/single_player', SinglePlayerMV.view)
   .register('/lobby', LobbyMV.view)
   .register('/multi_player', MultiPlayerMV.view)
-  .register('/chat', ChatView)
   .register('/profile/edit', ProfileMV.views.ProfileEditView);
 
 bus.on('logout', signOut, 'main');

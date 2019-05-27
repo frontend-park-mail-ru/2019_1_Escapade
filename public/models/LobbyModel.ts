@@ -11,19 +11,21 @@ export default class LobbyModel {
   wsAdress: string;
   currentRoomInfo: any;
   curPath: string;
+  wsReconnect: boolean;
   /**
    *
    */
   constructor() {
-    this.wsAdress = 'ws://localhost:3002/ws';
-    
+    this.wsAdress = 'wss://back.ser.ru.com/game/ws';
+
     this.currentRoomInfo = [];
-    
+
 
     Bus.on('currentPath', this._currentPathSignalFunc.bind(this), 'lobbyModel');
 
-    
+
     this.curPath = '';
+    this.wsReconnect = true;
   }
 
   _busAllOn() {
@@ -43,44 +45,49 @@ export default class LobbyModel {
   _currentPathSignalFunc(path: string) {
     if (path === '/multi_player') {
       console.log('pam pam');
+      this.wsReconnect = false;
       return;
     }
     if (path === '/lobby') {
       this.curPath = path;
       this._busAllOn();
-      this.ws = new WebSocketInterface(this.wsAdress);
+      if (this.wsReconnect) {
+        console.log("CREATE NEW WEBSOCKET");
+        this.ws = new WebSocketInterface(this.wsAdress);
+      }
     } else {
       if (this.curPath === '/lobby') {
         this._leaveRoom(14);
         this._busAllOff()
         this.ws.closeConnection();
+        this.wsReconnect = true;
         this.curPath = '';
       }
     }
   }
 
 
-  _getInfo(data : any) {
-    console.log('_getInfo begin ', data) 
-    switch(data.type) {
-      case 'Lobby' :
+  _getInfo(data: any) {
+    console.log('_getInfo begin ', data)
+    switch (data.type) {
+      case 'Lobby':
         Bus.emit('updateRooms', data.value.lobby);
         break;
-      case 'LobbyRoomCreate' :
+      case 'LobbyRoomCreate':
         Bus.emit('addRoom', data.value);
         break;
-      case 'LobbyRoomUpdate' :
+      case 'LobbyRoomUpdate':
         Bus.emit('updateRoom', data.value);
         break;
-      case 'LobbyRoomDelete' : 
+      case 'LobbyRoomDelete':
         Bus.emit('deleteRoom', data.value);
         break;
-      case 'Room' :
-        const roomValue  = data.value;
+      case 'Room':
+        const roomValue = data.value;
         if (!roomValue.room.players) {
           return;
         } else {
-          const info = {name : roomValue.room.name, length : roomValue.room.players.connections.length, capacity : roomValue.room.players.capacity}
+          const info = { id : roomValue.room.id, name: roomValue.room.name, length: roomValue.room.players.connections.get.length, capacity: roomValue.room.players.capacity }
           this._updateCurrentRoom(info);
           this.currentRoomInfo = roomValue;
           if (roomValue.room.status === 2 || roomValue.room.status === 3) {
@@ -89,34 +96,41 @@ export default class LobbyModel {
         }
         break;
     }
-    console.log('_getInfo end') 
+    console.log('_getInfo end')
   }
 
-  _createRoom() {
-    const width = 15;
-    const height = 15;
-    const players = 2;
+  _createRoom(data: any) {
+    const width = data.width;
+    const height = data.height;;
+    const players = data.players;;
     const observers = 10;
-    const mines = 20;
-    this.ws.sendInfoJSON({send : { RoomSettings : {name : 'my room', id : 'create', width : width, height : height, 
-    players : players, observers : observers, prepare:10, play:100, mines : mines}}});
+    const mines = data.mines;
+    const title = data.title;
+    this.ws.sendInfoJSON({
+      send: {
+        RoomSettings: {
+          name: title, id: 'create', width: width, height: height,
+          players: players, observers: observers, prepare: 10, play: 100, mines: mines
+        }
+      }
+    });
   }
 
-  _connectToRoom(id : any) {
-    this.ws.sendInfoJSON({send : { RoomSettings : {id : id}}});
+  _connectToRoom(id: any) {
+    this.ws.sendInfoJSON({ send: { RoomSettings: { id: id } } });
   }
 
-  _leaveRoom(signal : number) {
-    this.ws.sendInfoJSON({send:{action:signal}});
+  _leaveRoom(signal: number) {
+    this.ws.sendInfoJSON({ send: { action: signal } });
   }
 
-  _updateCurrentRoom(data : any) {
+  _updateCurrentRoom(data: any) {
     Bus.emit('updateCurrentRoom', data);
   }
 
   _startGame() {
     router.open('/multi_player');
-    Bus.emit('getWS', this.ws);
+    Bus.emit('getWSMultiplayer', this.ws);
     Bus.emit('sendRoom', this.currentRoomInfo)
   }
 

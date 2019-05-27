@@ -3,11 +3,12 @@ const singlePlayerTemplate = require('./SinglePlayer.pug');
 import BaseView from '../BaseView';
 import { User } from '../../utils/user';
 import { MineSweeper } from '../../game/minesweeper';
-import { Stopwatch } from '../../utils/stopwatch';
+import { Stopwatch } from '../../utils/stopwatch/stopwatch';
 import { checkAuth } from '../../utils/user';
 import Bus from '../../utils/bus';
 /** */
 export default class SinglePlayer {
+  [x: string]: any;
   cellsize: number;
   cellNumbersX: number;
   cellNumbersY: number;
@@ -35,6 +36,7 @@ export default class SinglePlayer {
   controlButtons: HTMLElement;
   timerContainer: HTMLElement;
   fieldContainer: HTMLElement;
+  firstClick: boolean;
 
   /**
    *
@@ -48,14 +50,13 @@ export default class SinglePlayer {
     this.difficult = 1;
     this.minesCount = 20;
     this.start = false;
+    this.firstClick = true;
     Bus.on('busAllOnSinglePlayer', this._busAllOn.bind(this), 'singlePlayerView');
     Bus.on('busAllOffSinglePlayer', this._busAllOff.bind(this), 'singlePlayerView');
-    document.body.oncontextmenu = function (e) {
-      return false;
-    };
   }
 
   _busAllOn() {
+    console.log('WWWWWWWWWWWWWWWWWw');
     Bus.on('leftClickOnCell', this._clickOnCell.bind(this), 'singlePlayerView');
     Bus.on('rightClickOnCell', this._rightСlickOnCell.bind(this), 'singlePlayerView');
     Bus.on('settingsChangeHard', this._changeHard.bind(this), 'singlePlayerView');
@@ -64,6 +65,7 @@ export default class SinglePlayer {
     Bus.on('stopResetTimer', this._stopResetTimer.bind(this), 'singlePlayerView');
     Bus.on('restartSinglePlayer', this._restart.bind(this), 'singlePlayerView');
     Bus.on('updateUserInfo', this._updateUserInfoCalback.bind(this), 'singlePlayerView');
+    this.firstClick = true;
   }
 
   _busAllOff() {
@@ -78,7 +80,7 @@ export default class SinglePlayer {
   }
 
   _newStopWatch() {
-    this.stopwatch = new Stopwatch('single_player__timer');
+    this.stopwatch = new Stopwatch('.single_player__timer');
   }
 
   /** */
@@ -116,13 +118,8 @@ export default class SinglePlayer {
     Bus.emit('renderField', { width: this.cellNumbersX, height: this.cellNumbersY, cellSize: this.cellsize })
     Bus.emit('statisticsResetParameters', this.minesCount)
     Bus.emit('settingsSetParameters', { difficult: this.difficult, width: this.cellNumbersX, height: this.cellNumbersY, mines: this.minesCount })
-
-    this.mineSweeper = new MineSweeper(this.cellNumbersX, this.cellNumbersY, this.minesCount);
-    this.BBBVCount = this.mineSweeper.count3BV();
-
-    if (this.start) {
-      this.stopwatch.router();
-    }
+    this.mineSweeperCreate = true;
+    
     return;
   }
 
@@ -141,6 +138,8 @@ export default class SinglePlayer {
       }
     }
     Bus.emit('setStylesOnStartSingle');
+    
+    this.stopwatch.start();
     this._showMap();
   }
 
@@ -148,7 +147,6 @@ export default class SinglePlayer {
   _changeHard(hardStruct: any) {
     Bus.emit('setStylesOnStartSingle');
     this.difficult = hardStruct.difficult;
-
 
     switch (this.difficult) {
       case 0:
@@ -169,22 +167,37 @@ export default class SinglePlayer {
     Bus.emit('settingsChangeSize', { width: this.cellNumbersX, height: this.cellNumbersY });
     Bus.emit('settingsChangeMinesCount', this.minesCount);
     checkAuth(this._updateUserInfoCalback.bind(this), this.difficult)
-    if (this.stopwatch.running) {
-      this.stopwatch.stop();
-    }
+    this.stopwatch.stop();
     if (!this.start) {
       this.start = true;
     }
+    this.stopwatch.start();
     this._showMap();
   }
 
+
   /** */
   _clickOnCell(coordinatesStruct: any) {
+    const x = parseInt(coordinatesStruct.x);
+    const y = parseInt(coordinatesStruct.y);
+    if (this.mineSweeperCreate) {
+      this.mineSweeper = new MineSweeper(this.cellNumbersX, this.cellNumbersY, this.minesCount, {startX : x, startY : y});
+      this.mineSweeperCreate = false
+    }
+    
+    if (this.firstClick) {
+      this.start = true;
+      this.firstClick = false;
+      this.stopwatch.start();
+      Bus.emit('setStylesOnStartSingle');
+      
+      this.BBBVCount = this.mineSweeper.count3BV();
+    }
     if (!this.start) {
       return;
     }
-    const x = parseInt(coordinatesStruct.x);
-    const y = parseInt(coordinatesStruct.y);
+    
+    
     if (this.mineSweeper.mapLabel[x][y] != 0) { // если не закрыта
       return;
     }
@@ -210,10 +223,9 @@ export default class SinglePlayer {
     let loser = false;
     if (this.mineSweeper.map[x][y] === 9) { // losing
       this._openAllCels();
-      if (this.stopwatch.running) {
-        this.stopwatch.stop();
-      }
+      this.stopwatch.stop();
       this.start = false;
+
       Bus.emit('sendResultsSingleGame', JSON.stringify({ difficult: this.difficult, singleTotal: 1, singleWin: 0 }));
       Bus.emit('showTextInMessageBox', 'You lose!');
 

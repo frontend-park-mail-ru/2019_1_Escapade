@@ -1,8 +1,4 @@
-const lobbyTemplate = require('./Lobby.pug');
-const lobbyTemplateFreeRoom = require('./LobbyFreeRoom.pug');
-const lobbyTemplateBusyRoom = require('./LobbyBusyRoom.pug');
-import { User } from '../../utils/user';
-import BaseView from '../BaseView';
+
 import Bus from '../../utils/bus';
 
 /**
@@ -53,12 +49,20 @@ export default class Lobby {
 
   _updateCurrentRoom(data : any) {
     this.currentRoomName = data.name;
+    this.currentRoomId = 0
+    for (let i = 0; i < this.rooms.length; i++) {
+      if (data.id === this.rooms[i].id) {
+        this.currentRoomId = i;
+        break;
+      }
+    }
+    Bus.emit('changeRoomStringColor',{type : 'free', id : this.currentRoomId, typeColor : 1})
     Bus.emit('showCurrentRoomPanel', data);
   }
 
   _createRoomEvent() {
     this.currentRoomId = -2;
-    Bus.emit('createRoom');
+    Bus.emit('showRoomSettingsPanel',this.rooms.length);
   }
 
   _leaveRoom() {
@@ -73,9 +77,9 @@ export default class Lobby {
   _addRoom(data : any) {
     Bus.emit('hideNotFoundRoomPanel');
     Bus.emit('showPaginatorPanel');
-    const room = {name : data.name, playersCount : data.players.connections.length,
-      playersCapacity : data.players.capacity, difficult : this._getModeByMines(data.field.Mines),
-      width : data.field.width, height : data.field.height, mines : data.field.Mines, time : '0:00:00',
+    const room = {name : data.name, playersCount : data.players.connections.get.length,
+      playersCapacity : data.players.capacity, difficult : this._getModeByMines(data.field.mines),
+      width : data.field.width, height : data.field.height, mines : data.field.mines, time : '0:00:00',
       observersCount : data.observers.get.length, status : this._getStatusByCode(data.status)}
     
     if (data.status === 3) {   // busy room
@@ -86,13 +90,13 @@ export default class Lobby {
       Bus.emit('addFreeRoomView', room);
     }
 
-    if (this.currentRoomId === -2) { 
-      this.currentRoomId = this.rooms.length - 1;
-      Bus.emit('changeRoomStringColor',{type : 'free', id : this.currentRoomId, typeColor : 1})
-      const info = {name : this.rooms[this.currentRoomId].name, length : this.rooms[this.currentRoomId].players.connections.length,
-        capacity : this.rooms[this.currentRoomId].players.capacity}
-      this._updateCurrentRoom(info);
-    }
+    // if (this.currentRoomId === -2) { 
+    //   this.currentRoomId = this.rooms.length - 1;
+    //   //Bus.emit('changeRoomStringColor',{type : 'free', id : this.currentRoomId, typeColor : 1})
+    //   const info = {name : this.rooms[this.currentRoomId].name, length : this.rooms[this.currentRoomId].players.connections.get.length,
+    //     capacity : this.rooms[this.currentRoomId].players.capacity}
+    //   this._updateCurrentRoom(info);
+    // }
   }
 
   _updateRoom(data : any) {
@@ -154,9 +158,9 @@ export default class Lobby {
     }
 
     data.allRooms.get.forEach((item : any, i : number) => {
-      const room = {name : item.name, playersCount : item.players.connections.length,
-        playersCapacity : item.players.capacity, difficult : this._getModeByMines(item.field.Mines),
-        width : item.field.width, height : item.field.height, mines : item.field.Mines, time : '0:00:00',
+      const room = {name : item.name, playersCount : item.players.connections.get.length,
+        playersCapacity : item.players.capacity, difficult : this._getModeByMines(item.field.mines),
+        width : item.field.width, height : item.field.height, mines : item.field.mines, time : '0:00:00',
         observersCount : item.observers.get.length, status : this._getStatusByCode(item.status)}
       
       if (item.status === 3 || item.status === 2) {   // busy room
@@ -181,7 +185,7 @@ export default class Lobby {
     } else if (type === 'free'){
       this.currentRoomId = num;
       Bus.emit('changeRoomStringColor',{type : 'free', id : this.currentRoomId, typeColor : 1})
-      const info = {name : this.rooms[this.currentRoomId].name, length : this.rooms[this.currentRoomId].players.connections.length,
+      const info = {name : this.rooms[this.currentRoomId].name, length : this.rooms[this.currentRoomId].players.connections.get.length,
         capacity : this.rooms[this.currentRoomId].players.capacity}
       this._updateCurrentRoom(info);
       Bus.emit('connectToRoom', this.rooms[this.currentRoomId].id)
@@ -205,6 +209,7 @@ export default class Lobby {
         mode = 'God';
         break;
     }
+    mode = 'Normal'; //!!!!!!!!!!!! Убрать, заглушка
     return mode;
   }
 

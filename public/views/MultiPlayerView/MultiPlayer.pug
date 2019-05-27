@@ -1,12 +1,18 @@
 section(data-section-name='multi_player')
   .multi_player
-    include ../MessageView/Message.pug
+    .multi_player__message_container
     .multi_player__wrapper
-      include ../GameView/Field/Field.pug
+      .multi_player__field_container
     .multi_player_info
-      .game__multi_right_menu_buttons
-        a.game__multi_quit_button(data-href='Quit', href='lobby') Quit
-      .multi_player__timer
-        .multi_player__timer_str#multi_player__timer 0:00:00
-      include ../GameView/PlayersList/PlayersList.pug
+      .multi_player__row
+        .multi_player__timer
+        a.game__multi_quit_button(data-href='Quit', href='lobby')
+      .multi_player__row
+        .multi_player__button_chat Chat
+        a.multi_player__button_restart(data-href='Quit', href='lobby') 
+      .multi_player__info_container
+        .multi_player__playerlist_container
+        .multi_player_actions_container
+      .multi_player__chat_container
     .logo
+    

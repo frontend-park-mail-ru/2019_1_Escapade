@@ -1,0 +1,166 @@
+.game {
+
+  &__players_list {
+    display: flex;
+    flex-direction: column;
+    margin-top: 11px;
+    text-align: center;
+    height: 354px;
+    border-radius: 23px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    overflow-y: scroll;
+  }
+
+
+  &__players_list::-webkit-scrollbar-button {
+    display: none;
+  }
+
+  @media screen and (max-width: $normal) {
+    &__players_list {
+      height: 280px;
+    }
+  }
+
+  @media screen and (max-width: $tablet) {
+    &__players_list {
+      height: 180px;
+    }
+  }
+
+
+
+  
+  &__players_list_row {
+    display: flex;
+    text-align: center;
+    border-radius: 15px;
+    height: 60px;
+    width: 500px;
+    margin-left: 20px;
+    margin-top: 6px;
+    background-color: #394653;
+    align-items: center;
+
+    @media screen and (max-width: $tablet) {
+      & {
+        width: 290px;
+        margin-left: 0;
+      }
+    }
+  }
+
+
+  &__players_list_color {
+    height: 57px;
+    width: 11px;
+    border-radius: 16px 0px 0px 16px;
+    margin-top: 1px;
+  }
+
+  &__players_list_me_row {
+    background-color: #2d3944;
+  }
+
+  &__players_list_observer_row {
+    background-color: #61413e;
+  }
+
+  &__players_list_img {
+    float: right;
+    border-radius: 50%;
+    width: 50px;
+    margin-top: 7px;
+    margin-left: 9px;
+    height: 50px;
+  }
+
+  &__players_list_str {
+    text-align: left;
+    height: 50px;
+    width: 150px;
+    color: white;
+    font-size: 20px;
+
+    @media screen and (max-width: $tablet) {
+      & {
+        width: initial;
+        font-size: 15px;
+      }
+    }
+  }
+
+  &__players_list_player_name {
+    margin-left: 5px;
+  }
+
+  &__players_list_player_points {
+    margin-left: 21px;
+  }
+
+  &__players_list_disconnect {
+    margin-top: 3px;
+    margin-left: 20px;
+  }
+
+  &__players_list_explose {
+    margin-top: 3px;
+    margin-left: 9px;
+  }
+
+  &__players_list_disconnect_img {
+    width: 40px;
+    height: 40px;
+    margin-top: 7px;
+
+    background: url('./img/disconnect.png') no-repeat;
+  }
+
+  &__players_list_explose_img {
+    width: 40px;
+    height: 40px;
+    margin-top: 7px;
+    margin-right: 7px;
+    background: url('./img/explosePlayer.png') no-repeat;
+  }
+
+  &__players_list_win_img {
+    width: 47px;
+    height: 40px;
+    margin-top: 7px;
+    margin-right: 7px;
+    background: url('./img/win.png') no-repeat;
+  }
+
+  &__players_list_clock_img {
+    width: 47px;
+    height: 40px;
+    margin-top: 7px;
+    margin-right: 7px;
+    background: url('./img/clockPlayerList.png') no-repeat;
+  }
+
+  &__players_list_flag_img {
+    width: 50px;
+    height: 40px;
+    margin-top: 7px;
+    margin-right: 7px;
+    background: url('./img/flag_lose.png') no-repeat;
+  }
+
+  &__players_list_title {
+    text-align: left;
+    height: 38px;
+    width: 150px;
+    color: white;
+    font-size: 20px;
+    margin-left: 20px;
+
+    @media screen and (max-width: $tablet) {
+      & {
+        margin-left: 0;
+      }
+    }
+  }
+}

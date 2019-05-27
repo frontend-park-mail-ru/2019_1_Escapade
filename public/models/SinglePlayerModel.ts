@@ -17,7 +17,7 @@ export default class SinglePlayerModel {
    */
   _sendResults(data: any) {
     console.log(data);
-    Net.post(data, '/game')
+    Net.post(data, '/api/game')
       .then((resp) => {
         if (resp.status === 200) {
           console.log('Ok SendResults : ', resp.status);

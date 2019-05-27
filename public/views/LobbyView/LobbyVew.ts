@@ -74,6 +74,9 @@ export default class LobbyVew extends BaseView {
     Bus.on('changeRoomStringColor', this._changeRoomStringColor.bind(this), 'lobbyView');
     Bus.on('updateRoomRow', this._updateRoomRow.bind(this), 'lobbyView');
     Bus.on('deleteRoomRow', this._deleteRoomRow.bind(this), 'lobbyView');
+    Bus.emit('addRoomSettings', '.lobby_room_settings_container');
+    Bus.emit('hideRoomSettingsPanel');
+    
   }
 
   _createRoomEvent() {
@@ -87,11 +90,11 @@ export default class LobbyVew extends BaseView {
   _hideCurrentRoomPanel() {
     this.roomStatusField.innerHTML = '';
     this.roomImagesField.innerHTML = '';
-    this.currentRoomPanel.hidden = true;
+    this.currentRoomPanel.style.display = 'none';;
   }
 
   _showCurrentRoomPanel({name = '', length = 0, capacity = 0}) {
-    this.currentRoomPanel.hidden = false;
+    this.currentRoomPanel.style.display = 'flex';;
     this.roomStatusField.innerHTML = `Room ${name} waiting... ${length}/${capacity}`;
   }
 
@@ -155,13 +158,13 @@ export default class LobbyVew extends BaseView {
     if (type === 'busy') {
       const elements = [].slice.call((document.querySelectorAll('.lobby__busy_room')));
       const newNum = elements.length - 1 - num;
-      elements[newNum].querySelector('.lobby__players').innerHTML = `${data.players.connections.length}/${data.players.capacity} players`;
+      elements[newNum].querySelector('.lobby__players').innerHTML = `${data.players.connections.get.length}/${data.players.capacity} players`;
       elements[newNum].querySelector('.lobby__observers').innerHTML = data.observers.get.length;
       elements[newNum].querySelector('.lobby__status').innerHTML = this._getStatusByCode(data.status);
     } else if (type === 'free'){
       const elements = [].slice.call((document.querySelectorAll('.lobby__free_room')));
       const newNum = elements.length - 1 - num;
-      elements[newNum].querySelector('.lobby__players').innerHTML = `${data.players.connections.length}/${data.players.capacity} players`;
+      elements[newNum].querySelector('.lobby__players').innerHTML = `${data.players.connections.get.length}/${data.players.capacity} players`;
     }
   }
 
