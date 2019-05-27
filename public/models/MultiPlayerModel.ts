@@ -1,5 +1,7 @@
 import Bus from '../utils/bus';
 import {WebSocketInterface} from '../utils/webSocket';
+import * as dataAddress from './../../netconfig.json';
+import router from '../main';
 /**
  *
  */
@@ -7,6 +9,7 @@ export default class MultiplayerModel {
   ws: WebSocketInterface;
   rooms: any;
   wsAdress: string;
+  curPath: string;
   /**
    *
    */
@@ -15,8 +18,28 @@ export default class MultiplayerModel {
     Bus.on('getWSMultiplayer', this._setWS.bind(this), 'multiPlayerModel');
     Bus.on('sendCellWS', this._sendCell.bind(this), 'multiPlayerModel');
     Bus.on('restartMultiplayer', this._seandRestart.bind(this), 'multiPlayerModel');
-    
+    Bus.on('currentPath', this._currentPathSignalFunc.bind(this), 'multiPlayerModel');
  }
+
+  _currentPathSignalFunc(path: string) {
+    if (path === '/multi_player') {
+      this.curPath = path;
+      setTimeout(this._createWs.bind(this), 200);
+    } else {
+      if (this.curPath === '/multi_player') {     
+        this.curPath = '';
+      }
+    }
+  }
+
+  _createWs() {
+    console.log("pred if CREATE NEW WEB SOCKET")
+    if (typeof this.ws == "undefined") {
+      router.open('/lobby');
+      //Bus.emit('lobbyCreateNewWebSocket')
+      // this.ws = new WebSocketInterface(dataAddress.lobbyWsAddress);
+    }
+  }
 
   _setWS(data : any) {
     this.ws = data;

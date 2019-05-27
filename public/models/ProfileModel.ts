@@ -1,6 +1,8 @@
 import Bus from '../utils/bus';
 import { Net } from '../utils/net';
 import { WebSocketInterface } from '../utils/webSocket';
+import * as dataAddress from './../../netconfig.json';
+
 /**
  *
  */
@@ -12,8 +14,7 @@ export default class ProfileModel {
    *
    */
   constructor() {
-    //this.wsAdress = 'ws://localhost:3004/history/ws';
-    this.wsAdress = 'wss://back.ser.ru.com/history/ws';
+    this.wsAdress = dataAddress.profileWsAddress;
     
     Bus.on('currentPath', this._currentPathSignalFunc.bind(this), 'profileModel');
   }

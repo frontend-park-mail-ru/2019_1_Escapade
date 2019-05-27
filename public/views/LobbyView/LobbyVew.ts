@@ -148,6 +148,9 @@ export default class LobbyVew extends BaseView {
         break;
     }
     const newId = elements.length - 1 - id;
+    if (newId < 0 || elements.length <= newId) {
+      return;
+    }
     elements[newId].style.backgroundColor = colorString;
   }
 

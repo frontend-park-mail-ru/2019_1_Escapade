@@ -1,6 +1,8 @@
 import Bus from '../utils/bus';
 import { WebSocketInterface } from '../utils/webSocket';
 import router from '../../public/main'
+import * as dataAddress from './../../netconfig.json';
+
 /**
  *
  */
@@ -16,16 +18,21 @@ export default class LobbyModel {
    *
    */
   constructor() {
-    this.wsAdress = 'wss://back.ser.ru.com/game/ws';
-    //this.wsAdress = 'ws://localhost:3002/game/ws';
+    this.wsAdress = dataAddress.lobbyWsAddress;
     this.currentRoomInfo = [];
 
 
     Bus.on('currentPath', this._currentPathSignalFunc.bind(this), 'lobbyModel');
-
+    Bus.on('lobbyCreateNewWebSocket', this._createWs.bind(this), 'lobbyModel');
+    
 
     this.curPath = '';
     this.wsReconnect = true;
+  }
+
+  _createWs(){
+    console.log("CREATE NEW WEB SOCKET")
+    this.ws = new WebSocketInterface(this.wsAdress)
   }
 
   _busAllOn() {
@@ -51,7 +58,7 @@ export default class LobbyModel {
     if (path === '/lobby') {
       this.curPath = path;
       this._busAllOn();
-      if (this.wsReconnect) {
+      if (typeof this.ws == "undefined") {
         console.log("CREATE NEW WEBSOCKET");
         this.ws = new WebSocketInterface(this.wsAdress);
       }

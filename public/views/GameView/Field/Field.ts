@@ -54,6 +54,7 @@ export default class FieldView {
   }
 
   _leftClickOnBody(e: any) {
+    console.log("QQQ leftClickOnBody");
     if (e.target.classList.contains('cell')) {
       let [, x, y] = e.target.id.split('_');
       Bus.emit('leftClickOnCell', {x : x, y : y});
@@ -101,6 +102,7 @@ export default class FieldView {
   }
 
   _openCell({x = 0, y = 0, type = 0, color = '#b9c0c9', my = false}){
+    console.log("QQQ _openCell");
     const cell = this.parent.
       querySelector(`#cell_${x}_${y}`);
     if (!cell) {
@@ -121,6 +123,7 @@ export default class FieldView {
   }
 
   _setUnsetFlagOnCell({x = 0, y = 0, type = 'flag' }){
+    console.log("QQQ _setUnsetFlagOnCell");
     const cell = this.parent.
       querySelector(`#cell_${x}_${y}`);
     if (!cell) {
@@ -139,6 +142,7 @@ export default class FieldView {
   }
 
   _setUnsetFlagMultiOnCell({x = 0, y = 0, type = 'flag' }){
+    console.log("QQQ _setUnsetFlagMultiOnCell");
     const cell = this.parent.
       querySelector(`#cell_${x}_${y}`);
     if (!cell) {

@@ -111,6 +111,7 @@ export default class MultiPlayerView extends BaseView {
    *
   */
   render() {
+    console.log("AAAAAAAAAAAAAAAAAAAAAAAAaaa")
     this.user = User;
     super.render();
     Bus.emit('busAllOffSinglePlayer');
@@ -201,13 +202,12 @@ export default class MultiPlayerView extends BaseView {
   /** */
   _showMap() {
     this.fieldMatrix = [];
-    this.flagPlaceManualy = false;
+    
     this.fieldMatrix = new Array(this.cellNumbersY);
     for (let i = 0; i < this.cellNumbersY; i++) {
       this.fieldMatrix[i] = new Array(this.cellNumbersX).fill(0);
     }
-    this.flagPlacing = true;
-    this.startGame = false;
+    
     console.log('_showMap');
     this.openCellsCount = 0;
     this.pointsCount = 0;
@@ -220,37 +220,32 @@ export default class MultiPlayerView extends BaseView {
   }
 
   _getRoom(data: any) {
-    let dataRoomCreate = data.room.date;
-    let dataNow = new Date(Date.now());
-    let secondsLatency = 0;
-    let timeInSeconds = data.room.settings.play - data.room.settings.prepare;
-    /*secondsLatency += (dataNow.getHours() - parseInt(dataRoomCreate.substring(11,13))) * 3600;
-    secondsLatency += (dataNow.getMinutes() - parseInt(dataRoomCreate.substring(14,16))) * 60;
-    secondsLatency += dataNow.getSeconds() - parseInt(dataRoomCreate.substring(17,19));
-    if (secondsLatency < data.room.settings.prepare) {
-      this.timer.start(this.startTimeFlag);
-      this.startTimeFlag.seconds = data.room.settings.prepare - secondsLatency;
+    let timeLeft = data.time;
+    let timeInSeconds = data.room.settings.play + data.room.settings.prepare;
+    if (timeInSeconds - timeLeft < data.room.settings.prepare) {
       this.gameTime.hour = Math.floor(timeInSeconds / 3600);
-      this.gameTime.minute = Math.floor((timeInSeconds - this.gameTime.hour * 3600)/ 60);
+      this.gameTime.minute = Math.floor((timeInSeconds - this.gameTime.hour * 3600) / 60);
       this.gameTime.seconds = Math.floor(timeInSeconds - this.gameTime.minute * 60 - this.gameTime.hour * 3600);
+      this.startTimeFlag.seconds = timeInSeconds - timeLeft;
       this.timer.start(this.startTimeFlag);
+      this.startGame = false;
+      this.flagPlacing = true;
+      this.flagPlaceManualy = false;
+      Bus.emit('addMessageInGameActions', 'Stage of flag placement')
     } else {
-      this.startTimeFlag.seconds = 0;
-      secondsLatency -= data.room.settings.prepare;
-      timeInSeconds -= secondsLatency;
-      this.gameTime.hour = Math.floor(timeInSeconds / 3600);
-      this.gameTime.minute = Math.floor((timeInSeconds - this.gameTime.hour * 3600)/ 60);
-      this.gameTime.seconds = Math.floor(timeInSeconds - this.gameTime.minute * 60 - this.gameTime.hour * 3600) + 1;
+      this.gameTime.hour = Math.floor(timeLeft / 3600);
+      this.gameTime.minute = Math.floor((timeLeft - this.gameTime.hour * 3600) / 60);
+      this.gameTime.seconds = Math.floor(timeLeft - this.gameTime.minute * 60 - this.gameTime.hour * 3600);
       this.timer.start(this.gameTime);
-    }*/
-    this.gameTime.hour = Math.floor(timeInSeconds / 3600);
-    this.gameTime.minute = Math.floor((timeInSeconds - this.gameTime.hour * 3600) / 60);
-    this.gameTime.seconds = Math.floor(timeInSeconds - this.gameTime.minute * 60 - this.gameTime.hour * 3600);
-    this.startTimeFlag.seconds = data.room.settings.prepare
-    this.timer.start(this.startTimeFlag);
-    Bus.emit('addMessageInGameActions', 'Stage of flag placement')
-    
-    if (data.room.status === 3) {
+      this.startGame = true;
+      this.flagPlacing = false;
+      this.flagPlaceManualy = false;
+
+      Bus.emit('addMessageInGameActions', 'Stage of flag placement')
+      Bus.emit('addMessageInGameActions', 'Game begins!');
+    }
+
+    if (!data.isPlayer) {
       this.observerMode = true;
     } else {
       this.observerMode = false;
@@ -299,6 +294,17 @@ export default class MultiPlayerView extends BaseView {
     this.countMines = data.mines; // обнова
     this.countOpenCells = 0;
     this._showMap();
+    data.history.forEach((element: any)  => {
+      let color = '#b9c0c9';
+      const my = element.playerID === this.myID;
+      for (let i = 0; i < this.players.length; i++) {
+        if (this.players[i].id === element.playerID) {
+          color = this.players[i].color;
+          break;
+        }
+      }
+      Bus.emit('openCell', { x: element.x, y: element.y, type: element.value, color: color, my: my })
+    });
   }
 
   _getPlayers(data: any) {
@@ -424,6 +430,8 @@ export default class MultiPlayerView extends BaseView {
 
   /** */
   _clickOnCell(coordinatesStruct: any) {
+
+    console.log("clickOnField ", Bus.listeners, ' ', this.flagPlacing, " ", this.startGame, " ", this.observerMode)
     if (!this.flagPlacing && !this.startGame || this.observerMode) {
       return;
     }

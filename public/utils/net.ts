@@ -1,7 +1,6 @@
-//const backHost = 'https://escapade-backend.herokuapp.com';
-//const backHost = 'http://localhost:3001';
-const backHost = 'https://back.ser.ru.com';
+import * as dataAddress from './../../netconfig.json';
 
+const backHost = dataAddress.backHost;
 
 /** */
 export class Net {
