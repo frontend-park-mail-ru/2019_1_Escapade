@@ -15,7 +15,6 @@ export default class Lobby {
   roomStatusField: any;
   roomImagesField: any;
   currentRoomPanel: any;
-  paginatorPanel: any;
   freeRoomContainer: any;
   busyRoomContainer: any;
   roomNotFoundPanel: any;
@@ -76,7 +75,6 @@ export default class Lobby {
 
   _addRoom(data : any) {
     Bus.emit('hideNotFoundRoomPanel');
-    Bus.emit('showPaginatorPanel');
     const room = {name : data.name, playersCount : data.players.connections.get.length,
       playersCapacity : data.players.capacity, difficult : this._getModeByMines(data.field.mines),
       width : data.field.width, height : data.field.height, mines : data.field.mines, time : '0:00:00',
@@ -137,7 +135,6 @@ export default class Lobby {
     }
     if (this.rooms.length === 0 && this.busyRooms.length === 0) { // not found rooms
       Bus.emit('showNotFoundRoomPanel');
-      Bus.emit('hidePaginatorPanel');
     }
   }
 
@@ -148,13 +145,11 @@ export default class Lobby {
     this.busyRooms = []
   
     Bus.emit('clearAllRoomsPanels');
-    Bus.emit('showPaginatorPanel');
     Bus.emit('hideCurrentRoomPanel');
     Bus.emit('hideNotFoundRoomPanel');
     
     if (data.allRooms.get.length === 0) { // not found rooms
       Bus.emit('showNotFoundRoomPanel');
-      Bus.emit('hidePaginatorPanel');
     }
 
     data.allRooms.get.forEach((item : any, i : number) => {

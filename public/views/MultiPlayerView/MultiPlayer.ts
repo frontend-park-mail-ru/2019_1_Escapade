@@ -121,7 +121,7 @@ export default class MultiPlayerView extends BaseView {
     Bus.emit('addMessage', { container: '.multi_player__message_container', parent: this.parent });
     Bus.emit('addPlayersList', '.multi_player__playerlist_container');
     Bus.emit('addGameActions', '.multi_player_actions_container');
-    Bus.emit('addChat', '.multi_player__chat_container');
+    Bus.emit('addChat', { container: '.multi_player__chat_container', parent: this.parent });
     Bus.emit('changeTitleRestartButton', 'Start');
     Bus.emit('messageBoxHide', true);
     this.infoContainer = document.querySelector('.multi_player__info_container');

@@ -16,17 +16,21 @@ export default class ChatView {
   currentPathSignalFunc: any;
   myMessage: boolean;
   chatVisitors: any;
+  container: any;
+  parent: any;
   constructor() {
     Bus.on('addChat', this._addListeners.bind(this), 'chatView');
     this.countMessage = 0;
   }
 
-  _addListeners(htmlElementTitle : string) {
-    const HTMLElement = document.querySelector(htmlElementTitle);
+  _addListeners(data : any) {
+    this.container = data.container;
+    this.parent = data.parent;
+    const HTMLElement = this.parent.querySelector(this.container);
     HTMLElement.innerHTML = Template();
-    this.sendButton = document.querySelector('.chat__send_button');
-    this.inputMessageField = document.querySelector('.chat__input');
-    this.chatHistory = document.querySelector('.chat__history');
+    this.sendButton = this.parent.querySelector('.chat__send_button');
+    this.inputMessageField = this.parent.querySelector('.chat__input');
+    this.chatHistory = this.parent.querySelector('.chat__history');
     this.counterOnlineField = document.querySelector('.chat__online');
 
     this.sendButton.addEventListener('click', this._sendMessage.bind(this));
