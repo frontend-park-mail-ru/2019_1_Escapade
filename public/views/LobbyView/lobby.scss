@@ -42,6 +42,19 @@
     width: 20px;
   }
 
+  &__rooms_container {
+    overflow-y: scroll;
+    width: 700px;
+    height: 700px;
+  }
+
+  &__row {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+  }
+
   &__button {
     border-radius: 30px;
     border: 0.2vw solid rgb(150, 159, 167);

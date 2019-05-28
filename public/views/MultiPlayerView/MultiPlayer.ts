@@ -52,6 +52,7 @@ export default class MultiPlayerView extends BaseView {
   chatContainer: any;
   oncontextmenu: (this: GlobalEventHandlers, ev: MouseEvent) => any;
   restartButton: any;
+  timeInSeconds: any;
   /**
    *
    * @param {*} parent
@@ -89,7 +90,8 @@ export default class MultiPlayerView extends BaseView {
     Bus.on('changeFlagSetWS', this._changeFlagSet.bind(this), 'multiplayerView');
     Bus.on('roomObserverEnterWS', this._getObservers.bind(this), 'multiplayerView');
     Bus.on('roomObserverExitWS', this._exitObserver.bind(this), 'multiplayerView');
-
+    Bus.on('roomStatusWS', this._getStatus.bind(this), 'multiplayerView');
+    
     Bus.on('gameOwerWS', this._gameOver.bind(this), 'multiplayerView');
     Bus.on('sendRoom', this._getRoom.bind(this), 'multiplayerView');
   }
@@ -103,7 +105,7 @@ export default class MultiPlayerView extends BaseView {
     Bus.off('changeFlagSetWS', this._changeFlagSet.bind(this), 'multiplayerView');
     Bus.off('roomObserverEnterWS', this._getObservers.bind(this), 'multiplayerView');
     Bus.off('roomObserverExitWS', this._exitObserver.bind(this), 'multiplayerView');
-
+    Bus.off('roomStatusWS', this._getStatus.bind(this), 'multiplayerView');
     Bus.off('gameOwerWS', this._gameOver.bind(this), 'multiplayerView');
     Bus.off('sendRoom', this._getRoom.bind(this), 'multiplayerView');
   }
@@ -220,19 +222,36 @@ export default class MultiPlayerView extends BaseView {
   }
 
   _getRoom(data: any) {
-    let timeLeft = data.time;
-    let timeInSeconds = data.room.settings.play + data.room.settings.prepare;
-    if (timeInSeconds - timeLeft < data.room.settings.prepare) {
-      this.gameTime.hour = Math.floor(timeInSeconds / 3600);
-      this.gameTime.minute = Math.floor((timeInSeconds - this.gameTime.hour * 3600) / 60);
-      this.gameTime.seconds = Math.floor(timeInSeconds - this.gameTime.minute * 60 - this.gameTime.hour * 3600);
-      this.startTimeFlag.seconds = timeInSeconds - timeLeft;
+ 
+    if (!data.isPlayer) {
+      this.observerMode = true;
+    } else {
+      this.observerMode = false;
+      this.flagCoords = { x: data.flag.x, y: data.flag.y };
+    }
+
+    this.timeInSeconds = data.room.settings.play + data.room.settings.prepare;
+
+    this._getPlayers(data.room.players);
+    this._getObservers(data.room.observers);
+    this._getField(data.room.field);
+  }
+
+  _getStatus(data : any) {
+    let timeLeft = data.value.time;
+    if (data.value.status === 2) { //flag placing
+      this.timer.stop();
+      this.gameTime.hour = Math.floor(this.timeInSeconds / 3600);
+      this.gameTime.minute = Math.floor((this.timeInSeconds - this.gameTime.hour * 3600) / 60);
+      this.gameTime.seconds = Math.floor(this.timeInSeconds - this.gameTime.minute * 60 - this.gameTime.hour * 3600);
+      this.startTimeFlag.seconds = timeLeft;
       this.timer.start(this.startTimeFlag);
       this.startGame = false;
       this.flagPlacing = true;
       this.flagPlaceManualy = false;
       Bus.emit('addMessageInGameActions', 'Stage of flag placement')
-    } else {
+    } else if (data.value.status === 3) {
+      this.timer.stop();
       this.gameTime.hour = Math.floor(timeLeft / 3600);
       this.gameTime.minute = Math.floor((timeLeft - this.gameTime.hour * 3600) / 60);
       this.gameTime.seconds = Math.floor(timeLeft - this.gameTime.minute * 60 - this.gameTime.hour * 3600);
@@ -244,19 +263,6 @@ export default class MultiPlayerView extends BaseView {
       Bus.emit('addMessageInGameActions', 'Stage of flag placement')
       Bus.emit('addMessageInGameActions', 'Game begins!');
     }
-
-    if (!data.isPlayer) {
-      this.observerMode = true;
-    } else {
-      this.observerMode = false;
-      this.flagCoords = { x: data.flag.x, y: data.flag.y };
-    }
-
-    this._getPlayers(data.room.players);
-    this._getObservers(data.room.observers);
-    this._getField(data.room.field);
-
-
   }
 
   _quitClick() {
@@ -276,8 +282,8 @@ export default class MultiPlayerView extends BaseView {
       }
       this.startGame = true;
     }
-    this.timer.start(this.gameTime);
-    Bus.emit('addMessageInGameActions', 'Game begins!');
+    // this.timer.start(this.gameTime);
+    // Bus.emit('addMessageInGameActions', 'Game begins!');
   }
 
   _createColorForPlayer(i: number) {

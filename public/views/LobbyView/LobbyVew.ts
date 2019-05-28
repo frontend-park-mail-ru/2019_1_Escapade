@@ -24,7 +24,6 @@ export default class LobbyVew extends BaseView {
   roomsHTML: any[];
   currentRoomId: number;
   currentRoomName: string;
-  paginatorPanel: any;
   roomNotFoundPanel: any;
   busyRooms: any[];
   /**
@@ -49,7 +48,6 @@ export default class LobbyVew extends BaseView {
     this.busyRoomContainer = this.parent.querySelector('.lobby__busy_room_container');
     this.leaveRoomButton = this.parent.querySelector('.room__exit');
     this.currentRoomPanel = this.parent.querySelector('.lobby__current_room_panel');
-    this.paginatorPanel = this.parent.querySelector('.lobby__paginator'); 
     this.createRoomButton = this.parent.querySelector('.lobby__create_game');
     this.roomNotFoundPanel = this.parent.querySelector('.lobby__room_not_found');
     this.roomStatusField = this.currentRoomPanel.querySelector('.room_status');
@@ -64,8 +62,6 @@ export default class LobbyVew extends BaseView {
 
     Bus.on('showCurrentRoomPanel', this._showCurrentRoomPanel.bind(this), 'lobbyView');
     Bus.on('hideCurrentRoomPanel', this._hideCurrentRoomPanel.bind(this), 'lobbyView');
-    Bus.on('showPaginatorPanel', this._showPaginatorPanel.bind(this), 'lobbyView');
-    Bus.on('hidePaginatorPanel', this._hidePaginatorPanel.bind(this), 'lobbyView');
     Bus.on('showNotFoundRoomPanel', this._notFoundRoomPanelShow.bind(this), 'lobbyView');
     Bus.on('hideNotFoundRoomPanel', this._notFoundRoomPanelHide.bind(this), 'lobbyView');
     Bus.on('clearAllRoomsPanels', this._clearAllRoomsPanels.bind(this), 'lobbyView');
@@ -99,13 +95,6 @@ export default class LobbyVew extends BaseView {
     this.roomStatusField.innerHTML = `Room ${name} waiting... ${length}/${capacity}`;
   }
 
-  _hidePaginatorPanel() {
-    this.paginatorPanel.style.display = 'none';
-  }
-
-  _showPaginatorPanel() {
-    this.paginatorPanel.style.display = 'flex';
-  }
 
   _notFoundRoomPanelShow() {
     this.roomNotFoundPanel.hidden = false;
