@@ -13,7 +13,9 @@ section(data-section-name='menu')
       a.menu__button.mt-2(href='sign_out', data-href='sign_out') Logout
       - }
       - else {
-      a.menu__logo.mb-2(href='single_player', data-href='single_player')
+      .menu__labels.mb-2
+        a.menu__logo.mb-2(href='single_player', data-href='single_player')
+        a.menu__multi_logo(href='lobby', data-href='lobby')
       a.menu__button(href='sign_in', data-href='sign_in') Anonymus
       .menu__or.mt-1 or
       .menu__row.mt-1

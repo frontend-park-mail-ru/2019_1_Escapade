@@ -2,7 +2,6 @@
 const singlePlayerTemplate = require('./MultiPlayer.pug');
 import MathGame from '../../utils/math';
 import BaseView from '../BaseView';
-import { User } from '../../utils/user';
 import { MineSweeper } from '../../game/minesweeper';
 import { Timer } from '../../utils/timer/timer';
 import { checkAuth } from '../../utils/user';
@@ -114,7 +113,7 @@ export default class MultiPlayerView extends BaseView {
   */
   render() {
     console.log("AAAAAAAAAAAAAAAAAAAAAAAAaaa")
-    this.user = User;
+
     super.render();
     Bus.emit('busAllOffSinglePlayer');
     Bus.emit('addField', { container: '.multi_player__field_container', parent: this.parent });
@@ -232,7 +231,7 @@ export default class MultiPlayerView extends BaseView {
 
     this.timeInSeconds = data.room.settings.play + data.room.settings.prepare;
 
-    this._getPlayers(data.room.players);
+    this._getPlayers(data);
     this._getObservers(data.room.observers);
     this._getField(data.room.field);
   }
@@ -317,14 +316,14 @@ export default class MultiPlayerView extends BaseView {
     this.players = [];
     this.myID = 0;
     Bus.emit('clearParametersPlayerList');
-    const dataConnections = data.connections.get;
-    const dataPlayers = data.players;
+    const dataConnections = data.room.players.connections.get;
+    const dataPlayers = data.room.players.players;
     const colorRandom = MathGame.randomInteger(0, 8);
     console.log('dataConnections ', dataConnections.length);
     dataConnections.forEach((item: any, i: number) => {
       let color = this._createColorForPlayer(i + colorRandom)
       let me = false;
-      if (User.name === item.user.name) {
+      if (data.you.id === item.user.id) {
         this.myID = dataPlayers[item.index].ID;
         me = true;
       }
