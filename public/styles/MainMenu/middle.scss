@@ -3,11 +3,11 @@
   &__labels {
     display: flex;
     margin-bottom: 15px;
-  }
 
-  @media screen and (min-width: $mobile) and (max-width: $tablet) {
-    &__labels {
-      flex-direction: column;
+    @media screen and (min-width: $mobile) and (max-width: $tablet) {
+      & {
+        flex-direction: column;
+      }
     }
   }
 
@@ -15,10 +15,17 @@
     background-image: url('./img/logo_single.png');
     background-repeat: no-repeat;
     background-size: cover;
-    height: 30vw;
-    width: 30vw;
+    height: 35vh;
+    width: 35vh;
     -webkit-animation: pulsing 3s infinite;
     animation: pulsing 3s infinite;
+
+    @media screen and (min-width: $mobile) and (max-width: $tablet) {
+      & {
+        height: 25vh;
+        width: 25vh;
+      }
+    }
   }
 
   @-webkit-keyframes pulsing {
@@ -59,10 +66,17 @@
     background-image: url('./img/logo_multi.png');
     background-repeat: no-repeat;
     background-size: cover;
-    height: 30vw;
-    width: 30vw;
+    height: 35vh;
+    width: 35vh;
     -webkit-animation: pulsing 3s infinite;
     animation: pulsing 3s infinite;
+
+    @media screen and (min-width: $mobile) and (max-width: $tablet) {
+      & {
+        height: 25vh;
+        width: 25vh;
+      }
+    }
   }
 
 }
