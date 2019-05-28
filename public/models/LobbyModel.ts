@@ -67,6 +67,7 @@ export default class LobbyModel {
         this._leaveRoom(14);
         this._busAllOff()
         this.ws.closeConnection();
+        this.ws = undefined;
         this.wsReconnect = true;
         this.curPath = '';
       }
