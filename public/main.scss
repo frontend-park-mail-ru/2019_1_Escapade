@@ -6,6 +6,7 @@
 @import './views/AuthorsView/about.scss';
 @import './views/RulesView/rules.scss';
 @import './views/LeaderBoardView/leaderboard.scss';
+@import './views/LeaderBoardView/Filter/LeaderBoardFilter.scss';
 @import './views/MainMenuView/menuStyle.scss';
 @import './views/SignUpView/SignUp.scss';
 @import './views/SignInView/SignIn.scss';
@@ -26,4 +27,3 @@
 @import './utils/stopwatch/stopwatch.scss';
 @import './utils/timer/timer.scss';
 @import './views/GameView/GameActions/GameActions.scss';
-

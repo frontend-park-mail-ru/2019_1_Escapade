@@ -1,6 +1,8 @@
 const leaderBoardTemplate = require('./LeaderBoard.pug');
+const leaderFilterTemplate = require('./Filter/LeaderBoardFilter.pug');
 import BaseView from '../BaseView';
 import Bus from '../../utils/bus';
+import LeaderboardFilterComponent from './Filter/filter';
 
 /** */
 export default class LeaderBoardView extends BaseView {
@@ -12,6 +14,7 @@ export default class LeaderBoardView extends BaseView {
   _pagesCount: any;
   _leftArrow: any;
   _rightArrow: any;
+  filter: LeaderboardFilterComponent
   /**
    *
    * @param {*} parent
@@ -51,10 +54,7 @@ export default class LeaderBoardView extends BaseView {
    */
   render() {
     Bus.on('respPage', this.renderUsers.bind(this), 'leaderBoardView');
-    // const leaderboardTableRowDomElement = document.getElementsByClassName('leaderboard__table_row')[0];
-
     this.divisionHeight = this._getPageAmount();
-    console.log(this.divisionHeight)
     this.pageStruct = { page: 1, per_page: this.divisionHeight };
     Bus.emit('reqPagesAmount', this.pageStruct.per_page);
     Bus.emit('reqPage', this.pageStruct);
@@ -68,6 +68,8 @@ export default class LeaderBoardView extends BaseView {
     const usersStruct = { users: users, page: this._currPage, per_page: this.pageStruct.per_page };
     this.data = usersStruct;
     super.render();
+    this.filter = new LeaderboardFilterComponent(this.parent.querySelector('.leaderboard__filter'), leaderFilterTemplate)
+    this.filter.render()
     this.leaderBoardPageDomElement = this.parent.querySelector('.leaderboard__footer_page');
     this.leaderBoardPageDomElement.innerHTML = this._currPage;
     this._initButtons();
