@@ -106,7 +106,7 @@ export class Timer {
   reset({hour = 0, minute = 0, seconds = 0}) {
     this.startTime = {hour : hour, minute : minute, seconds : seconds};
     
-    this.timeStr = this.startTime.hour + ':' + this.startTime.minute + ':' + this.startTime.seconds;
+    this.timeStr = '00:00:00';
     
     this.countdownElement.innerHTML = this.timeStr;
   };

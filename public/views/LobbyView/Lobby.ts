@@ -18,6 +18,7 @@ export default class Lobby {
   freeRoomContainer: any;
   busyRoomContainer: any;
   roomNotFoundPanel: any;
+  idPlayerBackend: any;
   /**
    *
    * @param {*} parent
@@ -143,16 +144,17 @@ export default class Lobby {
     this.currentRoomId = -1;
     this.rooms = []
     this.busyRooms = []
+    let lobby = data.lobby;
   
     Bus.emit('clearAllRoomsPanels');
     Bus.emit('hideCurrentRoomPanel');
     Bus.emit('hideNotFoundRoomPanel');
     
-    if (data.allRooms.get.length === 0) { // not found rooms
+    if (lobby.allRooms.get.length === 0) { // not found rooms
       Bus.emit('showNotFoundRoomPanel');
     }
 
-    data.allRooms.get.forEach((item : any, i : number) => {
+    lobby.allRooms.get.forEach((item : any, i : number) => {
       const room = {name : item.name, playersCount : item.players.connections.get.length,
         playersCapacity : item.players.capacity, difficult : this._getModeByMines(item.field.mines),
         width : item.field.width, height : item.field.height, mines : item.field.mines, time : '0:00:00',

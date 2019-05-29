@@ -1,13 +1,12 @@
 .lobby {
   display: flex;
   justify-content: center;
-  height: 100vh;
-  background: radial-gradient(512.00px at 50% 50%, rgba(255, 255, 255, 0.34) 0%, rgba(255, 255, 255, 0) 100%), #667787;
-
+  flex-direction: column;
+  background: radial-gradient(512px at 50% 50%,hsla(0,0%,100%,.34) 0,hsla(0,0%,100%,0) 100%),#667787;
+  
   &__header {
     display: flex;
     align-items: center;
-    margin-bottom: 3vh;
 
     @media screen and (max-width: $tablet) {
       & {
@@ -22,38 +21,19 @@
     width: 90vw;
   }
 
+  &__chat_container {
+    margin-left:5px;
+  }
+
   &__back {
-    width: 10vw;
-    height: 10vw;
-    background: url('./img/flag-right.png') no-repeat;
-    transform: matrix(-1, 0, 0, 1, 0, 0);
+    width: 95px;
+    height: 95px;
+    background: url(/img/flag-right.png) no-repeat;
+    -webkit-transform: matrix(-1,0,0,1,0,0);
+    transform: matrix(-1,0,0,1,0,0);
     background-size: contain;
   }
-  &__close_settings {
-    width: calc(1rem + 7vw);
-    height: calc(1rem + 7vw);
-    background: url('./img/cancel.png') #CED6DD no-repeat;
-    background-size: contain;
-    align-self: center;
-    border-radius: 50%;
-  }
-
-  &__chat_container{
-    width: 20px;
-  }
-
-  &__rooms_container {
-    overflow-y: scroll;
-    width: 700px;
-    height: 700px;
-  }
-
-  &__row {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: row;
-  }
+  
 
   &__button {
     border-radius: 30px;
@@ -68,12 +48,12 @@
     display: flex;
     padding: 15px;
     border-radius: 30px;
-    border: 0.2vw solid rgb(150, 159, 167);
-    background-color: rgba(75, 94, 112, 1);
-    color: white;
+    border: 2.2px solid #969fa7;
+    background-color: #4b5e70;
+    color: #fff;
     cursor: pointer;
     font-family: Saira;
-    margin-left: 10vw;
+    margin-left: 60px;
 
     &_info {
       display: flex;
@@ -84,6 +64,10 @@
   &__row {
     display: flex;
     flex-direction: row;
+    justify-content: center;
+    float: left;
+    /* position: relative; */
+    /* width: 2000px; */
   }
 
   &__center {
@@ -95,24 +79,28 @@
     justify-content: center;
     align-items: center;
     flex-direction: column;
+    width: 1168px;
+    display: table;
+    margin: 0 auto;
+    text-align: center;
 
     &_header {
       display: flex;
       justify-content: space-between;
       align-items: center;
       width: 100%;
+      height: 67px;
     }
   }
 
   &__create_game {
-    background-image: url('./img/create.png');
+    background-image: url(/img/create.png);
     background-size: 31px 31px;
-    background-position: 7px center;
+    background-position: 7px;
     background-repeat: no-repeat;
-    padding: 12px;
-    padding-left: 41px;
-    font-size: 2.5vw;
-    margin-right: 7vw;
+    padding: 12px 12px 12px 41px;
+    font-size: 20px;
+    margin-right: 22px;
   }
 
   @media screen and (max-width: $tablet) {
@@ -136,14 +124,14 @@
     border-radius: 10px;
     margin-bottom: 2px;
     font-family: Saira;
-    font-size: calc(1.2rem + 3.5vw);
-    color: white;
+    font-size: 55px;
+    color: #fff;
     padding: 3px 17px;
   }
 
-  &__back {
-    margin-bottom: 1vw;
-  }
+  // &__back {
+  //   margin-bottom: 1vw;
+  // }
 
   &__find_game {
     background-image: url('./img/magnifier.png');
@@ -152,12 +140,12 @@
   &__room {
     display: flex;
     border-radius: 5px;
-    color: white;
-    font-size: 1.5vw;
+    color: #fff;
+    font-size: 19px;
     margin-bottom: 5px;
     text-align: center;
     align-items: center;
-    min-height: 5vw;
+    min-height: 73px;
   }
 
   @media screen and (max-width: $tablet) {
@@ -181,9 +169,9 @@
 
   &__with_image {
     background-repeat: no-repeat;
-    background-size: 1.5vw;
+    background-size: 24px;
     background-position: left;
-    text-indent: 1vw;
+    text-indent: 15px;
   }
 
   @media screen and (max-width: $normal) {
@@ -202,12 +190,12 @@
 
   &__name {
     background-image: url('./img/room.png');
-    width: 18vw;
+    width: 108px;
   }
 
   &__players {
     background-image: url('./img/player.png');
-    width: 10vw;
+    width: 121px;
   }
 
   &__difficult {
@@ -217,17 +205,17 @@
 
   &__size {
     background-image: url('./img/size.png');
-    width: 8vw;
+    width: 94px;
   }
 
   &__mines {
     background-image: url('./img/mine_icon.png');
-    width: 5vw;
+    width: 64px;
   }
 
   &__time {
     background-image: url('./img/clock.png');
-    width: 32vw;
+    width: 123px;
   }
 
   &__time_have {
@@ -346,16 +334,30 @@
 
 @media screen and (min-width: $normal) {
   .room_status {
-    font-size: 2.2vw;
+    font-size: 27px;
   }
 }
 
 .room__exit {
-  width: 4vw;
-  height: 4vw;
-  background: url('./img/cancel.png') #CED6DD no-repeat;
+  width: 45px;
+  height: 45px;
+  background: url(/img/cancel.png) #ced6dd no-repeat;
   background-size: contain;
   border-radius: 50%;
-  margin-left: 2vw;
+  margin-left: 28px;
   ;
+}
+
+.lobby__rooms_container {
+  overflow-y: scroll;
+  width: 700px;
+  height: 700px;
+  margin-top: 10px;
+}
+
+.lobby__room_not_found {
+  color: #fff;
+  font-size: 40px;
+  text-align: left;
+  margin-left: 18px;
 }

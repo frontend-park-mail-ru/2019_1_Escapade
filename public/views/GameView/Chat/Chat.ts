@@ -1,6 +1,5 @@
 /* eslint-disable require-jsdoc */
 import Bus from '../../../utils/bus';
-import { WebSocketInterface } from '../../../utils/webSocket';
 import { User } from '../../../utils/user';
 const MessageTemplate = require('./ChatMessage.pug');
 const MyMessageTemplate = require('./MyChatMessage.pug');
@@ -16,22 +15,23 @@ export default class ChatView {
   currentPathSignalFunc: any;
   myMessage: boolean;
   chatVisitors: any;
-  container: any;
-  parent: any;
+  idPlayerBackend: any;
   constructor() {
     Bus.on('addChat', this._addListeners.bind(this), 'chatView');
     this.countMessage = 0;
+    this.idPlayerBackend = -1;
   }
 
   _addListeners(data : any) {
-    this.container = data.container;
-    this.parent = data.parent;
-    const HTMLElement = this.parent.querySelector(this.container);
+    let container = data.container;
+    let place = data.place;
+    let parent = data.parent;
+    const HTMLElement = parent.querySelector(container);
     HTMLElement.innerHTML = Template();
-    this.sendButton = this.parent.querySelector('.chat__send_button');
-    this.inputMessageField = this.parent.querySelector('.chat__input');
-    this.chatHistory = this.parent.querySelector('.chat__history');
-    this.counterOnlineField = document.querySelector('.chat__online');
+    this.sendButton = parent.querySelector('.chat__send_button');
+    this.inputMessageField = parent.querySelector('.chat__input');
+    this.chatHistory = parent.querySelector('.chat__history');
+    this.counterOnlineField = parent.querySelector('.chat__online');
 
     this.sendButton.addEventListener('click', this._sendMessage.bind(this));
     Bus.on('getChatMessage', this._getMessage.bind(this), 'chat');
@@ -52,7 +52,7 @@ export default class ChatView {
     }
   }
   _getMessage(data : any) {
-    const message = {photo : data.user.photo, name : data.user.name, text : data.text, time : data.time.substring(11,16)};
+    const message = {photo : data.user.photo,  id : data.user.id, name : data.user.name, text : data.text, time : data.time.substring(11,16)};
     this._addMessageToChatField(message);
     this.myMessage = false;
   }
@@ -69,10 +69,14 @@ export default class ChatView {
     console.log('_getInfo end') 
   }
 
-  _getMessageHistory(messageHistory : any) {
+  _getMessageHistory(data : any) {
     this.chatHistory.innerHTML = ''; 
+    let messageHistory = data.lobby.messages;
+    this.idPlayerBackend = data.you.id;
+    console.log(this.idPlayerBackend, " hghg  ", data.you.id)
+
     messageHistory.forEach((item : any) => {
-      const message = {photo : item.user.photo, name : item.user.name, text : item.text, time : item.time.substring(11,16)};
+      const message = {photo : item.user.photo, id : item.user.id, name : item.user.name, text : item.text, time : item.time.substring(11,16)};
       this._addMessageToChatField(message);
     });
   }
@@ -84,7 +88,6 @@ export default class ChatView {
     if (messageText == '') {
       return;
     }
-    console.log('BB', messageText)
     Bus.emit('sendChatMessage', messageText)
     
     this.myMessage = true;
@@ -92,8 +95,8 @@ export default class ChatView {
   }
 
   _addMessageToChatField(messageStruct : any) {
-
-    if (messageStruct.name != User.name) {
+    console.log(this.idPlayerBackend, " ", messageStruct.id)
+    if (messageStruct.id != this.idPlayerBackend) {
       this.chatHistory.innerHTML += MessageTemplate({ message : messageStruct });
     } else {
       this.chatHistory.innerHTML += MyMessageTemplate({ message : messageStruct });

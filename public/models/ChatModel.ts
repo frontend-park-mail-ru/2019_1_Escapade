@@ -44,7 +44,7 @@ export default class ChatModel {
         }
         break;
       case  'Lobby' :
-        Bus.emit('addMessageInChatHistory', data.value.lobby.messages);
+        Bus.emit('addMessageInChatHistory', data.value);
         break;
     }
     console.log('_getInfo end') 

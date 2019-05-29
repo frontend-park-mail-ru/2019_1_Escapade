@@ -112,8 +112,6 @@ export default class MultiPlayerView extends BaseView {
    *
   */
   render() {
-    console.log("AAAAAAAAAAAAAAAAAAAAAAAAaaa")
-
     super.render();
     Bus.emit('busAllOffSinglePlayer');
     Bus.emit('addField', { container: '.multi_player__field_container', parent: this.parent });
@@ -135,7 +133,6 @@ export default class MultiPlayerView extends BaseView {
     this.chatInfoButton.addEventListener('click', this._chatInfoClick.bind(this));
     this.quitDocElement.addEventListener('click', this._quitClick.bind(this));
     this.restartButton.style.display = 'none';
-    this._busAllOff();
     this._busAllOn();
     this.timer = new Timer('.multi_player__timer', this._timeIsOver.bind(this));
     Bus.emit("ClearMessagesGameActions")
@@ -260,8 +257,14 @@ export default class MultiPlayerView extends BaseView {
       this.gameTime.seconds = Math.floor(timeLeft - this.gameTime.minute * 60 - this.gameTime.hour * 3600);
       this.timer.start(this.gameTime);
       this.startGame = true;
-      this.flagPlacing = false;
       this.flagPlaceManualy = false;
+      if (!this.observerMode) {
+        if (this.flagPlacing) {
+          this.flagPlacing = false;
+          Bus.emit('setUnsetFlagMultiOnCell', { x: this.flagCoords.x, y: this.flagCoords.y, type: 'flag' })
+        }
+        this.startGame = true;
+      }
       
       Bus.emit('ClearMessagesGameActions');
       Bus.emit('addMessageInGameActions', 'Stage of flag placement');
@@ -279,13 +282,7 @@ export default class MultiPlayerView extends BaseView {
       return;
     }
 
-    if (!this.observerMode) {
-      if (this.flagPlacing) {
-        this.flagPlacing = false;
-        Bus.emit('setUnsetFlagMultiOnCell', { x: this.flagCoords.x, y: this.flagCoords.y, type: 'flag' })
-      }
-      this.startGame = true;
-    }
+    
   }
 
   _createColorForPlayer(i: number) {
@@ -381,6 +378,9 @@ export default class MultiPlayerView extends BaseView {
 
   _gameOver(data: any) {
     this.timer.stop();
+    if (data.value.timer) {
+      this.timer.reset({});
+    }
     const dataPlayers = data.value.players;
     this._openAllCells(data.value.cells);
     for (let i = 0; i < dataPlayers.length; i++) {

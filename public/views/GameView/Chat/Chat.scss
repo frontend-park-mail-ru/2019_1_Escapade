@@ -21,9 +21,19 @@
 .chat__history {
   display: flex;
   flex-direction: column;
-  width: 434px;
+  width: 440px;
   height: 359px;
   overflow-y: scroll;
+}
+
+.chat__message_name {
+  width: 97px;
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+  word-break: break-word;
+  line-break: auto;
+  hyphens: initial;
+  text-align: left;
 }
 
 .chat__column {
@@ -88,6 +98,7 @@
   line-break: auto;
   hyphens: initial;
   margin-left: 9px;
+  text-align: left;
 }
 
 .chat__controls{
