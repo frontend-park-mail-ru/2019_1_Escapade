@@ -24,7 +24,22 @@
   width: 440px;
   height: 359px;
   overflow-y: scroll;
+  overflow-x: hidden;
+  transition: 3s linear;
 }
+
+.chat__history:hover::-webkit-scrollbar {
+  width: 7px;  
+}
+.chat__history::-webkit-scrollbar {
+  width: 0px;  
+  transition: 3s linear;
+}
+.chat__history::-webkit-scrollbar-thumb {
+  background: #ff3d00;;
+}
+
+
 
 .chat__message_name {
   width: 97px;
@@ -125,6 +140,10 @@
   cursor: pointer;
   width: 41px;
   height: 41px;
+}
+
+.chat__send_button:hover {
+  filter: brightness(145%);
 }
 
 .chat__mymessage {

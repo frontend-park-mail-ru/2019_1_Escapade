@@ -92,6 +92,10 @@
   position: relative;
 }
 
+.lobby_room_close_settings:hover {
+  filter: brightness(125%)
+}
+
 .lobby_room_settings_ok_button {
   text-decoration: none;
   background-color: #4B5E70;
@@ -109,6 +113,10 @@
   border-radius: 10px;
 }
 
+.lobby_room_settings_ok_button:hover {
+  filter: brightness(125%)
+}
+
 .lobby_room_settings_button .lobby_room_settings_content {
   opacity: 0;
 }
@@ -123,6 +131,8 @@
   font-size: 25px;
 
 }
+
+
 
 .lobby_room_input {
   height: 35px;

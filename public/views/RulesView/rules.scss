@@ -53,6 +53,10 @@
     background-size: contain;
   }
 
+  &__back:hover {
+    animation: go-left .4s linear .2s 1 normal forwards;
+  }
+
   &__escapade{
     background: #FF3D00;
     border-radius: 30px;

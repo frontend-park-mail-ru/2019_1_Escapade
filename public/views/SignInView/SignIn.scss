@@ -28,6 +28,10 @@
     cursor: pointer;
   }
 
+  &__confirm:hover {
+    filter: brightness(125%);
+  }
+
   &__exit{
     width: calc(1rem + 7vw);
     height: calc(1rem + 7vw);
@@ -35,5 +39,9 @@
     background-size: contain;
     align-self: center;
     border-radius: 50%;
+  }
+
+  &__exit:hover {
+    filter: brightness(125%);
   }
 }

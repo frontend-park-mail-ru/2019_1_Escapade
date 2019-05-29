@@ -19,6 +19,10 @@
     border-radius: 10px;
   }
 
+  &__button_chat:hover {
+    filter: brightness(125%);
+  }
+
   &__button_restart {
     width: 45px;
     height: 45px;
@@ -28,6 +32,11 @@
     margin-bottom: 8px;
     background-size: contain;
   }
+
+  &__button_restart:hover {
+    filter: brightness(145%);
+  }
+  
 
 
   &__info_container {
@@ -145,4 +154,8 @@
   background: url(/img/quit.png);
   background-repeat: no-repeat;
   background-size: contain;
+}
+
+.game__multi_quit_button:hover {
+  filter: brightness(145%);
 }

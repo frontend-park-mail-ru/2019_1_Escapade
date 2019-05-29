@@ -67,6 +67,10 @@
     align-self: flex-start
   }
 
+  &__hrefBackToMenu:hover {
+    animation: go-left .4s linear .2s 1 normal forwards;
+  }
+
   &__hrefToChange {
     width: 90px;
     height: 90px;
@@ -74,6 +78,10 @@
     background-size: contain;
     align-self: center;
     border-radius: 50%;
+  }
+
+  &__hrefToChange:hover {
+    filter: brightness(125%);
   }
 
   @media screen and (max-width: $tablet) {
@@ -209,4 +217,8 @@ input[type="file"] {
   background: url('./img/upload-avatar.png') #46535E no-repeat;
   background-size: contain;
   background-position: center;
+}
+
+.custom-file-upload:hover {
+  filter: brightness(125%);
 }

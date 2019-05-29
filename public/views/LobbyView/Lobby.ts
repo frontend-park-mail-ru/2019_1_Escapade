@@ -116,16 +116,18 @@ export default class Lobby {
     }
   }
 
-  _deleteRoom(data : any) {
-    if (data.status === 3) {
-      for (let i = 0; i < this.busyRooms.length; i++) {
-        if (this.busyRooms[i].id === data) {
-          Bus.emit('deleteRoomRow', {type : 'busy', num : i});
-          this.busyRooms.splice(i, 1);
-          break;
-        }
-      } 
-    } else {
+  _deleteRoom(data : any) { // аааа не работает этот дебил убрал статус
+    let busyRoomsDelete = false;
+    for (let i = 0; i < this.busyRooms.length; i++) {
+      if (this.busyRooms[i].id === data) {
+        Bus.emit('deleteRoomRow', {type : 'busy', num : i});
+        this.busyRooms.splice(i, 1);
+        busyRoomsDelete = true;
+        break;
+      }
+    } 
+    
+    if (!busyRoomsDelete) {
       for (let i = 0; i < this.rooms.length; i++) {
         if (this.rooms[i].id === data) {
           Bus.emit('deleteRoomRow', {type : 'free', num : i});
@@ -134,6 +136,7 @@ export default class Lobby {
         }
       }
     }
+
     if (this.rooms.length === 0 && this.busyRooms.length === 0) { // not found rooms
       Bus.emit('showNotFoundRoomPanel');
     }

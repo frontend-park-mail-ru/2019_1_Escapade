@@ -10,6 +10,7 @@
     padding-top: 10px;
     padding-bottom: 10px;
     overflow-y: scroll;
+    overflow-x: hidden;
   }
 
 
@@ -163,4 +164,16 @@
       }
     }
   }
+}
+
+
+.game__players_list:hover::-webkit-scrollbar {
+  width: 7px;  
+}
+.game__players_list::-webkit-scrollbar {
+  width: 0px;  
+  transition: 3s linear;
+}
+.game__players_list::-webkit-scrollbar-thumb {
+  background: #ff3d00;;
 }

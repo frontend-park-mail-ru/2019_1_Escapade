@@ -207,6 +207,10 @@
       cursor: pointer;
     }
 
+    &_left:hover {
+      animation: go-left .4s linear .2s 1 normal forwards;
+    }
+
     &_right {
       background: url('./img/flag-right.png');
       background-repeat: no-repeat;
@@ -214,6 +218,10 @@
       height: 60px;
       width: 60px;
       cursor: pointer;
+    }
+
+    &_right:hover {
+      animation: go-right .4s linear .2s 1 normal forwards;
     }
   }
 }

@@ -33,7 +33,10 @@
     transform: matrix(-1,0,0,1,0,0);
     background-size: contain;
   }
-  
+
+  &__back:hover {
+    animation: go-left .4s linear .2s 1 normal forwards;
+  }
 
   &__button {
     border-radius: 30px;
@@ -103,6 +106,10 @@
     margin-right: 22px;
   }
 
+  &__create_game:hover {
+    filter: brightness(123%);
+  }
+
   @media screen and (max-width: $tablet) {
     &__current_room_panel {
       font-size: 3vw;
@@ -146,6 +153,10 @@
     text-align: center;
     align-items: center;
     min-height: 73px;
+  }
+
+  &__room:hover {
+    filter: brightness(125%);
   }
 
   @media screen and (max-width: $tablet) {
@@ -345,14 +356,30 @@
   background-size: contain;
   border-radius: 50%;
   margin-left: 28px;
-  ;
+}
+
+.room__exit:hover {
+  filter: brightness(125%);
 }
 
 .lobby__rooms_container {
   overflow-y: scroll;
+  overflow-x: hidden;
   width: 700px;
   height: 700px;
   margin-top: 10px;
+  padding-right: 5px;
+}
+
+.lobby__rooms_container:hover::-webkit-scrollbar {
+  width: 7px;  
+}
+.lobby__rooms_container::-webkit-scrollbar {
+  width: 0px;  
+  transition: 3s linear;
+}
+.lobby__rooms_container::-webkit-scrollbar-thumb {
+  background: #ff3d00;;
 }
 
 .lobby__room_not_found {

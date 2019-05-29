@@ -28,6 +28,10 @@
     transform: matrix(-1, 0, 0, 1, 0, 0);
     background-size: contain;
   }
+
+  &__back:hover {
+    animation: go-left .4s linear .2s 1 normal forwards;
+  }
   
   &__escapade{
     background: #FF3D00;
