@@ -38,7 +38,14 @@ export default class ChatModel {
       case 'GameMessage' :
         Bus.emit('getChatMessage', data.value);
         break;
-
+      case  'Room' :
+        if (data.room) {
+          Bus.emit('addMessageInChatHistory', data.room.messages);
+        }
+        break;
+      case  'Lobby' :
+        Bus.emit('addMessageInChatHistory', data.value.lobby.messages);
+        break;
     }
     console.log('_getInfo end') 
   }

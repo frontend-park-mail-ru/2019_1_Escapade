@@ -26,6 +26,7 @@ export default class LobbyVew extends BaseView {
   currentRoomName: string;
   roomNotFoundPanel: any;
   busyRooms: any[];
+  curPath: string;
   /**
    *
    * @param {*} parent
@@ -33,6 +34,7 @@ export default class LobbyVew extends BaseView {
   constructor(parent: HTMLElement) {
     super(parent, lobbyTemplate, false);
     this.parent = parent;
+    Bus.on('currentPath', this._currentPathSignalFunc.bind(this), 'lobbyView');
   }
 
   /** */
@@ -54,13 +56,40 @@ export default class LobbyVew extends BaseView {
     this.roomStatusField = this.currentRoomPanel.querySelector('.room_status');
     this.roomImagesField = this.currentRoomPanel.querySelector('.room_status_images_players');
     
-    
+    this._busAllOn();
     this._hideCurrentRoomPanel();
-
+    Bus.emit('addRoomSettings', '.lobby_room_settings_container');
+    Bus.emit('addChat', { container: '.lobby__chat_container', parent: this.parent, place: 'lobby' });  
+    
+    
     this.createRoomButton.addEventListener('click', this._createRoomEvent.bind(this));
     this.leaveRoomButton.addEventListener('click', this._leaveRoom.bind(this));
     document.addEventListener('click', this._clickOnFreeRoom.bind(this));
 
+    
+    
+    Bus.emit('hideRoomSettingsPanel');
+    
+  }
+
+
+  _currentPathSignalFunc(path: string) {
+    this._busAllOn();
+    if (path === '/lobby') {
+      Bus.emit('addRoomSettings', '.lobby_room_settings_container');
+      Bus.emit('addChat', { container: '.lobby__chat_container', parent: this.parent, place: 'lobby' });  
+      
+      this.curPath = path;
+    } else {
+      if (this.curPath === '/lobby') {
+        console.log('_currentPathSignalFunc else ');
+        this.curPath = '';
+        this._busAllOff();
+      }
+    }
+  }
+
+  _busAllOn() {
     Bus.on('showCurrentRoomPanel', this._showCurrentRoomPanel.bind(this), 'lobbyView');
     Bus.on('hideCurrentRoomPanel', this._hideCurrentRoomPanel.bind(this), 'lobbyView');
     Bus.on('showNotFoundRoomPanel', this._notFoundRoomPanelShow.bind(this), 'lobbyView');
@@ -71,10 +100,19 @@ export default class LobbyVew extends BaseView {
     Bus.on('changeRoomStringColor', this._changeRoomStringColor.bind(this), 'lobbyView');
     Bus.on('updateRoomRow', this._updateRoomRow.bind(this), 'lobbyView');
     Bus.on('deleteRoomRow', this._deleteRoomRow.bind(this), 'lobbyView');
-    Bus.emit('addRoomSettings', '.lobby_room_settings_container');
-    //Bus.emit('addChat', { container: '.lobby__chat_container', parent: this.parent });
-    Bus.emit('hideRoomSettingsPanel');
-    
+  }
+
+  _busAllOff() {
+    Bus.off('showCurrentRoomPanel', this._showCurrentRoomPanel.bind(this), 'lobbyView');
+    Bus.off('hideCurrentRoomPanel', this._hideCurrentRoomPanel.bind(this), 'lobbyView');
+    Bus.off('showNotFoundRoomPanel', this._notFoundRoomPanelShow.bind(this), 'lobbyView');
+    Bus.off('hideNotFoundRoomPanel', this._notFoundRoomPanelHide.bind(this), 'lobbyView');
+    Bus.off('clearAllRoomsPanels', this._clearAllRoomsPanels.bind(this), 'lobbyView');
+    Bus.off('addBusyRoomView', this._addBusyRoom.bind(this), 'lobbyView');
+    Bus.off('addFreeRoomView', this._addFreeRoom.bind(this), 'lobbyView');
+    Bus.off('changeRoomStringColor', this._changeRoomStringColor.bind(this), 'lobbyView');
+    Bus.off('updateRoomRow', this._updateRoomRow.bind(this), 'lobbyView');
+    Bus.off('deleteRoomRow', this._deleteRoomRow.bind(this), 'lobbyView');
   }
 
   _createRoomEvent() {

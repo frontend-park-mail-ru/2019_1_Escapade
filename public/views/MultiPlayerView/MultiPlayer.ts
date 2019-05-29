@@ -120,7 +120,7 @@ export default class MultiPlayerView extends BaseView {
     Bus.emit('addMessage', { container: '.multi_player__message_container', parent: this.parent });
     Bus.emit('addPlayersList', '.multi_player__playerlist_container');
     Bus.emit('addGameActions', '.multi_player_actions_container');
-    Bus.emit('addChat', { container: '.multi_player__chat_container', parent: this.parent });
+    Bus.emit('addChat', { container: '.multi_player__chat_container', parent: this.parent, place: 'multiplayer'  });
     Bus.emit('changeTitleRestartButton', 'Start');
     Bus.emit('messageBoxHide', true);
     this.infoContainer = document.querySelector('.multi_player__info_container');
@@ -134,6 +134,7 @@ export default class MultiPlayerView extends BaseView {
     this.restartButton.addEventListener('click', this._restartClick.bind(this));
     this.chatInfoButton.addEventListener('click', this._chatInfoClick.bind(this));
     this.quitDocElement.addEventListener('click', this._quitClick.bind(this));
+    this.restartButton.style.display = 'none';
     this._busAllOff();
     this._busAllOn();
     this.timer = new Timer('.multi_player__timer', this._timeIsOver.bind(this));
@@ -155,11 +156,13 @@ export default class MultiPlayerView extends BaseView {
       this.infoPanelMode = true;
       Bus.emit('busAllOffSinglePlayer');
       Bus.emit('addField', { container: '.multi_player__field_container', parent: this.parent });
+      Bus.emit('addChat', { container: '.multi_player__chat_container', parent: this.parent, place: 'multiplayer'  });
       Bus.emit('addMessage', { container: '.multi_player__message_container', parent: this.parent });
       Bus.emit('addPlayersList', '.multi_player__playerlist_container');
       Bus.emit('changeTitleRestartButton', 'Start');
       Bus.emit('messageBoxHide', true);
-      Bus.emit("ClearMessagesGameActions")
+      Bus.emit("ClearMessagesGameActions");
+      this.restartButton.style.display = 'none';
       this._showMap();
       this.curPath = path;
       document.body.oncontextmenu = function (e) {
@@ -226,7 +229,7 @@ export default class MultiPlayerView extends BaseView {
       this.observerMode = true;
     } else {
       this.observerMode = false;
-      this.flagCoords = { x: data.flag.x, y: data.flag.y };
+      this.flagCoords = { x: data.flag.cell.x, y: data.flag.cell.y };
     }
 
     this.timeInSeconds = data.room.settings.play + data.room.settings.prepare;
@@ -248,6 +251,7 @@ export default class MultiPlayerView extends BaseView {
       this.startGame = false;
       this.flagPlacing = true;
       this.flagPlaceManualy = false;
+      Bus.emit('ClearMessagesGameActions');
       Bus.emit('addMessageInGameActions', 'Stage of flag placement')
     } else if (data.value.status === 3) {
       this.timer.stop();
@@ -258,8 +262,9 @@ export default class MultiPlayerView extends BaseView {
       this.startGame = true;
       this.flagPlacing = false;
       this.flagPlaceManualy = false;
-
-      Bus.emit('addMessageInGameActions', 'Stage of flag placement')
+      
+      Bus.emit('ClearMessagesGameActions');
+      Bus.emit('addMessageInGameActions', 'Stage of flag placement');
       Bus.emit('addMessageInGameActions', 'Game begins!');
     }
   }
@@ -281,8 +286,6 @@ export default class MultiPlayerView extends BaseView {
       }
       this.startGame = true;
     }
-    // this.timer.start(this.gameTime);
-    // Bus.emit('addMessageInGameActions', 'Game begins!');
   }
 
   _createColorForPlayer(i: number) {
@@ -328,7 +331,7 @@ export default class MultiPlayerView extends BaseView {
         me = true;
       }
       Bus.emit('addPlayer', { player: item.user, color: color, me: me });
-      this.players.push({ user: item.user, id: dataPlayers[item.index].ID, points: dataPlayers[item.index].Points, me: me, color: color });
+      this.players.push({ user: item.user, id: dataPlayers[item.index].ID, points: Math.round(dataPlayers[item.index].Points), me: me, color: color });
     });
   }
 
@@ -369,8 +372,8 @@ export default class MultiPlayerView extends BaseView {
     const points = data.value;
     for (let i = 0; i < this.players.length; i++) {
       if (this.players[i].id === points.ID) {
-        Bus.emit('updatePoints', { number: i, points: points.Points });
-        this.players[i].points = points.Points;
+        Bus.emit('updatePoints', { number: i, points: Math.round(points.Points) });
+        this.players[i].points = Math.round(points.Points);
         break;
       }
     }
@@ -393,6 +396,7 @@ export default class MultiPlayerView extends BaseView {
         }
       }
     }
+    this.restartButton.style.display = 'flex';
     setTimeout(this._writeGameOver.bind(this), 500);
     
   }

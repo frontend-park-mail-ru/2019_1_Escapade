@@ -62,6 +62,7 @@ export default class LobbyModel {
         console.log("CREATE NEW WEBSOCKET");
         this.ws = new WebSocketInterface(this.wsAdress);
       }
+      Bus.emit('getWSMultiplayer', this.ws);
     } else {
       if (this.curPath === '/lobby') {
         this._leaveRoom(14);
