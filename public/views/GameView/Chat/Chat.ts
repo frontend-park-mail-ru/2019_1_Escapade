@@ -75,6 +75,9 @@ export default class ChatView {
     this.idPlayerBackend = data.you.id;
     console.log(this.idPlayerBackend, " hghg  ", data.you.id)
 
+    if (data.lobby.messages == null) {
+      return;
+    }
     messageHistory.forEach((item : any) => {
       const message = {photo : item.user.photo, id : item.user.id, name : item.user.name, text : item.text, time : item.time.substring(11,16)};
       this._addMessageToChatField(message);
