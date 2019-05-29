@@ -259,8 +259,8 @@ export default class MultiPlayerView extends BaseView {
       this.startGame = true;
       this.flagPlaceManualy = false;
       if (!this.observerMode) {
-        if (this.flagPlacing) {
-          this.flagPlacing = false;
+        this.flagPlacing = false;
+        if (!this.flagPlaceManualy) {
           Bus.emit('setUnsetFlagMultiOnCell', { x: this.flagCoords.x, y: this.flagCoords.y, type: 'flag' })
         }
         this.startGame = true;
