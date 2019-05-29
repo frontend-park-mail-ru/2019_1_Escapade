@@ -106,7 +106,7 @@ export default class SinglePlayerView extends BaseView {
     if (width <= 440) {
       this.playerInfo.style.transform = "translateY(-390px)";
       //this.timerContainer.style.transform = "translateY(-100px)"
-      this.fieldContainer.style.transform = "translateY(110px)"
+      this.fieldContainer.style.transform = "translateY(90px)"
     }
   }
 
