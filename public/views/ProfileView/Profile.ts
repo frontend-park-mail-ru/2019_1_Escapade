@@ -1,10 +1,12 @@
 const ProfileTemplate = require('./Profile.pug');
 const profileDataTmpl = require('./UserData/Profile__data.pug');
+const profileGamesTmpl = require('./UserGames/Profile__game.pug');
 import { User } from '../../utils/user';
 import { checkAuth } from '../../utils/user';
 import BaseView from '../BaseView';
 import Bus from '../../utils/bus';
 import UserDataComponent from './UserData/userdata'
+import UserGamesComponent from './UserGames/games'
 /**
  *
  */
@@ -13,6 +15,7 @@ export default class ProfileView extends BaseView {
   parent: any;
   _user: any;
   userData: UserDataComponent;
+  userGames: UserGamesComponent;
   /**
    *
    * @param {*} parent
@@ -41,6 +44,7 @@ export default class ProfileView extends BaseView {
     this._warnings.email = this.parent.querySelector('.js-warning-email');
     this.userData = new UserDataComponent(this.parent.querySelector('.profile__data'), profileDataTmpl)
     this.userData.render()
+    this.userGames = new UserGamesComponent(this.parent.querySelector('.profile__games'), profileGamesTmpl)
     Bus.emit('getAvatar', User.name);
     document.getElementById('file')
       .addEventListener('change', this._handleFileSelect.bind(this), false);

@@ -15,7 +15,7 @@ export default class ProfileModel {
    */
   constructor() {
     this.wsAdress = dataAddress.profileWsAddress;
-    
+
     Bus.on('currentPath', this._currentPathSignalFunc.bind(this), 'profileModel');
   }
 
@@ -52,6 +52,7 @@ export default class ProfileModel {
     console.log('_getInfo begin ', data)
     switch (data.type) {
       case 'Lobby':
+        console.log('updateProfileGames')
         Bus.emit('updateProfileGames', data.value);
         break;
     }
