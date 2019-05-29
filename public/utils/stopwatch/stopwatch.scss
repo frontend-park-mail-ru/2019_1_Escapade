@@ -17,7 +17,12 @@
 
   &__row {
     display: flex;
-    flex-direction: row;
+
+    @media screen and (max-width: $tablet) {
+      & {
+        width: 256px;
+      }
+    }
   }
 
   &__clock {
@@ -34,7 +39,7 @@
     &__label {
       font-size: 12px;
       margin-right: 18px;
-      margin-left: 4px;
+      margin-left: 1px;
     }
   }
 }

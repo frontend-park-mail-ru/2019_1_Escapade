@@ -1,10 +1,10 @@
-
-.user_info{
+.user_info {
   &__player {
     display: flex;
     width: 296px;
     text-align: left;
   }
+
   &__player_photo {
     width: 75px;
     height: 75px;
@@ -20,9 +20,9 @@
     height: 24px;
   }
 
-  @media screen and (max-width: $tablet){
+  @media screen and (max-width: $tablet) {
     &__player {
-      width: 300px;
+      width: 260px;
     }
 
     &__player_score {
@@ -35,8 +35,9 @@
 
   }
 }
+
 .user_info__column {
-  display:flex;
+  display: flex;
   flex-direction: column;
 }
 
