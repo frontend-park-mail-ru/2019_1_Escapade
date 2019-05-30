@@ -19,8 +19,7 @@
 - npm i
 - npm run build
 - npm start
-
-- [Рисовать](https://www.figma.com/file/WcFryEu51iySsuBd8F0CLi0S/explose)
+- Enjoy!
 
 ## Состав:
 - Надежный ментор - [Дмитрий Липко](https://github.com/dlipko)
