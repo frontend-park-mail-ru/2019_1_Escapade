@@ -52,6 +52,7 @@ export default class MultiPlayerView extends BaseView {
   oncontextmenu: (this: GlobalEventHandlers, ev: MouseEvent) => any;
   restartButton: any;
   timeInSeconds: any;
+  isGameOver: boolean;
   /**
    *
    * @param {*} parent
@@ -71,6 +72,7 @@ export default class MultiPlayerView extends BaseView {
     this.players = [];
     this.flagCoords = { x: 0, y: 0 };
     this.myID = 0;
+    this.isGameOver = false;
     this.infoPanelMode = true;
     this.observerMode = false;
     this.colorArr = ['#b6b4ca', '#cab4be', '#b4cabd', '#cac7b4', '#cab4b4', '#dedede', '#94c9b4', '#b9bfc9'];
@@ -90,7 +92,7 @@ export default class MultiPlayerView extends BaseView {
     Bus.on('roomObserverEnterWS', this._getObservers.bind(this), 'multiplayerView');
     Bus.on('roomObserverExitWS', this._exitObserver.bind(this), 'multiplayerView');
     Bus.on('roomStatusWS', this._getStatus.bind(this), 'multiplayerView');
-    
+    this.isGameOver = false;
     Bus.on('gameOwerWS', this._gameOver.bind(this), 'multiplayerView');
     Bus.on('sendRoom', this._getRoom.bind(this), 'multiplayerView');
   }
@@ -382,18 +384,23 @@ export default class MultiPlayerView extends BaseView {
       this.timer.reset({});
     }
     const dataPlayers = data.value.players;
+    const winners = data.value.winners;
     this._openAllCells(data.value.cells);
     for (let i = 0; i < dataPlayers.length; i++) {
-      if (!dataPlayers[i].Finished) {
-        Bus.emit('winPlayer', i);
-        Bus.emit('addMessageInGameActions', `Player ${this.players[i].user.name} win!`);
-      }
-      if (dataPlayers[i].ID === this.myID) {
-        if (dataPlayers[i].Finished) {
-          Bus.emit('showTextInMessageBox', 'You lose!');
-        } else {
-          Bus.emit('showTextInMessageBox', 'You win!');
+      let flagNotWinner = true;
+      for (let j = 0; j < winners.length; j++) {
+        if (i === winners[j]) {
+          Bus.emit('winPlayer', i);
+          Bus.emit('addMessageInGameActions', `Player ${this.players[i].user.name} win!`);
+          if (dataPlayers[i].ID === this.myID) {
+            Bus.emit('showTextInMessageBox', 'You win!');
+          }
+          flagNotWinner = false;
+          break;
         }
+      }
+      if (dataPlayers[i].ID === this.myID && flagNotWinner && !this.isGameOver) {
+        Bus.emit('showTextInMessageBox', 'You lose!');
       }
     }
     this.restartButton.style.display = 'flex';
@@ -418,10 +425,18 @@ export default class MultiPlayerView extends BaseView {
           case 7:
             Bus.emit('explosePlayer', i);
             Bus.emit('addMessageInGameActions', `Player ${this.players[i].user.name} explose!`);
+            if (this.myID === action.player) {
+              this.isGameOver = true;
+              Bus.emit('showTextInMessageBox', 'You lose!');
+            }
             break;
           case 10:
             Bus.emit('findFlagPlayer', i);
             Bus.emit('addMessageInGameActions', `Player ${this.players[i].user.name} lost his flag!`);
+            if (this.myID === action.player) {
+              this.isGameOver = true;
+              Bus.emit('showTextInMessageBox', 'You lose!');
+            }
             break;
           case 4:
             Bus.emit('disconnectPlayer', i);

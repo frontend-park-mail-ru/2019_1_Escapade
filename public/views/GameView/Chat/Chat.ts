@@ -183,36 +183,31 @@ export default class ChatView {
     this.myMessage = false;
   }
 
-  _getInfo(data: any) {
-    console.log('_getInfo begin ', data)
+  _getMessageHistory(dataStruct: any) {
+    const data = dataStruct.data;
+    const place = dataStruct.place;
 
-
-    if (data.type === 'Lobby') {
-      this._updateChatVisitors(data.value.lobby.waiting.get);
-    } else if (data.type === 'Messages') {
-      this._getMessageHistory(data.messages)
-    }
-    console.log('_getInfo end')
-  }
-
-  _getMessageHistory(data: any) {
     this.chatHistory.innerHTML = '';
-    let messageHistory = data.lobby.messages;
+    let messageHistory = [];
+    console.log('WWWWWW ', place);
+    if (place === 'lobby') {
+      messageHistory = data.lobby.messages;
+      if (data.lobby.messages == null) {
+        return;
+      }
+    } else {
+      messageHistory = data.room.messages;
+    }
+    console.log(messageHistory)
     this.idPlayerBackend = data.you.id;
     console.log(this.idPlayerBackend, " hghg  ", data.you.id)
 
-    if (data.lobby.messages == null) {
-      return;
-    }
+
     messageHistory.forEach((item: any) => {
       const message = { photo: item.user.photo, messID: item.id, messEdited: item.edited, id: item.user.id, name: item.user.name, text: item.text, time: item.time.substring(11, 16) };
       this._addMessageToChatField(message);
     });
   }
-
-
-
-
 
   _sendMessage() {
     const messageText = this.inputMessageField.value;
@@ -231,8 +226,10 @@ export default class ChatView {
       messageStruct.photo = './img/anonymous.jpg'
     }
     if (messageStruct.id != this.idPlayerBackend) {
+      console.log('PPPPPPPPPPP');
       this.chatHistory.innerHTML += MessageTemplate({ message: messageStruct });
     } else {
+      console.log('QQQQQQQQQ');
       this.chatHistory.innerHTML += MyMessageTemplate({ message: messageStruct });
       this.myMessages.push(messageStruct);
     }

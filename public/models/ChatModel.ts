@@ -63,12 +63,12 @@ export default class ChatModel {
         Bus.emit('getChatMessage', data.value);
         break;
       case  'Room' :
-        if (data.room) {
-          Bus.emit('addMessageInChatHistory', data.room.messages);
+        if (data.value.room.messages) {
+          Bus.emit('addMessageInChatHistory', {data: data.value, place: 'room'});
         }
         break;
       case  'Lobby' :
-        Bus.emit('addMessageInChatHistory', data.value);
+        Bus.emit('addMessageInChatHistory', {data: data.value, place: 'lobby'});
         break;
     }
     console.log('_getInfo end') 

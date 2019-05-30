@@ -209,7 +209,7 @@
   }
 
   &__edit_button {
-    background-image: url(/img/pencil.png);
+    background-image: url('./img/pencil.png');
     background-repeat: no-repeat;
     background-size: contain;
     background-position: center;
@@ -221,7 +221,7 @@
   }
 
   &__remove_button {
-    background-image: url(/img/trash.png);
+    background-image: url('./img/trash.png');
     background-repeat: no-repeat;
     background-size: contain;
     background-position: center;
