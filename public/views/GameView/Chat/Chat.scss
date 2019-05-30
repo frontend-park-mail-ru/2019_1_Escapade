@@ -153,6 +153,20 @@
   height: 41px;
 }
 
+.chat__edit_button_send {
+  width: 38px;
+  height: 38px;
+  background: url('/img/check.png') #46535E no-repeat;
+  background-size: contain;
+  align-self: center;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+.chat__edit_button_send:hover {
+  filter: brightness(125%);
+}
+
 .chat__send_button:hover {
   filter: brightness(145%);
 }

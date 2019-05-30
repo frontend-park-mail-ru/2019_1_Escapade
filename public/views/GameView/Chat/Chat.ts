@@ -18,6 +18,8 @@ export default class ChatView {
   idPlayerBackend: any;
   allMessages: any[];
   myMessages: any[];
+  editButtonSend: any;
+  editMessId: any;
   constructor() {
     Bus.on('addChat', this._addListeners.bind(this), 'chatView');
     this.countMessage = 0;
@@ -27,8 +29,7 @@ export default class ChatView {
   }
 
   _addListeners(data : any) {
-    this.allMessages = [];
-    this.myMessages = [];
+    this._clearParameters();
     let container = data.container;
     let place = data.place;
     let parent = data.parent;
@@ -38,14 +39,16 @@ export default class ChatView {
     this.inputMessageField = parent.querySelector('.chat__input');
     this.chatHistory = parent.querySelector('.chat__history');
     this.counterOnlineField = parent.querySelector('.chat__online');
-
+    this.editButtonSend = parent.querySelector('.chat__edit_button_send');
+    this.editButtonSend.style.display = 'none';
+    this.editButtonSend.addEventListener('click', this._sendEditMessage.bind(this));
     this.sendButton.addEventListener('click', this._sendMessage.bind(this));
     Bus.on('getChatMessage', this._getMessage.bind(this), 'chat');
     Bus.on('addMessageInChatHistory', this._getMessageHistory.bind(this), 'chat');
     
     this.inputMessageField.onkeydown = this._onkeydownSignal.bind(this)
     this.chatHistory.scrollTop = 9999;
-    this._clearParameters();
+    
     document.removeEventListener('click', this._clickOnMessageButtons.bind(this));
     document.addEventListener('click', this._clickOnMessageButtons.bind(this));
   }
@@ -62,43 +65,107 @@ export default class ChatView {
     if (target.classList.contains('chat__edit_button')) { 
       const elements = [].slice.call((document.querySelectorAll('.chat__edit_button')));
       const num = elements.indexOf(target);
-      
+      if (num < 0 || num >= this.myMessages.length) {
+        return;
+      }
+      this.editMessId = this.myMessages[num].messID;
+      this._editMessage(this.myMessages[num]);
     } else if (target.classList.contains('chat__remove_button')) {  
       const elements = [].slice.call((document.querySelectorAll('.chat__remove_button')));
       const num = elements.indexOf(target);
-      console.log(this.myMessages)
       Bus.emit('removeMessageWS', { id : this.myMessages[num].messID});
     }
   }
 
 
-
   _clearParameters() {
+    this.allMessages = [];
+    this.myMessages = [];
+    this.editMessId = null;
     this.countMessage = 0;
+  }
+
+
+  _editMessage(message : any) {
+    this.inputMessageField.value = message.text;
+    this.editButtonSend.style.display = 'flex';
+    this.sendButton.style.display = 'none';
+  }
+  
+  _sendEditMessage() {
+    const messageText = this.inputMessageField.value;
+    console.log(messageText, ' ', this.editMessId)
+    
+    if (messageText == '' || this.editMessId == null) {
+      return;
+    }
+    this.editButtonSend.style.display = 'none';
+    this.sendButton.style.display = 'flex';
+    Bus.emit('editChatMessage',  { id : this.editMessId, text: messageText})
+    this.editMessId = null;
+    this.myMessage = true;
+    this.inputMessageField.value = '';
   }
 
   _onkeydownSignal(e : any) {
     if (e.keyCode === 13) {
-      this._sendMessage();
+      if (this.editMessId == null) {
+        this._sendMessage();
+      } else {  
+        this._sendEditMessage();
+      }
     }
   }
   _getMessage(data : any) {
-    if (data.action === 2) {
-      let num = -1;
+    if (data.action === 2) { // delete
+      let allNnum = -1;
+      let myNum = -1;
       for (let i = 0; i < this.allMessages.length; i++) {
         if (this.allMessages[i].messID === data.id) {
-          num = i;
+          allNnum = i;
+          break;
+        }
+      }
+      for (let i = 0; i < this.myMessages.length; i++) {
+        if (this.myMessages[i].messID === data.id) {
+          myNum = i;
           break;
         }
       }
       const messages = [].slice.call((document.querySelectorAll('.chat__message')));
-      if (num < 0 || num >= messages.length) {
+      if (allNnum < 0 || allNnum >= messages.length) {
         return;
       }
-      messages[num].parentNode.removeChild(messages[num]);  
+      messages[allNnum].parentNode.removeChild(messages[allNnum]); 
+      this.myMessages.splice(allNnum,1);
+      this.allMessages.splice(myNum,1);
     }
-   
-    const message = {photo : data.user.photo,  id : data.user.id, name : data.user.name, text : data.text, time : data.time.substring(11,16)};
+
+    if (data.action === 1) { // delete
+      let allNnum = -1;
+      let myNum = -1;
+      for (let i = 0; i < this.allMessages.length; i++) {
+        if (this.allMessages[i].messID === data.id) {
+          allNnum = i;
+          break;
+        }
+      }
+      for (let i = 0; i < this.myMessages.length; i++) {
+        if (this.myMessages[i].messID === data.id) {
+          myNum = i;
+          break;
+        }
+      }
+      const messages = [].slice.call((document.querySelectorAll('.chat__message')));
+      if (allNnum < 0 || allNnum >= messages.length) {
+        return;
+      }
+      messages[allNnum].querySelector('.chat__text').innerHTML =  data.text; 
+      this.myMessages[myNum].text = data.text;
+      this.allMessages[allNnum].text = data.text;
+    }
+    const message = {photo : data.user.photo, messID: data.id, messEdited: data.edited, id : data.user.id, name : data.user.name, text : data.text, time : data.time.substring(11,16)};
+
     this._addMessageToChatField(message);
     this.myMessage = false;
   }
