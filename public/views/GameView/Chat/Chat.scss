@@ -13,10 +13,16 @@
   border-radius: 15px;
 }
 
-.chat__row {
-  display: flex;
-  flex-direction: row;
+
+
+.chat__message:hover .chat__edit_button {
+  opacity: 1;
 }
+
+.chat__message:hover .chat__remove_button {
+  opacity: 1;
+}
+
 
 .chat__history {
   display: flex;
@@ -48,7 +54,9 @@
   word-break: break-word;
   line-break: auto;
   hyphens: initial;
+  font-style: italic;
   text-align: left;
+  font-size: 17px;
 }
 
 .chat__column {
@@ -64,6 +72,7 @@
   padding: 5px;
   font-size: 18px;
   margin: 5px 0;
+  width: 438px;
 }
 
 .chat__online{
@@ -106,14 +115,15 @@
 .chat__text{
   display: flex;
   align-items: center;
-  width: 230px;
+  width: 222px;
   overflow-wrap: break-word;
   word-wrap: break-word;
   word-break: break-word;
   line-break: auto;
   hyphens: initial;
-  margin-left: 9px;
+  margin-left: 13px;
   text-align: left;
+  font-size: 17px;
 }
 
 .chat__controls{
@@ -130,6 +140,7 @@
 .chat__message_time {
   float: left;
   color: #999;
+  font-size: 16px;
 }
 
 .chat__send_button {
@@ -146,18 +157,26 @@
   filter: brightness(145%);
 }
 
-.chat__mymessage {
+.chat__reverse_message {
   background: #323d48;
   color: white;
 }
 
 
-.chat_my___row{
+.chat_my__row{
+  display: flex;
+  flex-direction: row;
+}
+
+.chat__row {
   display: flex;
   flex-direction: row-reverse;
 }
 
-
+.chat__row_text {
+  display: flex;
+  flex-direction: row;
+}
 
 .chat__popup{
   position: absolute;
@@ -175,3 +194,27 @@
     bottom: 0;
     z-index: 100;
 }
+
+.chat__edit_button {
+  background-image: url(/img/pencil.png);
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position: center;
+  cursor: pointer;
+  width: 18px;
+  height: 18px;
+  margin-top: 3px;
+  opacity: 0;
+}
+
+.chat__remove_button {
+  background-image: url(/img/trash.png);
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position: center;
+  cursor: pointer;
+  opacity: 0;
+  width: 27px;
+  height: 25px;
+}
+

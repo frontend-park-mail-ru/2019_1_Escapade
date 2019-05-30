@@ -64,7 +64,7 @@ export default class LobbyVew extends BaseView {
     
     this.createRoomButton.addEventListener('click', this._createRoomEvent.bind(this));
     this.leaveRoomButton.addEventListener('click', this._leaveRoom.bind(this));
-    document.addEventListener('click', this._clickOnFreeRoom.bind(this));
+    document.addEventListener('click', this._clickOnRoom.bind(this));
 
     
     
@@ -215,7 +215,7 @@ export default class LobbyVew extends BaseView {
   }
 
 
-  _clickOnFreeRoom(e : any) {
+  _clickOnRoom(e : any) {
     let target = e.target;
     while (!target.classList.contains('lobby__free_room') && !target.classList.contains('lobby__busy_room')) {
       target = target.parentNode;

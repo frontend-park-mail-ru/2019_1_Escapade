@@ -1,8 +1,13 @@
-.chat__message.chat__mymessage
-  .chat_my___row
+.chat__message 
+  .chat_my__row
     .chat__message_img_container
-        img.chat__message_img.ml-2(src=message.photo)
+        img.chat__message_img.mr-2(src=message.photo)
     .chat__column_meta
       .chat__message_name #{message.name}
       .chat__message_time #{message.time}
-    .chat__text.left_text.mr-2 #{message.text}
+    .chat__column_meta
+      .chat__row_text
+        .chat__text.ml-2 #{message.text}
+        .chat_my__row
+          .chat__edit_button
+          .chat__remove_button

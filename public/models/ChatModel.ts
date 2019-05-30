@@ -14,6 +14,8 @@ export default class ChatModel {
     Bus.on('getInfoFromWS', this._getInfo.bind(this), 'chatModel');
     Bus.on('sendChatMessage', this._sendMessage.bind(this), 'chatModel');
     Bus.on('getWSMultiplayer', this._setWS.bind(this), 'chatModel');
+    Bus.on('removeMessageWS', this._sendRemoveMessage.bind(this), 'chatModel');
+    
  }
 
   _setWS(data : any) {
@@ -22,10 +24,19 @@ export default class ChatModel {
 
 
   _sendMessage(mess: any) {
-    console.log('AAAAAA ', mess)
     this.ws.sendInfoJSON({
       message: {
         text: mess
+      }
+    });
+  }
+
+  _sendRemoveMessage(mess : any) {
+    console.log('AAAAAA ', mess)
+    this.ws.sendInfoJSON({
+      message: {
+        action : 2, 
+        id : mess.id
       }
     });
   }
