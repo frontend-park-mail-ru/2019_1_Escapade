@@ -27,6 +27,7 @@ export default class LobbyVew extends BaseView {
   roomNotFoundPanel: any;
   busyRooms: any[];
   curPath: string;
+  clickOnRoomBindThis: any;
   /**
    *
    * @param {*} parent
@@ -35,6 +36,7 @@ export default class LobbyVew extends BaseView {
     super(parent, lobbyTemplate, false);
     this.parent = parent;
     Bus.on('currentPath', this._currentPathSignalFunc.bind(this), 'lobbyView');
+    this.clickOnRoomBindThis = this._clickOnRoom.bind(this);
   }
 
   /** */
@@ -64,10 +66,9 @@ export default class LobbyVew extends BaseView {
     
     this.createRoomButton.addEventListener('click', this._createRoomEvent.bind(this));
     this.leaveRoomButton.addEventListener('click', this._leaveRoom.bind(this));
-    document.addEventListener('click', this._clickOnRoom.bind(this));
+    document.removeEventListener('click', this.clickOnRoomBindThis);
+    document.addEventListener('click', this.clickOnRoomBindThis);
 
-    
-    
     Bus.emit('hideRoomSettingsPanel');
     
   }

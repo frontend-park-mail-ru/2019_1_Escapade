@@ -411,6 +411,10 @@ export default class MultiPlayerView extends BaseView {
     for (let i = 0; i < this.players.length; i++) {
       if (this.players[i].id === action.player) {
         switch (action.action) {
+          case 3:
+            Bus.emit('reconnectPlayer', i);
+            Bus.emit('addMessageInGameActions', `Player ${this.players[i].user.name} reconnect!`);
+            break;
           case 7:
             Bus.emit('explosePlayer', i);
             Bus.emit('addMessageInGameActions', `Player ${this.players[i].user.name} explose!`);

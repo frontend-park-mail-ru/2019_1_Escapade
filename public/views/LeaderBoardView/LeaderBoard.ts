@@ -15,6 +15,8 @@ export default class LeaderBoardView extends BaseView {
   _leftArrow: any;
   _rightArrow: any;
   filter: LeaderboardFilterComponent
+  prevPageBindThis: any;
+  nextPageBindThis: any;
   /**
    *
    * @param {*} parent
@@ -24,6 +26,8 @@ export default class LeaderBoardView extends BaseView {
     this._currPage = 1;
 
     Bus.on('respPagesAmount', this._initBoard.bind(this), 'leaderBoardView');
+    this.prevPageBindThis = this._prevPage.bind(this);
+    this.nextPageBindThis = this._nextPage.bind(this);
   }
 
   /**
@@ -89,8 +93,10 @@ export default class LeaderBoardView extends BaseView {
   _initButtons() {
     ([this._leftArrow, this._rightArrow] =
       this.parent.querySelectorAll('.leaderboard__arrow'));
-    this._leftArrow.addEventListener('click', this._prevPage.bind(this));
-    this._rightArrow.addEventListener('click', this._nextPage.bind(this));
+    this._leftArrow.removeEventListener('click', this.prevPageBindThis);
+    this._rightArrow.removeEventListener('click', this.nextPageBindThis);
+    this._leftArrow.addEventListener('click', this.prevPageBindThis);
+    this._rightArrow.addEventListener('click', this.nextPageBindThis);
     if (this._currPage === 1) {
       this._leftArrow.classList.add('leaderboard__arrow__inactive');
     } else {

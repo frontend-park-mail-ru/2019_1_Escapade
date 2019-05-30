@@ -29,6 +29,8 @@ export default class PlayersListView {
     Bus.on('findFlagPlayer', this._findFlagPlayer.bind(this), 'playerListView');
     Bus.on('winPlayer', this._winPlayer.bind(this), 'playerListView');
     Bus.on('disconnectPlayer', this._disconnectPlayer.bind(this), 'playerListView');
+    Bus.on('reconnectPlayer', this._reconnectPlayer.bind(this), 'playerListView');
+    
     Bus.on('timeIsOverPlayers', this._timeIsOverPlayers.bind(this), 'playerListView');
     
     Bus.on('clearParametersPlayerList', this._clearParameters.bind(this), 'playerListView');
@@ -98,6 +100,10 @@ export default class PlayersListView {
     elements[num].querySelector('.game__players_list_disconnect_img').hidden = false;
   }
 
+  _reconnectPlayer(num : number){
+    const elements = [].slice.call(document.querySelectorAll('.game__players_list_row'));
+    elements[num].querySelector('.game__players_list_disconnect_img').hidden = true;
+  }
   _addObserver(data : any) {
     this.observersTitle.hidden = false;
     const observer = data.player;

@@ -15,12 +15,14 @@ export default class SettingsGameView {
   width: number;
   height: number;
   timerHTMLElement: any;
+  clickOnBodyBindThis: any;
   constructor() {
     this.difficult = 1;
     this.minesCount = 20;
     this.width = 15;
     this.height = 15;
     Bus.on('addSettingsGame', this._addListeners.bind(this), 'settingsView');
+    this.clickOnBodyBindThis = this._clickOnBody.bind(this);
   }
 
   _addListeners(htmlElementTitle : string) {
@@ -31,7 +33,8 @@ export default class SettingsGameView {
     Bus.on('settingsChangeMode', this._modeChange.bind(this), 'settingsView');
     Bus.on('settingsChangeSize',this._sizeChange.bind(this), 'settingsView');
     Bus.on('settingsSetParameters', this._setParameters.bind(this), 'settingsView');
-    document.addEventListener('click', this._clickOnBody.bind(this));
+    document.removeEventListener('click', this.clickOnBodyBindThis);
+    document.addEventListener('click', this.clickOnBodyBindThis);
   }
 
   /** */

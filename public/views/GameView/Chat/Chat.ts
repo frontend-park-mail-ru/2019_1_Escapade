@@ -20,13 +20,20 @@ export default class ChatView {
   myMessages: any[];
   editButtonSend: any;
   editMessId: any;
+  clickOnMessageButtonsBindThis: any;
+  sendEditMessageBindThis: any;
+  sendMessageBindThis: any;
   constructor() {
     Bus.on('addChat', this._addListeners.bind(this), 'chatView');
     this.countMessage = 0;
     this.idPlayerBackend = -1;
     this.allMessages = [];
     this.myMessages = [];
+    this.clickOnMessageButtonsBindThis = this._clickOnMessageButtons.bind(this);
+    this.sendEditMessageBindThis = this._sendEditMessage.bind(this);
+    this.sendMessageBindThis = this._sendMessage.bind(this);
   }
+
 
   _addListeners(data : any) {
     this._clearParameters();
@@ -41,16 +48,22 @@ export default class ChatView {
     this.counterOnlineField = parent.querySelector('.chat__online');
     this.editButtonSend = parent.querySelector('.chat__edit_button_send');
     this.editButtonSend.style.display = 'none';
-    this.editButtonSend.addEventListener('click', this._sendEditMessage.bind(this));
-    this.sendButton.addEventListener('click', this._sendMessage.bind(this));
+    
+    this.editButtonSend.removeEventListener('click', this.sendEditMessageBindThis);
+    this.sendButton.removeEventListener('click', this.sendMessageBindThis);
+    this.editButtonSend.addEventListener('click', this.sendEditMessageBindThis);
+    this.sendButton.addEventListener('click', this.sendMessageBindThis);
+
+
     Bus.on('getChatMessage', this._getMessage.bind(this), 'chat');
     Bus.on('addMessageInChatHistory', this._getMessageHistory.bind(this), 'chat');
     
     this.inputMessageField.onkeydown = this._onkeydownSignal.bind(this)
     this.chatHistory.scrollTop = 9999;
     
-    document.removeEventListener('click', this._clickOnMessageButtons.bind(this));
-    document.addEventListener('click', this._clickOnMessageButtons.bind(this));
+
+    document.removeEventListener('click', this.clickOnMessageButtonsBindThis);
+    document.addEventListener('click', this.clickOnMessageButtonsBindThis);
   }
 
   _clickOnMessageButtons(e : any) {

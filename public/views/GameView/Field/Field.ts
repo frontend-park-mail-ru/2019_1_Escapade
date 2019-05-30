@@ -37,8 +37,10 @@ export default class FieldView {
     Bus.on('setUnsetFlagOnCell', this._setUnsetFlagOnCell.bind(this), 'fieldView');
     Bus.on('setUnsetFlagMultiOnCell', this._setUnsetFlagMultiOnCell.bind(this), 'fieldView');
     Bus.on('progressGameChange', this._progressGameChange.bind(this), 'fieldView');
-    this.parent.addEventListener('click', this._leftClickOnBody.bind(this));
-    this.parent.addEventListener('contextmenu', this._rightСlickOnCell.bind(this));
+    this.parent.removeEventListener('click', this._leftClickOnBody);
+    this.parent.removeEventListener('contextmenu', this._rightСlickOnCell);
+    this.parent.addEventListener('click', this._leftClickOnBody);
+    this.parent.addEventListener('contextmenu', this._rightСlickOnCell);
     this.percent = 0;
   }
 
@@ -49,8 +51,8 @@ export default class FieldView {
     Bus.off('setUnsetFlagOnCell', this._setUnsetFlagOnCell.bind(this), 'fieldView');
     Bus.off('setUnsetFlagMultiOnCell', this._setUnsetFlagMultiOnCell.bind(this), 'fieldView');
     Bus.off('progressGameChange', this._progressGameChange.bind(this), 'fieldView');
-    this.parent.removeEventListener('click', this._leftClickOnBody.bind(this));
-    this.parent.removeEventListener('contextmenu', this._rightСlickOnCell.bind(this));
+    this.parent.removeEventListener('click', this._leftClickOnBody);
+    this.parent.removeEventListener('contextmenu', this._rightСlickOnCell);
   }
 
   _leftClickOnBody(e: any) {
