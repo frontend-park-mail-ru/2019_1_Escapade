@@ -19,7 +19,7 @@
 - npm i
 - npm run build
 - npm start
-- Enjoy!
+- **Enjoy!**
 
 ## Состав:
 - Надежный ментор - [Дмитрий Липко](https://github.com/dlipko)
