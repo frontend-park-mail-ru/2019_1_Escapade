@@ -144,7 +144,7 @@
 }
 
 .chat__send_button {
-  background-image: url(/img/flag_ahead.png);
+  background-image: url('./img/flag_ahead.png');
   background-repeat: no-repeat;
   background-size: contain;
   background-position: center;
@@ -156,7 +156,7 @@
 .chat__edit_button_send {
   width: 38px;
   height: 38px;
-  background: url('/img/check.png') #46535E no-repeat;
+  background: url('./img/check.png') #46535E no-repeat;
   background-size: contain;
   align-self: center;
   border-radius: 50%;
@@ -210,7 +210,7 @@
 }
 
 .chat__edit_button {
-  background-image: url(/img/pencil.png);
+  background-image: url('./img/pencil.png');
   background-repeat: no-repeat;
   background-size: contain;
   background-position: center;
@@ -222,7 +222,7 @@
 }
 
 .chat__remove_button {
-  background-image: url(/img/trash.png);
+  background-image: url('./img/trash.png');
   background-repeat: no-repeat;
   background-size: contain;
   background-position: center;

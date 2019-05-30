@@ -26,7 +26,7 @@
   &__button_restart {
     width: 45px;
     height: 45px;
-    background: url(/img/restart.png);
+    background: url('./img/restart.png');
     background-repeat: no-repeat;
     margin-left: 5px;
     margin-bottom: 8px;
@@ -151,7 +151,7 @@
 .game__multi_quit_button {
   width: 55px;
   height: 55px;
-  background: url(/img/quit.png);
+  background: url('./img/quit.png');
   background-repeat: no-repeat;
   background-size: contain;
 }

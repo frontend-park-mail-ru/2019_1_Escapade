@@ -17,12 +17,12 @@
 @import './views/GameView/Settings/Settings.scss';
 @import './views/GameView/Statistics/Statistics.scss';
 @import './views/GameView/Userinfo/Userinfo.scss';
-@import url('views/MessageView/Message.css');
+@import './views/MessageView/Message.css';
 @import './views/MultiPlayerView/MultiPlayer.scss';
-@import url('views/GameView//Chat/Chat.scss');
+@import './views/GameView//Chat/Chat.scss';
 @import './views/GameView/PlayersList/PlayersList.scss';
-@import url('views/LobbyView/LobbyRoomSettings/LobbyRoomSettings.scss');
-@import url('components/OfflinePoppup/offline.css');
+@import './views/LobbyView/LobbyRoomSettings/LobbyRoomSettings.scss';
+@import './components/OfflinePoppup/offline.css';
 @import './views/ProfileEditView/ProfileEdit.scss';
 @import './utils/stopwatch/stopwatch.scss';
 @import './utils/timer/timer.scss';

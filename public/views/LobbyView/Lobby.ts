@@ -77,7 +77,7 @@ export default class Lobby {
   _addRoom(data : any) {
     Bus.emit('hideNotFoundRoomPanel');
     const room = {name : data.name, playersCount : data.players.connections.get.length,
-      playersCapacity : data.players.capacity, difficult : this._getModeByMines(data.field.mines),
+      playersCapacity : data.players.capacity,
       width : data.field.width, height : data.field.height, mines : data.field.mines, time : '0:00:00',
       observersCount : data.observers.get.length, status : this._getStatusByCode(data.status)}
     
@@ -159,7 +159,7 @@ export default class Lobby {
 
     lobby.allRooms.get.forEach((item : any, i : number) => {
       const room = {name : item.name, playersCount : item.players.connections.get.length,
-        playersCapacity : item.players.capacity, difficult : this._getModeByMines(item.field.mines),
+        playersCapacity : item.players.capacity,
         width : item.field.width, height : item.field.height, mines : item.field.mines, time : '0:00:00',
         observersCount : item.observers.get.length, status : this._getStatusByCode(item.status)}
       
