@@ -28,7 +28,5 @@
 - Креативный фронтендер - [Иван Спасенов](https://github.com/slevinsps)
 - Усердный фронтендер - [Сергей Апарин](https://github.com/Bigyin1)
 
-- [Концепты](https://www.figma.com/file/WcFryEu51iySsuBd8F0CLi0S/explose)
-
 ## Бэк
 - [Клик](https://github.com/frontend-park-mail-ru/2019_1_Escapade)
