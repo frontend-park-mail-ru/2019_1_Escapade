@@ -18,6 +18,7 @@ import SinglePlayerMV from './ModelView/SinglePlayerMV';
 import ProfileMV from './ModelView/ProfileMV';
 
 import './main.scss';
+import './img/anonymous.jpg'
 
 const root = document.getElementById('application');
 

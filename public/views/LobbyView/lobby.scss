@@ -1,9 +1,9 @@
 .lobby {
   display: flex;
-  justify-content: center;
   flex-direction: column;
-  background: radial-gradient(512px at 50% 50%,hsla(0,0%,100%,.34) 0,hsla(0,0%,100%,0) 100%),#667787;
-  
+  background: radial-gradient(512px at 50% 50%, hsla(0, 0%, 100%, .34) 0, hsla(0, 0%, 100%, 0) 100%), #667787;
+  height: 100vh;
+
   &__header {
     display: flex;
     align-items: center;
@@ -22,15 +22,44 @@
   }
 
   &__chat_container {
-    margin-left:5px;
+    margin-left: 5px;
+  }
+
+  &__rooms_container {
+    overflow-y: scroll;
+    overflow-x: hidden;
+    margin-top: 10px;
+    width: 50vw;
+    padding-right: 5px;
+  }
+
+  &__rooms_container:hover::-webkit-scrollbar {
+    width: 7px;
+  }
+
+  &__rooms_container::-webkit-scrollbar {
+    width: 0px;
+    transition: 3s linear;
+  }
+
+  &__rooms_container::-webkit-scrollbar-thumb {
+    background: #ff3d00;
+    ;
+  }
+
+  &__room_not_found {
+    color: #fff;
+    font-size: 40px;
+    text-align: left;
+    margin-left: 18px;
   }
 
   &__back {
     width: 95px;
     height: 95px;
     background: url(/img/flag-right.png) no-repeat;
-    -webkit-transform: matrix(-1,0,0,1,0,0);
-    transform: matrix(-1,0,0,1,0,0);
+    -webkit-transform: matrix(-1, 0, 0, 1, 0, 0);
+    transform: matrix(-1, 0, 0, 1, 0, 0);
     background-size: contain;
   }
 
@@ -69,8 +98,6 @@
     flex-direction: row;
     justify-content: center;
     float: left;
-    /* position: relative; */
-    /* width: 2000px; */
   }
 
   &__center {
@@ -80,10 +107,7 @@
   &__rooms {
     display: flex;
     justify-content: center;
-    align-items: center;
     flex-direction: column;
-    width: 1168px;
-    display: table;
     margin: 0 auto;
     text-align: center;
 
@@ -91,7 +115,6 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      width: 100%;
       height: 67px;
     }
   }
@@ -360,31 +383,4 @@
 
 .room__exit:hover {
   filter: brightness(125%);
-}
-
-.lobby__rooms_container {
-  overflow-y: scroll;
-  overflow-x: hidden;
-  width: 700px;
-  height: 700px;
-  margin-top: 10px;
-  padding-right: 5px;
-}
-
-.lobby__rooms_container:hover::-webkit-scrollbar {
-  width: 7px;  
-}
-.lobby__rooms_container::-webkit-scrollbar {
-  width: 0px;  
-  transition: 3s linear;
-}
-.lobby__rooms_container::-webkit-scrollbar-thumb {
-  background: #ff3d00;;
-}
-
-.lobby__room_not_found {
-  color: #fff;
-  font-size: 40px;
-  text-align: left;
-  margin-left: 18px;
 }
