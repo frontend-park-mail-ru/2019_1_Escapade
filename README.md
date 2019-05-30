@@ -1,7 +1,7 @@
 # 2019_1_Escapade
 :heart_eyes: Топ frontend :heart_eyes:
 
-- [Играть](https://ser.ru.com/)
+## [Играть](https://ser.ru.com/)
 
 ## Правила игры:
 Все знают, как играть в сапера, поэтому описывать singleplayer смысла нет, опишу особенности multiplayer.
