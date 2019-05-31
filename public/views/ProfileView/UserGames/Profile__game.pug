@@ -9,22 +9,15 @@
     -}
     .bar-vertical.mr-2
     .profile__star.mr-1
-    .mr-2.text-white #{data[i].points}
+    .mr-2.text-white #{Math.floor(data[i].points)}
     .bar-vertical.mr-2
     .mr-2.text-white #{data[i].date}
-    .bar-vertical.mr-2
-    .mr-2.text-red master
     .bar-vertical.mr-2
     .mr-2.text-white #{data[i].width}x#{data[i].height}
     .bar-vertical.mr-1
     .profile__bomb
-    .mr-2.text-white 3000/9998
+    .mr-2.text-white #{data[i].mines}
     .bar-vertical.mr-1
     .profile__clock.mr-1
-    .mr-2.text-white 00:12:45
-    .bar-vertical.mr-1
-    .profile__click_left
-    .mr-2.text-white 1000
-    .profile__click_right
-    .mr-1.text-white 230
+    .mr-2.text-white #{data[i].duration}
 - }

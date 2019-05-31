@@ -22,6 +22,8 @@ export default class UserGamesComponent extends BaseComponent {
       date: string,
       width: number,
       height: number,
+      mines: number,
+      duration: string,
     }
     this.data = games.lobby.allRooms.get.map((game: any) => {
 
@@ -29,12 +31,15 @@ export default class UserGamesComponent extends BaseComponent {
         return player.ID === id
       })[0]
       const date = new Date(game.date)
+      const duration = new Date(game.settings.play * 1000).toISOString().substr(11, 8);
       let res: gameInfo = {
         iswin: !player.Died,
         points: player.Points,
         date: `${date.getDay()}.${date.getMonth()}.${date.getFullYear()}`,
         width: game.settings.width,
         height: game.settings.height,
+        mines: game.field.mines,
+        duration: duration
       }
       return res
     })
