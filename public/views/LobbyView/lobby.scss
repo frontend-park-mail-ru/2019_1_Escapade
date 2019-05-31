@@ -1,5 +1,7 @@
 .lobby {
   display: flex;
+  align-items: center;
+  justify-content: center;
   flex-direction: column;
   background: radial-gradient(512px at 50% 50%, hsla(0, 0%, 100%, .34) 0, hsla(0, 0%, 100%, 0) 100%), #667787;
   height: 100vh;
@@ -31,6 +33,15 @@
     margin-top: 10px;
     width: 50vw;
     padding-right: 5px;
+    display: flex;
+    flex-direction: column;
+
+    @media screen and (max-width: $tablet) {
+      & {
+        width: initial;
+        padding-right: 0;
+      }
+    }
   }
 
   &__rooms_container:hover::-webkit-scrollbar {
@@ -45,6 +56,12 @@
   &__rooms_container::-webkit-scrollbar-thumb {
     background: #ff3d00;
     ;
+  }
+
+  &__free_room_container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
   }
 
   &__room_not_found {
@@ -87,17 +104,29 @@
     font-family: Saira;
     margin-left: 60px;
 
+    @media screen and (max-width: $tablet) {
+      & {
+        margin-left: 14px;
+      }
+    }
+
     &_info {
       display: flex;
       flex-direction: column;
+      margin-right: 12px;
     }
   }
 
-  &__row {
+  &__rooms_main {
     display: flex;
-    flex-direction: row;
     justify-content: center;
-    float: left;
+
+    @media screen and (max-width: $tablet) {
+      & {
+        flex-direction: column;
+      }
+    }
+
   }
 
   &__center {
@@ -146,7 +175,7 @@
 
     &__room_not_found {
       width: 200px;
-      height: 200px;
+      font-size: 23px;
     }
   }
 
@@ -157,6 +186,12 @@
     font-size: 55px;
     color: #fff;
     padding: 3px 17px;
+
+    @media screen and (max-width: $tablet) {
+      & {
+        font-size: 45px;
+      }
+    }
   }
 
   // &__back {
@@ -176,17 +211,19 @@
     text-align: center;
     align-items: center;
     min-height: 73px;
-  }
 
-  &__room:hover {
-    filter: brightness(125%);
-  }
+    @media screen and (max-width: $tablet) {
+      & {
+        font-size: 3.5vw;
+        min-height: 50px;
+      }
+    }
 
-  @media screen and (max-width: $tablet) {
-    &__room {
-      font-size: 3.5vw
+    &:hover {
+      filter: brightness(125%);
     }
   }
+
 
   &__free_room {
     background-color: rgba(70, 83, 94, 1);
@@ -376,9 +413,8 @@
   width: 45px;
   height: 45px;
   background: url(/img/cancel.png) #ced6dd no-repeat;
-  background-size: contain;
+  background-size: cover;
   border-radius: 50%;
-  margin-left: 28px;
 }
 
 .room__exit:hover {

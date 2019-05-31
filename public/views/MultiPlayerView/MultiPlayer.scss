@@ -17,6 +17,12 @@
     color: #fff;
     font-size: 21px;
     border-radius: 10px;
+
+    @media screen and (max-width: $tablet) {
+      & {
+        width: 250px;
+      }
+    }
   }
 
   &__button_chat:hover {
@@ -36,7 +42,7 @@
   &__button_restart:hover {
     filter: brightness(145%);
   }
-  
+
 
 
   &__info_container {
@@ -53,6 +59,14 @@
     height: 731px;
     width: 534px;
     border-radius: 23px;
+
+    @media screen and (max-width: $tablet) {
+      & {
+        width: initial;
+        height: initial;
+        margin-left: 0;
+      }
+    }
   }
 
   &__row {
@@ -89,6 +103,7 @@
 
   &__playerlist_container {
     display: flex;
+    justify-content: center;
   }
 
   @media screen and (max-width: 320px) {

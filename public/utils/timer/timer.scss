@@ -17,7 +17,7 @@
 
   &__row {
     display: flex;
-    width: 284px;
+    width: 244px;
     flex-direction: row;
   }
 
@@ -42,7 +42,12 @@
   width: 275px;
   height: 78px;
 
-  // & {
-  //   font-size: 40px;
-  // }
+  @media screen and (max-width: $tablet) {
+    & {
+      width: initial;
+      height: initial;
+      text-align: left;
+      font-size: 36px
+    }
+  }
 }

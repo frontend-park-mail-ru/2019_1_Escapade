@@ -13,8 +13,11 @@
       & {
         width: initial;
         height: 90px;
+        margin-left: 13px;
+        margin-right: 13px;
       }
     }
+
   }
 
   &__game_actions_message_num {
@@ -43,6 +46,7 @@
     @media screen and (max-width: $tablet) {
       & {
         margin-left: 0;
+        width: initial;
       }
     }
   }
@@ -65,12 +69,14 @@
 
 
 .game__game_actions:hover::-webkit-scrollbar {
-  width: 7px;  
+  width: 7px;
 }
+
 .game__game_actions::-webkit-scrollbar {
-  width: 0px;  
+  width: 0px;
   transition: 3s linear;
 }
+
 .game__game_actions::-webkit-scrollbar-thumb {
   background: #ff3d00;
 }
