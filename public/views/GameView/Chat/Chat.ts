@@ -86,7 +86,7 @@ export default class ChatView {
         return;
       }
       this.editMessId = this.myMessages[num].messID;
-      this._editMessage(this.myMessages[num]);
+      this._editMessageClick(this.myMessages[num]);
     } else if (target.classList.contains('chat__remove_button')) {
       const elements = [].slice.call((this.parent.querySelectorAll('.chat__remove_button')));
       const num = elements.indexOf(target);
@@ -103,7 +103,7 @@ export default class ChatView {
   }
 
 
-  _editMessage(message: any) {
+  _editMessageClick(message: any) {
     this.inputMessageField.value = message.text;
     this.editButtonSend.style.display = 'flex';
     this.sendButton.style.display = 'none';
@@ -143,22 +143,31 @@ export default class ChatView {
           break;
         }
       }
+      const messages = [].slice.call((this.parent.querySelectorAll('.chat__message')));
+      if (allNnum < 0 || allNnum >= messages.length) {
+        return;
+      }
       for (let i = 0; i < this.myMessages.length; i++) {
         if (this.myMessages[i].messID === data.id) {
           myNum = i;
           break;
         }
       }
-      const messages = [].slice.call((this.parent.querySelectorAll('.chat__message')));
-      if (allNnum < 0 || allNnum >= messages.length) {
+      if (myNum < 0 || allNnum >= messages.length) {
         return;
       }
+
       messages[allNnum].parentNode.removeChild(messages[allNnum]);
-      this.myMessages.splice(allNnum, 1);
-      this.allMessages.splice(myNum, 1);
+      console.log('qwerty ', allNnum, ' ', this.myMessages);
+      console.log('qwerty2 ', myNum, ' ', this.allMessages);
+      this.allMessages.splice(allNnum, 1);
+      this.myMessages.splice(myNum, 1);
+      console.log('22qwerty ', allNnum, ' ', this.myMessages);
+      console.log('22qwerty2 ', myNum, ' ', this.allMessages);
+      return;
     }
 
-    if (data.action === 1) { // delete
+    if (data.action === 1) { // edit
       let allNnum = -1;
       let myNum = -1;
       for (let i = 0; i < this.allMessages.length; i++) {
@@ -180,11 +189,13 @@ export default class ChatView {
       messages[allNnum].querySelector('.chat__text').innerHTML = data.text;
       this.myMessages[myNum].text = data.text;
       this.allMessages[allNnum].text = data.text;
+      return;
     }
     const message = { photo: data.user.photo, messID: data.id, status : data.status, messEdited: data.edited, id: data.user.id, name: data.user.name, text: data.text, time: data.time.substring(11, 16) };
 
     this._addMessageToChatField(message);
     this.myMessage = false;
+    return;
   }
 
   _getMessageHistory(dataStruct: any) {
