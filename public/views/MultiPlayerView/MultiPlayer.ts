@@ -155,6 +155,7 @@ export default class MultiPlayerView extends BaseView {
       this.infoPanelMode = true;
       Bus.emit('busAllOffSinglePlayer');
       Bus.emit('addField', { container: '.multi_player__field_container', parent: this.parent });
+      console.log('this.parent multi ', this.parent)
       Bus.emit('addChat', { container: '.multi_player__chat_container', parent: this.parent, place: 'multiplayer'  });
       Bus.emit('addMessage', { container: '.multi_player__message_container', parent: this.parent });
       Bus.emit('addPlayersList', '.multi_player__playerlist_container');
@@ -236,6 +237,7 @@ export default class MultiPlayerView extends BaseView {
     this._getPlayers(data);
     this._getObservers(data.room.observers);
     this._getField(data.room.field);
+    Bus.emit('addMessageInChatHistory', {data: data, place: 'room'});
   }
 
   _getStatus(data : any) {

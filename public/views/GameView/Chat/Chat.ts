@@ -23,6 +23,7 @@ export default class ChatView {
   clickOnMessageButtonsBindThis: any;
   sendEditMessageBindThis: any;
   sendMessageBindThis: any;
+  parent: any;
   constructor() {
     Bus.on('addChat', this._addListeners.bind(this), 'chatView');
     this.countMessage = 0;
@@ -36,17 +37,19 @@ export default class ChatView {
 
 
   _addListeners(data: any) {
+    console.log('add listeners chat ', data.parent)
     this._clearParameters();
     let container = data.container;
     let place = data.place;
-    let parent = data.parent;
-    const HTMLElement = parent.querySelector(container);
+    this.parent = data.parent;
+
+    const HTMLElement = this.parent.querySelector(container);
     HTMLElement.innerHTML = Template();
-    this.sendButton = parent.querySelector('.chat__send_button');
-    this.inputMessageField = parent.querySelector('.chat__input');
-    this.chatHistory = parent.querySelector('.chat__history');
-    this.counterOnlineField = parent.querySelector('.chat__online');
-    this.editButtonSend = parent.querySelector('.chat__edit_button_send');
+    this.sendButton = this.parent.querySelector('.chat__send_button');
+    this.inputMessageField = this.parent.querySelector('.chat__input');
+    this.chatHistory = this.parent.querySelector('.chat__history');
+    this.counterOnlineField = this.parent.querySelector('.chat__online');
+    this.editButtonSend = this.parent.querySelector('.chat__edit_button_send');
     this.editButtonSend.style.display = 'none';
 
     this.editButtonSend.removeEventListener('click', this.sendEditMessageBindThis);
@@ -62,8 +65,8 @@ export default class ChatView {
     this.chatHistory.scrollTop = 9999;
 
 
-    document.removeEventListener('click', this.clickOnMessageButtonsBindThis);
-    document.addEventListener('click', this.clickOnMessageButtonsBindThis);
+    this.parent.removeEventListener('click', this.clickOnMessageButtonsBindThis);
+    this.parent.addEventListener('click', this.clickOnMessageButtonsBindThis);
   }
 
   _clickOnMessageButtons(e: any) {
@@ -76,7 +79,7 @@ export default class ChatView {
     }
 
     if (target.classList.contains('chat__edit_button')) {
-      const elements = [].slice.call((document.querySelectorAll('.chat__edit_button')));
+      const elements = [].slice.call((this.parent.querySelectorAll('.chat__edit_button')));
       const num = elements.indexOf(target);
       if (num < 0 || num >= this.myMessages.length) {
         return;
@@ -84,7 +87,7 @@ export default class ChatView {
       this.editMessId = this.myMessages[num].messID;
       this._editMessage(this.myMessages[num]);
     } else if (target.classList.contains('chat__remove_button')) {
-      const elements = [].slice.call((document.querySelectorAll('.chat__remove_button')));
+      const elements = [].slice.call((this.parent.querySelectorAll('.chat__remove_button')));
       const num = elements.indexOf(target);
       Bus.emit('removeMessageWS', { id: this.myMessages[num].messID });
     }
@@ -145,7 +148,7 @@ export default class ChatView {
           break;
         }
       }
-      const messages = [].slice.call((document.querySelectorAll('.chat__message')));
+      const messages = [].slice.call((this.parent.querySelectorAll('.chat__message')));
       if (allNnum < 0 || allNnum >= messages.length) {
         return;
       }
@@ -169,7 +172,7 @@ export default class ChatView {
           break;
         }
       }
-      const messages = [].slice.call((document.querySelectorAll('.chat__message')));
+      const messages = [].slice.call((this.parent.querySelectorAll('.chat__message')));
       if (allNnum < 0 || allNnum >= messages.length) {
         return;
       }
@@ -186,7 +189,8 @@ export default class ChatView {
   _getMessageHistory(dataStruct: any) {
     const data = dataStruct.data;
     const place = dataStruct.place;
-
+    this.allMessages = [];
+    this.myMessages = [];
     this.chatHistory.innerHTML = '';
     let messageHistory = [];
     console.log('WWWWWW ', place);
@@ -229,7 +233,7 @@ export default class ChatView {
       console.log('PPPPPPPPPPP');
       this.chatHistory.innerHTML += MessageTemplate({ message: messageStruct });
     } else {
-      console.log('QQQQQQQQQ');
+      console.log('QQQQQQQQQ ', this.chatHistory, ' ', this.parent);
       this.chatHistory.innerHTML += MyMessageTemplate({ message: messageStruct });
       this.myMessages.push(messageStruct);
     }
