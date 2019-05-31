@@ -2,9 +2,16 @@
   .chat_my__row
     .chat__message_img_container
         img.chat__message_img.mr-2(src=message.photo)
-    .chat__column_meta
+    .chat__column
       .chat__message_name #{message.name}
-      .chat__message_time #{message.time}
+      .chat_my__row
+        .chat__message_time #{message.time}
+        - if (message.messEdited){
+        .chat__edited_message (edit)
+        - }
+      - if (message.status == 2){
+      .chat__observer_message (observer)
+      - }
     .chat__column_meta
       .chat__row_text
         .chat__text.ml-2 #{message.text}

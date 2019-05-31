@@ -3,6 +3,7 @@ import Bus from '../../../utils/bus';
 import { User } from '../../../utils/user';
 const MessageTemplate = require('./ChatMessage.pug');
 const MyMessageTemplate = require('./MyChatMessage.pug');
+
 const Template = require('./Chat.pug');
 /** */
 export default class ChatView {
@@ -180,7 +181,7 @@ export default class ChatView {
       this.myMessages[myNum].text = data.text;
       this.allMessages[allNnum].text = data.text;
     }
-    const message = { photo: data.user.photo, messID: data.id, messEdited: data.edited, id: data.user.id, name: data.user.name, text: data.text, time: data.time.substring(11, 16) };
+    const message = { photo: data.user.photo, messID: data.id, status : data.status, messEdited: data.edited, id: data.user.id, name: data.user.name, text: data.text, time: data.time.substring(11, 16) };
 
     this._addMessageToChatField(message);
     this.myMessage = false;
@@ -208,7 +209,7 @@ export default class ChatView {
 
 
     messageHistory.forEach((item: any) => {
-      const message = { photo: item.user.photo, messID: item.id, messEdited: item.edited, id: item.user.id, name: item.user.name, text: item.text, time: item.time.substring(11, 16) };
+      const message = { photo: item.user.photo, messID: item.id, status : item.status, messEdited: item.edited, id: item.user.id, name: item.user.name, text: item.text, time: item.time.substring(11, 16) };
       this._addMessageToChatField(message);
     });
   }
@@ -225,15 +226,13 @@ export default class ChatView {
   }
 
   _addMessageToChatField(messageStruct: any) {
-    console.log(this.idPlayerBackend, " ", messageStruct.id)
     if (messageStruct.id < 0) {
       messageStruct.photo = './img/anonymous.jpg'
     }
+
     if (messageStruct.id != this.idPlayerBackend) {
-      console.log('PPPPPPPPPPP');
       this.chatHistory.innerHTML += MessageTemplate({ message: messageStruct });
     } else {
-      console.log('QQQQQQQQQ ', this.chatHistory, ' ', this.parent);
       this.chatHistory.innerHTML += MyMessageTemplate({ message: messageStruct });
       this.myMessages.push(messageStruct);
     }

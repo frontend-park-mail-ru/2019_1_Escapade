@@ -16,6 +16,19 @@
     }
   }
 
+  &__column{
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+  }
+
+  &__column_meta{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+  }
+
+
 
 
   &__message:hover &__edit_button {
@@ -26,6 +39,17 @@
     opacity: 1;
   }
 
+  &__edited_message {
+    color: #999;
+    font-size: 16px;
+    margin-left:5px;
+  }
+
+  &__observer_message {
+    color: #999;
+    font-size: 16px;
+    float: left;
+  }
 
   &__history {
     display: flex;
@@ -47,7 +71,7 @@
 
   &__history::-webkit-scrollbar-thumb {
     background: #ff3d00;
-    ;
+
   }
 
 
@@ -64,12 +88,7 @@
     font-size: 17px;
   }
 
-  &__column {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-  }
+
 
   &__message {
     background-color: #f1f1f1;

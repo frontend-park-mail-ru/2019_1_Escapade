@@ -353,7 +353,7 @@ export default class MultiPlayerView extends BaseView {
   }
 
   _exitObserver(data: any) {
-    Bus.emit('delObserver', { player: data.value.user });
+    Bus.emit('delObserver', { player: data.value.User });
   }
 
   _updateField(data: any) {

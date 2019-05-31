@@ -102,16 +102,10 @@ export default class Lobby {
       Bus.emit('addFreeRoomView', room);
     }
 
-    // if (this.currentRoomId === -2) { 
-    //   this.currentRoomId = this.rooms.length - 1;
-    //   //Bus.emit('changeRoomStringColor',{type : 'free', id : this.currentRoomId, typeColor : 1})
-    //   const info = {name : this.rooms[this.currentRoomId].name, length : this.rooms[this.currentRoomId].players.connections.get.length,
-    //     capacity : this.rooms[this.currentRoomId].players.capacity}
-    //   this._updateCurrentRoom(info);
-    // }
   }
 
   _updateRoom(data : any) {
+    
     if (data.status === 3) {
       for (let i = 0; i < this.busyRooms.length; i++) {
         if (this.busyRooms[i].id === data.id) {
@@ -126,6 +120,16 @@ export default class Lobby {
           break;
         }
       }
+    }
+
+    //console.log('currRoomId ', this.currentRoomId, this.rooms)
+    
+    if (this.currentRoomId < 0 || this.currentRoomId >= this.rooms.length) {
+      return;
+    }
+    //console.log(data, ' ',  data.id, ' eeee ', this.rooms[this.currentRoomId].id)
+    if (this.rooms[this.currentRoomId].id === data.id) {
+        Bus.emit('showCurrentRoomPanel', {name: data.name, length: data.players.connections.get.length, capacity: data.players.capacity});
     }
   }
 
@@ -222,7 +226,7 @@ export default class Lobby {
         mode = 'God';
         break;
     }
-    mode = 'Normal'; //!!!!!!!!!!!! Убрать, заглушка
+    mode = 'Normal'; //  заглушка
     return mode;
   }
 
