@@ -76,9 +76,22 @@ export default class Lobby {
 
   _addRoom(data : any) {
     Bus.emit('hideNotFoundRoomPanel');
+    let gameTime = data.settings.play;
+    
+    const d = [3600, 60, 1];
+    const time = [];
+    let i = 0;
+    while (i < d.length) {
+      let t = Math.floor(gameTime / d[i]);
+      gameTime -= t * d[i];
+      let strT = ((t >= 0 && t < 10) ? '0' + t : t).toString();
+      time.push(strT);
+      i++;
+    }
+
     const room = {name : data.name, playersCount : data.players.connections.get.length,
       playersCapacity : data.players.capacity,
-      width : data.field.width, height : data.field.height, mines : data.field.mines, time : '0:00:00',
+      width : data.field.width, height : data.field.height, mines : data.field.mines, time : `${time[0]}:${time[1]}:${time[2]}`,
       observersCount : data.observers.get.length, status : this._getStatusByCode(data.status)}
     
     if (data.status === 3) {   // busy room

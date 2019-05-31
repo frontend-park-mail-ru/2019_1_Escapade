@@ -96,10 +96,23 @@
 
   &__players_list_player_name {
     margin-left: 5px;
+    line-height: 46px;
+    @media screen and (max-width: $tablet) {
+      & {
+        line-height: 28px;
+      }
+    }
   }
 
   &__players_list_player_points {
     margin-left: 21px;
+    text-align: right;
+    line-height: 46px;
+    @media screen and (max-width: $tablet) {
+      & {
+        line-height: 28px;
+      }
+    }
   }
 
   &__players_list_disconnect {
@@ -180,5 +193,4 @@
 
 .game__players_list::-webkit-scrollbar-thumb {
   background: #ff3d00;
-  ;
 }

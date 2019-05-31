@@ -86,7 +86,7 @@
   &__back {
     width: 95px;
     height: 95px;
-    background: url(/img/flag-right.png) no-repeat;
+    background: url('./img/flag-right.png') no-repeat;
     -webkit-transform: matrix(-1, 0, 0, 1, 0, 0);
     transform: matrix(-1, 0, 0, 1, 0, 0);
     background-size: contain;
@@ -161,7 +161,7 @@
   }
 
   &__create_game {
-    background-image: url(/img/create.png);
+    background-image: url('./img/create.png');
     background-size: 31px 31px;
     background-position: 7px;
     background-repeat: no-repeat;
@@ -280,6 +280,7 @@
   &__players {
     background-image: url('./img/player.png');
     width: 121px;
+    background-size: 12px;
   }
 
   &__difficult {
@@ -425,7 +426,7 @@
 .room__exit {
   width: 45px;
   height: 45px;
-  background: url(/img/cancel.png) #ced6dd no-repeat;
+  background: url('./img/cancel.png') #ced6dd no-repeat;
   background-size: cover;
   border-radius: 50%;
 }

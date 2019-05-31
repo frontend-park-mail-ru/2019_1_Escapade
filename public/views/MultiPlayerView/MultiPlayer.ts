@@ -6,6 +6,7 @@ import { MineSweeper } from '../../game/minesweeper';
 import { Timer } from '../../utils/timer/timer';
 import { checkAuth } from '../../utils/user';
 import Bus from '../../utils/bus';
+import bus from '../../utils/bus';
 /** */
 export default class MultiPlayerView extends BaseView {
   cellsize: number;
@@ -237,6 +238,11 @@ export default class MultiPlayerView extends BaseView {
     this._getPlayers(data);
     this._getObservers(data.room.observers);
     this._getField(data.room.field);
+
+    Bus.emit('ClearMessagesGameActions');
+    data.room.history.forEach((element: any)  => {
+      this._roomAction({value : element});
+    })
     Bus.emit('addMessageInChatHistory', {data: data, place: 'room'});
   }
 
@@ -270,8 +276,7 @@ export default class MultiPlayerView extends BaseView {
         this.startGame = true;
       }
       
-      Bus.emit('ClearMessagesGameActions');
-      Bus.emit('addMessageInGameActions', 'Stage of flag placement');
+      
       Bus.emit('addMessageInGameActions', 'Game begins!');
     }
   }
@@ -290,9 +295,7 @@ export default class MultiPlayerView extends BaseView {
   }
 
   _createColorForPlayer(i: number) {
-    while (i >= this.colorArr.length) {
-      i = i - this.colorArr.length;
-    }
+    i = i % this.colorArr.length;
     return this.colorArr[i];
   }
 
@@ -334,7 +337,7 @@ export default class MultiPlayerView extends BaseView {
       }
       const points = Math.round(dataPlayers[item.index].Points);
       Bus.emit('addPlayer', { player: item.user, points : points, color: color, me: me });
-      this.players.push({ user: item.user, id: dataPlayers[item.index].ID, points: Math.round(dataPlayers[item.index].Points), me: me, color: color });
+      this.players.push({ user: item.user, id: item.user.id, points: Math.round(dataPlayers[item.index].Points), me: me, color: color });
     });
   }
 
@@ -409,6 +412,9 @@ export default class MultiPlayerView extends BaseView {
     }
     this.restartButton.style.display = 'flex';
     setTimeout(this._writeGameOver.bind(this), 500);
+    if (this.observerMode) {
+      Bus.emit('showTextInMessageBox', 'Game over!');
+    }
     
   }
 
@@ -420,6 +426,7 @@ export default class MultiPlayerView extends BaseView {
     const action = data.value;
     console.log(this.players);
     for (let i = 0; i < this.players.length; i++) {
+      console.log(this.players[i].id, ' ',action.player )
       if (this.players[i].id === action.player) {
         switch (action.action) {
           case 3:

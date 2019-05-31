@@ -36,11 +36,13 @@
 }
 
 .timer__clock {
+
+  width: 275px;
   color: #fff;
   font-size: 59px;
   letter-spacing: 2px;
-  width: 275px;
-  height: 78px;
+  height: 65px;
+  line-height: 57px;
 
   @media screen and (max-width: $tablet) {
     & {

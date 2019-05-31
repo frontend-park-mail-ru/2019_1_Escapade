@@ -26,9 +26,11 @@
   }
 
   &__clock {
-    color: white;
+    color: #fff;
     font-size: 59px;
     letter-spacing: 2px;
+    height: 65px;
+    line-height: 57px;
   }
 
   @media screen and (max-width: $tablet) {
