@@ -6,6 +6,12 @@
   background: radial-gradient(512px at 50% 50%, hsla(0, 0%, 100%, .34) 0, hsla(0, 0%, 100%, 0) 100%), #667787;
   height: 100vh;
 
+  @media screen and (max-width: $tablet) {
+    & {
+      justify-content: flex-start;
+    }
+  }
+
   &__header {
     display: flex;
     align-items: center;
