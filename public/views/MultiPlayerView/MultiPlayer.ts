@@ -322,6 +322,7 @@ export default class MultiPlayerView extends BaseView {
     const dataPlayers = data.room.players.players;
     const colorRandom = MathGame.randomInteger(0, 8);
     console.log('dataConnections ', dataConnections.length);
+
     dataConnections.forEach((item: any, i: number) => {
       let color = this._createColorForPlayer(i + colorRandom)
       let me = false;
@@ -329,14 +330,15 @@ export default class MultiPlayerView extends BaseView {
         this.myID = dataPlayers[item.index].ID;
         me = true;
       }
-      Bus.emit('addPlayer', { player: item.user, color: color, me: me });
+      const points = Math.round(dataPlayers[item.index].Points);
+      Bus.emit('addPlayer', { player: item.user, points : points, color: color, me: me });
       this.players.push({ user: item.user, id: dataPlayers[item.index].ID, points: Math.round(dataPlayers[item.index].Points), me: me, color: color });
     });
   }
 
   _getObservers(data: any) {
     if (data.value) {
-      Bus.emit('addObserver', { player: data.value.user });
+      Bus.emit('addObserver', { player: data.value.User });
     } else {
       const observerArray = data.get;
       observerArray.forEach((item: any, i: number) => {

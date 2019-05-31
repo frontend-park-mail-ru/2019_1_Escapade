@@ -48,7 +48,8 @@ export default class PlayersListView {
   }
   _addPlayer(data : any) {
     const player = data.player;
-    const dataJSON = {name : player.name, points : 0};
+    const points = data.points;
+    const dataJSON = {name : player.name, points : points};
     this.playersListContainer.innerHTML += PlayerRowTemplate({data : dataJSON});
 
     var elements = [].slice.call(document.querySelectorAll('.game__players_list_row'));
@@ -107,6 +108,7 @@ export default class PlayersListView {
   _addObserver(data : any) {
     this.observersTitle.hidden = false;
     const observer = data.player;
+    console.log(observer)
     const dataJSON = {name : observer.name};
     this.observersListContainer.innerHTML += ObserverRowTemplate({data : dataJSON});
   }

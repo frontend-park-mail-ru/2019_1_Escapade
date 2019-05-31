@@ -63,7 +63,7 @@ export default class ChatModel {
         Bus.emit('getChatMessage', data.value);
         break;
       case  'Room' :
-        if (data.value.room.messages) {
+        if (data.value.room && (data.value.room.status === 2 || data.value.room.status === 3)) {
           Bus.emit('addMessageInChatHistory', {data: data.value, place: 'room'});
         }
         break;
