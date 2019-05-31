@@ -64,6 +64,12 @@
     justify-content: center;
   }
 
+  &__busy_room_container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
   &__room_not_found {
     color: #fff;
     font-size: 40px;
@@ -210,6 +216,7 @@
     margin-bottom: 5px;
     text-align: center;
     align-items: center;
+    justify-content: center;
     min-height: 73px;
 
     @media screen and (max-width: $tablet) {
@@ -240,7 +247,7 @@
 
   &__with_image {
     background-repeat: no-repeat;
-    background-size: 24px;
+    background-size: 19px;
     background-position: left;
     text-indent: 15px;
   }
