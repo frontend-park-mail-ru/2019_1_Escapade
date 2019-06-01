@@ -1,0 +1,22 @@
+.leaderboard__label Leaderboard
+.leaderboard__header
+  .leaderboard__header_number №
+  .leaderboard__header_name Nickname
+  .leaderboard__header_points Points
+  .leaderboard__header_time Time
+.leaderboard__table
+  - for(var i = 0; i < data.users.length;i++){
+  .leaderboard__table_row
+    .leaderboard__table_number
+      .leaderboard__table_number_wrapper #{(i + 1)  +  (data.page - 1) * data.per_page}
+    .leaderboard__table_row_wrapper
+      .leaderboard__table_avatar_back
+        img.leaderboard__table_avatar(src=data.users[i].photo)
+      .leaderboard__table_name #{data.users[i].name}
+      .leaderboard__table_points #{data.users[i].bestScore.String || 0}
+      .leaderboard__table_time #{data.users[i].bestTime.String || 0}
+  - }
+.leaderboard__footer
+  .leaderboard__footer_left.leaderboard__arrow
+  .leaderboard__footer_page 1
+  .leaderboard__footer_right.leaderboard__arrow
