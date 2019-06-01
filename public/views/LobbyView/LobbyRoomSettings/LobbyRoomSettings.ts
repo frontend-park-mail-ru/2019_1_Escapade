@@ -119,6 +119,10 @@ export default class LobbyRoomSettings{
     if (title === '') {
       title = this.roomTitleDefault;
     }
+    const maxLenName = 35;
+    if (title.length > maxLenName) {
+      title = title.substr(0, maxLenName) + '...';
+    }
     Bus.emit('createRoom', {title : title, players : this.players, width : this.size, height : this.size, mines : this.minesCount})
     this._hideSettingsPanel();
   }
