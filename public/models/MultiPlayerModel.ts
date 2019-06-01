@@ -88,10 +88,8 @@ export default class MultiplayerModel {
         Bus.emit('roomStatusWS', data);
         break;
       case 'AccountTaken':
-        router.open('/');
-        break;
-        
-        
+        document.location.replace('/');
+        break;        
     }
     console.log('_getInfo end') 
   }
