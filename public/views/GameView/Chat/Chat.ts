@@ -137,31 +137,36 @@ export default class ChatView {
     if (data.action === 2) { // delete
       let allNnum = -1;
       let myNum = -1;
+      console.log('qwerty ', ' ', this.myMessages);
+      console.log('qwerty2 ',  ' ', this.allMessages);
       for (let i = 0; i < this.allMessages.length; i++) {
         if (this.allMessages[i].messID === data.id) {
           allNnum = i;
           break;
         }
       }
+      console.log('id in arr mess ', allNnum);
       const messages = [].slice.call((this.parent.querySelectorAll('.chat__message')));
-      if (allNnum < 0 || allNnum >= messages.length) {
+      if (allNnum < 0 || allNnum >= messages.length || allNnum >= this.allMessages.length) {
         return;
       }
+      messages[allNnum].parentNode.removeChild(messages[allNnum]);
+      this.allMessages.splice(allNnum, 1);
       for (let i = 0; i < this.myMessages.length; i++) {
         if (this.myMessages[i].messID === data.id) {
           myNum = i;
           break;
         }
       }
-      if (myNum < 0 || allNnum >= messages.length) {
+      if (myNum < 0 || myNum >= this.myMessages.length) {
         return;
       }
+      this.myMessages.splice(myNum, 1);
 
-      messages[allNnum].parentNode.removeChild(messages[allNnum]);
+      
       console.log('qwerty ', allNnum, ' ', this.myMessages);
       console.log('qwerty2 ', myNum, ' ', this.allMessages);
-      this.allMessages.splice(allNnum, 1);
-      this.myMessages.splice(myNum, 1);
+
       console.log('22qwerty ', allNnum, ' ', this.myMessages);
       console.log('22qwerty2 ', myNum, ' ', this.allMessages);
       return;
@@ -176,19 +181,23 @@ export default class ChatView {
           break;
         }
       }
+      const messages = [].slice.call((this.parent.querySelectorAll('.chat__message')));
+      if (allNnum < 0 || allNnum >= this.allMessages.length) {
+        return;
+      }
+      this.allMessages[allNnum].text = data.text;
+      messages[allNnum].querySelector('.chat__text').innerHTML = data.text;
       for (let i = 0; i < this.myMessages.length; i++) {
         if (this.myMessages[i].messID === data.id) {
           myNum = i;
           break;
         }
       }
-      const messages = [].slice.call((this.parent.querySelectorAll('.chat__message')));
-      if (allNnum < 0 || allNnum >= messages.length) {
+      if (myNum < 0 || allNnum >= this.myMessages.length) {
         return;
       }
-      messages[allNnum].querySelector('.chat__text').innerHTML = data.text;
       this.myMessages[myNum].text = data.text;
-      this.allMessages[allNnum].text = data.text;
+      
       return;
     }
     const message = { photo: data.user.photo, messID: data.id, status : data.status, messEdited: data.edited, id: data.user.id, name: data.user.name, text: data.text, time: data.time.substring(11, 16) };
