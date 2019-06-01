@@ -14,7 +14,8 @@ export default class LeaderBoardView extends BaseView {
   _pagesCount: any;
   _leftArrow: any;
   _rightArrow: any;
-  filter: LeaderboardFilterComponent
+  filter: LeaderboardFilterComponent;
+  difficulty: number;
   prevPageBindThis: any;
   nextPageBindThis: any;
   /**
@@ -24,8 +25,14 @@ export default class LeaderBoardView extends BaseView {
   constructor(parent: any) {
     super(parent, leaderBoardTemplate, false);
     this._currPage = 1;
+    this.difficulty = 1
 
     Bus.on('respPagesAmount', this._initBoard.bind(this), 'leaderBoardView');
+    Bus.on('respPage', this.renderUsers.bind(this), 'leaderBoardView');
+    Bus.on('leaderboardRankFilter', (rank: number) => {
+      this.difficulty = rank
+      this.render()
+    }, 'leaderBoardView')
     this.prevPageBindThis = this._prevPage.bind(this);
     this.nextPageBindThis = this._nextPage.bind(this);
   }
@@ -49,6 +56,9 @@ export default class LeaderBoardView extends BaseView {
     } else {
       fieldHeight = 90;
     }
+    if (screen.height <= 700) {
+      fieldHeight = 100;
+    }
     console.log(devHeight, fieldHeight)
     return Math.round(devHeight / fieldHeight);
   }
@@ -57,10 +67,9 @@ export default class LeaderBoardView extends BaseView {
    *
    */
   render() {
-    Bus.on('respPage', this.renderUsers.bind(this), 'leaderBoardView');
     this.divisionHeight = this._getPageAmount();
-    this.pageStruct = { page: 1, per_page: this.divisionHeight };
-    Bus.emit('reqPagesAmount', this.pageStruct.per_page);
+    this.pageStruct = { page: 1, per_page: this.divisionHeight, difficulty: this.difficulty };
+    Bus.emit('reqPagesAmount', this.pageStruct);
     Bus.emit('reqPage', this.pageStruct);
   }
 
@@ -123,7 +132,7 @@ export default class LeaderBoardView extends BaseView {
     }
 
     this.divisionHeight = this._getPageAmount();
-    this.pageStruct = { page: ++this._currPage, per_page: this.divisionHeight };
+    this.pageStruct = { page: ++this._currPage, per_page: this.divisionHeight, difficulty: this.difficulty };
     Bus.emit('reqPage', this.pageStruct);
   }
 
@@ -136,7 +145,7 @@ export default class LeaderBoardView extends BaseView {
     }
 
     this.divisionHeight = this._getPageAmount();
-    this.pageStruct = { page: --this._currPage, per_page: this.divisionHeight };
+    this.pageStruct = { page: --this._currPage, per_page: this.divisionHeight, difficulty: this.difficulty };
     Bus.emit('reqPage', this.pageStruct);
   }
 }
