@@ -88,6 +88,10 @@ body {
   margin-left: 1.3rem;
 }
 
+.ml-auto {
+  margin-left: auto;
+}
+
 .mb-1 {
   margin-bottom: 0.35rem;
 }
