@@ -147,24 +147,26 @@ export default class SinglePlayer {
   _changeHard(hardStruct: any) {
     Bus.emit('setStylesOnStartSingle');
     this.difficult = hardStruct.difficult;
-
+    this.cellNumbersX = hardStruct.width;
+    this.cellNumbersY = hardStruct.height;
+    let difficultCoef = 0.2;
     switch (this.difficult) {
       case 0:
-        this.minesCount = 10;
+        difficultCoef = 0.1;
         break;
       case 1:
-        this.minesCount = 20;
+        difficultCoef = 0.2;
         break;
       case 2:
-        this.minesCount = 30;
+        difficultCoef = 0.3
         break;
       case 3:
-        this.minesCount = 40;
+        difficultCoef = 0.4
         break;
     }
-    this.cellNumbersX = 15;
-    this.cellNumbersY = 15;
-    Bus.emit('settingsChangeSize', { width: this.cellNumbersX, height: this.cellNumbersY });
+
+    this.minesCount = Math.round(difficultCoef * this.cellNumbersX * this.cellNumbersY);
+
     Bus.emit('settingsChangeMinesCount', this.minesCount);
     checkAuth(this._updateUserInfoCalback.bind(this), this.difficult)
     this.stopwatch.stop();

@@ -131,7 +131,7 @@ export default class LobbyVew extends BaseView {
   }
 
   _showCurrentRoomPanel({name = '', length = 0, capacity = 0}) {
-    this.currentRoomPanel.style.display = 'flex';;
+    this.currentRoomPanel.style.display = 'flex';
     this.roomStatusField.innerHTML = `Room ${name} waiting... ${length}/${capacity}`;
   }
 
@@ -151,10 +151,24 @@ export default class LobbyVew extends BaseView {
 
   _addFreeRoom(room : any) {
     this.freeRoomContainer.innerHTML = lobbyTemplateFreeRoom({ room : room }) + this.freeRoomContainer.innerHTML;
+    let elements = [].slice.call((document.querySelectorAll('.lobby__free_room')));
+    elements.forEach((element : any, i : number) => {
+     let numDom = element.querySelector('.lobby__room_num');
+     if (numDom != null) {
+      numDom.innerHTML = `#${i + 1}`
+     }
+    });
   }
 
   _addBusyRoom(room : any) {
     this.busyRoomContainer.innerHTML = lobbyTemplateBusyRoom({ room : room }) + this.busyRoomContainer.innerHTML;
+    let elements = [].slice.call((document.querySelectorAll('.lobby__busy_room')));
+    elements.forEach((element : any, i : number) => {
+     let numDom = element.querySelector('.lobby__room_num');
+     if (numDom != null) {
+      numDom.innerHTML = `#${i + 1}`
+     }
+    });
   }
 
 
@@ -194,6 +208,8 @@ export default class LobbyVew extends BaseView {
       elements[newNum].querySelector('.lobby__players').innerHTML = `${data.players.connections.get.length}/${data.players.capacity} players`;
       elements[newNum].querySelector('.lobby__observers').innerHTML = data.observers.get.length;
       elements[newNum].querySelector('.lobby__status').innerHTML = this._getStatusByCode(data.status);
+      
+      
     } else if (type === 'free'){
       const elements = [].slice.call((document.querySelectorAll('.lobby__free_room')));
       const newNum = elements.length - 1 - num;
@@ -206,13 +222,31 @@ export default class LobbyVew extends BaseView {
     const type = info.type;
     let elements;
     if (type === 'busy') {
+
       elements = [].slice.call((document.querySelectorAll('.lobby__busy_room')));
+      const newNum = elements.length - 1 - num;
+      elements[newNum].parentNode.removeChild(elements[newNum]);
+      elements.splice(newNum, 1);
+      elements.forEach((element : any, i : number) => {
+        let numDom = element.querySelector('.lobby__room_num');
+        if (numDom != null) {
+          numDom.innerHTML = `#${i + 1}`
+        }
+      });
       
     } else if (type === 'free'){
       elements = [].slice.call((document.querySelectorAll('.lobby__free_room')));
+      const newNum = elements.length - 1 - num;
+      elements[newNum].parentNode.removeChild(elements[newNum]);
+      elements.splice(newNum, 1);
+      elements.forEach((element : any, i : number) => {
+        let numDom = element.querySelector('.lobby__room_num');
+        if (numDom != null) {
+          numDom.innerHTML = `#${i + 1}`
+        }
+      });
     }
-    const newNum = elements.length - 1 - num;
-    elements[newNum].parentNode.removeChild(elements[newNum]);
+    
   }
 
 
