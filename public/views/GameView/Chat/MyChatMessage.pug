@@ -3,8 +3,8 @@
     .chat__message_img_container
         img.chat__message_img.mr-2(src=message.photo)
     .chat__column
-      .chat__message_name #{message.name}
-      .chat_my__row
+      .chat__message_name.text-left #{message.name}
+      .chat_my__row.flex-start
         .chat__message_time #{message.time}
         - if (message.messEdited){
         .chat__edited_message (edit)
@@ -14,7 +14,7 @@
       - }
     .chat__column_meta
       .chat__row_text
-        .chat__text.ml-2 #{message.text}
+        .chat__text.ml-2.mr-2 #{message.text}
         .chat_my__row
           .chat__edit_button
           .chat__remove_button

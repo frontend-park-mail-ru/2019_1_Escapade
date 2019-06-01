@@ -16,16 +16,17 @@
     }
   }
 
-  &__column{
+  &__column {
     display: flex;
     flex-direction: column;
     text-align: left;
   }
 
-  &__column_meta{
+  &__column_meta {
     display: flex;
     flex-direction: column;
     justify-content: space-evenly;
+    margin-left: auto;
   }
 
 
@@ -42,7 +43,7 @@
   &__edited_message {
     color: #999;
     font-size: 16px;
-    margin-left:5px;
+    margin-left: 5px;
   }
 
   &__observer_message {
@@ -54,23 +55,28 @@
   &__history {
     display: flex;
     flex-direction: column;
-    height: 359px;
+    height: 360px;
     overflow-y: scroll;
     overflow-x: hidden;
     transition: 3s linear;
-  }
+    padding-right: 8px;
 
-  &__history:hover::-webkit-scrollbar {
-    width: 7px;
-  }
+    &::-webkit-scrollbar-button {
+      display: none;
+    }
 
-  &__history::-webkit-scrollbar {
-    width: 0px;
-    transition: 3s linear;
-  }
+    &:hover::-webkit-scrollbar {
+      width: 7px;
+    }
 
-  &__history::-webkit-scrollbar-thumb {
-    background: #ff3d00;
+    &::-webkit-scrollbar {
+      width: 0px;
+      transition: 3s linear;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background: #ff3d00;
+    }
 
   }
 
@@ -84,7 +90,6 @@
     line-break: auto;
     hyphens: initial;
     font-style: italic;
-    text-align: left;
     font-size: 17px;
   }
 
@@ -98,6 +103,13 @@
     margin: 5px 0;
     margin-right: 8px;
     width: 25vw;
+
+
+    @media screen and (max-width: $normal) {
+      & {
+        width: 30vw;
+      }
+    }
 
     @media screen and (max-width: $tablet) {
       & {

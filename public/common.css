@@ -9,6 +9,22 @@ body {
   text-align: center
 }
 
+.text-left {
+  text-align: left
+}
+
+.text-right {
+  text-align: right
+}
+
+.flex-end {
+  justify-content: flex-end;
+}
+
+.flex-start {
+  justify-content: flex-start;
+}
+
 .bar-vertical {
   border: 0.6px solid #E5E5E5;
   height: 40px;
@@ -103,4 +119,8 @@ body {
 
 .pl-4 {
   padding-left: 2.3rem;
+}
+
+.block_left {
+  margin-right: auto;
 }

@@ -76,7 +76,7 @@ export class Net {
   static delete(url = '/', host = backHost) {
     return fetch(host + url, {
       method: 'DELETE',
-      mode: 'no-cors',
+      mode: 'cors',
       credentials: 'include',
     });
   }

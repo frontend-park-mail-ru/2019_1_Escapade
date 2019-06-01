@@ -26,7 +26,13 @@
   &__games {
     display: flex;
     flex-direction: column;
-    justify-content: space-between
+    height: 25vh;
+    overflow-y: scroll;
+    padding-right: 10px;
+
+    &::-webkit-scrollbar-button {
+      display: none;
+    }
   }
 
   &__game {
