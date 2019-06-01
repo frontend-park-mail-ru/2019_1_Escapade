@@ -46,10 +46,10 @@
     background: #4B5E70;
     position: absolute;
     left: 0;
-    top: 100%;
+    top: 134%;
     border-radius: 15px;
     z-index: 5;
-    width: 100px;
+    width: 171px;
     opacity: 0;
     transform: scaleY(0);
     transform-origin: 0 0;
@@ -126,4 +126,18 @@
   background-repeat: no-repeat;
   background-size: contain;
   margin-left: 25px;
+}
+
+.settings__row {
+  display: flex;
+  flex-direction: row;
+}
+
+.settings__column {
+  display: flex;
+  flex-direction: column;
+}
+
+.left_border {
+  border-left: 1px solid white;
 }
