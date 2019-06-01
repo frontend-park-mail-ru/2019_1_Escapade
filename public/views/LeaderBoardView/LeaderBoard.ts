@@ -37,10 +37,6 @@ export default class LeaderBoardView extends BaseView {
     }, 'leaderBoardView')
     this.prevPageBindThis = this._prevPage.bind(this);
     this.nextPageBindThis = this._nextPage.bind(this);
-    super.render()
-    this.lbcontainer = this.parent.querySelector('.leaderboard__board')
-    this.filter = new LeaderboardFilterComponent(this.parent.querySelector('.leaderboard__filter'), leaderFilterTemplate)
-    this.filter.render()
   }
 
   /**
@@ -73,6 +69,12 @@ export default class LeaderBoardView extends BaseView {
    *
    */
   render() {
+    if (!this.rendered) {
+      super.render()
+      this.lbcontainer = this.parent.querySelector('.leaderboard__board')
+      this.filter = new LeaderboardFilterComponent(this.parent.querySelector('.leaderboard__filter'), leaderFilterTemplate)
+      this.filter.render()
+    }
     this.divisionHeight = this._getPageAmount();
     this.pageStruct = { page: 1, per_page: this.divisionHeight, difficulty: this.difficulty };
     Bus.emit('reqPagesAmount', this.pageStruct);
