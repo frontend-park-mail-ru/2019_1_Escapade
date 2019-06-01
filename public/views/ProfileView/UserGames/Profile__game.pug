@@ -1,6 +1,6 @@
 - for(var i = 0; i < data.length;i++){
   .profile__game.mb-2
-    .text-white.mr-2 ##{i+1}
+    .text-white.gamerow__number.mr-2 ##{i+1}
     .bar-vertical
     - if (data[i].iswin){
     .profile__flag_left
@@ -9,15 +9,15 @@
     -}
     .bar-vertical.mr-2
     .profile__star.mr-1
-    .mr-2.text-white #{Math.floor(data[i].points)}
+    .mr-2.gamerow__points.text-white #{Math.floor(data[i].points)}
     .bar-vertical.mr-2
-    .mr-2.text-white #{data[i].date}
+    .mr-2.gamerow__date.text-white #{data[i].date}
     .bar-vertical.mr-2
-    .mr-2.text-white #{data[i].width}x#{data[i].height}
+    .mr-2.gamerow__size.text-white #{data[i].width}x#{data[i].height}
     .bar-vertical.mr-1
     .profile__bomb
-    .mr-2.text-white #{data[i].mines}
+    .mr-2.gamerow__mines.text-white #{data[i].mines}
     .bar-vertical.mr-1
     .profile__clock.mr-1
-    .mr-2.text-white #{data[i].duration}
+    .mr-2.gamerow__duration.text-white #{data[i].duration}
 - }

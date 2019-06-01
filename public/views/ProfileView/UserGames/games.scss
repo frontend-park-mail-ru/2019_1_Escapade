@@ -1,0 +1,32 @@
+.gamerow {
+  &__number {
+    width: 40px;
+    text-align: center;
+  }
+
+  &__points {
+    width: 56px;
+    text-align: center;
+  }
+
+  &__date {
+    width: 70px;
+    text-align: center;
+  }
+
+  &__size {
+    width: 44px;
+    text-align: center;
+  }
+
+  &__mines {
+    width: 35px;
+    text-align: center;
+  }
+
+  &__duration {
+    width: 70px;
+    text-align: center;
+  }
+
+}
