@@ -4,7 +4,7 @@ node_js:
 script:
 - npm install
 - npm run build
-- chmod 600 ./id_rsa
+- chmod 600 /pr_key.pem
 - ssh-keyscan -H $front_host >> ~/.ssh/known_hosts
 - scp -i ./pr_key.pem -r ./public/dist ubuntu@$front_host:/home/ubuntu/
 branches:
