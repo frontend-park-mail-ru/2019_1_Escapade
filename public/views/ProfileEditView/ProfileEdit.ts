@@ -41,7 +41,6 @@ export default class ProfileEditView extends BaseView {
 
     this._form = this.parent.querySelector('.profile_edit__form');
     this._warnings = {};
-    this._warnings.email = this.parent.querySelector('.js-warning-email');
     this._warnings.login = this.parent.querySelector('.js-warning-login');
     this._warnings.pass = this.parent.querySelector('.js-warning-password');
     this._warnings.repass = this.parent.querySelector('.js-warning-repassword');
@@ -59,7 +58,6 @@ export default class ProfileEditView extends BaseView {
     event.preventDefault();
     console.log('event _onSubmitDataProfile');
     const data: any = {};
-    data.email = this._form.elements['email'].value;
     data.name = this._form.elements['login'].value;
     data.password = this._form.elements['password'].value;
     data.repass = this._form.elements['password-repeat'].value;
@@ -78,18 +76,9 @@ export default class ProfileEditView extends BaseView {
   _validateInput(data: { email?: any; name?: any; password?: any; repass?: any; }) {
     let message = '';
     let isValid = true;
-    this._hideWarning(this._warnings.email);
     this._hideWarning(this._warnings.login);
     this._hideWarning(this._warnings.pass);
     this._hideWarning(this._warnings.repass);
-    data.email = makeSafe(data.email);
-    if (data.email != this._data.email) {
-      message = validateEmail(data.email);
-      if (message.length !== 0) {
-        this._showWarning(this._warnings.email, message);
-        isValid = false;
-      }
-    }
 
     data.name = makeSafe(data.name);
     if (data.name != this._data.name) {

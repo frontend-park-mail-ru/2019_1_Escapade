@@ -31,6 +31,13 @@
 
   &__chat_container {
     margin-left: 5px;
+
+    @media screen and (max-width: $tablet) {
+      & {
+        margin-left: 0;
+        width: 95vw;
+      }
+    }
   }
 
   &__rooms_container {
@@ -48,7 +55,7 @@
 
     @media screen and (max-width: $tablet) {
       & {
-        width: initial;
+        width: 95vw;
         padding-right: 0;
       }
     }
@@ -140,6 +147,7 @@
     @media screen and (max-width: $tablet) {
       & {
         flex-direction: column;
+        align-items: center;
       }
     }
 
