@@ -55,6 +55,7 @@ export default class MultiPlayerView extends BaseView {
   timeInSeconds: any;
   isGameOver: boolean;
   observers: any;
+  messageCount: number;
   /**
    *
    * @param {*} parent
@@ -79,6 +80,7 @@ export default class MultiPlayerView extends BaseView {
     this.isGameOver = false;
     this.infoPanelMode = true;
     this.observerMode = false;
+    this.messageCount = 0;
     this.colorArr = ['#b6b4ca', '#cab4be', '#b4cabd', '#cac7b4', '#cab4b4', '#dedede', '#94c9b4', '#b9bfc9'];
     this.startTimeFlag = { hour: 0, minute: 0, seconds: 10 };
     this.gameTime = { hour: 0, minute: 10, seconds: 0 };
@@ -95,6 +97,7 @@ export default class MultiPlayerView extends BaseView {
     Bus.on('changeFlagSetWS', this._changeFlagSet.bind(this), 'multiplayerView');
     Bus.on('roomObserverEnterWS', this._getObservers.bind(this), 'multiplayerView');
     Bus.on('roomStatusWS', this._getStatus.bind(this), 'multiplayerView');
+    Bus.on('getChatMessage', this._updateCountMessage.bind(this), 'multiplayerView' )
     this.isGameOver = false;
     Bus.on('gameOwerWS', this._gameOver.bind(this), 'multiplayerView');
     Bus.on('sendRoom', this._getRoom.bind(this), 'multiplayerView');
@@ -198,6 +201,7 @@ export default class MultiPlayerView extends BaseView {
       this.chatInfoButton.innerHTML = 'Chat';
       this.infoContainer.style.display = 'flex';
       this.chatContainer.style.display = 'none';
+      this.messageCount = 0;
     }    
   }
 
@@ -546,5 +550,12 @@ export default class MultiPlayerView extends BaseView {
     });
     Bus.emit('progressGameChange', 100);
     return;
+  }
+
+  _updateCountMessage() {
+    if (this.infoPanelMode) {
+      this.messageCount++;
+      this.chatInfoButton.innerHTML = `Chat (${this.messageCount})`;
+    }  
   }
 }
