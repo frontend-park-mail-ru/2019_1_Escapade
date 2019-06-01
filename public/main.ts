@@ -48,8 +48,4 @@ router
 
 bus.on('logout', signOut, 'main');
 checkAuth(router.start.bind(router));
-//if (screen.height <= 1000) {
-root.requestFullscreen()
-
-//}
 export default router;
