@@ -20,10 +20,10 @@ import ProfileMV from './ModelView/ProfileMV';
 import './main.scss';
 import './img/anonymous.jpg'
 
-const root = document.getElementById('application');
+let root: any
+root = document.getElementById('application');
 if (screen.height <= 1000) {
-
-  root.requestFullscreen()
+  window.scrollTo(0, 1);
 }
 if ('serviceWorker' in navigator) {
   navigator.serviceWorker.register('./sw.js', { scope: '/' })
