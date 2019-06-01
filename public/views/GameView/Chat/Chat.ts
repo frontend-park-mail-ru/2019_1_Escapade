@@ -134,72 +134,88 @@ export default class ChatView {
       }
     }
   }
+
+  _deleteMessage(data : any) {
+    let allNnum = -1;
+    let myNum = -1;
+    console.log('qwerty ', ' ', this.myMessages);
+    console.log('qwerty2 ',  ' ', this.allMessages);
+    for (let i = 0; i < this.allMessages.length; i++) {
+      if (this.allMessages[i].messID === data.id) {
+        allNnum = i;
+        break;
+      }
+    }
+    console.log('id in arr mess ', allNnum);
+    const messages = [].slice.call((this.parent.querySelectorAll('.chat__message')));
+    if (allNnum < 0 || allNnum >= messages.length || allNnum >= this.allMessages.length) {
+      return;
+    }
+    messages[allNnum].parentNode.removeChild(messages[allNnum]);
+    this.allMessages.splice(allNnum, 1);
+    for (let i = 0; i < this.myMessages.length; i++) {
+      if (this.myMessages[i].messID === data.id) {
+        myNum = i;
+        break;
+      }
+    }
+    if (myNum < 0 || myNum >= this.myMessages.length) {
+      return;
+    }
+    this.myMessages.splice(myNum, 1);
+
+    
+    console.log('qwerty ', allNnum, ' ', this.myMessages);
+    console.log('qwerty2 ', myNum, ' ', this.allMessages);
+
+    console.log('22qwerty ', allNnum, ' ', this.myMessages);
+    console.log('22qwerty2 ', myNum, ' ', this.allMessages);
+    return;
+  }
+
+  _editMessage(data : any) {
+    let allNnum = -1;
+    let myNum = -1;
+    for (let i = 0; i < this.allMessages.length; i++) {
+      if (this.allMessages[i].messID === data.id) {
+        allNnum = i;
+        break;
+      }
+    }
+    const messages = [].slice.call((this.parent.querySelectorAll('.chat__message')));
+    if (allNnum < 0 || allNnum >= this.allMessages.length) {
+      return;
+    }
+    this.allMessages[allNnum].text = data.text;
+    messages[allNnum].querySelector('.chat__text').innerHTML = data.text;
+    let div = document.createElement('div');
+    div.className = "chat__edited_message";
+    div.innerHTML = '(edit)';
+    messages[allNnum].querySelector('.chat__edited_message_container').appendChild(div);
+
+    for (let i = 0; i < this.myMessages.length; i++) {
+      if (this.myMessages[i].messID === data.id) {
+        myNum = i;
+        break;
+      }
+    }
+    if (myNum < 0 || allNnum >= this.myMessages.length) {
+      return;
+    }
+    
+    this.myMessages[myNum].text = data.text;
+    
+    return;
+  }
+
   _getMessage(data: any) {
     if (data.action === 2) { // delete
-      let allNnum = -1;
-      let myNum = -1;
-      console.log('qwerty ', ' ', this.myMessages);
-      console.log('qwerty2 ',  ' ', this.allMessages);
-      for (let i = 0; i < this.allMessages.length; i++) {
-        if (this.allMessages[i].messID === data.id) {
-          allNnum = i;
-          break;
-        }
-      }
-      console.log('id in arr mess ', allNnum);
-      const messages = [].slice.call((this.parent.querySelectorAll('.chat__message')));
-      if (allNnum < 0 || allNnum >= messages.length || allNnum >= this.allMessages.length) {
-        return;
-      }
-      messages[allNnum].parentNode.removeChild(messages[allNnum]);
-      this.allMessages.splice(allNnum, 1);
-      for (let i = 0; i < this.myMessages.length; i++) {
-        if (this.myMessages[i].messID === data.id) {
-          myNum = i;
-          break;
-        }
-      }
-      if (myNum < 0 || myNum >= this.myMessages.length) {
-        return;
-      }
-      this.myMessages.splice(myNum, 1);
-
-      
-      console.log('qwerty ', allNnum, ' ', this.myMessages);
-      console.log('qwerty2 ', myNum, ' ', this.allMessages);
-
-      console.log('22qwerty ', allNnum, ' ', this.myMessages);
-      console.log('22qwerty2 ', myNum, ' ', this.allMessages);
+      this._deleteMessage(data);
       return;
     }
 
     if (data.action === 1) { // edit
-      let allNnum = -1;
-      let myNum = -1;
-      for (let i = 0; i < this.allMessages.length; i++) {
-        if (this.allMessages[i].messID === data.id) {
-          allNnum = i;
-          break;
-        }
-      }
-      const messages = [].slice.call((this.parent.querySelectorAll('.chat__message')));
-      if (allNnum < 0 || allNnum >= this.allMessages.length) {
-        return;
-      }
-      this.allMessages[allNnum].text = data.text;
-      messages[allNnum].querySelector('.chat__text').innerHTML = data.text;
-      for (let i = 0; i < this.myMessages.length; i++) {
-        if (this.myMessages[i].messID === data.id) {
-          myNum = i;
-          break;
-        }
-      }
-      if (myNum < 0 || allNnum >= this.myMessages.length) {
-        return;
-      }
-      
-      this.myMessages[myNum].text = data.text;
-      
+      this._editMessage(data);
       return;
     }
     

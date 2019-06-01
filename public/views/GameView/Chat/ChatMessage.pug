@@ -6,10 +6,11 @@
       .chat__column
         .chat__message_name.text-right #{message.name}
         .chat__time_cont.flex-end
-          - if (message.messEdited){
-          .chat__edited_message (edit)
-          - }
-          .chat__message_time.text-right.ml-2 #{message.time}
+          .chat__message_time.text-right #{message.time}
+          .chat__edited_message_container
+            - if (message.messEdited){
+            .chat__edited_message (edit)
+            - }       
       - if (message.status == 2){
       .chat__observer_message (observer)
       - }
