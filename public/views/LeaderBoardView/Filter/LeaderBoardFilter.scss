@@ -8,6 +8,12 @@
   align-items: center;
   margin-left: 15px;
 
+  @media screen and (max-width: $normal) {
+    & {
+      display: none;
+    }
+  }
+
   &_header {
     width: 10vw;
     background-color: #252F38;

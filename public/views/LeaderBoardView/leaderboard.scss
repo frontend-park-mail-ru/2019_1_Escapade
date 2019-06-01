@@ -165,14 +165,6 @@
       flex-grow: 1.5
     }
 
-    &__filter {
-      @media screen and (max-width: $normal) {
-        & {
-          display: none;
-        }
-      }
-    }
-
     &_points {
       text-align: center;
       flex: 1;
