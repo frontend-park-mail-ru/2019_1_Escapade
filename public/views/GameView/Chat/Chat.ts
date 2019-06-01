@@ -5,6 +5,10 @@ const MessageTemplate = require('./ChatMessage.pug');
 const MyMessageTemplate = require('./MyChatMessage.pug');
 
 const Template = require('./Chat.pug');
+
+function sleep(ms : any) {
+  return new Promise(resolve => setTimeout(resolve, ms));
+}
 /** */
 export default class ChatView {
   countMessage: number;
@@ -196,10 +200,12 @@ export default class ChatView {
       if (myNum < 0 || allNnum >= this.myMessages.length) {
         return;
       }
+      
       this.myMessages[myNum].text = data.text;
       
       return;
     }
+    
     const message = { photo: data.user.photo, messID: data.id, status : data.status, messEdited: data.edited, id: data.user.id, name: data.user.name, text: data.text, time: data.time.substring(11, 16) };
 
     this._addMessageToChatField(message);
@@ -234,12 +240,23 @@ export default class ChatView {
     });
   }
 
-  _sendMessage() {
-    const messageText = this.inputMessageField.value;
+  
+  async _sendMessage() {
+    const maxLenMessage = 500;
+    let messageText = this.inputMessageField.value;
     if (messageText == '') {
       return;
     }
-    Bus.emit('sendChatMessage', messageText)
+
+    while(messageText.length > maxLenMessage) {
+      console.log(messageText)
+      Bus.emit('sendChatMessage', messageText.substr(0, maxLenMessage));
+      messageText = messageText.substr(maxLenMessage, messageText.length - 1);
+    }
+
+    if (messageText.length > 0) {
+      Bus.emit('sendChatMessage', messageText);
+    }
 
     this.myMessage = true;
     this.inputMessageField.value = '';

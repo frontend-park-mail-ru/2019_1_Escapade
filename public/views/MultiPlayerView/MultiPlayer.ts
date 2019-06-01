@@ -425,6 +425,7 @@ export default class MultiPlayerView extends BaseView {
     const action = data.value;
 
     if (action.action == 5) {
+      console.log('this.observers ',  this.observers)
       for (let i = 0; i < this.observers.length; i++) {
         if (this.observers[i].id === action.player) {
           Bus.emit('delObserver', { player: this.observers[i] });
