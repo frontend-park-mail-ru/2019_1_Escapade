@@ -108,12 +108,14 @@ export default class PlayersListView {
   _addObserver(data : any) {
     this.observersTitle.hidden = false;
     const observer = data.player;
-    console.log(observer)
+    console.log('WWWW ', observer)
     const dataJSON = {name : observer.name};
     this.observersListContainer.innerHTML += ObserverRowTemplate({data : dataJSON});
+    console.log('this.observersListContainer.innerHTML ', this.observersListContainer.innerHTML)
   }
 
   _delObserver(data : any) {
+    console.log('delObserver ', data)
     const elements = [].slice.call(document.querySelectorAll('.game__players_list_observer_row'));
     const observer = data.player;
     for(let i = 0; i < elements.length; i++) {

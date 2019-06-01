@@ -84,9 +84,6 @@ export default class MultiplayerModel {
       case 'RoomObserverEnter':
         Bus.emit('roomObserverEnterWS', data);
         break;
-      case 'RoomObserverExit':
-        Bus.emit('roomObserverExitWS', data);
-        break;
       case 'RoomStatus':
         Bus.emit('roomStatusWS', data);
         break;

@@ -54,6 +54,7 @@ export default class MultiPlayerView extends BaseView {
   restartButton: any;
   timeInSeconds: any;
   isGameOver: boolean;
+  observers: any;
   /**
    *
    * @param {*} parent
@@ -71,6 +72,8 @@ export default class MultiPlayerView extends BaseView {
     this.flagPlacing = true;
     this.startGame = false;
     this.players = [];
+    this.observers = [];
+
     this.flagCoords = { x: 0, y: 0 };
     this.myID = 0;
     this.isGameOver = false;
@@ -91,7 +94,6 @@ export default class MultiPlayerView extends BaseView {
     Bus.on('roomActionWS', this._roomAction.bind(this), 'multiplayerView');
     Bus.on('changeFlagSetWS', this._changeFlagSet.bind(this), 'multiplayerView');
     Bus.on('roomObserverEnterWS', this._getObservers.bind(this), 'multiplayerView');
-    Bus.on('roomObserverExitWS', this._exitObserver.bind(this), 'multiplayerView');
     Bus.on('roomStatusWS', this._getStatus.bind(this), 'multiplayerView');
     this.isGameOver = false;
     Bus.on('gameOwerWS', this._gameOver.bind(this), 'multiplayerView');
@@ -106,7 +108,6 @@ export default class MultiPlayerView extends BaseView {
     Bus.off('roomActionWS', this._roomAction.bind(this), 'multiplayerView');
     Bus.off('changeFlagSetWS', this._changeFlagSet.bind(this), 'multiplayerView');
     Bus.off('roomObserverEnterWS', this._getObservers.bind(this), 'multiplayerView');
-    Bus.off('roomObserverExitWS', this._exitObserver.bind(this), 'multiplayerView');
     Bus.off('roomStatusWS', this._getStatus.bind(this), 'multiplayerView');
     Bus.off('gameOwerWS', this._gameOver.bind(this), 'multiplayerView');
     Bus.off('sendRoom', this._getRoom.bind(this), 'multiplayerView');
@@ -241,7 +242,9 @@ export default class MultiPlayerView extends BaseView {
 
     Bus.emit('ClearMessagesGameActions');
     data.room.history.forEach((element: any)  => {
-      this._roomAction({value : element});
+      if (element.action != 1 && element.action != 2 && element.action != 4 && element.action != 5) {
+        this._roomAction({value : element});
+      }
     })
     Bus.emit('addMessageInChatHistory', {data: data, place: 'room'});
   }
@@ -289,9 +292,7 @@ export default class MultiPlayerView extends BaseView {
   _timeIsOver() {
     if (this.startGame) {
       return;
-    }
-
-    
+    }    
   }
 
   _createColorForPlayer(i: number) {
@@ -344,16 +345,14 @@ export default class MultiPlayerView extends BaseView {
   _getObservers(data: any) {
     if (data.value) {
       Bus.emit('addObserver', { player: data.value.User });
+      this.observers.push(data.value.User);
     } else {
       const observerArray = data.get;
       observerArray.forEach((item: any, i: number) => {
         Bus.emit('addObserver', { player: item.user });
+        this.observers.push(item.user);
       });
     }
-  }
-
-  _exitObserver(data: any) {
-    Bus.emit('delObserver', { player: data.value.User });
   }
 
   _updateField(data: any) {
@@ -424,6 +423,20 @@ export default class MultiPlayerView extends BaseView {
 
   _roomAction(data: any) {
     const action = data.value;
+
+    if (action.action == 5) {
+      for (let i = 0; i < this.observers.length; i++) {
+        if (this.observers[i].id === action.player) {
+          Bus.emit('delObserver', { player: this.observers[i] });
+          this.observers.splice(i, 1);
+          break;
+          
+        }
+      }
+      
+      return;
+    }
+            
     console.log(this.players);
     for (let i = 0; i < this.players.length; i++) {
       console.log(this.players[i].id, ' ',action.player )
@@ -456,6 +469,7 @@ export default class MultiPlayerView extends BaseView {
           case 15:
             Bus.emit('timeIsOverPlayer', i);
             break;
+          
         }
         break;
       }
