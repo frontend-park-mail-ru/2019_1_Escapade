@@ -16,6 +16,14 @@
     }
   }
 
+  &__message_user {
+    display: flex;
+  }
+
+  &__time_cont {
+    display: flex;
+  }
+
   &__column {
     display: flex;
     flex-direction: column;
@@ -83,7 +91,6 @@
 
 
   &__message_name {
-    width: 97px;
     overflow-wrap: break-word;
     word-wrap: break-word;
     word-break: break-word;
@@ -156,14 +163,13 @@
 
   &__text {
     display: flex;
-    align-items: center;
+    justify-content: center;
     overflow-wrap: break-word;
     word-wrap: break-word;
     word-break: break-word;
     line-break: auto;
     hyphens: initial;
     margin-left: 13px;
-    text-align: left;
     font-size: 17px;
   }
 
@@ -179,7 +185,6 @@
 
   /* Style time text */
   &__message_time {
-    float: left;
     color: #999;
     font-size: 16px;
   }
@@ -225,7 +230,7 @@
 
   &__row {
     display: flex;
-    flex-direction: row-reverse;
+    // flex-direction: row-reverse;
   }
 
   &__row_text {

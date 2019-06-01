@@ -20,11 +20,7 @@ import ProfileMV from './ModelView/ProfileMV';
 import './main.scss';
 import './img/anonymous.jpg'
 
-let root: any
-root = document.getElementById('application');
-if (screen.height <= 1000) {
-  window.scrollTo(0, 1);
-}
+let root = document.getElementById('application');
 if ('serviceWorker' in navigator) {
   navigator.serviceWorker.register('./sw.js', { scope: '/' })
     .then((reg) => {
@@ -52,5 +48,8 @@ router
 
 bus.on('logout', signOut, 'main');
 checkAuth(router.start.bind(router));
+//if (screen.height <= 1000) {
+root.requestFullscreen()
 
+//}
 export default router;

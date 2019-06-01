@@ -25,6 +25,15 @@ body {
   justify-content: flex-start;
 }
 
+.flex {
+  display: flex
+}
+
+.flex-rev {
+  display: flex;
+  flex-direction: row-reverse;
+}
+
 .bar-vertical {
   border: 0.6px solid #E5E5E5;
   height: 40px;
