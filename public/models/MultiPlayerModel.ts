@@ -87,6 +87,9 @@ export default class MultiplayerModel {
       case 'RoomStatus':
         Bus.emit('roomStatusWS', data);
         break;
+      case 'AccountTaken':
+        router.open('/');
+        break;
         
         
     }

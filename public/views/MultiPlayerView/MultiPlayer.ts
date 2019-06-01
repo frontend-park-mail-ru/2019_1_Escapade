@@ -7,6 +7,7 @@ import { Timer } from '../../utils/timer/timer';
 import { checkAuth } from '../../utils/user';
 import Bus from '../../utils/bus';
 import bus from '../../utils/bus';
+import router from '../../main';
 /** */
 export default class MultiPlayerView extends BaseView {
   cellsize: number;
@@ -451,6 +452,10 @@ export default class MultiPlayerView extends BaseView {
             Bus.emit('reconnectPlayer', i);
             Bus.emit('addMessageInGameActions', `Player ${this.players[i].user.name} reconnect!`);
             break;
+          case 4:
+            Bus.emit('disconnectPlayer', i);
+            Bus.emit('addMessageInGameActions', `Player ${this.players[i].user.name} disconnect`);
+            break;
           case 7:
             Bus.emit('explosePlayer', i);
             Bus.emit('addMessageInGameActions', `Player ${this.players[i].user.name} explose!`);
@@ -467,14 +472,9 @@ export default class MultiPlayerView extends BaseView {
               Bus.emit('showTextInMessageBox', 'You lose!');
             }
             break;
-          case 4:
-            Bus.emit('disconnectPlayer', i);
-            Bus.emit('addMessageInGameActions', `Player ${this.players[i].user.name} disconnect`);
-            break;
           case 15:
             Bus.emit('timeIsOverPlayer', i);
             break;
-          
         }
         break;
       }
