@@ -60,7 +60,7 @@ export function checkAuth(callback: CallableFunction, difficult = 1) {
       if (resp.status === 200) {
         resp.json()
           .then((json) => {
-            console.log('checkAuth' + { ...json })
+            console.log('checkAuth', json)
             User.setUser({ ...json });
             callback();
           });
