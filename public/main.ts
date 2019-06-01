@@ -21,7 +21,10 @@ import './main.scss';
 import './img/anonymous.jpg'
 
 const root = document.getElementById('application');
+if (screen.height <= 1000) {
 
+  root.requestFullscreen()
+}
 if ('serviceWorker' in navigator) {
   navigator.serviceWorker.register('./sw.js', { scope: '/' })
     .then((reg) => {
