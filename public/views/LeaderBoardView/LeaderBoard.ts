@@ -41,7 +41,7 @@ export default class LeaderBoardView extends BaseView {
     if (devWidth < 320) {
       fieldHeight = 80;
     } else if (devWidth < 480) {
-      fieldHeight = 60;
+      fieldHeight = 80;
     } else if (devWidth < 768) {
       fieldHeight = 70;
     } else if (devWidth < 1200) {

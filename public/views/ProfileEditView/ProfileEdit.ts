@@ -62,8 +62,6 @@ export default class ProfileEditView extends BaseView {
     data.password = this._form.elements['password'].value;
     data.repass = this._form.elements['password-repeat'].value;
     if (this._validateInput(data)) {
-      console.log(' Data : ' + data.email, ' ',
-        data.name, ' ', data.password, ' ', data.repass);
       Bus.emit('changeProfile', data);
     }
   }
@@ -73,7 +71,7 @@ export default class ProfileEditView extends BaseView {
    * @param  {...any} data
    * @return {boolean}
    */
-  _validateInput(data: { email?: any; name?: any; password?: any; repass?: any; }) {
+  _validateInput(data: { name?: any; password?: any; repass?: any; }) {
     let message = '';
     let isValid = true;
     this._hideWarning(this._warnings.login);
