@@ -4,9 +4,11 @@ export class WebSocketInterface {
   ws: WebSocket;
   dataJSON: any;
   connect: boolean;
+  countOfrefresh: number;
 
   constructor(address = 'ws://localhost:8081') {
     this.connectWS(address);
+    this.countOfrefresh = 2;
   }
 
   connectWS(address : string) {
@@ -16,18 +18,26 @@ export class WebSocketInterface {
     this.ws.onopen = function (event) {
       console.log('Success onopen');
     };
-    this.ws.onclose = function (event) {
+    this.ws.onclose = (function (event : any) {
       if (event.wasClean) {
         console.log('Connection is closed clean');
       } else {
         console.log('Disconnection');
+        if (this.countOfrefresh-- < 0) {
+          return;
+        }
+        window.location.reload();
       }
       console.log('Code: ' + event.code + ' cause: ' + event.reason);
-    };
-    this.ws.onerror = function (error) {
+    }).bind(this);
+    this.ws.onerror = (function (error : any) {
       console.log('ws error');
+      if (this.countOfrefresh-- < 0) {
+        return;
+      }
+      window.location.reload();
       return;
-    };
+    }).bind(this);;
 
     console.log('_connect begin');
     if (this.ws) {

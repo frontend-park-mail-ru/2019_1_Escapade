@@ -88,8 +88,12 @@ export default class MultiplayerModel {
         Bus.emit('roomStatusWS', data);
         break;
       case 'AccountTaken':
-        document.location.replace('/');
-        break;        
+        document.location.replace('/');        
+        break;    
+        // if (anotherConnectionDetected != null && anotherConnectionDetected) {
+        //   Bus.emit('showTextInMessageBox', 'another connection<br>detected');
+        //   anotherConnectionDetected = false;
+        // }    
     }
     console.log('_getInfo end') 
   }

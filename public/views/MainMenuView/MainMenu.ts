@@ -4,6 +4,8 @@ import BaseView from '../BaseView';
 import { User } from '../../utils/user';
 import Bus from '../../utils/bus';
 /** */
+
+export var anotherConnectionDetected: boolean;
 export class MainMenuView extends BaseView {
   /**
    *
@@ -11,6 +13,7 @@ export class MainMenuView extends BaseView {
    */
   constructor(parent: any) {
     super(parent, menuTemplate, true);
+    this.parent = parent;
     Bus.on('userUpdate', this.onUserUpdate.bind(this), 'mainMenuView');
   }
 
@@ -20,6 +23,9 @@ export class MainMenuView extends BaseView {
   render() {
     this.user = User;
     super.render();
+    Bus.emit('addMessage', { container: '.menu__message_container', parent: this.parent });
+    Bus.emit('messageBoxHide', true);
+
   }
 
   /**

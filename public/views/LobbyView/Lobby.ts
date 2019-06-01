@@ -133,7 +133,8 @@ export default class Lobby {
     }
   }
 
-  _deleteRoom(data : any) { // аааа не работает этот дебил убрал статус
+  _deleteRoom(data : any) {
+    console.log(this.busyRooms, ' ', this.rooms, ' ', data)
     let busyRoomsDelete = false;
     for (let i = 0; i < this.busyRooms.length; i++) {
       if (this.busyRooms[i].id === data) {

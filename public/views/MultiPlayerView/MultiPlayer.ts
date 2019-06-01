@@ -57,6 +57,7 @@ export default class MultiPlayerView extends BaseView {
   isGameOver: boolean;
   observers: any;
   messageCount: number;
+  myRoomId: any;
   /**
    *
    * @param {*} parent
@@ -80,6 +81,7 @@ export default class MultiPlayerView extends BaseView {
     this.myID = 0;
     this.isGameOver = false;
     this.infoPanelMode = true;
+    this.myRoomId = '';
     this.observerMode = false;
     this.messageCount = 0;
     this.colorArr = ['#b6b4ca', '#cab4be', '#b4cabd', '#cac7b4', '#cab4b4', '#dedede', '#94c9b4', '#b9bfc9'];
@@ -177,12 +179,6 @@ export default class MultiPlayerView extends BaseView {
       console.log('_currentPathSignalFunc multi_player ');
     } else {
       if (this.curPath === '/multi_player') {
-
-        if (path !== '/lobby') {
-          Bus.emit('leaveRoom', 4);
-        }
-        console.log('Ohohohohohoho');
-        console.log('_currentPathSignalFunc else ');
         this._stop_reset_timer();
         this.curPath = '';
         this._busAllOff();
@@ -240,7 +236,7 @@ export default class MultiPlayerView extends BaseView {
     }
 
     this.timeInSeconds = data.room.settings.play + data.room.settings.prepare;
-
+    this.myRoomId = data.room.id;
     this._getPlayers(data);
     this._getObservers(data.room.observers);
     this._getField(data.room.field);
@@ -292,6 +288,8 @@ export default class MultiPlayerView extends BaseView {
   _quitClick() {
     this._stop_reset_timer();
     Bus.emit('leaveRoom', 14);
+    Bus.emit('deleteRoom', this.myRoomId);
+    Bus.emit('hideCurrentRoomPanel');
   }
 
   _timeIsOver() {
