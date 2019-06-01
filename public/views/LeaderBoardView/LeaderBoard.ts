@@ -86,6 +86,7 @@ export default class LeaderBoardView extends BaseView {
   renderUsers(users: any) {
     const usersStruct = { users: users, page: this._currPage, per_page: this.pageStruct.per_page };
     this.data = usersStruct;
+    console.log("LB board render")
     this.lbcontainer.innerHTML = boardTemplate({ data: usersStruct })
     this.leaderBoardPageDomElement = this.parent.querySelector('.leaderboard__footer_page');
     this.leaderBoardPageDomElement.innerHTML = this._currPage;
