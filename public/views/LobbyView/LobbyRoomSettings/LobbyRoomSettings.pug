@@ -5,17 +5,19 @@
     input.lobby_room_input.lobby_room_range_titleRoom(name='nameRoom', type='text')
     .lobby_room_settings_text Number of peple:
     .lobby_room_settings_range
-      input.lobby_room_range_people(type="range" min="1" max="3" value="1" class="slider")
+      input.lobby_room_range_people(type="range" min="1" max="4" value="1" class="slider")
       .lobby_room_settings_sliderticks
         p 2
         p 3
         p 4
+        p 6
     .lobby_room_settings_text Field size:
     .lobby_room_settings_range
-      input.lobby_room_range_field(type="range" min="1" max="3" value="1" class="slider")
+      input.lobby_room_range_field(type="range" min="1" max="4" value="1" class="slider")
       .lobby_room_settings_sliderticks
         p 14x14
         p 20x20
+        p 25x25
         p 30x30
     .lobby_room_settings_text Difficulty:
     .lobby_room_settings_range
@@ -25,5 +27,13 @@
         p normal
         p hard
         p god
+    .lobby_room_settings_text Time(min):
+    .lobby_room_settings_range
+      input.lobby_room_range_time(type="range" min="1" max="4" value="2" class="slider")
+      .lobby_room_settings_sliderticks
+        p 1
+        p 1.5
+        p 3
+        p 5
     .lobby_room_settings_text.lobby_room_mines Mines = 20
     .lobby_room_settings_ok_button Ok

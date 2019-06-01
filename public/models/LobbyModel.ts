@@ -115,11 +115,12 @@ export default class LobbyModel {
     const observers = 10;
     const mines = data.mines;
     const title = data.title;
+    const time = data.time;
     this.ws.sendInfoJSON({
       send: {
         RoomSettings: {
           name: title, id: 'create', width: width, height: height,
-          players: players, observers: observers, prepare: 10, play: 100, mines: mines
+          players: players, observers: observers, prepare: 10, play: time, mines: mines
         }
       }
     });

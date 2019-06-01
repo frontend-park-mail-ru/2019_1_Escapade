@@ -17,6 +17,8 @@ export default class LobbyRoomSettings{
   players: number;
   roomTitleDefault: string;
   closeButton: any;
+  rangeTime: any;
+  time: number;
   /**
    *
    * @param {*} parent
@@ -32,18 +34,21 @@ export default class LobbyRoomSettings{
     this.rangePlayers = document.querySelector('.lobby_room_range_people');
     this.rangeField = document.querySelector('.lobby_room_range_field');
     this.rangeDiff = document.querySelector('.lobby_room_range_diff');
+    this.rangeTime = document.querySelector('.lobby_room_range_time');
     this.rangeTitle = document.querySelector('.lobby_room_range_titleRoom');
     this.minesCounter = document.querySelector('.lobby_room_mines');
     this.okButton = document.querySelector('.lobby_room_settings_ok_button');
     this.closeButton = document.querySelector('.lobby_room_close_settings');
-    this.difficult = 0
-    this.size = 0
-    this._clickOnRangeDiff()
-    this._clickOnRangeField()
-    this._clickOnRangePlayers()
+    this.difficult = 0;
+    this.size = 0;
+    this._clickOnRangeDiff();
+    this._clickOnRangeField();
+    this._clickOnRangePlayers();
+    this._clickOnRangeTime();
     this.minesCounter.innerHTML = `Mines = ${this.minesCount}`;
     this.okButton.addEventListener('click', this._clickOnOkButton.bind(this));
     this.rangeDiff.addEventListener('click', this._clickOnRangeDiff.bind(this));
+    this.rangeTime.addEventListener('click', this._clickOnRangeTime.bind(this));
     this.rangeField.addEventListener('click', this._clickOnRangeField.bind(this));
     this.rangePlayers.addEventListener('click', this._clickOnRangePlayers.bind(this));
     this.closeButton.addEventListener('click', this._clickOnCloseButton.bind(this));
@@ -81,6 +86,23 @@ export default class LobbyRoomSettings{
     this.minesCounter.innerHTML = `Mines = ${this.minesCount}`;
   }
 
+  _clickOnRangeTime() {
+    switch (parseInt(this.rangeTime.value)) {
+      case 1:
+        this.time = 60
+        break;
+      case 2:
+        this.time = 90;
+        break;
+      case 3:
+        this.time = 180;
+        break;
+      case 4:
+        this.time = 300;
+        break;
+    }
+  }
+
   _clickOnRangeField() {
     console.log('this.rangeField.value', this.rangeField.value)
     switch (parseInt(this.rangeField.value)) {
@@ -91,6 +113,9 @@ export default class LobbyRoomSettings{
         this.size = 20;
         break;
       case 3:
+        this.size = 25;
+        break;
+      case 4:
         this.size = 30;
         break;
     }
@@ -111,6 +136,9 @@ export default class LobbyRoomSettings{
       case 3:
         this.players = 4;
         break;
+      case 4:
+        this.players = 6;
+        break;
     }
   }
 
@@ -123,7 +151,7 @@ export default class LobbyRoomSettings{
     if (title.length > maxLenName) {
       title = title.substr(0, maxLenName) + '...';
     }
-    Bus.emit('createRoom', {title : title, players : this.players, width : this.size, height : this.size, mines : this.minesCount})
+    Bus.emit('createRoom', {title : title, players : this.players, width : this.size, height : this.size, time : this.time, mines : this.minesCount})
     this._hideSettingsPanel();
   }
 

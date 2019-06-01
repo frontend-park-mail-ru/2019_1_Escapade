@@ -6,9 +6,7 @@ const MyMessageTemplate = require('./MyChatMessage.pug');
 
 const Template = require('./Chat.pug');
 
-function sleep(ms : any) {
-  return new Promise(resolve => setTimeout(resolve, ms));
-}
+
 /** */
 export default class ChatView {
   countMessage: number;
@@ -115,7 +113,6 @@ export default class ChatView {
 
   _sendEditMessage() {
     const messageText = this.inputMessageField.value;
-    console.log(messageText, ' ', this.editMessId)
 
     if (messageText == '' || this.editMessId == null) {
       return;
@@ -220,7 +217,6 @@ export default class ChatView {
     this.myMessages = [];
     this.chatHistory.innerHTML = '';
     let messageHistory = [];
-    console.log('WWWWWW ', place);
     if (place === 'lobby') {
       messageHistory = data.lobby.messages;
       if (data.lobby.messages == null) {
@@ -229,9 +225,7 @@ export default class ChatView {
     } else {
       messageHistory = data.room.messages;
     }
-    console.log(messageHistory)
     this.idPlayerBackend = data.you.id;
-    console.log(this.idPlayerBackend, " hghg  ", data.you.id)
 
 
     messageHistory.forEach((item: any) => {
@@ -241,7 +235,7 @@ export default class ChatView {
   }
 
   
-  async _sendMessage() {
+  _sendMessage() {
     const maxLenMessage = 500;
     let messageText = this.inputMessageField.value;
     if (messageText == '') {
@@ -249,7 +243,6 @@ export default class ChatView {
     }
 
     while(messageText.length > maxLenMessage) {
-      console.log(messageText)
       Bus.emit('sendChatMessage', messageText.substr(0, maxLenMessage));
       messageText = messageText.substr(maxLenMessage, messageText.length - 1);
     }
