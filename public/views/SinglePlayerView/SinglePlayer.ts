@@ -88,10 +88,10 @@ export default class SinglePlayer {
     if (User.name) {
       Bus.emit('userNameInGameChange', User.name);
       Bus.emit('userPhotoInGameChange', User.avatar);
-      
+
       if (User.bestScore.String) {
         Bus.emit('userScoreInGameChange', User.bestScore.String) // получать из user
-        Bus.emit('userTimeInGameChange', User.bestScore.String);
+        Bus.emit('userTimeInGameChange', User.bestTime.String);
       } else {
         Bus.emit('userScoreInGameChange', 0)
         Bus.emit('userTimeInGameChange', '0:00:00');
@@ -119,7 +119,7 @@ export default class SinglePlayer {
     Bus.emit('statisticsResetParameters', this.minesCount)
     Bus.emit('settingsSetParameters', { difficult: this.difficult, width: this.cellNumbersX, height: this.cellNumbersY, mines: this.minesCount })
     this.mineSweeperCreate = true;
-    
+
     return;
   }
 
@@ -138,7 +138,7 @@ export default class SinglePlayer {
       }
     }
     Bus.emit('setStylesOnStartSingle');
-    
+
     this.stopwatch.start();
     this._showMap();
   }
@@ -183,23 +183,23 @@ export default class SinglePlayer {
     const x = parseInt(coordinatesStruct.x);
     const y = parseInt(coordinatesStruct.y);
     if (this.mineSweeperCreate) {
-      this.mineSweeper = new MineSweeper(this.cellNumbersX, this.cellNumbersY, this.minesCount, {startX : x, startY : y});
+      this.mineSweeper = new MineSweeper(this.cellNumbersX, this.cellNumbersY, this.minesCount, { startX: x, startY: y });
       this.mineSweeperCreate = false
     }
-    
+
     if (this.firstClick) {
       this.start = true;
       this.firstClick = false;
       this.stopwatch.start();
       Bus.emit('setStylesOnStartSingle');
-      
+
       this.BBBVCount = this.mineSweeper.count3BV();
     }
     if (!this.start) {
       return;
     }
-    
-    
+
+
     if (this.mineSweeper.mapLabel[x][y] != 0) { // если не закрыта
       return;
     }
@@ -228,10 +228,9 @@ export default class SinglePlayer {
       this.stopwatch.stop();
       this.start = false;
 
-      Bus.emit('sendResultsSingleGame', JSON.stringify({ difficult: this.difficult, singleTotal: 1, singleWin: 0 }));
+      Bus.emit('sendResultsSingleGame', { difficult: this.difficult, singleTotal: 1, singleWin: 0 });
       Bus.emit('showTextInMessageBox', 'You lose!');
-
-      Bus.emit('rollbackStylesOnEndSingle');
+      checkAuth(this._updateUserInfoCalback.bind(this), this.difficult)
       loser = true;
     }
     return loser;
@@ -259,6 +258,7 @@ export default class SinglePlayer {
       }
       Bus.emit('showTextInMessageBox', 'You win!');
       Bus.emit('rollbackStylesOnEndSingle');
+      checkAuth(this._updateUserInfoCalback.bind(this), this.difficult)
       winner = true;
     }
     return winner;
