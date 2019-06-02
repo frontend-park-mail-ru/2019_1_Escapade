@@ -17,19 +17,17 @@ export default class ProfileModel {
     this.wsAdress = dataAddress.profileWsAddress;
 
     Bus.on('currentPath', this._currentPathSignalFunc.bind(this), 'profileModel');
+    Bus.on('changeProfile', this._changeProfile.bind(this), 'profileModel');
   }
 
   _busAllOn() {
     Bus.on('getAvatar', this._getAvatar.bind(this), 'profileModel');
-    Bus.on('changeProfile', this._changeProfile.bind(this), 'profileModel');
     Bus.on('uploadAvatar', this._uploadAvatar.bind(this), 'profileModel');
     Bus.on('getInfoFromWS', this._getInfo.bind(this), 'profileModel');
-
   }
 
   _busAllOff() {
     Bus.off('getAvatar', this._getAvatar.bind(this), 'profileModel');
-    Bus.off('changeProfile', this._changeProfile.bind(this), 'profileModel');
     Bus.off('uploadAvatar', this._uploadAvatar.bind(this), 'profileModel');
     Bus.off('getInfoFromWS', this._getInfo.bind(this), 'profileModel');
   }

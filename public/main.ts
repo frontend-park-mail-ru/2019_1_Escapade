@@ -16,9 +16,11 @@ import LobbyMV from './ModelView/LobbyMV';
 import MultiPlayerMV from './ModelView/MultiPlayerMV'
 import SinglePlayerMV from './ModelView/SinglePlayerMV';
 import ProfileMV from './ModelView/ProfileMV';
+import { NewConnView } from './views/NewConnView/NewConn'
 
 import './main.scss';
 import './img/anonymous.jpg'
+
 
 let root = document.getElementById('application');
 if ('serviceWorker' in navigator) {
@@ -43,6 +45,7 @@ router
   .register('/profile', ProfileMV.views.ProfileView)
   .register('/single_player', SinglePlayerMV.view)
   .register('/lobby', LobbyMV.view)
+  .register('/newconn', NewConnView)
   .register('/multi_player', MultiPlayerMV.view)
   .register('/profile/edit', ProfileMV.views.ProfileEditView);
 

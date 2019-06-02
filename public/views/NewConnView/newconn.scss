@@ -1,0 +1,22 @@
+.new_conn__wrapper {
+  display: flex;
+  align-items: center;
+  height: 100vh;
+  background: $escapade-gradient;
+}
+
+.new_conn {
+  display: flex;
+  flex-direction: column;
+  padding: 12px;
+  height: 15vh;
+}
+
+.new_conn__hrefBackToMenu {
+  width: calc(1rem + 7vw);
+  height: calc(1rem + 7vw);
+  background: url('./img/cancel.png') #CED6DD no-repeat;
+  background-size: contain;
+  align-self: center;
+  border-radius: 50%;
+}

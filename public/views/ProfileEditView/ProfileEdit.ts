@@ -22,10 +22,8 @@ export default class ProfileEditView extends BaseView {
     super(parent, ProfileEditTemplate, false);
 
     Bus.on('onSuccessChange', (usr: any) => {
-      usr.password = '';
-      usr.repassword = '';
-      console.log('Edit ' + usr);
-      User.setUser({ ...usr });
+      console.log('Edit ', usr);
+      User.name = usr.name
       Bus.emit('userUpdate');
       router.open('/profile');
     }, 'profileEditView');
@@ -62,6 +60,7 @@ export default class ProfileEditView extends BaseView {
     data.password = this._form.elements['password'].value;
     data.repass = this._form.elements['password-repeat'].value;
     if (this._validateInput(data)) {
+      console.log('validated');
       Bus.emit('changeProfile', data);
     }
   }

@@ -1,5 +1,5 @@
 import Bus from '../utils/bus';
-import {WebSocketInterface} from '../utils/webSocket';
+import { WebSocketInterface } from '../utils/webSocket';
 import * as dataAddress from './../../netconfig.json';
 import router from '../main';
 /**
@@ -19,14 +19,14 @@ export default class MultiplayerModel {
     Bus.on('sendCellWS', this._sendCell.bind(this), 'multiPlayerModel');
     Bus.on('restartMultiplayer', this._seandRestart.bind(this), 'multiPlayerModel');
     Bus.on('currentPath', this._currentPathSignalFunc.bind(this), 'multiPlayerModel');
- }
+  }
 
   _currentPathSignalFunc(path: string) {
     if (path === '/multi_player') {
       this.curPath = path;
       setTimeout(this._createWs.bind(this), 200);
     } else {
-      if (this.curPath === '/multi_player') {     
+      if (this.curPath === '/multi_player') {
         this.curPath = '';
       }
     }
@@ -41,21 +41,21 @@ export default class MultiplayerModel {
     }
   }
 
-  _setWS(data : any) {
+  _setWS(data: any) {
     this.ws = data;
   }
 
   /**
    * _sendInfo
    */
-  _sendCell(data : any) {
-    const sendInfo = {send : { cell : { x : data.x, y : data.y}}};
+  _sendCell(data: any) {
+    const sendInfo = { send: { cell: { x: data.x, y: data.y } } };
     console.log(sendInfo);
     this.ws.sendInfoJSON(sendInfo);
   }
 
-  _seandRestart(data : any) {
-    const sendInfo = {send : { action : 16}};
+  _seandRestart(data: any) {
+    const sendInfo = { send: { action: 16 } };
     console.log(sendInfo);
     this.ws.sendInfoJSON(sendInfo);
   }
@@ -63,19 +63,19 @@ export default class MultiplayerModel {
   /**
    * _getInfo
    */
-  _getInfo(data : any) {
-    console.log('_getInfo begin ', data) 
-    switch(data.type) {
-      case 'RoomNewCells' :
+  _getInfo(data: any) {
+    console.log('_getInfo begin ', data)
+    switch (data.type) {
+      case 'RoomNewCells':
         Bus.emit('updateFieldWS', data);
         break;
-      case 'RoomPlayerPoints' :
+      case 'RoomPlayerPoints':
         Bus.emit('updatePointsWS', data);
         break;
-      case 'RoomGameOver' :
+      case 'RoomGameOver':
         Bus.emit('gameOwerWS', data);
         break;
-      case 'RoomAction' :
+      case 'RoomAction':
         Bus.emit('roomActionWS', data);
         break;
       case 'ChangeFlagSet':
@@ -88,13 +88,9 @@ export default class MultiplayerModel {
         Bus.emit('roomStatusWS', data);
         break;
       case 'AccountTaken':
-        document.location.replace('/');        
-        break;    
-        // if (anotherConnectionDetected != null && anotherConnectionDetected) {
-        //   Bus.emit('showTextInMessageBox', 'another connection<br>detected');
-        //   anotherConnectionDetected = false;
-        // }    
+        document.location.replace('/newconn');
+        break;
     }
-    console.log('_getInfo end') 
+    console.log('_getInfo end')
   }
 }
