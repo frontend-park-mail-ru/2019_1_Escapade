@@ -1,20 +1,18 @@
 .chat__message.chat__reverse_message
-  .chat__row.flex-rev
-    .chat__message_user.flex-rev
+  .chat__row
+    .chat__message_user
       .chat__message_img_container
-          img.chat__message_img.ml-2(src=message.photo)
+          img.chat__message_img.mr-2(src=message.photo)
       .chat__column
         .chat__message_name.text-right #{message.name}
-        .chat__time_cont.flex-end
+        .chat__time_cont.flex-start
           .chat__message_time.text-right #{message.time}
           .chat__edited_message_container
             - if (message.messEdited){
             .chat__edited_message (edit)
-            - }       
+            - }
       - if (message.status == 2){
       .chat__observer_message (observer)
       - }
-  .chat__text.flex-end.mr-2 #{message.text}
+  .chat__text.flex-start.mr-2 #{message.text}
 
-
-    

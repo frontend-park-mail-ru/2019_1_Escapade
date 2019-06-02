@@ -5,10 +5,12 @@ export class WebSocketInterface {
   dataJSON: any;
   connect: boolean;
   countOfrefresh: number;
+  address: string;
 
   constructor(address = 'ws://localhost:8081') {
     this.connectWS(address);
-    this.countOfrefresh = 2;
+    this.address = address;
+    this.countOfrefresh = 150;
   }
 
   connectWS(address : string) {
@@ -26,7 +28,7 @@ export class WebSocketInterface {
         if (this.countOfrefresh-- < 0) {
           return;
         }
-        this.ws = new WebSocket(address);
+        this.connectWS(this.address);
       }
       console.log('Code: ' + event.code + ' cause: ' + event.reason);
     }).bind(this);
@@ -35,7 +37,7 @@ export class WebSocketInterface {
       if (this.countOfrefresh-- < 0) {
         return;
       }
-      this.ws = new WebSocket(address);
+      this.connectWS(this.address);
       return;
     }).bind(this);;
 

@@ -27,6 +27,7 @@ export default class ChatView {
   sendEditMessageBindThis: any;
   sendMessageBindThis: any;
   parent: any;
+  chatPlayerVisitors: any;
   constructor() {
     Bus.on('addChat', this._addListeners.bind(this), 'chatView');
     this.countMessage = 0;
@@ -65,6 +66,8 @@ export default class ChatView {
     Bus.on('addMessageInChatHistory', this._getMessageHistory.bind(this), 'chat');
     Bus.on('addWaiterInChat', this._addWaiterInChat.bind(this), 'chat');
     Bus.on('delWaiterInChat', this._delWaiterInChat.bind(this), 'chat');
+    Bus.on('addPlayerInChat', this._addPlayerInChat.bind(this), 'chat');
+    Bus.on('delPlayerInChat', this._delPlayerInChat.bind(this), 'chat');
     this.inputMessageField.onkeydown = this._onkeydownSignal.bind(this)
     this.chatHistory.scrollTop = 9999;
 
@@ -244,6 +247,7 @@ export default class ChatView {
         return;
       }
       this.chatVisitors = data.lobby.waiting.get.length;
+      this.chatPlayerVisitors = data.lobby.playing.get.length;
       this._updateChatVisitors();
     } else {
       messageHistory = data.room.messages;
@@ -306,8 +310,19 @@ export default class ChatView {
     this._updateChatVisitors();
   }
 
+
+  _addPlayerInChat() {
+    ++this.chatPlayerVisitors;
+    this._updateChatVisitors();
+  }
+
+  _delPlayerInChat() {
+    --this.chatPlayerVisitors;
+    this._updateChatVisitors();
+  }
+
   _updateChatVisitors() {
-    this.counterOnlineField.innerHTML = `Now Online: ${this.chatVisitors}`;
+    this.counterOnlineField.innerHTML = `Now in lobby: ${this.chatVisitors}, in game: ${this.chatPlayerVisitors}`;
   }
 
 }

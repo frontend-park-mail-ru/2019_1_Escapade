@@ -71,6 +71,13 @@ export default class ChatModel {
       case  'LobbyWaiterExit' :
         Bus.emit('delWaiterInChat');
         break;
+      case  'LobbyPlayerEnter' :
+        Bus.emit('addPlayerInChat');
+        break;
+      case  'LobbyPlayerExit' :
+        Bus.emit('delPlayerInChat');
+        break;
+        
         
     }
     console.log('_getInfo end') 
