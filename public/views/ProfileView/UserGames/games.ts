@@ -43,6 +43,8 @@ export default class UserGamesComponent extends BaseComponent {
       }
       return res
     })
+    let count = games.lobby.allRooms.capacity
+    Bus.emit('profileGamesScroll', count)
 
     this.render()
   }

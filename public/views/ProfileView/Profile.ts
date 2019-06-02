@@ -12,7 +12,7 @@ import UserGamesComponent from './UserGames/games'
  */
 export default class ProfileView extends BaseView {
   _warnings: any;
-  parent: any;
+  parent: HTMLElement;
   _user: any;
   userData: UserDataComponent;
   userGames: UserGamesComponent;
@@ -29,6 +29,7 @@ export default class ProfileView extends BaseView {
     }, 'profileView');
     Bus.on('onSuccessAvatarGet', this._onSuccessAvatarGet.bind(this), 'profileView');
     Bus.on('onFailedAvatarGet', this._onFailedAvatarGet.bind(this), 'profileView');
+    Bus.on('profileGamesScroll', this._onGamesCountChange.bind(this), 'profileView')
   }
 
   /** */
@@ -122,5 +123,12 @@ export default class ProfileView extends BaseView {
     img.className = 'thumb';
     document.getElementById('output').innerHTML = '';
     document.getElementById('output').appendChild(img);
+  }
+
+  _onGamesCountChange(count: number) {
+    let games = this.parent.querySelector('.profile__games')
+    if (count > 3) {
+      games.classList.remove('profile__games_noscroll')
+    }
   }
 }
