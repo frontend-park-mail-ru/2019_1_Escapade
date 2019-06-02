@@ -1,5 +1,5 @@
 {
-  "backHost": "https://ser.ru.com",
-  "lobbyWsAddress": "wss://ser.ru.com/game/ws",
-  "profileWsAddress": "wss://ser.ru.com/history/ws"
+  "backHost": "https://back.ser.ru.com",
+  "lobbyWsAddress": "wss://back.ser.ru.com/game/ws",
+  "profileWsAddress": "wss://back.ser.ru.com/history/ws"
 }
