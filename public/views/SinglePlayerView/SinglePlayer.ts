@@ -231,7 +231,9 @@ export default class SinglePlayer {
       Bus.emit('showTextInMessageBox', 'You lose!');
       checkAuth(this._updateUserInfoCalback.bind(this), this.difficult)
       loser = true;
+      Bus.emit('rollbackStylesOnEndSingle');
     }
+    
     return loser;
   }
 

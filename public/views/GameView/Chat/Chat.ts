@@ -11,7 +11,6 @@ const Template = require('./Chat.pug');
 export default class ChatView {
   countMessage: number;
   gameActionsField: any;
-  counterOnlineField: any;
   sendButton: any;
   inputMessageField: any;
   chatHistory: any;
@@ -51,7 +50,7 @@ export default class ChatView {
     this.sendButton = this.parent.querySelector('.chat__send_button');
     this.inputMessageField = this.parent.querySelector('.chat__input');
     this.chatHistory = this.parent.querySelector('.chat__history');
-    this.counterOnlineField = this.parent.querySelector('.chat__online');
+    //this.counterOnlineField = this.parent.querySelector('.chat__online');
     this.editButtonSend = this.parent.querySelector('.chat__edit_button_send');
     this.editButtonSend.style.display = 'none';
 
@@ -63,19 +62,19 @@ export default class ChatView {
 
     Bus.on('getChatMessage', this._getMessage.bind(this), 'chat');
     Bus.on('addMessageInChatHistory', this._getMessageHistory.bind(this), 'chat');
-    Bus.on('addWaiterInChat', this._addWaiterInChat.bind(this), 'chat');
-    Bus.on('delWaiterInChat', this._delWaiterInChat.bind(this), 'chat');
-    Bus.on('addPlayerInChat', this._addPlayerInChat.bind(this), 'chat');
-    Bus.on('delPlayerInChat', this._delPlayerInChat.bind(this), 'chat');
+    // Bus.on('addWaiterInChat', this._addWaiterInChat.bind(this), 'chat');
+    // Bus.on('delWaiterInChat', this._delWaiterInChat.bind(this), 'chat');
+    // Bus.on('addPlayerInChat', this._addPlayerInChat.bind(this), 'chat');
+    // Bus.on('delPlayerInChat', this._delPlayerInChat.bind(this), 'chat');
     this.inputMessageField.onkeydown = this._onkeydownSignal.bind(this)
     this.chatHistory.scrollTop = 9999;
 
 
     this.parent.removeEventListener('click', this.clickOnMessageButtonsBindThis);
     this.parent.addEventListener('click', this.clickOnMessageButtonsBindThis);
-    if (place === 'multiplayer') {
-      this.counterOnlineField.parentNode.removeChild(this.counterOnlineField);
-    }
+    // if (place === 'multiplayer') {
+    //   this.counterOnlineField.parentNode.removeChild(this.counterOnlineField);
+    // }
   }
 
   _clickOnMessageButtons(e: any) {
@@ -239,7 +238,7 @@ export default class ChatView {
       }
       this.chatVisitors = data.lobby.waiting.get.length;
       this.chatPlayerVisitors = data.lobby.playing.get.length;
-      this._updateChatVisitors();
+      //this._updateChatVisitors();
     } else {
       messageHistory = data.room.messages;
     }
@@ -291,35 +290,35 @@ export default class ChatView {
 
   }
 
-  _addWaiterInChat() {
-    ++this.chatVisitors;
-    this._updateChatVisitors();
-  }
+  // _addWaiterInChat() {
+  //   ++this.chatVisitors;
+  //   this._updateChatVisitors();
+  // }
 
-  _delWaiterInChat() {
-    --this.chatVisitors;
-    if (this.chatVisitors < 0) {
-      this.chatVisitors = 0;
-    }
-    this._updateChatVisitors();
-  }
+  // _delWaiterInChat() {
+  //   --this.chatVisitors;
+  //   if (this.chatVisitors < 0) {
+  //     this.chatVisitors = 0;
+  //   }
+  //   this._updateChatVisitors();
+  // }
 
 
-  _addPlayerInChat() {
-    ++this.chatPlayerVisitors;
-    this._updateChatVisitors();
-  }
+  // _addPlayerInChat() {
+  //   ++this.chatPlayerVisitors;
+  //   this._updateChatVisitors();
+  // }
 
-  _delPlayerInChat() {
-    --this.chatPlayerVisitors;
-    if (this.chatPlayerVisitors < 0) {
-      this.chatPlayerVisitors = 0;
-    }
-    this._updateChatVisitors();
-  }
+  // _delPlayerInChat() {
+  //   --this.chatPlayerVisitors;
+  //   if (this.chatPlayerVisitors < 0) {
+  //     this.chatPlayerVisitors = 0;
+  //   }
+  //   this._updateChatVisitors();
+  // }
 
-  _updateChatVisitors() {
-    this.counterOnlineField.innerHTML = `Now in lobby: ${this.chatVisitors}, in game: ${this.chatPlayerVisitors}`;
-  }
+  // _updateChatVisitors() {
+  //   this.counterOnlineField.innerHTML = `Now in lobby: ${this.chatVisitors}, in game: ${this.chatPlayerVisitors}`;
+  // }
 
 }
