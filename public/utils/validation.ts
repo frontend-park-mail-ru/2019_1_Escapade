@@ -25,6 +25,7 @@ export function validateEmail(email: { length: number; }) {
  */
 export function validatePass(password: string) {
   let message = '';
+  password = password.trim()
   if (password.length === 0) {
     message = 'Fill password field please';
   }

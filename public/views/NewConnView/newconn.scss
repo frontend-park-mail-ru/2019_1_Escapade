@@ -17,11 +17,14 @@
   border-radius: 12px
 }
 
+.new_conn__message {
+  color: white;
+}
+
 .new_conn__hrefBackToMenu {
-  width: calc(1rem + 7vw);
-  height: calc(1rem + 7vw);
-  background: url('./img/cancel.png') #CED6DD no-repeat;
-  background-size: contain;
-  align-self: center;
-  border-radius: 50%;
+  width: 88px;
+  height: 106px;
+  background: url('./img/flag-right.png') no-repeat;
+  transform: matrix(-1, 0, 0, 1, 0, 0);
+  background-size: cover;
 }
