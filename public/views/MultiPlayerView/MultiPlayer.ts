@@ -101,6 +101,8 @@ export default class MultiPlayerView extends BaseView {
     Bus.on('roomObserverEnterWS', this._getObservers.bind(this), 'multiplayerView');
     Bus.on('roomStatusWS', this._getStatus.bind(this), 'multiplayerView');
     Bus.on('getChatMessage', this._updateCountMessage.bind(this), 'multiplayerView' )
+    Bus.on('clickOnYesAskMessage', this._restartClick.bind(this), 'multiplayerView' )
+    
     this.isGameOver = false;
     Bus.on('gameOwerWS', this._gameOver.bind(this), 'multiplayerView');
     Bus.on('sendRoom', this._getRoom.bind(this), 'multiplayerView');
@@ -117,6 +119,7 @@ export default class MultiPlayerView extends BaseView {
     Bus.off('roomStatusWS', this._getStatus.bind(this), 'multiplayerView');
     Bus.off('gameOwerWS', this._gameOver.bind(this), 'multiplayerView');
     Bus.off('sendRoom', this._getRoom.bind(this), 'multiplayerView');
+    Bus.off('clickOnYesAskMessage', this._restartClick.bind(this), 'multiplayerView' )
   }
   /**
    *
@@ -126,11 +129,14 @@ export default class MultiPlayerView extends BaseView {
     Bus.emit('busAllOffSinglePlayer');
     Bus.emit('addField', { container: '.multi_player__field_container', parent: this.parent });
     Bus.emit('addMessage', { container: '.multi_player__message_container', parent: this.parent });
+    Bus.emit('addAskMessage', { container: '.multi_player__message_ask_container', parent: this.parent });
     Bus.emit('addPlayersList', '.multi_player__playerlist_container');
     Bus.emit('addGameActions', '.multi_player_actions_container');
     Bus.emit('addChat', { container: '.multi_player__chat_container', parent: this.parent, place: 'multiplayer'  });
     Bus.emit('changeTitleRestartButton', 'Start');
     Bus.emit('messageBoxHide', true);
+    Bus.emit('messageAskBoxHide', true);
+    
     this.infoContainer = document.querySelector('.multi_player__info_container');
     this.chatContainer = document.querySelector('.multi_player__chat_container');
     this.chatContainer.style.display = 'none';
@@ -169,7 +175,10 @@ export default class MultiPlayerView extends BaseView {
       Bus.emit('addPlayersList', '.multi_player__playerlist_container');
       Bus.emit('changeTitleRestartButton', 'Start');
       Bus.emit('messageBoxHide', true);
+      Bus.emit('messageAskBoxHide', true);
       Bus.emit("ClearMessagesGameActions");
+      this.chatInfoButton.innerHTML = 'Chat';
+
       this.restartButton.style.display = 'none';
       this._showMap();
       this.curPath = path;
@@ -220,6 +229,7 @@ export default class MultiPlayerView extends BaseView {
     this.pointsCount = 0;
 
     Bus.emit('messageBoxHide', true)
+    Bus.emit('messageAskBoxHide', true);
     
     Bus.emit('renderField', { width: this.cellNumbersX, height: this.cellNumbersY, cellSize: this.cellsize })
 
@@ -248,6 +258,11 @@ export default class MultiPlayerView extends BaseView {
       }
     })
     Bus.emit('addMessageInChatHistory', {data: data, place: 'room'});
+    this.countOpenCells = data.room.field.history.length;
+    this.countCells = data.room.field.width * data.room.field.height;
+    this.countMines = data.room.field.mines;
+    const prcentOpen = Math.round((this.countOpenCells / (this.countCells - this.countMines) * 100));
+    Bus.emit('progressGameChange', prcentOpen);
   }
 
   _getStatus(data : any) {
@@ -412,7 +427,9 @@ export default class MultiPlayerView extends BaseView {
         Bus.emit('showTextInMessageBox', 'You lose!');
       }
     }
-    this.restartButton.style.display = 'flex';
+    if (!this.observerMode) {
+      this.restartButton.style.display = 'flex';
+    }
     setTimeout(this._writeGameOver.bind(this), 500);
     if (this.observerMode) {
       Bus.emit('showTextInMessageBox', 'Game over!');
@@ -426,27 +443,29 @@ export default class MultiPlayerView extends BaseView {
 
   _roomAction(data: any) {
     const action = data.value;
-
-    if (action.action == 5) {
-      console.log('this.observers ',  this.observers)
+    let boolObserverExit = false;
+    if (action.action == 4) {
       for (let i = 0; i < this.observers.length; i++) {
         if (this.observers[i].id === action.player) {
           Bus.emit('delObserver', { player: this.observers[i] });
           this.observers.splice(i, 1);
+          boolObserverExit = true;
           break;
-          
         }
       }
-      
-      return;
-    }
-            
-    console.log(this.players);
+      if (boolObserverExit) {
+        return;
+      }
+    } 
     for (let i = 0; i < this.players.length; i++) {
       console.log(this.players[i].id, ' ',action.player )
       if (this.players[i].id === action.player) {
         switch (action.action) {
           case 3:
+            Bus.emit('reconnectPlayer', i);
+            Bus.emit('addMessageInGameActions', `Player ${this.players[i].user.name} reconnect!`);
+            break;
+          case 1:
             Bus.emit('reconnectPlayer', i);
             Bus.emit('addMessageInGameActions', `Player ${this.players[i].user.name} reconnect!`);
             break;
@@ -472,6 +491,9 @@ export default class MultiPlayerView extends BaseView {
             break;
           case 15:
             Bus.emit('timeIsOverPlayer', i);
+            break;
+          case 16:
+            Bus.emit('showTextInMessageAskBox', `Player ${this.players[i].user.name}<br>wants revenge!`);
             break;
         }
         break;

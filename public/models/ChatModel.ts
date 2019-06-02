@@ -65,6 +65,13 @@ export default class ChatModel {
       case  'Lobby' :
         Bus.emit('addMessageInChatHistory', {data: data.value, place: 'lobby'});
         break;
+      case  'LobbyWaiterEnter' :
+        Bus.emit('addWaiterInChat');
+        break;
+      case  'LobbyWaiterExit' :
+        Bus.emit('delWaiterInChat');
+        break;
+        
     }
     console.log('_getInfo end') 
   }

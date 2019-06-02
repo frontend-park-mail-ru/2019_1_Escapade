@@ -1,0 +1,103 @@
+.messagebox__popup_ask{
+  width: 100%;
+  min-height: 100%;
+  background-color: rgba(0,0,0,0.5);
+  overflow: hidden;
+  position: fixed;
+  z-index: 8;
+  top: 0;
+  left: 0;
+  overflow: auto;
+}
+.messagebox__popup_content_ask{
+
+  /* height: 230px; */
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  background-color: #667787;
+  border-radius: 15px;
+  box-shadow: 0px 0px 10px #000;
+  z-index: 8;
+  margin: auto;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  transition: .5s ease-in-out;
+}
+
+.messagebox__popup_ok_button_yes {
+  text-decoration: none;
+  background-color: #4B5E70;
+  position: relative;
+  text-align: center;
+  height: 70px;
+  width: 100%;
+  color: white;
+  margin-top: 10px;
+  margin-left: auto;
+  margin-right: auto;
+  font-size: 30px;
+  line-height: 70px;
+  border: 1px solid #000000;
+  border-radius: 10px;
+}
+
+.messagebox__popup_ok_button_yes:hover {
+  filter: brightness(125%);
+}
+
+.messagebox__popup_ok_button_yes .messagebox__popup_content_ask {
+  opacity: 0;
+}
+
+.messagebox__popup_ok_button_no {
+  text-decoration: none;
+  background-color: #4B5E70;
+  position: relative;
+  text-align: center;
+  height: 70px;
+  width: 100%;
+  color: white;
+  margin-top: 10px;
+  margin-left: auto;
+  margin-right: auto;
+  font-size: 30px;
+  line-height: 70px;
+  border: 1px solid #000000;
+  border-radius: 10px;
+  margin-left:8px;
+}
+
+.messagebox__popup_ok_button_no:hover {
+  filter: brightness(125%);
+}
+
+.messagebox__popup_ok_button_no .messagebox__popup_content_ask {
+  opacity: 0;
+}
+
+.messagebox__popup_text_ask {
+  text-decoration: none;
+  position: relative;
+  text-align: center;
+  color: white;
+  margin-left: auto;
+  margin-right: auto;
+  font-size: 25px;
+  /* display: flex; */
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+  word-break: break-word;
+  line-break: auto;
+  hyphens: initial;
+  text-align: center;
+  width: 268px;
+
+}
+
+.messagebox__popup_row {
+  display: flex;
+  flex-direction: row;
+}

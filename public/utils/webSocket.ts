@@ -26,7 +26,7 @@ export class WebSocketInterface {
         if (this.countOfrefresh-- < 0) {
           return;
         }
-        window.location.reload();
+        this.ws = new WebSocket(address);
       }
       console.log('Code: ' + event.code + ' cause: ' + event.reason);
     }).bind(this);
@@ -35,7 +35,7 @@ export class WebSocketInterface {
       if (this.countOfrefresh-- < 0) {
         return;
       }
-      window.location.reload();
+      this.ws = new WebSocket(address);
       return;
     }).bind(this);;
 

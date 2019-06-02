@@ -63,13 +63,17 @@ export default class ChatView {
 
     Bus.on('getChatMessage', this._getMessage.bind(this), 'chat');
     Bus.on('addMessageInChatHistory', this._getMessageHistory.bind(this), 'chat');
-
+    Bus.on('addWaiterInChat', this._addWaiterInChat.bind(this), 'chat');
+    Bus.on('delWaiterInChat', this._delWaiterInChat.bind(this), 'chat');
     this.inputMessageField.onkeydown = this._onkeydownSignal.bind(this)
     this.chatHistory.scrollTop = 9999;
 
 
     this.parent.removeEventListener('click', this.clickOnMessageButtonsBindThis);
     this.parent.addEventListener('click', this.clickOnMessageButtonsBindThis);
+    if (place === 'multiplayer') {
+      this.counterOnlineField.parentNode.removeChild(this.counterOnlineField);
+    }
   }
 
   _clickOnMessageButtons(e: any) {
@@ -227,6 +231,7 @@ export default class ChatView {
   }
 
   _getMessageHistory(dataStruct: any) {
+    
     const data = dataStruct.data;
     const place = dataStruct.place;
     this.allMessages = [];
@@ -238,6 +243,8 @@ export default class ChatView {
       if (data.lobby.messages == null) {
         return;
       }
+      this.chatVisitors = data.lobby.waiting.get.length;
+      this._updateChatVisitors();
     } else {
       messageHistory = data.room.messages;
     }
@@ -248,6 +255,8 @@ export default class ChatView {
       const message = { photo: item.user.photo, messID: item.id, status : item.status, messEdited: item.edited, id: item.user.id, name: item.user.name, text: item.text, time: item.time.substring(11, 16) };
       this._addMessageToChatField(message);
     });
+
+    
   }
 
   
@@ -287,9 +296,18 @@ export default class ChatView {
 
   }
 
-  _updateChatVisitors(chatVisitors: any) {
-    this.chatVisitors = chatVisitors;
-    this.counterOnlineField.innerHTML = `Now Online: ${this.chatVisitors.length}`;
+  _addWaiterInChat() {
+    ++this.chatVisitors;
+    this._updateChatVisitors();
+  }
+
+  _delWaiterInChat() {
+    --this.chatVisitors;
+    this._updateChatVisitors();
+  }
+
+  _updateChatVisitors() {
+    this.counterOnlineField.innerHTML = `Now Online: ${this.chatVisitors}`;
   }
 
 }

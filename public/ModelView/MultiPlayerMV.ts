@@ -5,6 +5,7 @@ import MessageView from '../views/MessageView/Message';
 import PlayersListView from '../views/GameView/PlayersList/PlayersList';
 import GameActionsView from '../views/GameView/GameActions/GameActions';
 import ChatView from '../views/GameView/Chat/Chat';
+import MessageAskView from '../views/MessageAskView/MessageAsk';
 import ChatModel from '../models/ChatModel';
 /**
  *
@@ -18,6 +19,7 @@ class MultiPlayerMV {
   gameActions: GameActionsView;
   gameChat: ChatView;
   chatModel: ChatModel;
+  messageViewAsk: MessageAskView;
   /**
    *
    */
@@ -28,6 +30,7 @@ class MultiPlayerMV {
     this.playersListView = new PlayersListView();
     this.gameActions = new GameActionsView();
     this.gameChat = new ChatView();
+    this.messageViewAsk = new MessageAskView();
   }
 }
 export default new MultiPlayerMV;
