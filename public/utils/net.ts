@@ -14,7 +14,7 @@ export class Net {
     return fetch(host + url, {
       method: 'POST',
       body: JSON.stringify(body),
-      mode: 'no-cors',
+      mode: 'cors',
       credentials: 'include',
       headers: {
         'Content-Type': 'application/json; charset=utf-8',
@@ -32,7 +32,7 @@ export class Net {
     return fetch(host + url, {
       method: 'PUT',
       body: JSON.stringify(body),
-      mode: 'no-cors',
+      mode: 'cors',
       credentials: 'include',
       headers: {
         'Content-Type': 'application/json; charset=utf-8',
@@ -50,7 +50,7 @@ export class Net {
     return fetch(host + url, {
       method: 'POST',
       body: body,
-      mode: 'no-cors',
+      mode: 'cors',
       credentials: 'include',
     });
   }
@@ -63,7 +63,7 @@ export class Net {
   static get(url = '/', host = backHost) {
     return fetch(host + url, {
       method: 'GET',
-      mode: 'no-cors',
+      mode: 'cors',
       credentials: 'include',
     });
   }
