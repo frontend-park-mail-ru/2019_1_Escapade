@@ -37,12 +37,9 @@
 
 body {
   background-color: #667787;
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
- 
-  font-weight: normal; 
-  font-style: normal; 
+
+  font-weight: normal;
+  font-style: normal;
   font-family: 'Saira', sans-serif;
 }
 
@@ -55,9 +52,9 @@ body {
   height: 100vh;
   background: $escapade-gradient;
 
-  
+
   &__body {
-    display:flex;
+    display: flex;
     justify-content: center;
     flex-direction: column;
     align-items: center;
@@ -65,8 +62,8 @@ body {
   }
 }
 
-@media screen and (max-width: $tablet){
-  .menu{
+@media screen and (max-width: $tablet) {
+  .menu {
     justify-content: center;
   }
 }

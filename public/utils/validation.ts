@@ -1,5 +1,7 @@
-import {BLACKLIST_TAGS, WHITELIST_ATTRS,
-  R_TAG, R_ATTRIBUTES, R_EMAIL, R_PASSWORD} from './constans';
+import {
+  BLACKLIST_TAGS, WHITELIST_ATTRS,
+  R_TAG, R_ATTRIBUTES, R_EMAIL, R_PASSWORD, R_LOGIN
+} from './constans';
 /**
    * Валидация email
    * @param {*} email
@@ -41,10 +43,14 @@ export function validatePass(password: string) {
  * @param {*} login
  * @return {boolean}
  */
-export function validateLogin(login: { length: number; }) {
+export function validateLogin(login: string) {
   let message = '';
+  login = login.trim()
+  // if (R_LOGIN.test(login) == true) {
+  //   message = 'Dont use only spaces'
+  // }
   if (login.length < 3) {
-    message = 'Login must be at least 3 letters';
+    message = 'Login must be at least 3 letters and no spaces';
   }
   return message;
 }
@@ -56,11 +62,11 @@ export function validateLogin(login: { length: number; }) {
  */
 export function makeSafe(unsafeString = '') {
   return unsafeString
-      .replace(R_TAG, (match, g1) => {
-        return BLACKLIST_TAGS.includes(g1) ? '' : match;
-      })
-      .replace(R_ATTRIBUTES, (match, g1) => {
-        return WHITELIST_ATTRS.includes(g1) ? match : '';
-      })
-  ;
+    .replace(R_TAG, (match, g1) => {
+      return BLACKLIST_TAGS.includes(g1) ? '' : match;
+    })
+    .replace(R_ATTRIBUTES, (match, g1) => {
+      return WHITELIST_ATTRS.includes(g1) ? match : '';
+    })
+    ;
 }
