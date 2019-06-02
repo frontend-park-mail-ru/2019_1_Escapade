@@ -65,7 +65,6 @@ export default class MultiPlayerView extends BaseView {
   constructor(parent: any) {
     super(parent, singlePlayerTemplate, true, 'updateUserInfo');
     this.parent = parent;
-    console.log('this.parent ', this.parent)
     this.cellNumbersX = 15;
     this.cellNumbersY = 15;
     this.minesCount = 20;
@@ -157,7 +156,6 @@ export default class MultiPlayerView extends BaseView {
     document.body.oncontextmenu = function (e) {
       return false;
     };
-    console.log('render');
   }
 
 
@@ -169,7 +167,6 @@ export default class MultiPlayerView extends BaseView {
       this.infoPanelMode = true;
       Bus.emit('busAllOffSinglePlayer');
       Bus.emit('addField', { container: '.multi_player__field_container', parent: this.parent });
-      console.log('this.parent multi ', this.parent)
       Bus.emit('addChat', { container: '.multi_player__chat_container', parent: this.parent, place: 'multiplayer'  });
       Bus.emit('addMessage', { container: '.multi_player__message_container', parent: this.parent });
       Bus.emit('addPlayersList', '.multi_player__playerlist_container');
@@ -185,7 +182,6 @@ export default class MultiPlayerView extends BaseView {
       document.body.oncontextmenu = function (e) {
         return false;
       };
-      console.log('_currentPathSignalFunc multi_player ');
     } else {
       if (this.curPath === '/multi_player') {
         this._stop_reset_timer();
@@ -224,7 +220,6 @@ export default class MultiPlayerView extends BaseView {
       this.fieldMatrix[i] = new Array(this.cellNumbersX).fill(0);
     }
     
-    console.log('_showMap');
     this.openCellsCount = 0;
     this.pointsCount = 0;
 
@@ -345,7 +340,6 @@ export default class MultiPlayerView extends BaseView {
     const dataConnections = data.room.players.connections.get;
     const dataPlayers = data.room.players.players;
     const colorRandom = MathGame.randomInteger(0, 8);
-    console.log('dataConnections ', dataConnections.length);
 
     dataConnections.forEach((item: any, i: number) => {
       let color = this._createColorForPlayer(i + colorRandom)
@@ -458,7 +452,6 @@ export default class MultiPlayerView extends BaseView {
       }
     } 
     for (let i = 0; i < this.players.length; i++) {
-      console.log(this.players[i].id, ' ',action.player )
       if (this.players[i].id === action.player) {
         switch (action.action) {
           case 3:
@@ -509,7 +502,6 @@ export default class MultiPlayerView extends BaseView {
   /** */
   _clickOnCell(coordinatesStruct: any) {
 
-    console.log("clickOnField ", Bus.listeners, ' ', this.flagPlacing, " ", this.startGame, " ", this.observerMode)
     if (!this.flagPlacing && !this.startGame || this.observerMode) {
       return;
     }

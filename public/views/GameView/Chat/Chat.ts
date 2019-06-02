@@ -41,7 +41,6 @@ export default class ChatView {
 
 
   _addListeners(data: any) {
-    console.log('add listeners chat ', data.parent)
     this._clearParameters();
     let container = data.container;
     let place = data.place;
@@ -145,15 +144,12 @@ export default class ChatView {
   _deleteMessage(data : any) {
     let allNnum = -1;
     let myNum = -1;
-    console.log('qwerty ', ' ', this.myMessages);
-    console.log('qwerty2 ',  ' ', this.allMessages);
     for (let i = 0; i < this.allMessages.length; i++) {
       if (this.allMessages[i].messID === data.id) {
         allNnum = i;
         break;
       }
     }
-    console.log('id in arr mess ', allNnum);
     const messages = [].slice.call((this.parent.querySelectorAll('.chat__message')));
     if (allNnum < 0 || allNnum >= messages.length || allNnum >= this.allMessages.length) {
       return;
@@ -171,12 +167,7 @@ export default class ChatView {
     }
     this.myMessages.splice(myNum, 1);
 
-    
-    console.log('qwerty ', allNnum, ' ', this.myMessages);
-    console.log('qwerty2 ', myNum, ' ', this.allMessages);
 
-    console.log('22qwerty ', allNnum, ' ', this.myMessages);
-    console.log('22qwerty2 ', myNum, ' ', this.allMessages);
     return;
   }
 
@@ -307,6 +298,9 @@ export default class ChatView {
 
   _delWaiterInChat() {
     --this.chatVisitors;
+    if (this.chatVisitors < 0) {
+      this.chatVisitors = 0;
+    }
     this._updateChatVisitors();
   }
 
@@ -318,6 +312,9 @@ export default class ChatView {
 
   _delPlayerInChat() {
     --this.chatPlayerVisitors;
+    if (this.chatPlayerVisitors < 0) {
+      this.chatPlayerVisitors = 0;
+    }
     this._updateChatVisitors();
   }
 

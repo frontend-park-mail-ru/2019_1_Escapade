@@ -5,7 +5,6 @@ export default class UserGamesComponent extends BaseComponent {
 
   constructor(parent: HTMLElement, template: any) {
     super(parent, template)
-    console.log('usergames')
     Bus.on('updateProfileGames', this.onGamesUpdate.bind(this), 'userGames');
   }
 
@@ -14,7 +13,6 @@ export default class UserGamesComponent extends BaseComponent {
   }
 
   onGamesUpdate(games: any) {
-    console.log(games)
     const id = games.you.id
     interface gameInfo {
       iswin: boolean,

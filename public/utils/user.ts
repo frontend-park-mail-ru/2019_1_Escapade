@@ -25,7 +25,6 @@ export class UserSingleton {
    * @param {string} name
    */
   setUser({ email = '', played = 0, photo = '', name = '', bestTime = '', bestScore = '' } = {}) {
-    console.log('HERERERE1 ', email, ' 2 ', played, ' 3 ', photo, ' 4 ', name, ' ', bestTime, ' ', bestScore);
     this.email = email || null;
     this.played = played || 0;
     this.avatar = photo || './img/qrosh.png';
@@ -60,7 +59,6 @@ export function checkAuth(callback: CallableFunction, difficult = 1) {
       if (resp.status === 200) {
         resp.json()
           .then((json) => {
-            console.log('checkAuth', json)
             User.setUser({ ...json });
             callback();
           });

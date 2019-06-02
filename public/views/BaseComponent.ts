@@ -8,7 +8,6 @@ export default class BaseComponent {
 
   constructor(parent: HTMLElement, template: any) {
     this.parent = parent;
-    console.log(this.parent)
     this.parent.hidden = true;
     this.template = template;
   }

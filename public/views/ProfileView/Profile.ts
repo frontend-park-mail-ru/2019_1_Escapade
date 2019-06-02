@@ -39,7 +39,6 @@ export default class ProfileView extends BaseView {
 
   renderCallback() {
     this.user = User;
-    console.log('User ', User);
     super.render();
     this._warnings = {};
     this._warnings.email = this.parent.querySelector('.js-warning-email');
@@ -92,12 +91,10 @@ export default class ProfileView extends BaseView {
    * @param {*} uploadURL
    */
   _onSuccessUpload(uploadURL: any) {
-    console.log('_onSuccessUpload ');
     // Render thumbnail.'
     const img = document.createElement('img');
     img.src = uploadURL;
     User.avatar = uploadURL;
-    console.log(User.avatar);
     img.className = 'thumb';
     document.getElementById('output').innerHTML = '';
     document.getElementById('output').appendChild(img);
@@ -107,7 +104,6 @@ export default class ProfileView extends BaseView {
    *
    */
   _onFailedAvatarGet() {
-    console.log('Failed to get avatar');
     document.getElementById('output')
       .innerHTML = `<div class=profile__default_avatar></div>`;
 

@@ -22,7 +22,6 @@ export default class ProfileEditView extends BaseView {
     super(parent, ProfileEditTemplate, false);
 
     Bus.on('onSuccessChange', (usr: any) => {
-      console.log('Edit ', usr);
       User.name = usr.name
       Bus.emit('userUpdate');
       router.open('/profile');
@@ -54,7 +53,6 @@ export default class ProfileEditView extends BaseView {
    */
   _onSubmitDataProfile(event: { preventDefault: () => void; }) {
     event.preventDefault();
-    console.log('event _onSubmitDataProfile');
     const data: any = {};
     data.name = this._form.elements['login'].value;
     data.password = this._form.elements['password'].value;

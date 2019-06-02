@@ -27,10 +27,8 @@ export default class FieldView {
   _addListeners(data : any) {
     this.container = data.container;
     this.parent = data.parent;
-    console.log('addListenersField ', this.container)
     this.HTMLElement = this.parent.querySelector(this.container);
     this.HTMLElement.innerHTML = Template();
-    console.log('addListenersField ', Bus.listeners);
     this._removeListeners();
     Bus.on('renderField', this._render.bind(this), 'fieldView');
     Bus.on('openCell', this._openCell.bind(this), 'fieldView');
@@ -56,7 +54,6 @@ export default class FieldView {
   }
 
   _leftClickOnBody(e: any) {
-    console.log("QQQ leftClickOnBody");
     if (e.target.classList.contains('cell')) {
       let [, x, y] = e.target.id.split('_');
       Bus.emit('leftClickOnCell', {x : x, y : y});
@@ -66,7 +63,6 @@ export default class FieldView {
   _rightСlickOnCell(e: any) {
     if (e.target.classList.contains('cell')) {
       if (e.target.classList.length < 3) {
-        console.log('error e.target.classList.length < 3');
         return;
       }
       let [, x, y] = e.target.id.split('_');
@@ -74,7 +70,6 @@ export default class FieldView {
     }
   }
   _render(fieldSize : any) {
-    console.log('render(fieldSize : any) singleplayer ', fieldSize.width, " ", fieldSize.height, " ", fieldSize.cellSize)
     this.percent = 0;
     this.width = fieldSize.width;
     this.height = fieldSize.height;
@@ -99,17 +94,13 @@ export default class FieldView {
     this.loadbarDocElement = this.parent.querySelector('.game__field__loadbar');
     this.percentOpenDocElement.innerHTML = `0%`;
     this.loadbarDocElement.style.width = '0px';
-    console.log('render(fieldSize : any) end ')
 
   }
 
   _openCell({x = 0, y = 0, type = 0, color = '#b9c0c9', my = false}){
-    console.log("QQQ _openCell");
     const cell = this.parent.
       querySelector(`#cell_${x}_${y}`);
     if (!cell) {
-      console.log('error _openCels cannot find ' +
-        `cell${x}_${y}`);
       return;
     }
     if (type > 13) {
@@ -125,15 +116,11 @@ export default class FieldView {
   }
 
   _setUnsetFlagOnCell({x = 0, y = 0, type = 'flag' }){
-    console.log("QQQ _setUnsetFlagOnCell");
     const cell = this.parent.
       querySelector(`#cell_${x}_${y}`);
     if (!cell) {
-      console.log('error _openCels cannot find ' +
-        `cell${x}_${y}`);
       return;
     }
-    console.log('rightСlickOnCell2')
     const classElems = cell.classList[2].split('_');
     const numClassElem = parseInt(classElems[2]);
     if (type === 'flag') {
@@ -144,12 +131,9 @@ export default class FieldView {
   }
 
   _setUnsetFlagMultiOnCell({x = 0, y = 0, type = 'flag' }){
-    console.log("QQQ _setUnsetFlagMultiOnCell");
     const cell = this.parent.
       querySelector(`#cell_${x}_${y}`);
     if (!cell) {
-      console.log('error _openCels cannot find ' +
-        `cell${x}_${y}`);
       return;
     }
     const classElems = cell.classList[2].split('_');

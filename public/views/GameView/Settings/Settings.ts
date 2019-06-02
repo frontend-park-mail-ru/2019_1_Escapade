@@ -119,7 +119,6 @@ export default class SettingsGameView {
     
     
     this.height = this.width;
-    console.log("_changeHard");
     this._modeChange(this._getModeByDifficult(this.difficult));
     this._sizeChange({width : this.width, height : this.height});
     Bus.emit('settingsChangeHard', {difficult : this.difficult, width : this.width, height : this.height});
@@ -130,7 +129,6 @@ export default class SettingsGameView {
   }
   /** */
   _modeChange(mode : string) {
-    console.log("_modeChange");
     this.infoModeDocElement.innerHTML = `${mode}`;
   }
 }

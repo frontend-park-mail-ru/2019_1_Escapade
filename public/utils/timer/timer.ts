@@ -30,11 +30,9 @@ export class Timer {
    *
    */
   start({hour = 0, minute = 0, seconds = 0}) {
-    console.log('start running timer');
     if (this.running) {
       return;
     }
-    console.log('start timer');
     this.startTime = {hour : hour, minute : minute, seconds : seconds};
     const time = this._parseTime();
     this.timeStr = `${time[0]}:${time[1]}:${time[2]}`;
@@ -79,7 +77,6 @@ export class Timer {
     const time = this._parseTime();
     this.timeStr = `${time[0]}:${time[1]}:${time[2]}`;;
     this.countdownElement.innerHTML = this.timeStr;
-    console.log('run timer');
     if ((this.startTime.seconds === 0) && (this.startTime.minute === 0) && (this.startTime.hour === 0)) {
       this.stop();
       this.funcCallback();
@@ -91,11 +88,9 @@ export class Timer {
    *
    */
   stop() {
-    console.log('stop running timer');
     if (!this.running) {
       return;
     }
-    console.log('stop timer');
     this.running = false;
     clearInterval(this.timer);
   };

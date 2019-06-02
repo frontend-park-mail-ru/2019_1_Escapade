@@ -61,7 +61,6 @@ export default class LeaderBoardView extends BaseView {
     if (screen.height <= 700) {
       fieldHeight = 100;
     }
-    console.log(devHeight, fieldHeight)
     return Math.round(devHeight / fieldHeight);
   }
 

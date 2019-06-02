@@ -16,8 +16,6 @@ export default class SignUpModel {
    * @param {object} data
    */
   _auth(data: object) {
-    console.log(data);
-
     Net.post(data, '/api/user')
       .then((resp) => {
         if (resp.status === 201) {

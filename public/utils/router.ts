@@ -43,7 +43,6 @@ export default class Router {
 
     if (!view) {
       view = new View(el);
-      console.log('created view: ', view);
     }
 
     if (this.currentView !== null) {
@@ -89,9 +88,7 @@ export default class Router {
       event.preventDefault();
       const link = event.target;
 
-      console.log({
-        pathname: link.pathname,
-      });
+
       if (link.pathname === '/sign_out') {
         bus.emit('logout', null);
         return;

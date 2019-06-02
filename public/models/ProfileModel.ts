@@ -47,7 +47,7 @@ export default class ProfileModel {
   }
 
   _getInfo(data: any) {
-    console.log('_getInfo begin ', data)
+    //console.log('_getInfo ', data)
     switch (data.type) {
       case 'Lobby':
         console.log('updateProfileGames')

@@ -56,7 +56,6 @@ export default class SinglePlayer {
   }
 
   _busAllOn() {
-    console.log('WWWWWWWWWWWWWWWWWw');
     Bus.on('leftClickOnCell', this._clickOnCell.bind(this), 'singlePlayerView');
     Bus.on('rightClickOnCell', this._rightСlickOnCell.bind(this), 'singlePlayerView');
     Bus.on('settingsChangeHard', this._changeHard.bind(this), 'singlePlayerView');

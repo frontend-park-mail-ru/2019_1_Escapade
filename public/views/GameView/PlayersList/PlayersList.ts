@@ -53,7 +53,7 @@ export default class PlayersListView {
     this.playersListContainer.innerHTML += PlayerRowTemplate({data : dataJSON});
 
     var elements = [].slice.call(document.querySelectorAll('.game__players_list_row'));
-    console.log('elements ', elements);
+
     elements[elements.length - 1].querySelector('.game__players_list_disconnect_img').hidden = true;
     elements[elements.length - 1].querySelector('.game__players_list_explose_img').hidden = true;
     elements[elements.length - 1].querySelector('.game__players_list_win_img').hidden = true;
@@ -108,10 +108,8 @@ export default class PlayersListView {
   _addObserver(data : any) {
     this.observersTitle.hidden = false;
     const observer = data.player;
-    console.log('WWWW ', observer)
     const dataJSON = {name : observer.name};
     this.observersListContainer.innerHTML += ObserverRowTemplate({data : dataJSON});
-    console.log('this.observersListContainer.innerHTML ', this.observersListContainer.innerHTML)
   }
 
   _delObserver(data : any) {

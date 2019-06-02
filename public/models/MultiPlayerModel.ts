@@ -17,7 +17,7 @@ export default class MultiplayerModel {
     Bus.on('getInfoFromWS', this._getInfo.bind(this), 'multiPlayerModel');
     Bus.on('getWSMultiplayer', this._setWS.bind(this), 'multiPlayerModel');
     Bus.on('sendCellWS', this._sendCell.bind(this), 'multiPlayerModel');
-    Bus.on('restartMultiplayer', this._seandRestart.bind(this), 'multiPlayerModel');
+    Bus.on('restartMultiplayer', this._sendRestart.bind(this), 'multiPlayerModel');
     Bus.on('currentPath', this._currentPathSignalFunc.bind(this), 'multiPlayerModel');
   }
 
@@ -33,11 +33,8 @@ export default class MultiplayerModel {
   }
 
   _createWs() {
-    console.log("pred if CREATE NEW WEB SOCKET")
     if (typeof this.ws == "undefined") {
       router.open('/lobby');
-      //Bus.emit('lobbyCreateNewWebSocket')
-      // this.ws = new WebSocketInterface(dataAddress.lobbyWsAddress);
     }
   }
 
@@ -50,13 +47,11 @@ export default class MultiplayerModel {
    */
   _sendCell(data: any) {
     const sendInfo = { send: { cell: { x: data.x, y: data.y } } };
-    console.log(sendInfo);
     this.ws.sendInfoJSON(sendInfo);
   }
 
-  _seandRestart(data: any) {
+  _sendRestart(data: any) {
     const sendInfo = { send: { action: 16 } };
-    console.log(sendInfo);
     this.ws.sendInfoJSON(sendInfo);
   }
 
@@ -64,7 +59,7 @@ export default class MultiplayerModel {
    * _getInfo
    */
   _getInfo(data: any) {
-    console.log('_getInfo begin ', data)
+    //console.log('_getInfo ', data)
     switch (data.type) {
       case 'RoomNewCells':
         Bus.emit('updateFieldWS', data);
@@ -91,6 +86,5 @@ export default class MultiplayerModel {
         document.location.replace('/newconn');
         break;
     }
-    console.log('_getInfo end')
   }
 }
