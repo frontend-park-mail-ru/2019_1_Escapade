@@ -1,0 +1,176 @@
+.multi_player {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+
+  &__wrapper {
+    margin-top: 10px;
+    display: flex;
+    flex-direction: column;
+  }
+
+  &__button_chat {
+    width: 276px;
+    background-color: #394653;
+    height: 33px;
+    color: #fff;
+    font-size: 21px;
+    border-radius: 10px;
+
+    @media screen and (max-width: $tablet) {
+      & {
+        width: 250px;
+      }
+    }
+  }
+
+  &__button_chat:hover {
+    filter: brightness(125%);
+  }
+
+  &__button_restart {
+    width: 45px;
+    height: 45px;
+    background: url('./img/restart.png');
+    background-repeat: no-repeat;
+    margin-left: 5px;
+    margin-bottom: 8px;
+    background-size: contain;
+  }
+
+  &__button_restart:hover {
+    filter: brightness(145%);
+  }
+
+
+
+  &__info_container {
+    display: flex;
+    flex-direction: column;
+  }
+
+  &_info {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-left: 15px;
+    text-align: center;
+    height: 731px;
+    width: 534px;
+    border-radius: 23px;
+
+    @media screen and (max-width: $tablet) {
+      & {
+        width: initial;
+        height: initial;
+        margin-left: 0;
+      }
+    }
+  }
+
+  &__row {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    transition: all 0.5s ease-in-out;
+  }
+
+  &__timer {
+    // background-color: #4B5E70;
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    margin-top: 15px;
+    border-radius: 23px;
+  }
+
+  &__timer_str {
+    text-align: center;
+    color: white;
+    font-size: 4rem;
+    font-weight: 700;
+    padding: 8px;
+  }
+
+  @media screen and (max-width: $tablet) {
+    &__timer_str {
+      font-size: 2rem;
+      font-weight: 600;
+    }
+  }
+
+  &__playerlist_container {
+    display: flex;
+    justify-content: center;
+  }
+
+  @media screen and (max-width: 320px) {
+    & {
+      display: flex;
+      align-items: center;
+      flex-direction: column;
+    }
+  }
+
+  @media screen and (min-width: 321px) and (max-width: 480px) {
+    & {
+      display: flex;
+      align-items: center;
+      flex-direction: column;
+    }
+
+  }
+
+  @media screen and (min-width: 481px) and (max-width: 768px) {
+    & {
+      display: flex;
+      align-items: center;
+      flex-direction: column;
+    }
+
+    &__player {
+      margin-left: 70px;
+    }
+
+    &__settings {
+      margin-left: 65px;
+    }
+
+    &_info {
+      margin-left: 30px;
+    }
+
+    &__under_map {
+      margin-left: 75px;
+    }
+
+  }
+
+  @media screen and (min-width: 769px) and (max-width: 1200px) {
+    & {
+      display: flex;
+      align-items: center;
+      flex-direction: column;
+    }
+  }
+}
+
+.game__multi_right_menu_buttons {
+  display: flex;
+  margin-top: 15px;
+}
+
+
+.game__multi_quit_button {
+  width: 55px;
+  height: 55px;
+  background: url('./img/quit.png');
+  background-repeat: no-repeat;
+  background-size: contain;
+}
+
+.game__multi_quit_button:hover {
+  filter: brightness(145%);
+}

@@ -1,0 +1,82 @@
+.game {
+  &__game_actions {
+    width: 517px;
+    height: 155px;
+    padding-bottom: 10px;
+    margin-left: 20px;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    background-color: #566472;
+    border-radius: 8px;
+
+    @media screen and (max-width: $tablet) {
+      & {
+        width: initial;
+        height: 90px;
+        margin-left: 13px;
+        margin-right: 13px;
+      }
+    }
+
+  }
+
+  &__game_actions_message_num {
+    color: #c1c1c1;
+    margin-left: 8px;
+    font-size: 20px;
+  }
+
+  &__game_actions_message {
+    color: white;
+    font-size: 20px;
+    margin-right: 10px;
+    margin-left: 10px;
+  }
+
+  &__game_actions_row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: all .5s ease-in-out;
+    margin-right: 5px;
+    margin-left: 20px;
+    margin-top: 6px;
+    width: 486px;
+
+    @media screen and (max-width: $tablet) {
+      & {
+        margin-left: 0;
+        width: initial;
+      }
+    }
+  }
+
+  &__game_actions_message_time {
+    color: #c1c1c1;
+    margin-right: 10px;
+    font-size: 15px;
+  }
+
+  &__game_actions_title {
+    height: 34px;
+    width: 150px;
+    color: white;
+    font-size: 20px;
+    margin-left: 20px;
+  }
+}
+
+
+
+.game__game_actions:hover::-webkit-scrollbar {
+  width: 7px;
+}
+
+.game__game_actions::-webkit-scrollbar {
+  width: 0px;
+  transition: 3s linear;
+}
+
+.game__game_actions::-webkit-scrollbar-thumb {
+  background: #ff3d00;
+}

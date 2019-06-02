@@ -1,4 +1,5 @@
 import Bus from '../../../utils/bus';
+const Template = require('./Settings.pug');
 /** */
 export default class SettingsGameView {
   infoModeDocElement: any;
@@ -13,33 +14,41 @@ export default class SettingsGameView {
   difficult: number;
   width: number;
   height: number;
+  timerHTMLElement: any;
+  clickOnBodyBindThis: any;
+  numOfSize: number;
   constructor() {
     this.difficult = 1;
     this.minesCount = 20;
-    this.width = 15;
-    this.height = 15;
-    Bus.on('addListenersSettingsGame', this._addListeners.bind(this), 'settingsView');
+    this.width = 14;
+    this.height = 14;
+    this.numOfSize = 0;
+    Bus.on('addSettingsGame', this._addListeners.bind(this), 'settingsView');
+    this.clickOnBodyBindThis = this._clickOnBody.bind(this);
   }
 
-  _addListeners() {
+  _addListeners(htmlElementTitle : string) {
+    this.timerHTMLElement = document.querySelector(htmlElementTitle);
+    this.timerHTMLElement.innerHTML = Template();
     this.infoModeDocElement = document.querySelector('.single_player__settings_info_mode');
     this.infoWidthDocElement = document.querySelector('.single_player__settings_info_width');
-    this.infoHeightDocElement = document.querySelector('.single_player__settings_info_height');
-    this.infoMinesDocElement = document.querySelector('.single_player__settings_info_mines');
     Bus.on('settingsChangeMode', this._modeChange.bind(this), 'settingsView');
-    Bus.on('settingsChangeMinesCount', this._minesCountChange.bind(this), 'settingsView');
     Bus.on('settingsChangeSize',this._sizeChange.bind(this), 'settingsView');
     Bus.on('settingsSetParameters', this._setParameters.bind(this), 'settingsView');
-    document.addEventListener('click', this._clickOnBody.bind(this));
+    document.removeEventListener('click', this.clickOnBodyBindThis);
+    document.addEventListener('click', this.clickOnBodyBindThis);
+    let sizesDom = [].slice.call(document.querySelectorAll('.single_player__submenu_size'));
+    let diffDom = [].slice.call(document.querySelectorAll('.single_player__submenu_diff'));
+
+    diffDom[this.difficult].style.color = '#D5B45B'
+    sizesDom[this.numOfSize].style.color = '#D5B45B'
   }
 
   /** */
   _setParameters({difficult = 1, width = 15, height = 15, mines = 20}) {
     const mode = this._getModeByDifficult(difficult);
-    this.infoModeDocElement.innerHTML = `${mode} mode`;
-    this.infoMinesDocElement.innerHTML = `${mines} mines`;
-    this.infoWidthDocElement.innerHTML = `${width} width`;
-    this.infoHeightDocElement.innerHTML = `${height} height`;
+    this.infoModeDocElement.innerHTML = `${mode}`;
+    this.infoWidthDocElement.innerHTML = `${width}x${height}`;
   };
 
   _getModeByDifficult(difficult : number) {
@@ -68,31 +77,58 @@ export default class SettingsGameView {
   }
 
   _changeHard(e: any) {
+    let sizesDom = [].slice.call(document.querySelectorAll('.single_player__submenu_size'));
+    let diffDom = [].slice.call(document.querySelectorAll('.single_player__submenu_diff'));
     if (e.target.classList.contains('single_player__submenu_baby')) {
+      diffDom[this.difficult].style.color = 'white'
       this.difficult = 0;
+      diffDom[this.difficult].style.color = '#D5B45B'
     } else if (e.target.classList.contains('single_player__submenu_normal')) {
+      diffDom[this.difficult].style.color = 'white'
       this.difficult = 1;
+      diffDom[this.difficult].style.color = '#D5B45B'
     } else if (e.target.classList.contains('single_player__submenu_hard')) {
+      diffDom[this.difficult].style.color = 'white'
       this.difficult = 2;
+      diffDom[this.difficult].style.color = '#D5B45B'
     } else if (e.target.classList.contains('single_player__submenu_god')) {
+      diffDom[this.difficult].style.color = 'white'
       this.difficult = 3;
+      diffDom[this.difficult].style.color = '#D5B45B'
+    } else if (e.target.classList.contains('single_player__submenu_size_0')) {
+      this.width = 14;
+      sizesDom[this.numOfSize].style.color = 'white'
+      this.numOfSize = 0;
+      sizesDom[this.numOfSize].style.color = '#D5B45B'
+    } else if (e.target.classList.contains('single_player__submenu_size_1')) {
+      this.width = 20;
+      sizesDom[this.numOfSize].style.color = 'white'
+      this.numOfSize = 1;
+      sizesDom[this.numOfSize].style.color = '#D5B45B'
+    } else if (e.target.classList.contains('single_player__submenu_size_2')) {
+      this.width = 25;
+      sizesDom[this.numOfSize].style.color = 'white'
+      this.numOfSize = 2;
+      sizesDom[this.numOfSize].style.color = '#D5B45B'
+    } else if (e.target.classList.contains('single_player__submenu_size_3')) {
+      this.width = 30;
+      sizesDom[this.numOfSize].style.color = 'white'
+      this.numOfSize = 3;
+      sizesDom[this.numOfSize].style.color = '#D5B45B'
     }
-    console.log("_changeHard");
+    
+    
+    this.height = this.width;
     this._modeChange(this._getModeByDifficult(this.difficult));
-    Bus.emit('settingsChangeHard', {difficult : this.difficult});
+    this._sizeChange({width : this.width, height : this.height});
+    Bus.emit('settingsChangeHard', {difficult : this.difficult, width : this.width, height : this.height});
   }
   /** */
   _sizeChange({width = 15, height = 15}) {
-    this.infoWidthDocElement.innerHTML = `${width} width`;
-    this.infoHeightDocElement.innerHTML = `${height} height`;
+    this.infoWidthDocElement.innerHTML = `${width}x${height}`;
   }
   /** */
   _modeChange(mode : string) {
-    console.log("_modeChange");
-    this.infoModeDocElement.innerHTML = `${mode} mode`;
-  }
-  /** */
-  _minesCountChange(number : number) {
-    this.infoMinesDocElement.innerHTML = `${number} mines`;
+    this.infoModeDocElement.innerHTML = `${mode}`;
   }
 }

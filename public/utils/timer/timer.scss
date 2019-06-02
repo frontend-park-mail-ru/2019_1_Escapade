@@ -1,0 +1,55 @@
+.countdown {
+  display: flex;
+  justify-content: space-around;
+
+
+  &__label {
+    margin-right: 27px;
+    margin-left: 10px;
+    color: #C4C4C4;
+    font-size: 18px;
+  }
+
+  &__column {
+    display: flex;
+    flex-direction: column;
+  }
+
+  &__row {
+    display: flex;
+    width: 244px;
+    flex-direction: row;
+  }
+
+
+  @media screen and (max-width: $tablet) {
+    &__clock {
+      font-size: 35px;
+    }
+
+    &__label {
+      font-size: 12px;
+      margin-right: 18px;
+      margin-left: 4px;
+    }
+  }
+}
+
+.timer__clock {
+
+  width: 275px;
+  color: #fff;
+  font-size: 59px;
+  letter-spacing: 2px;
+  height: 65px;
+  line-height: 57px;
+
+  @media screen and (max-width: $tablet) {
+    & {
+      width: initial;
+      height: initial;
+      text-align: left;
+      font-size: 36px
+    }
+  }
+}

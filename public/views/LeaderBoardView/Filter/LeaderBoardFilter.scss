@@ -1,0 +1,40 @@
+.leaderboard__filter {
+
+  display: flex;
+  flex-direction: column;
+  background-color: #4B5E70;
+  border: 2px solid black;
+  border-radius: 12px;
+  align-items: center;
+  margin-left: 15px;
+
+  @media screen and (max-width: $normal) {
+    & {
+      display: none;
+    }
+  }
+
+  &_header {
+    width: 10vw;
+    background-color: #252F38;
+    border-radius: 9px;
+    padding: 10px 20px;
+    text-align: center;
+    color: white;
+  }
+
+  &_ranks {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    margin: 10px;
+  }
+
+  &_rank {
+    background-color: white;
+    padding: 10px 15px;
+    border-radius: 10px;
+    margin-bottom: 10px;
+    cursor: pointer;
+  }
+}

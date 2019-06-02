@@ -1,13 +1,10 @@
-
-.single_player{
+.user_info {
   &__player {
-    background-color: #4B5E70;
-    display:flex;
-    justify-content: space-between;
-    align-items: center;
-    border-radius: 50px 15px 15px 50px;
-    width:700px
+    display: flex;
+    width: 296px;
+    text-align: left;
   }
+
   &__player_photo {
     width: 75px;
     height: 75px;
@@ -19,21 +16,13 @@
   &__player_str {
     color: white;
     font-size: 20px;
+    margin-left: 11px;
+    height: 24px;
   }
 
-  &__player_score {
-    border-left: 1px solid white; 
-    border-right: 1px solid white;
-    padding: 0 20px;
-  }
-
-  &__player_dop{
-    width: 20px;
-  }
-
-  @media screen and (max-width: $tablet){
+  @media screen and (max-width: $tablet) {
     &__player {
-      width: 300px;
+      width: 260px;
     }
 
     &__player_score {
@@ -45,4 +34,26 @@
     }
 
   }
+}
+
+.user_info__column {
+  display: flex;
+  flex-direction: column;
+}
+
+.user_info__row {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 181px;
+  height: 24px;
+}
+
+.user_info__label {
+  margin-left: 11px;
+  color: #C4C4C4;
+}
+
+.single_player__player_name {
+  font-weight: bold;
 }

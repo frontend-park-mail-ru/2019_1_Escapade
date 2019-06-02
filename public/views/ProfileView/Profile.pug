@@ -8,9 +8,6 @@ section(data-section-name='profile')
         .profile__data.mr-2.ml-3
         a.profile__hrefToChange(data-href='profile/edit', href='profile/edit')
       .profile__stats
-        .mb-3.games
-          span.rowname.profile__rowname games:
-        .profile__games
-          include ./UserGames/Profile__game.pug
-          include ./UserGames/Profile__game.pug
-          include ./UserGames/Profile__game.pug
+        .mb-3.mt-2.games
+          span.rowname.profile__rowname Your games
+        .profile__games.profile__games_noscroll

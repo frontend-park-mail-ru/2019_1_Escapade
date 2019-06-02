@@ -1,6 +1,8 @@
 import Bus from '../utils/bus';
 import { Net } from '../utils/net';
 import { WebSocketInterface } from '../utils/webSocket';
+import * as dataAddress from './../../netconfig.json';
+
 /**
  *
  */
@@ -12,21 +14,20 @@ export default class ProfileModel {
    *
    */
   constructor() {
-    this.wsAdress = 'ws://localhost:3004/ws';
+    this.wsAdress = dataAddress.profileWsAddress;
+
     Bus.on('currentPath', this._currentPathSignalFunc.bind(this), 'profileModel');
+    Bus.on('changeProfile', this._changeProfile.bind(this), 'profileModel');
   }
 
   _busAllOn() {
     Bus.on('getAvatar', this._getAvatar.bind(this), 'profileModel');
-    Bus.on('changeProfile', this._changeProfile.bind(this), 'profileModel');
     Bus.on('uploadAvatar', this._uploadAvatar.bind(this), 'profileModel');
     Bus.on('getInfoFromWS', this._getInfo.bind(this), 'profileModel');
-    
   }
 
   _busAllOff() {
     Bus.off('getAvatar', this._getAvatar.bind(this), 'profileModel');
-    Bus.off('changeProfile', this._changeProfile.bind(this), 'profileModel');
     Bus.off('uploadAvatar', this._uploadAvatar.bind(this), 'profileModel');
     Bus.off('getInfoFromWS', this._getInfo.bind(this), 'profileModel');
   }
@@ -45,10 +46,11 @@ export default class ProfileModel {
     }
   }
 
-  _getInfo(data : any) {
-    console.log('_getInfo begin ', data) 
-    switch(data.type) {
-      case 'Lobby' :
+  _getInfo(data: any) {
+    //console.log('_getInfo ', data)
+    switch (data.type) {
+      case 'Lobby':
+        console.log('updateProfileGames')
         Bus.emit('updateProfileGames', data.value);
         break;
     }
@@ -60,7 +62,7 @@ export default class ProfileModel {
    */
   _changeProfile(data: object) {
     console.log(data);
-    Net.put(data, '/user')
+    Net.put(data, '/api/user')
       .then((resp) => {
         console.log(resp.status);
         if (resp.status === 200) {
@@ -114,7 +116,7 @@ export default class ProfileModel {
    * @param {*} name
    */
   _getAvatar(name: string) {
-    Net.get(`/avatar/${name}`)
+    Net.get(`/api/avatar/${name}`)
       .then((resp) => {
         console.log(resp.status);
         if (resp.status === 200) {

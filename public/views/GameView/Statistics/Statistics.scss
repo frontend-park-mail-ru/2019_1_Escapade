@@ -1,11 +1,10 @@
 .single_player{
   &__statistics {
-    background-color: #4B5E70;
-    display:flex;
+    display: flex;
     flex-direction: column;
-    margin-top: 15px;
+    /* margin-top: 21px; */
     text-align: center;
-    border-radius: 23px;
+    width: 329px;
   }
 
   &__statistics_row {
@@ -18,41 +17,42 @@
   &__statistics_row_str {
     position: relative;
     text-align: center;
-    color: white;
+    color: #fff;
     border-radius: 15px;
     font-size: 20px;
+    width: 34px;
   }
 
   &__statistics_points_img{
-    width: 50px;
-    height: 50px;
+    width: 28px;
+    height: 28px;
     background: url('./img/star.png');
     background-repeat: no-repeat;
-    background-size: cover;
+    background-size: contain;
   }
 
   &__statistics_mines_img{
-    width: 50px;
-    height: 50px;
+    width: 28px;
+    height: 28px;
     background: url('./img/bomb_w.png');
     background-repeat: no-repeat;
-    background-size: cover;
+    background-size: contain;
   }
 
   &__statistics_left_click_img{
-    width: 45px;
-    height: 76px;
+    width: 18px;
+    height: 28px;
     background: url('./img/left_click.png');
     background-repeat: no-repeat;
-    background-size: cover;
+    background-size: contain;
   }
 
   &__statistics_right_click_img{
-    width: 45px;
-    height: 76px;
+    width: 18px;
+    height: 28px;
     background: url('./img/right_click.png');
     background-repeat: no-repeat;
-    background-size: cover;
+    background-size: contain;
   }
 
   @media screen and (max-width: $tablet) {

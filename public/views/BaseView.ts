@@ -106,6 +106,9 @@ export default class BaseView {
    *
    */
   showOfflineOverlay() {
+    if (!this.overlayOffline) {
+      return;
+    }
     this.overlayOffline.hidden = false;
   }
 
@@ -113,6 +116,9 @@ export default class BaseView {
    *
    */
   _hideOfflineOverlay() {
+    if (!this.overlayOffline) {
+      return;
+    }
     this.overlayOffline.hidden = true;
   }
 }

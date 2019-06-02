@@ -9,7 +9,7 @@ module.exports = {
   output: {
     publicPath: '/',
     path: path.resolve(__dirname, 'public/dist'),
-    filename: 'bundle.js',
+    filename: 'bundle.[chunkhash].js',
   },
 
   plugins: [
@@ -26,33 +26,32 @@ module.exports = {
   },
 
   module: {
-    rules: [
-      {
-        test: /\.ts$/,
-        exclude: /node_modules/,
-        loader: 'ts-loader',
-      },
-      {
-        test: /\.js$/,
-        use: ['source-map-loader'],
-        enforce: 'pre',
-      },
-      {
-        test: /\.css$/,
-        use: ['style-loader', 'css-loader'],
-      },
-      {
-        test: /\.scss$/,
-        use: ['style-loader', 'css-loader', 'sass-loader'],
-      },
-      {
-        test: /\.pug$/,
-        loader: 'pug-loader',
-      },
-      {
-        test: /\.(img|jpeg|jpg|png)$/,
-        loader: 'file-loader?name=img/[name].[ext]',
-      },
+    rules: [{
+      test: /\.ts$/,
+      exclude: /node_modules/,
+      loader: 'ts-loader',
+    },
+    {
+      test: /\.js$/,
+      use: ['source-map-loader'],
+      enforce: 'pre',
+    },
+    {
+      test: /\.css$/,
+      use: ['style-loader', 'css-loader'],
+    },
+    {
+      test: /\.scss$/,
+      use: ['style-loader', 'css-loader', 'postcss-loader', 'sass-loader'],
+    },
+    {
+      test: /\.pug$/,
+      loader: 'pug-loader',
+    },
+    {
+      test: /\.(img|jpeg|jpg|png)$/,
+      loader: 'file-loader?name=img/[name].[ext]',
+    },
     ],
   },
 };

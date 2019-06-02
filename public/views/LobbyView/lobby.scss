@@ -1,0 +1,448 @@
+.lobby {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  background: radial-gradient(512px at 50% 50%, hsla(0, 0%, 100%, .34) 0, hsla(0, 0%, 100%, 0) 100%), #667787;
+  height: 100vh;
+
+  @media screen and (max-width: $tablet) {
+    & {
+      justify-content: flex-start;
+    }
+  }
+
+  &__header {
+    display: flex;
+    align-items: center;
+
+    @media screen and (max-width: $tablet) {
+      & {
+        margin-bottom: 6vh;
+      }
+    }
+  }
+
+  &__main {
+    flex-direction: column;
+    justify-content: center;
+    width: 90vw;
+  }
+
+  &__chat_container {
+    margin-left: 5px;
+
+    @media screen and (max-width: $tablet) {
+      & {
+        margin-left: 0;
+        width: 95vw;
+      }
+    }
+  }
+
+  &__rooms_container {
+    overflow-y: scroll;
+    overflow-x: hidden;
+    margin-top: 10px;
+    width: 50vw;
+    padding-right: 5px;
+    display: flex;
+    flex-direction: column;
+
+    &::-webkit-scrollbar-button {
+      display: none;
+    }
+
+    @media screen and (max-width: $tablet) {
+      & {
+        width: 95vw;
+        padding-right: 0;
+      }
+    }
+  }
+
+  &__rooms_container:hover::-webkit-scrollbar {
+    width: 7px;
+  }
+
+  &__rooms_container::-webkit-scrollbar {
+    width: 0px;
+    transition: 3s linear;
+  }
+
+  &__rooms_container::-webkit-scrollbar-thumb {
+    background: #ff3d00;
+    ;
+  }
+
+  &__free_room_container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  &__busy_room_container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  &__room_not_found {
+    color: #fff;
+    font-size: 40px;
+    text-align: left;
+    margin-left: 18px;
+  }
+
+  &__back {
+    width: 95px;
+    height: 95px;
+    background: url('./img/flag-right.png') no-repeat;
+    -webkit-transform: matrix(-1, 0, 0, 1, 0, 0);
+    transform: matrix(-1, 0, 0, 1, 0, 0);
+    background-size: contain;
+  }
+
+  &__back:hover {
+    animation: go-left .4s linear .2s 1 normal forwards;
+  }
+
+  &__button {
+    border-radius: 30px;
+    border: 0.2vw solid rgb(150, 159, 167);
+    background-color: rgba(75, 94, 112, 1);
+    color: white;
+    cursor: pointer;
+    font-family: Saira;
+  }
+
+  &__current_room_panel {
+    display: flex;
+    padding: 15px;
+    border-radius: 30px;
+    border: 2.2px solid #969fa7;
+    background-color: #4b5e70;
+    color: #fff;
+    cursor: pointer;
+    font-family: Saira;
+    margin-left: 60px;
+
+    @media screen and (max-width: $tablet) {
+      & {
+        margin-left: 14px;
+      }
+    }
+
+    &_info {
+      display: flex;
+      flex-direction: column;
+      margin-right: 12px;
+    }
+  }
+
+  &__rooms_main {
+    display: flex;
+    justify-content: center;
+
+    @media screen and (max-width: $tablet) {
+      & {
+        flex-direction: column;
+        align-items: center;
+      }
+    }
+
+  }
+
+  &__center {
+    justify-content: center;
+  }
+
+  &__rooms {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    margin: 0 auto;
+    text-align: center;
+
+    &_header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      height: 67px;
+    }
+  }
+
+  &__create_game {
+    background-image: url('./img/create.png');
+    background-size: 31px 31px;
+    background-position: 7px;
+    background-repeat: no-repeat;
+    padding: 12px 12px 12px 41px;
+    font-size: 20px;
+    margin-right: 22px;
+  }
+
+  &__create_game:hover {
+    filter: brightness(123%);
+  }
+
+  @media screen and (max-width: $tablet) {
+    &__current_room_panel {
+      font-size: 3vw;
+    }
+
+    &__create_game {
+      font-size: 3.5vw;
+      padding: 3.2vw;
+      padding-left: 42px;
+    }
+
+    &__room_not_found {
+      width: 200px;
+      font-size: 23px;
+    }
+  }
+
+  &__label {
+    border-radius: 10px;
+    margin-bottom: 2px;
+    font-family: Saira;
+    font-size: 55px;
+    color: #fff;
+    padding: 3px 17px;
+
+    @media screen and (max-width: $tablet) {
+      & {
+        font-size: 45px;
+      }
+    }
+  }
+
+  // &__back {
+  //   margin-bottom: 1vw;
+  // }
+
+  &__find_game {
+    background-image: url('./img/magnifier.png');
+  }
+
+  &__room {
+    display: flex;
+    border-radius: 5px;
+    color: #fff;
+    font-size: 19px;
+    margin-bottom: 5px;
+    text-align: center;
+    align-items: center;
+    justify-content: space-evenly;
+    min-height: 73px;
+
+    @media screen and (max-width: $tablet) {
+      & {
+        font-size: 3.5vw;
+        min-height: 50px;
+      }
+    }
+
+    &:hover {
+      filter: brightness(125%);
+    }
+  }
+
+
+  &__free_room {
+    background-color: rgba(70, 83, 94, 1);
+  }
+
+  &__busy_room {
+    background-color: rgba(130, 130, 130, 1);
+  }
+
+  &__element {
+    margin: 3px;
+    padding: 4px;
+  }
+
+  &__with_image {
+    background-repeat: no-repeat;
+    background-size: 19px;
+    background-position: left;
+    text-indent: 15px;
+  }
+
+  @media screen and (max-width: $normal) {
+    &__with_image {
+      padding-left: 14px;
+      background-size: 2.2vw;
+    }
+  }
+
+  @media screen and (max-width: $tablet) {
+    &__with_image {
+      padding-left: 17px;
+      background-size: 4.5vw;
+    }
+  }
+
+  &__name {
+    background-image: url('./img/room.png');
+    width: 108px;
+  }
+
+  &__players {
+    background-image: url('./img/player.png');
+    width: 121px;
+    background-size: 12px;
+  }
+
+  &__difficult {
+    background-image: url('./img/difficult.png');
+    width: 10vw;
+  }
+
+  &__size {
+    background-image: url('./img/size.png');
+    width: 94px;
+  }
+
+  &__mines {
+    background-image: url('./img/mine_icon.png');
+    width: 64px;
+  }
+
+  &__time {
+    background-image: url('./img/clock.png');
+    width: 123px;
+  }
+
+  &__time_have {
+    background-image: url('./img/clock.png');
+    width: 10vw;
+  }
+
+  &__observers {
+    background-image: url('./img/observer.png');
+    width: 10vw;
+  }
+
+  &__status {
+    background-image: url('./img/status.png');
+    width: 10vw;
+  }
+
+  @media screen and (max-width: $tablet) {
+    &__name {
+      width: initial
+    }
+
+    &__players {
+      width: initial
+    }
+
+    &__difficult {
+      width: initial
+    }
+
+    &__size {
+      width: initial
+    }
+
+    &__mines {
+      width: initial
+    }
+
+    &__time {
+      display: none;
+    }
+
+    &__time_have {
+      display: none;
+    }
+
+    &__status {
+      display: none;
+    }
+
+    &__observers {
+      display: none;
+    }
+  }
+
+
+  &__paginator {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    width: 20vw;
+    height: 5vw;
+    border-radius: 5px;
+    color: white;
+    background-color: rgba(0, 0, 0, 0.55);
+    margin-top: 2vh;
+  }
+
+  @media screen and (max-width: $tablet) {
+    &__paginator {
+      width: 28vw;
+      height: 8.5vw;
+    }
+  }
+
+  &__paginator_left {
+    background-image: url('./img/flag_back.png');
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center;
+    cursor: pointer;
+    width: 4vw;
+    height: 4vw;
+  }
+
+  &__paginator_right {
+    background-image: url('./img/flag_ahead.png');
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center;
+    cursor: pointer;
+    width: 4vw;
+    height: 4vw;
+  }
+
+  @media screen and (max-width: $tablet) {
+    &__paginator_left {
+      width: 6.5vw;
+      height: 6.5vw;
+    }
+
+    &__paginator_right {
+      width: 6.5vw;
+      height: 6.5vw;
+    }
+  }
+
+  &__paginator_page {
+    color: white;
+    font-size: 3vw;
+    font-weight: 600;
+    align-self: center;
+  }
+
+}
+
+@media screen and (min-width: $normal) {
+  .room_status {
+    font-size: 27px;
+  }
+}
+
+.room__exit {
+  width: 45px;
+  height: 45px;
+  background: url('./img/cancel.png') #ced6dd no-repeat;
+  background-size: cover;
+  border-radius: 50%;
+}
+
+.room__exit:hover {
+  filter: brightness(125%);
+}

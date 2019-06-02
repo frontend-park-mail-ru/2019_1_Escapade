@@ -4,52 +4,53 @@ export class WebSocketInterface {
   ws: WebSocket;
   dataJSON: any;
   connect: boolean;
+  countOfrefresh: number;
+  address: string;
 
   constructor(address = 'ws://localhost:8081') {
     this.connectWS(address);
+    this.address = address;
+    this.countOfrefresh = 150;
   }
 
   connectWS(address : string) {
     this.connect = true;
     // не работает ws.onopen пока не знаю почему
     this.ws = new WebSocket(address);
-    this.ws.onopen = function (event) {
-      console.log('Success onopen');
-    };
-    this.ws.onclose = function (event) {
-      if (event.wasClean) {
-        console.log('Connection is closed clean');
-      } else {
-        console.log('Disconnection');
-      }
-      console.log('Code: ' + event.code + ' cause: ' + event.reason);
-    };
-    this.ws.onerror = function (error) {
-      console.log('ws error');
-      return;
-    };
 
-    console.log('_connect begin');
+    this.ws.onclose = (function (event : any) {
+      if (!event.wasClean) {
+        console.log('Disconnection');
+        if (this.countOfrefresh-- < 0) {
+          return;
+        }
+        this.connectWS(this.address);
+      }
+    }).bind(this);
+    this.ws.onerror = (function (error : any) {
+      if (this.countOfrefresh-- < 0) {
+        return;
+      }
+      this.connectWS(this.address);
+      return;
+    }).bind(this);;
+
     if (this.ws) {
       this.setCallback(this._getInfoCallBack.bind(this));
     }
-    console.log('_connect end');
     //Bus.on('sendInfoToWS', this._sendInfoJSON.bind(this));
   }
   /**
    * _getRoomsCallBack
    */
   _getInfoCallBack(data: string) {  
-    console.log('_getInfoCallBack begin') 
     try {
       this.dataJSON = JSON.parse(data);
     } catch (e) {
-      console.log('debugging - ', data);
       return;
     }
     Bus.emit('getInfoFromWS', this.dataJSON);
 
-    console.log('_getInfoCallBack end')
   }
 
   /**
@@ -57,15 +58,13 @@ export class WebSocketInterface {
    */
   sendInfoJSON(data : any) { 
     const dataJSON = JSON.stringify(data);
-    console.log(dataJSON);
+    //console.log(dataJSON);
     this.sendMessage(dataJSON);
   }
 
 
   sendMessage(data: any) {
-    //if (this.connect) {
     this.ws.send(data);
-    //}
   }
 
 

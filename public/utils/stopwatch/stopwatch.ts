@@ -1,4 +1,6 @@
 /** */
+const timerTemplate = require('./stopwatch.pug');
+
 export class Stopwatch {
   timerHTMLElement: any;
   running: boolean;
@@ -8,11 +10,15 @@ export class Stopwatch {
   then: number;
   delayThen: number;
   timer: NodeJS.Timeout;
+  countdownElement: any;
+
   /**
    *
    */
   constructor(htmlElementTitle : string) {
-    this.timerHTMLElement = document.getElementById(htmlElementTitle);
+    this.timerHTMLElement = document.querySelector(htmlElementTitle);
+    this.timerHTMLElement.innerHTML = timerTemplate();
+    this.countdownElement = document.querySelector(".countdown__clock");
     this.running = false;
     this.paused = false;
     this.timeStr = '';
@@ -22,6 +28,9 @@ export class Stopwatch {
    *
    */
   start() {
+    if (this.running) {
+      return;
+    }
     this.delay = 0;
     this.running = true;
     this.then = Date.now();
@@ -39,7 +48,7 @@ export class Stopwatch {
     while (i < d.length) {
       let t = Math.floor(elapsed / d[i]);
       elapsed -= t * d[i];
-      let strT = ((i > 0 && t < 10) ? '0' + t : t).toString();
+      let strT = ((t >= 0 && t < 10) ? '0' + t : t).toString();
       time.push(strT);
       i++;
     }
@@ -52,14 +61,17 @@ export class Stopwatch {
    */
   run() {
     const time = this._parseTime(Date.now() - this.then - this.delay);
-    this.timeStr = time[0] + ':' + time[1] + ':' + time[2];
-    this.timerHTMLElement.innerHTML = this.timeStr;
+    this.timeStr = `${time[0]}:${time[1]}:${time[2]}`;
+    this.countdownElement.innerHTML = this.timeStr;
   };
 
   /**
    *
    */
   stop() {
+    if (!this.running) {
+      return;
+    }
     this.running = false;
     this.delayThen = Date.now();
     clearInterval(this.timer);
@@ -81,8 +93,8 @@ export class Stopwatch {
   reset() {
     this.running = false;
     this.paused = false;
-    this.timeStr = '0:00:00';
-    this.timerHTMLElement.innerHTML = this.timeStr;
+    this.timeStr = `00:00:00`;
+    this.countdownElement.innerHTML = this.timeStr;
   };
 
   /**

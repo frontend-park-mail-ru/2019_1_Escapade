@@ -1,7 +1,6 @@
-//const backHost = 'https://escapade-backend.herokuapp.com';
-const backHost = 'http://localhost:3001';
-//const backHost = 'http://3.120.191.110';
+import * as dataAddress from './../../netconfig.json';
 
+const backHost = dataAddress.backHost;
 
 /** */
 export class Net {
@@ -47,7 +46,7 @@ export class Net {
    * @param {object} body
    * @return {Promise<Response>}
    */
-  static postPhoto(body: FormData, url = '/avatar', host = backHost) {
+  static postPhoto(body: FormData, url = '/api/avatar', host = backHost) {
     return fetch(host + url, {
       method: 'POST',
       body: body,

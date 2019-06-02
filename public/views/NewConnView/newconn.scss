@@ -1,0 +1,30 @@
+.new_conn__wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  background: $escapade-gradient;
+}
+
+.new_conn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 12px;
+  height: 15vh;
+  border: 1px solid black;
+  border-radius: 12px
+}
+
+.new_conn__message {
+  color: white;
+}
+
+.new_conn__hrefBackToMenu {
+  width: 88px;
+  height: 106px;
+  background: url('./img/flag-right.png') no-repeat;
+  transform: matrix(-1, 0, 0, 1, 0, 0);
+  background-size: cover;
+}

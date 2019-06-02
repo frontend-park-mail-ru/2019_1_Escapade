@@ -1,0 +1,21 @@
+.chat__message.chat_my_message
+  .chat__row
+    .chat__message_user
+      .chat__message_img_container
+          img.chat__message_img.mr-2(src=message.photo)
+      .chat__column
+        .chat__message_name.text-right #{message.name}
+        .chat__time_cont.flex-start
+          .chat__message_time.text-right #{message.time}
+          .chat__edited_message_container
+            - if (message.messEdited){
+            .chat__edited_message (edit)
+            - }
+      - if (message.status == 2){
+      .chat__observer_message (observer)
+      - }
+    .chat_my__row.ml-auto
+      .chat__edit_button
+      .chat__remove_button
+  .chat__text.flex-start.mr-2 #{message.text}
+

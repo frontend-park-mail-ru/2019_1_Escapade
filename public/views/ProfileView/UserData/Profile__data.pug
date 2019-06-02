@@ -2,16 +2,12 @@
   div
     span.rowname.profile__rowname nickname:
   .input.profile__input.text-white #{user.name}
-.profile__row
-  div
-    span.rowname.profile__rowname email:
-  .input.profile__input.text-white #{user.email}
 .profile__row_score.pl-1
   .profile__score.mr-1
     div
       span.rowname.profile__rowname best score:
-    .input.profile__input.text-center.text-white.profile__input_score 0
+    .input.profile__input.text-center.text-white.profile__input_score #{user.bestScore.String}
   .profile__score.ml-1
     div
       span.rowname.profile__rowname best time:
-    .input.profile__input.text-center.text-white.profile__input_time 0:00:00:00
+    .input.profile__input.text-center.text-white.profile__input_time #{user.bestTime.String}

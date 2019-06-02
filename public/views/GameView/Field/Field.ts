@@ -1,6 +1,7 @@
 /* eslint-disable require-jsdoc */
 import Bus from '../../../utils/bus';
 import MathGame from '../../../utils/math';
+const Template = require('./Field.pug');
 /** */
 export default class FieldView {
   field: any;
@@ -12,30 +13,44 @@ export default class FieldView {
   prcentOpen: number;
   percent: number;
   mapElement: any;
+  HTMLElement: any;
+  container: any;
+  parent: any;
+
   constructor() {
     this.width = 0;
     this.height = 0;
-    Bus.on('addListenersField', this._addListeners.bind(this), 'fieldView');
-    Bus.on('removeListenersField', this._removeListeners.bind(this), 'fieldView');
+    Bus.on('addField', this._addListeners.bind(this), 'fieldView');
+    Bus.on('removeField', this._removeListeners.bind(this), 'fieldView');
   }
 
-  _addListeners() {
-    console.log('addListenersField ', Bus.listeners);
+  _addListeners(data : any) {
+    this.container = data.container;
+    this.parent = data.parent;
+    this.HTMLElement = this.parent.querySelector(this.container);
+    this.HTMLElement.innerHTML = Template();
     this._removeListeners();
     Bus.on('renderField', this._render.bind(this), 'fieldView');
     Bus.on('openCell', this._openCell.bind(this), 'fieldView');
     Bus.on('setUnsetFlagOnCell', this._setUnsetFlagOnCell.bind(this), 'fieldView');
     Bus.on('setUnsetFlagMultiOnCell', this._setUnsetFlagMultiOnCell.bind(this), 'fieldView');
     Bus.on('progressGameChange', this._progressGameChange.bind(this), 'fieldView');
-    document.addEventListener('click', this._leftClickOnBody.bind(this));
-    document.addEventListener('contextmenu', this._rightСlickOnCell.bind(this));
+    this.parent.removeEventListener('click', this._leftClickOnBody);
+    this.parent.removeEventListener('contextmenu', this._rightСlickOnCell);
+    this.parent.addEventListener('click', this._leftClickOnBody);
+    this.parent.addEventListener('contextmenu', this._rightСlickOnCell);
     this.percent = 0;
   }
 
 
   _removeListeners() {
-    document.removeEventListener('click', this._leftClickOnBody.bind(this));
-    document.removeEventListener('contextmenu', this._rightСlickOnCell.bind(this));
+    Bus.off('renderField', this._render.bind(this), 'fieldView');
+    Bus.off('openCell', this._openCell.bind(this), 'fieldView');
+    Bus.off('setUnsetFlagOnCell', this._setUnsetFlagOnCell.bind(this), 'fieldView');
+    Bus.off('setUnsetFlagMultiOnCell', this._setUnsetFlagMultiOnCell.bind(this), 'fieldView');
+    Bus.off('progressGameChange', this._progressGameChange.bind(this), 'fieldView');
+    this.parent.removeEventListener('click', this._leftClickOnBody);
+    this.parent.removeEventListener('contextmenu', this._rightСlickOnCell);
   }
 
   _leftClickOnBody(e: any) {
@@ -48,7 +63,6 @@ export default class FieldView {
   _rightСlickOnCell(e: any) {
     if (e.target.classList.contains('cell')) {
       if (e.target.classList.length < 3) {
-        console.log('error e.target.classList.length < 3');
         return;
       }
       let [, x, y] = e.target.id.split('_');
@@ -60,7 +74,7 @@ export default class FieldView {
     this.width = fieldSize.width;
     this.height = fieldSize.height;
     this.cellSize = fieldSize.cellSize;
-    this.field = document.querySelector('.game__field__map');
+    this.field = this.parent.querySelector('.game__field__map');
     this.field.innerHTML = '';
     this.field.setAttribute('class', 'game__field__map');
     this.field.setAttribute('style', `width: ${this.width * this.cellSize}px; height: ${this.height * this.cellSize}px;`);
@@ -76,18 +90,17 @@ export default class FieldView {
       }
     }
 
-    this.percentOpenDocElement = document.querySelector('.game__field__percent');
-    this.loadbarDocElement = document.querySelector('.game__field__loadbar');
+    this.percentOpenDocElement = this.parent.querySelector('.game__field__percent');
+    this.loadbarDocElement = this.parent.querySelector('.game__field__loadbar');
     this.percentOpenDocElement.innerHTML = `0%`;
     this.loadbarDocElement.style.width = '0px';
+
   }
 
   _openCell({x = 0, y = 0, type = 0, color = '#b9c0c9', my = false}){
-    const cell = document.
-      getElementById(`cell_${x}_${y}`);
+    const cell = this.parent.
+      querySelector(`#cell_${x}_${y}`);
     if (!cell) {
-      console.log('error _openCels cannot find ' +
-        `cell${x}_${y}`);
       return;
     }
     if (type > 13) {
@@ -103,14 +116,11 @@ export default class FieldView {
   }
 
   _setUnsetFlagOnCell({x = 0, y = 0, type = 'flag' }){
-    const cell = document.
-      getElementById(`cell_${x}_${y}`);
+    const cell = this.parent.
+      querySelector(`#cell_${x}_${y}`);
     if (!cell) {
-      console.log('error _openCels cannot find ' +
-        `cell${x}_${y}`);
       return;
     }
-    console.log('rightСlickOnCell2')
     const classElems = cell.classList[2].split('_');
     const numClassElem = parseInt(classElems[2]);
     if (type === 'flag') {
@@ -121,11 +131,9 @@ export default class FieldView {
   }
 
   _setUnsetFlagMultiOnCell({x = 0, y = 0, type = 'flag' }){
-    const cell = document.
-      getElementById(`cell_${x}_${y}`);
+    const cell = this.parent.
+      querySelector(`#cell_${x}_${y}`);
     if (!cell) {
-      console.log('error _openCels cannot find ' +
-        `cell${x}_${y}`);
       return;
     }
     const classElems = cell.classList[2].split('_');
@@ -143,7 +151,7 @@ export default class FieldView {
     }
     this.percent = percent;
     this.percentOpenDocElement.innerHTML = `${percent}%`;
-    this.mapElement = document.querySelector('.game__field__map');
-    this.loadbarDocElement.style.width = `${(percent / 100) * (this.mapElement.offsetWidth - 51)}px`;
+    this.mapElement = this.parent.querySelector('.game__field__map');
+    this.loadbarDocElement.style.width = `${(percent / 100) * (this.mapElement.offsetWidth - 58)}px`;
   }  
 }

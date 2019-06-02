@@ -39,13 +39,13 @@
     font-size: calc(0.5rem + 1vw);
   }
 
-  &__header{
+  &__header {
     display: flex;
     justify-content: center;
     align-items: center;
   }
 
-  &__back{
+  &__back {
     width: 108px;
     height: 106px;
     background: url('./img/flag-right.png') no-repeat;
@@ -53,7 +53,17 @@
     background-size: contain;
   }
 
-  &__escapade{
+  &__back:hover {
+    animation: go-left .4s linear .2s 1 normal forwards;
+  }
+
+  &__mode {
+    margin-left: 20vw;
+    cursor: pointer;
+    transform: scale(1) !important;
+  }
+
+  &__escapade {
     background: #FF3D00;
     border-radius: 30px;
     text-align: center;

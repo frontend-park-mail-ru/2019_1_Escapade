@@ -1,24 +1,23 @@
-.profile__game.mb-2
-  .text-white.mr-2 #1
-  .bar-vertical
-  .profile__flag_left
-  .bar-vertical.mr-2
-  .profile__star.mr-1
-  .mr-2.text-white +999
-  .bar-vertical.mr-2
-  .mr-2.text-white 15.08.2018
-  .bar-vertical.mr-2
-  .mr-2.text-red master
-  .bar-vertical.mr-2
-  .mr-2.text-white 66x66
-  .bar-vertical.mr-1
-  .profile__bomb
-  .mr-2.text-white 3000/9998
-  .bar-vertical.mr-1
-  .profile__clock.mr-1
-  .mr-2.text-white 00:12:45
-  .bar-vertical.mr-1
-  .profile__click_left
-  .mr-2.text-white 1000
-  .profile__click_right
-  .mr-1.text-white 230
+- for(var i = 0; i < data.length;i++){
+  .profile__game.mb-2
+    .text-white.gamerow__number.mr-2 ##{i+1}
+    .bar-vertical
+    - if (data[i].iswin){
+    .profile__flag_left
+    - } else {
+    .profile__explosion
+    -}
+    .bar-vertical.mr-2
+    .profile__star.mr-1
+    .mr-2.gamerow__points.text-white #{Math.floor(data[i].points)}
+    .bar-vertical.mr-2
+    .mr-2.gamerow__date.text-white #{data[i].date}
+    .bar-vertical.mr-2
+    .mr-2.gamerow__size.text-white #{data[i].width}x#{data[i].height}
+    .bar-vertical.mr-1
+    .profile__bomb
+    .mr-2.gamerow__mines.text-white #{data[i].mines}
+    .bar-vertical.mr-1
+    .profile__clock.mr-1
+    .mr-2.gamerow__duration.text-white #{data[i].duration}
+- }

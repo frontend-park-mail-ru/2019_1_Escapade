@@ -1,0 +1,5 @@
+{
+  "backHost": "https://explosion.team",
+  "lobbyWsAddress": "wss://explosion.team/game/ws",
+  "profileWsAddress": "wss://explosion.team/history/ws"
+}

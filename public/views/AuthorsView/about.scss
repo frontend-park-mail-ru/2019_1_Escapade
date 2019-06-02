@@ -15,21 +15,25 @@
     justify-content: center;
   }
 
-  &__header{
+  &__header {
     display: flex;
     justify-content: center;
     align-items: center;
   }
-  
-  &__back{
+
+  &__back {
     width: 108px;
     height: 106px;
     background: url('./img/flag-right.png') no-repeat;
     transform: matrix(-1, 0, 0, 1, 0, 0);
     background-size: contain;
   }
-  
-  &__escapade{
+
+  &__back:hover {
+    animation: go-left .4s linear .2s 1 normal forwards;
+  }
+
+  &__escapade {
     background: #FF3D00;
     border-radius: 30px;
     text-align: center;
@@ -49,7 +53,7 @@
   grid-column-gap: 10px;
   grid-row-gap: 10px;
 
-.team__name,
+  .team__name,
   &__role {
     font-family: Saira;
     padding: 1vmin;
@@ -62,10 +66,11 @@
 
   &__a {
     color: white;
-    text-decoration: none
+    text-decoration: none;
+    border-radius: 14px;
   }
 
-  &__a:hover{
-    text-decoration: underline
+  &__a:hover {
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
   }
 }

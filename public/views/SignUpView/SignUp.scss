@@ -1,4 +1,4 @@
-.signup{
+.signup {
   height: 100vh;
   display: flex;
   flex-direction: column;
@@ -7,7 +7,7 @@
   background: $escapade-gradient;
 
 
-  &__main{
+  &__main {
     justify-content: space-evenly;
     display: flex;
     align-items: center;
@@ -22,12 +22,12 @@
   }
 
   @media screen and (min-width: $tablet) {
-    &__form{
+    &__form {
       min-width: 35vh;
     }
   }
 
-  &__submit{
+  &__submit {
     border: none;
     text-align: center;
     background-color: #fffff2;
@@ -35,14 +35,13 @@
     margin: 1.5vh;
   }
 
-  &__warning{
-    width: 80%;
+  &__warning {
     align-self: center;
     margin-top: -5px;
     margin-bottom: 5px;
   }
 
-  &__confirm{
+  &__confirm {
     width: calc(1rem + 7vw);
     height: calc(1rem + 7vw);
     background: url('./img/signup.png') #46535E no-repeat;
@@ -52,7 +51,11 @@
     cursor: pointer;
   }
 
-  &__exit{
+  &__confirm:hover {
+    filter: brightness(125%);
+  }
+
+  &__exit {
     width: calc(1rem + 7vw);
     height: calc(1rem + 7vw);
     background: url('./img/cancel.png') #CED6DD no-repeat;
@@ -61,18 +64,22 @@
     border-radius: 50%;
   }
 
+  &__exit:hover {
+    filter: brightness(125%);
+  }
+
 }
 
-.warning{
+.warning {
   font-size: 13px;
   color: red;
 }
 
-.hidden{
+.hidden {
   display: none !important
 }
 
-.button{
+.button {
   user-select: none;
   padding: 5px 10px;
   cursor: pointer;

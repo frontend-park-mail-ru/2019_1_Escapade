@@ -5,31 +5,43 @@
   background: $escapade-gradient;
 
 
-  &__main{
+  &__main {
     justify-content: center;
     display: flex;
     align-items: center;
     flex-direction: column
   }
 
-  &__info{
+  &__info {
     display: flex;
     justify-content: space-around;
     align-items: flex-end;
   }
 
-  &__row_score{
+  &__row_score {
     display: flex;
     justify-content: space-evenly
   }
 
-  &__games{
+  &__games {
     display: flex;
     flex-direction: column;
-    justify-content: space-between
+    height: 25vh;
+    overflow-y: scroll;
+    padding-right: 10px;
+
+    &::-webkit-scrollbar-button {
+      display: none;
+    }
   }
 
-  &__game{
+  &__games_noscroll {
+    &::-webkit-scrollbar {
+      display: none;
+    }
+  }
+
+  &__game {
     background: #46535E;
     border-radius: 15px;
     display: flex;
@@ -37,20 +49,20 @@
     align-items: center
   }
 
-  &__avatar{
+  &__avatar {
     display: flex;
     flex-direction: column;
-    justify-content:space-between ;
+    justify-content: space-between;
     align-items: center;
     position: relative;
   }
 
-  &__data{
+  &__data {
     display: flex;
     flex-direction: column;
   }
 
-  &__default_avatar{
+  &__default_avatar {
     width: 290px;
     height: 290px;
     background: url('./img/user.png') no-repeat;
@@ -66,7 +78,11 @@
     background-size: contain;
     align-self: flex-start
   }
-  
+
+  &__hrefBackToMenu:hover {
+    animation: go-left .4s linear .2s 1 normal forwards;
+  }
+
   &__hrefToChange {
     width: 90px;
     height: 90px;
@@ -75,99 +91,110 @@
     align-self: center;
     border-radius: 50%;
   }
-  
+
+  &__hrefToChange:hover {
+    filter: brightness(125%);
+  }
+
   @media screen and (max-width: $tablet) {
-  
-    &__info{
+
+    &__info {
       flex-direction: column;
       align-items: center
     }
-  
-    &__main{
+
+    &__main {
       justify-content: space-evenly;
     }
-  
-    &__games{
+
+    &__games {
       display: none;
     }
-  
-    &__input{
+
+    &__input {
       font-size: calc(1rem + 1.5vw);
     }
-  
-    .games{
+
+    .games {
       display: none;
     }
   }
-  
+
   @media screen and (min-width: $tablet) and (max-width: $small) {
-  
-    &__info{
+
+    &__info {
       flex-direction: column;
       align-items: center
     }
-  
-    &__main{
+
+    &__main {
       justify-content: space-evenly;
     }
-  
-    &__games{
+
+    &__games {
       display: none;
     }
-  
-    &__input{
+
+    &__input {
       font-size: calc(1rem + 1.5vw);
     }
-  
-    .games{
+
+    .games {
       display: none;
     }
   }
-  
-  
+
+
   /* Statistics Footer */
-  
-  
-  &__flag_left{
+
+
+  &__flag_left {
     width: 40px;
     height: 36px;
     background: url('./img/flag-right.png') no-repeat;
     transform: matrix(-1, 0, 0, 1, 0, 0);
     background-size: contain;
   }
-  
-  &__star{
+
+  &__explosion {
+    width: 40px;
+    height: 36px;
+    background: url('./img/explosePlayer.png') no-repeat;
+    background-size: contain;
+  }
+
+  &__star {
     width: 40px;
     height: 36px;
     background: url('./img/star-q.png') no-repeat;
     background-size: contain;
   }
-  
-  &__bomb{
+
+  &__bomb {
     width: 40px;
     height: 36px;
     background: url('./img/bomb1.png') no-repeat;
     background-size: contain;
     background-position: center;
   }
-  
-  &__clock{
+
+  &__clock {
     width: 40px;
     height: 36px;
     background: url('./img/clock.png') no-repeat;
     background-size: contain;
     background-position: center;
   }
-  
-  &__click_left{
+
+  &__click_left {
     width: 40px;
     height: 36px;
     background: url('./img/left-click.png') no-repeat;
     background-size: contain;
     background-position: center;
   }
-  
-  &__click_right{
+
+  &__click_right {
     width: 35px;
     height: 36px;
     background: url('./img/right-click.png') no-repeat;
@@ -178,8 +205,8 @@
 
 .thumb {
   display: inline-block;
-  width:290px;
-  height:290px;
+  width: 290px;
+  height: 290px;
   padding: 5px 10px;
   text-align: center;
   border-radius: 50%
@@ -194,7 +221,7 @@ input[type="file"] {
   cursor: pointer;
   position: absolute;
   width: 40px;
-  height: 50px;
+  height: 40px;
   top: 15px;
   left: 220px;
   z-index: 50;
@@ -202,4 +229,8 @@ input[type="file"] {
   background: url('./img/upload-avatar.png') #46535E no-repeat;
   background-size: contain;
   background-position: center;
+}
+
+.custom-file-upload:hover {
+  filter: brightness(125%);
 }

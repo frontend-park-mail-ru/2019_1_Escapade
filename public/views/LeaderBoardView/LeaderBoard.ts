@@ -1,6 +1,9 @@
 const leaderBoardTemplate = require('./LeaderBoard.pug');
+const leaderFilterTemplate = require('./Filter/LeaderBoardFilter.pug');
+const boardTemplate = require('./Board.pug');
 import BaseView from '../BaseView';
 import Bus from '../../utils/bus';
+import LeaderboardFilterComponent from './Filter/filter';
 
 /** */
 export default class LeaderBoardView extends BaseView {
@@ -12,6 +15,11 @@ export default class LeaderBoardView extends BaseView {
   _pagesCount: any;
   _leftArrow: any;
   _rightArrow: any;
+  filter: LeaderboardFilterComponent;
+  difficulty: number;
+  prevPageBindThis: any;
+  nextPageBindThis: any;
+  lbcontainer: HTMLElement;
   /**
    *
    * @param {*} parent
@@ -19,8 +27,16 @@ export default class LeaderBoardView extends BaseView {
   constructor(parent: any) {
     super(parent, leaderBoardTemplate, false);
     this._currPage = 1;
+    this.difficulty = 1
 
     Bus.on('respPagesAmount', this._initBoard.bind(this), 'leaderBoardView');
+    Bus.on('respPage', this.renderUsers.bind(this), 'leaderBoardView');
+    Bus.on('leaderboardRankFilter', (rank: number) => {
+      this.difficulty = rank
+      this.render()
+    }, 'leaderBoardView')
+    this.prevPageBindThis = this._prevPage.bind(this);
+    this.nextPageBindThis = this._nextPage.bind(this);
   }
 
   /**
@@ -34,7 +50,7 @@ export default class LeaderBoardView extends BaseView {
     if (devWidth < 320) {
       fieldHeight = 80;
     } else if (devWidth < 480) {
-      fieldHeight = 60;
+      fieldHeight = 80;
     } else if (devWidth < 768) {
       fieldHeight = 70;
     } else if (devWidth < 1200) {
@@ -42,7 +58,9 @@ export default class LeaderBoardView extends BaseView {
     } else {
       fieldHeight = 90;
     }
-    console.log(devHeight, fieldHeight)
+    if (screen.height <= 700) {
+      fieldHeight = 100;
+    }
     return Math.round(devHeight / fieldHeight);
   }
 
@@ -50,13 +68,15 @@ export default class LeaderBoardView extends BaseView {
    *
    */
   render() {
-    Bus.on('respPage', this.renderUsers.bind(this), 'leaderBoardView');
-    // const leaderboardTableRowDomElement = document.getElementsByClassName('leaderboard__table_row')[0];
-
+    if (!this.rendered) {
+      super.render()
+      this.lbcontainer = this.parent.querySelector('.leaderboard__board')
+      this.filter = new LeaderboardFilterComponent(this.parent.querySelector('.leaderboard__filter'), leaderFilterTemplate)
+      this.filter.render()
+    }
     this.divisionHeight = this._getPageAmount();
-    console.log(this.divisionHeight)
-    this.pageStruct = { page: 1, per_page: this.divisionHeight };
-    Bus.emit('reqPagesAmount', this.pageStruct.per_page);
+    this.pageStruct = { page: 1, per_page: this.divisionHeight, difficulty: this.difficulty };
+    Bus.emit('reqPagesAmount', this.pageStruct);
     Bus.emit('reqPage', this.pageStruct);
   }
 
@@ -67,7 +87,8 @@ export default class LeaderBoardView extends BaseView {
   renderUsers(users: any) {
     const usersStruct = { users: users, page: this._currPage, per_page: this.pageStruct.per_page };
     this.data = usersStruct;
-    super.render();
+    console.log("LB board render")
+    this.lbcontainer.innerHTML = boardTemplate({ data: usersStruct })
     this.leaderBoardPageDomElement = this.parent.querySelector('.leaderboard__footer_page');
     this.leaderBoardPageDomElement.innerHTML = this._currPage;
     this._initButtons();
@@ -87,8 +108,10 @@ export default class LeaderBoardView extends BaseView {
   _initButtons() {
     ([this._leftArrow, this._rightArrow] =
       this.parent.querySelectorAll('.leaderboard__arrow'));
-    this._leftArrow.addEventListener('click', this._prevPage.bind(this));
-    this._rightArrow.addEventListener('click', this._nextPage.bind(this));
+    this._leftArrow.removeEventListener('click', this.prevPageBindThis);
+    this._rightArrow.removeEventListener('click', this.nextPageBindThis);
+    this._leftArrow.addEventListener('click', this.prevPageBindThis);
+    this._rightArrow.addEventListener('click', this.nextPageBindThis);
     if (this._currPage === 1) {
       this._leftArrow.classList.add('leaderboard__arrow__inactive');
     } else {
@@ -115,7 +138,7 @@ export default class LeaderBoardView extends BaseView {
     }
 
     this.divisionHeight = this._getPageAmount();
-    this.pageStruct = { page: ++this._currPage, per_page: this.divisionHeight };
+    this.pageStruct = { page: ++this._currPage, per_page: this.divisionHeight, difficulty: this.difficulty };
     Bus.emit('reqPage', this.pageStruct);
   }
 
@@ -128,7 +151,7 @@ export default class LeaderBoardView extends BaseView {
     }
 
     this.divisionHeight = this._getPageAmount();
-    this.pageStruct = { page: --this._currPage, per_page: this.divisionHeight };
+    this.pageStruct = { page: --this._currPage, per_page: this.divisionHeight, difficulty: this.difficulty };
     Bus.emit('reqPage', this.pageStruct);
   }
 }

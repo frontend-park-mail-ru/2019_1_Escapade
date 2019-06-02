@@ -1,13 +1,13 @@
 .menu {
 
-  &__labels{
+  &__labels {
     display: flex;
     margin-bottom: 15px;
-  }
 
-  @media screen and (min-width: $mobile) and (max-width: $tablet){
-    &__labels{
-      flex-direction: column;
+    @media screen and (min-width: $mobile) and (max-width: $tablet) {
+      & {
+        flex-direction: column;
+      }
     }
   }
 
@@ -15,10 +15,17 @@
     background-image: url('./img/logo_single.png');
     background-repeat: no-repeat;
     background-size: cover;
-    height: 32vw;
-    width: 32vw;
+    height: 35vh;
+    width: 35vh;
     -webkit-animation: pulsing 3s infinite;
     animation: pulsing 3s infinite;
+
+    @media screen and (min-width: $mobile) and (max-width: $tablet) {
+      & {
+        height: 25vh;
+        width: 25vh;
+      }
+    }
   }
 
   @-webkit-keyframes pulsing {
@@ -26,10 +33,12 @@
       -webkit-transform: scale(0.8, 0.8);
       transform: scale(0.8, 0.8)
     }
+
     50% {
       -webkit-transform: scale(1.0, 1.0);
       transform: scale(1.0, 1.0);
     }
+
     100% {
       -webkit-transform: scale(0.8, 0.8);
       transform: scale(0.8, 0.8);
@@ -41,10 +50,12 @@
       -webkit-transform: scale(0.8, 0.8);
       transform: scale(0.8, 0.8)
     }
+
     50% {
       -webkit-transform: scale(1.0, 1.0);
       transform: scale(1.0, 1.0);
     }
+
     100% {
       -webkit-transform: scale(0.8, 0.8);
       transform: scale(0.8, 0.8);
@@ -55,10 +66,17 @@
     background-image: url('./img/logo_multi.png');
     background-repeat: no-repeat;
     background-size: cover;
-    height: 32vw;
-    width: 32vw;
+    height: 35vh;
+    width: 35vh;
     -webkit-animation: pulsing 3s infinite;
     animation: pulsing 3s infinite;
+
+    @media screen and (min-width: $mobile) and (max-width: $tablet) {
+      & {
+        height: 25vh;
+        width: 25vh;
+      }
+    }
   }
 
 }

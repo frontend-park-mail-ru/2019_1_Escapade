@@ -1,6 +1,10 @@
 import Bus from '../../utils/bus';
+const Template = require('./Message.pug');
 /** */
 export default class MessageView {
+  timerHTMLElement: any;
+  container: any;
+  parent: any;
   resetParameters(arg0: number) {
     throw new Error("Method not implemented.");
   }
@@ -9,15 +13,20 @@ export default class MessageView {
   messageBoxMessageDocElement: any;
 
   constructor() {
-    Bus.on('addListenersMessage', this._addListeners.bind(this), 'messageView');
+    Bus.on('addMessage', this._addListeners.bind(this), 'messageView');
   }
 
-  _addListeners() {
-    this.messageBoxDocElement = document.querySelector('.messagebox__popup');
-    this.messageBoxMessageDocElement = document.querySelector('.messagebox__popup_text');
+  _addListeners(data : any) {
+    this.container = data.container;
+    this.parent = data.parent;
+    this.timerHTMLElement = this.parent.querySelector(this.container);
+    this.timerHTMLElement.innerHTML = Template();
+    this.messageBoxDocElement = this.parent.querySelector('.messagebox__popup');
+    this.messageBoxMessageDocElement = this.parent.querySelector('.messagebox__popup_text');
     Bus.on('messageBoxHide', this._hideTextMessage.bind(this), 'messageView');
     Bus.on('showTextInMessageBox', this._showTextMessage.bind(this), 'messageView');
-    document.addEventListener('click', this._clickOnMessageButton.bind(this));
+    this.parent.addEventListener('click', this._clickOnMessageButton.bind(this));
+
   }
 
   _clickOnMessageButton(e: any) {
@@ -28,6 +37,7 @@ export default class MessageView {
 
   /** */
   _hideTextMessage(hide : any) {
+    console.log('_hideTextMessage');
     this.messageBoxDocElement.hidden = hide;
   }
 
