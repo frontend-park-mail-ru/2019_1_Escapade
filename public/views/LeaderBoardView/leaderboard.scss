@@ -5,6 +5,14 @@
   align-items: center;
   font-family: Saira;
   background: $escapade-gradient;
+  
+  &__table_avatar {
+    height: 6vh;
+    width: 6vh;
+    border-radius: 50%;
+    /* background: url(/img/flag.png) no-repeat; */
+    background-size: cover;
+  }
 
   &__back {
     background: url('./img/flag-right.png');
@@ -136,8 +144,7 @@
     }
 
     &_avatar {
-      height: 5vh;
-      width: 5vh;
+
 
       &_back {
         border-radius: 50%;
