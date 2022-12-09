@@ -20,7 +20,7 @@
     "@webpack-cli/init": "^0.1.5",
     "body-parser": "^1.18.3",
     "cookie-parser": "^1.4.4",
-    "express": "^4.16.4",
+    "express": "^4.17.3",
     "express-history-api-fallback": "^2.2.1",
     "firebase": "^5.9.3",
     "morgan": "^1.9.1",
